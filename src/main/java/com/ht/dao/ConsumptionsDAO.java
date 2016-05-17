@@ -25,7 +25,7 @@ public class ConsumptionsDAO {
 			ps.setInt(5, consumption.getPlantId());
 			ps.setString(6, consumption.getPlantCode());
 			ps.setInt(7, consumption.getMeterReadingId());
-			ps.setInt(8, consumption.getConsumptionBifercated());
+			ps.setInt(8, consumption.getConsumptionBifurcated());
 			ps.executeUpdate();
 			ResultSet keys = ps.getGeneratedKeys();    
 			keys.next();  
@@ -51,7 +51,7 @@ public class ConsumptionsDAO {
 			ps.setInt(5, consumption.getPlantId());
 			ps.setString(6, consumption.getPlantCode());
 			ps.setInt(7, consumption.getMeterReadingId());
-			ps.setInt(8, consumption.getConsumptionBifercated());
+			ps.setInt(8, consumption.getConsumptionBifurcated());
 			ps.setInt(9, consumption.getId());
 			ps.executeUpdate();
 			ps.close();
@@ -307,7 +307,7 @@ public class ConsumptionsDAO {
 				consumption.setPlantId(rs.getInt(6));
 				consumption.setPlantCode(rs.getString(7));
 				consumption.setMeterReadingId(rs.getInt(8));
-				consumption.setConsumptionBifercated(rs.getInt(9));
+				consumption.setConsumptionBifurcated(rs.getInt(9));
 				consumptionsList.add(consumption);
 			}
 		} catch (SQLException e) {

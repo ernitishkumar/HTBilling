@@ -56,9 +56,10 @@ angular.module("htBillingApp").controller('BifircateReadingsController', ['$http
 	 * provided plant and meter
 	 */
 	function loadConsumptionData() {
-		var plantId = $routeParams.plantId;
-		var meterNo = $routeParams.meterNo;
 		
+		var plantId = $routeParams.plantId;
+		
+		var consumptionId = $routeParams.consumptionId;
 		//Getting Investors for bifurcation of readings
 		$http(
 				{
@@ -83,7 +84,7 @@ angular.module("htBillingApp").controller('BifircateReadingsController', ['$http
 		$http(
 				{
 					method: 'GET',
-					url: 'backend/consumptions/meterno/'+meterNo
+					url: 'backend/consumptions/'+consumptionId
 				}
 		).then(
 				function (response) {
@@ -125,8 +126,7 @@ angular.module("htBillingApp").controller('BifircateReadingsController', ['$http
 			}).then(function (response) {
 				var result = response.data.Result;
 				if (result === "OK") {
-					var id = consumption.id;
-					updateBifercationFlag(id);
+					updateBifurcationFlag(consumption);
 				} else {
 					alert("Unable to save consumptions");
 				}
@@ -140,15 +140,13 @@ angular.module("htBillingApp").controller('BifircateReadingsController', ['$http
 	 * updateBifercationFlag(id) function to update the bifurcation flag of consumption data
 	 * in the backend when developer successfully bifurcates the consumption data
 	 */
-	function updateBifercationFlag(id) {
+	function updateBifurcationFlag(consumption) {
+		consumption.consumptionBifurcated = 1;
 		$http(
 				{
 					method: 'PUT',
-					url: 'backend/consumptions/bifurcation',
-					params: {
-						id: id,
-						flag: '1'
-					}
+					url: 'backend/consumptions/'+consumption.id,
+					data: consumption
 				}
 		).then(
 				function (response) {

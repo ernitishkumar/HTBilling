@@ -13,7 +13,7 @@ public class Consumption {
 	private int plantId;
 	private String plantCode;
 	private int meterReadingId;
-	private int consumptionBifercated;
+	private int consumptionBifurcated;
     
 	public int getId() {
 		return id;
@@ -64,11 +64,11 @@ public class Consumption {
 	public void setMeterReadingId(int meterReadingId) {
 		this.meterReadingId = meterReadingId;
 	}
-	public int getConsumptionBifercated() {
-		return consumptionBifercated;
+	public int getConsumptionBifurcated() {
+		return consumptionBifurcated;
 	}
-	public void setConsumptionBifercated(int consumptionBifercated) {
-		this.consumptionBifercated = consumptionBifercated;
+	public void setConsumptionBifurcated(int consumptionBifercated) {
+		this.consumptionBifurcated = consumptionBifercated;
 	}
 	
 	/* (non-Javadoc)
@@ -79,7 +79,7 @@ public class Consumption {
 		return "Consumption [id=" + id + ", meterNo=" + meterNo + ", date=" + date + ", activeConsumption="
 				+ activeConsumption + ", reactiveConsumption=" + reactiveConsumption + ", plantId=" + plantId
 				+ ", plantCode=" + plantCode + ", meterReadingId=" + meterReadingId + ", consumptionBifercated="
-				+ consumptionBifercated + "]";
+				+ consumptionBifurcated + "]";
 	}
 	
 }

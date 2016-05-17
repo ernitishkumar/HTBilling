@@ -155,7 +155,7 @@ angular.module("htBillingApp").controller('DeveloperViewMeterReadingsController'
 	 * where investor wise bifurcation of readings is done.
 	 */
 	this.getInvestorsData = function (reading) {
-		$location.path("/splitreadings/" + reading.plant.id + "/" + reading.meterNo);
+		$location.path("/splitreadings/" + reading.plant.id + "/" + reading.consumption.id);
 	};
 
 	/*
@@ -163,6 +163,7 @@ angular.module("htBillingApp").controller('DeveloperViewMeterReadingsController'
 	 * where developer can see investor's wise bifurcation page of particular plant.
 	 */
 	this.viewInvestorsData = function (reading) {
+		console.log(reading);
 		$location.path("/viewsplitedreadings/" + reading.plant.id + "/" + reading.meterNo);
 	};
 

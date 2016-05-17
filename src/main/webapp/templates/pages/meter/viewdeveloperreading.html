@@ -43,8 +43,8 @@
                 &nbsp;&nbsp;&nbsp;
                 <button type="button" class="btn btn-danger" name="discardButton" ng-hide="reading.currentMeterReading.developerValidation">Discard Readings</button>
                 &nbsp;&nbsp;&nbsp;
-                <button type="button" class="btn btn-primary" data-toggle="modal" ng-show="reading.currentMeterReading.developerValidation && !reading.consumption.consumptionBifercated" ng-click="viewMeterReadingsCtrl.getInvestorsData(reading)">Bifurcate Readings</button>
-                <button type="button" class="btn btn-success" data-toggle="modal" ng-show="reading.consumption.consumptionBifercated" ng-click="viewMeterReadingsCtrl.viewInvestorsData(reading)">View Bifurcation & Bill</button>
+                <button type="button" class="btn btn-primary" data-toggle="modal" ng-show="reading.currentMeterReading.developerValidation && !reading.consumption.consumptionBifurcated" ng-click="viewMeterReadingsCtrl.getInvestorsData(reading)">Bifurcate Readings</button>
+                <button type="button" class="btn btn-success" data-toggle="modal" ng-show="reading.consumption.consumptionBifurcated" ng-click="viewMeterReadingsCtrl.viewInvestorsData(reading)">View Bifurcation & Bill</button>
                 <br>
                 <br> 
                 <span ng-show="reading.currentMeterReading.htCellValidation" class="label label-primary">Validated by HTCell</span>

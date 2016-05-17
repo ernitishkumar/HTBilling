@@ -1,48 +1,78 @@
-angular.module("htBillingApp").controller('ViewBifircateReadingsController', ['$http', '$scope', '$location', '$routeParams', function ($http, $scope, $location, $routeParams) {
+angular.module("htBillingApp").controller('ViewBifircateReadingsController', ['$http', '$scope', '$location', '$routeParams','authService', function ($http, $scope, $location, $routeParams,authService) {
 
-    $scope.user = {};
+	/*
+	 * var user a controller level variable to store user object.
+	 */
+	$scope.user = {};
 
+	/*
+	 * var userRole a controller level variable to store userRole object.
+	 */
+	$scope.userRole = {};
+
+	/*
+	 * var sno a controller level variable to store Serial No.
+	 */
     $scope.sno = 0;
 
+    /*
+     * var generating a controller level variable to store boolean value.
+     */
     $scope.generating = false;
-    var checkUser = function () {
-        $http({
-            method: 'GET',
-            url: 'ValidateSession'
-        }).then(function (response) {
-            var user = response.data;
-            if (user.username === null || user.username === undefined) {
-                $location.path("/");
-            } else {
-                $scope.user = user;
-                if ($scope.user.username != null && $scope.user.user_role === 'developer') {
-                    loadConsumptionData();
-                } else {
-                    $location.path("/");
-                    $scope.user = {};
-                }
-            }
-        });
-    };
+    
+    /* 
+	 * checkUser function. checks whether any user is logged into the system
+	 * and if he is authorized to view this page according to his role
+	 *  if not then he is redirected to login page 
+	 */
+	var checkUser = function () {
+		var user = authService.fetchData(authService.USER_KEY);
+		var userRole = authService.fetchData(authService.USER_ROLE_KEY);
+		if(user === null || user === undefined || user.username === null || user.username == undefined || userRole === null || userRole === undefined){
+			$location.path("/");
+		}else if(userRole.role === "developer"){
+			$scope.user = user;
+			$scope.userRole = userRole;
+			loadConsumptionData();
+		}else{
+			$location.path("/");
+		}
+	};
 
-    checkUser();
+	/* 
+	 * calling checkUser() function on page load 
+	 */
+	checkUser();
 
-    this.logout = function () {
-        $http({
-            method: 'GET',
-            url: 'Logout'
-        }).then(function (response) {
-            $location.path("/");
-        });
-    };
+	/* 
+	 * logout function. Removes all local storage data
+	 * and routes to login page
+	 */
+	this.logout = function () {
+		$scope.user = {};
+		$scope.userRole = {};
+		authService.logout();
+	};
 
+	/*
+	 * loadDeveloperHome function to navigate to developer home page
+	 */
     this.loadDeveloperHome = function () {
         $location.path("/developerhome");
     }
 
+    /*
+	 * function loadConsumptionData to load the consumption data for 
+	 * provided plant and meter
+	 */
     function loadConsumptionData() {
+    	
         var plantId = $routeParams.plantId;
+        
         var meterNo = $routeParams.meterNo;
+        
+        var consumptionId = $routeParams.consumptionId;
+        
         $http({
             method: 'GET',
             url: 'InvestorConsumptionController',

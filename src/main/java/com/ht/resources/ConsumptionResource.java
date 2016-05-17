@@ -32,6 +32,11 @@ public class ConsumptionResource {
 
 	private ConsumptionsDAO consumptionsDAO=new ConsumptionsDAO();
 
+	/**
+	 * method to add consumption
+	 * @param consumption
+	 * @return
+	 */
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
@@ -57,6 +62,11 @@ public class ConsumptionResource {
 		}
 	}
 
+	/**
+	 * method to get consumption for a given meterno
+	 * @param meterno
+	 * @return Consumption
+	 */
 	@GET
 	@Path("/meterno/{meterno}")
 	@Produces(MediaType.APPLICATION_JSON)
@@ -71,7 +81,29 @@ public class ConsumptionResource {
 		}
 		return consumption;
 	}
+	
+	/**
+	 * method to get consumption for a given consumptionId
+	 * @param consumptionId
+	 * @return Consumption
+	 */
+	@GET
+	@Path("/{consumptionId}")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Consumption getByConsumptionId(@PathParam("consumptionId")String consumptionId){
+		System.out.println("GetConsumptions by consumptionId called");
+		Consumption consumption = null;
+		if(consumptionId!=null){
+			consumption=consumptionsDAO.getById(Integer.parseInt(consumptionId.trim()));
+		}
+		return consumption;
+	}
 
+	/**
+	 * method to get the consumptions for a given plantId
+	 * @param plantId
+	 * @return
+	 */
 	@GET
 	@Path("/plantid/{plantId}")
 	@Produces(MediaType.APPLICATION_JSON)
@@ -92,6 +124,23 @@ public class ConsumptionResource {
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response updateBifurcationFlag(@QueryParam("flag")int flag,@QueryParam("consumptionId")int consumptionId){
 		boolean updated = consumptionsDAO.updateConsumptionBifercated(flag, consumptionId);
+		if(updated){
+			return Response.status(Status.OK)
+					.entity(new MessageBean("Updated successfully"))
+					.build();
+		}else{
+			return Response.status(Status.EXPECTATION_FAILED)
+					.entity(new ErrorBean("Unable to update bifurcation flag"))
+					.build();
+		}
+	}
+	
+	@PUT
+	@Path("/{consumptionId}")
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response updateBifurcationFlag(Consumption consumption){
+		boolean updated = consumptionsDAO.update(consumption);
 		if(updated){
 			return Response.status(Status.OK)
 					.entity(new MessageBean("Updated successfully"))

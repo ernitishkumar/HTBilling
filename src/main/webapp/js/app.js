@@ -59,7 +59,7 @@
 			templateUrl: 'templates/pages/meter/viewdeveloperreading.html',
 			controller: 'DeveloperViewMeterReadingsController',
 			controllerAs: 'viewMeterReadingsCtrl'
-		}).when('/splitreadings/:plantId/:meterNo', {
+		}).when('/splitreadings/:plantId/:consumptionId', {
 			templateUrl: 'templates/pages/meter/readingsbifircationpage.html',
 			controller: 'BifircateReadingsController',
 			controllerAs: 'viewMeterReadingsCtrl'

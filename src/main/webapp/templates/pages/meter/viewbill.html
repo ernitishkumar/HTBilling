@@ -1,0 +1,156 @@
+<br>
+<br>
+<div class="navbar navbar-fixed-top">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="javascript:void(0);">MPPKVVCL HTBilling</a>
+        </div>
+        <div class="collapse navbar-collapse" id="myNavbar">
+            <ul class="nav navbar-nav">
+                <li class="active"><a href="javascript:void(0);" ng-click="viewBillCtrl.loadDeveloperHome()">Developer Home</a></li>
+            </ul>
+            <ul class="nav navbar-nav pull-right">
+                <li class="dropdown">
+                    <a class="dropdown-toggle" data-toggle="dropdown" href="javascript:void(0);"><span class="glyphicon glyphicon-user"></span>  {{user.name}}<strong class="caret"></strong></a>
+                    <ul class="dropdown-menu">
+                        <li>
+                            <a href="javascript:void(0);"><span class="glyphicon glyphicon-wrench"></span> Settings</a>
+                        </li>
+                        <li>
+                            <a href="javascript:void(0);" ng-click="vviewBillCtrl.logout()"><span class="glyphicon glyphicon-off"></span> Logout</a>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="page-header text-center container">
+        <h2><span class="glyphicon glyphicon-certificate"></span>Generated Bill</h2>
+        <br>
+        <div>
+            <div class="row">
+                <div class="col-md-12">
+                    <table class="table table-bordered">
+                        <tbody class="text-center">
+                            <tr>
+                                <td colspan="6">
+                                <b>
+                                <p>{{billDetails.investor.name}}</p>
+                                <!-- <p>302, Sai Amrit Apartment,14, Rajaswgram, Chhatribagh, Indore (M.P)</p>
+                                <p>379, VARDHMAN GRAND PLAZA, PLOT NO.7, MANGALAM PLACE, SECTOR-3, ROHINI, DELHI-110085.</p> -->
+                                </b>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="6"> <b>To,  <br><p>The Superintending Engineer (O&M), M.P.P.K.V.V.Co.Ltd</p></b></td>
+                            </tr>
+                            <tr>
+                                <td>BILL NO. </td>
+                                <td><strong>{{billDetails.billNo}}</strong></td>
+                                <td colspan="4"></td>
+                            </tr>
+                            <tr>
+                                <td>METER NO</td>
+                                <td><b>{{billDetails.meterNo}}</b></td>
+                                <td>BILL DATE</td>
+                                <td><b>{{billDetails.billGenerationDate}}</b></td>
+                                <td>READING DATE</td>
+                                <td><b>{{billDetails.readingDate}}</b></td>
+                            </tr>
+                            <tr class="text-center">
+                                <td>Invoice No</td>
+                                <td><b>{{billDetails.investor.invoiceNo}}</b></td>
+                                <td>Ref.</td>
+                                <td colspan="3">
+                                    <b>PPA Dated {{billDetails.investorConsumptionView.machines[0].ppaDate}} issued vide</b>
+                                    <br>
+                                    <b>Letter No.{{billDetails.investorConsumptionView.machines[0].ppaLetterNo.substring(0,billDetails.investorConsumptionView.machines[0].ppaLetterNo.indexOf('from'))}}</b>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Letter No</td>
+                                <td><b>{{billDetails.investorConsumptionView.machines[0].ppaLetterNo}}</b>
+                                </td>
+                                <td>TIN/VAT No</td>
+                                <td colspan="3"><b>{{billDetails.investor.tin}}/{{billDetails.investor.vat}}</b></td>
+                            </tr>
+                            <tr>
+                                <td>Investor Name`</td>
+                                <td><b>{{billDetails.investor.name}}</b></td>
+                                <td>Date of commission</td>
+                                <td colspan="3"><b>{{billDetails.investorConsumptionView.machines[0].commissionedDate}}</b></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <h3>Billing Details</h3>
+                    <table class="table table-condensed table-bordered">
+                        <tbody class="text-center">
+                            <tr>
+                                <td><strong>S.No</strong></td>
+                                <td><strong>Particulars</strong></td>
+                                <td><strong>Units</strong></td>
+                                <td><strong>Rate Per Unit</strong></td>
+                                <td><strong>Amount</strong></td>
+                            </tr>
+                            <tr>
+                                <td>1</td>
+                                <td>Sale of Power (KWH Export)</td>
+                                <td>{{billDetails.totalKWH}}</td>
+                                <td>{{billDetails.kwhRate}}</td>
+                                <td>{{billDetails.activeAmount}}</td>
+                            </tr>
+                            <tr>
+                                <td>2</td>
+                                <td>RKVH Charges</td>
+                                <td>{{billDetails.totalRKVH}}</td>
+                                <td>{{billDetails.rkvhRate}}</td>
+                                <td>{{billDetails.reactiveAmount}}</td>
+                            </tr>
+                            <tr>
+                                <td>3</td>
+                                <td colspan="3">Total Amount</td>
+                                <td>{{billDetails.totalAmount}}</td>
+                            </tr>
+                            <tr>
+                                <td>4</td>
+                                <td colspan="3">Total Amount Rounded off</td>
+                                <td>{{billDetails.totalAmountRoundoff}}</td>
+                            </tr>
+                            <tr>
+                                <td colspan="2"><strong>Singature & Seal of Investor</strong></td>
+                                <td colspan="3">
+
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="2"><strong>Note:</strong></td>
+                                <td colspan="3"></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<br>
+<br>
+<div class="row">
+<button class="btn btn-primary btn-lg" type="button" ng-click="viewBillCtrl.back()">Back to Bifurcation Page</button>
+</div>
+<br>
+<br>
+<div class="row">
+    <br>
+</div>

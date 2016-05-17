@@ -1,0 +1,166 @@
+angular.module("htBillingApp").controller('BifircateReadingsController', ['$http', '$scope', '$location', '$routeParams','authService', function ($http, $scope, $location, $routeParams,authService) {
+
+	/*
+	 * var user a controller level variable to store user object.
+	 */
+	$scope.user = {};
+
+	/*
+	 * var userRole a controller level variable to store userRole object.
+	 */
+	$scope.userRole = {};
+
+	/* 
+	 * checkUser function. checks whether any user is logged into the system
+	 * and if he is authorized to view this page according to his role
+	 *  if not then he is redirected to login page 
+	 */
+	var checkUser = function () {
+		var user = authService.fetchData(authService.USER_KEY);
+		var userRole = authService.fetchData(authService.USER_ROLE_KEY);
+		if(user === null || user === undefined || user.username === null || user.username == undefined || userRole === null || userRole === undefined){
+			$location.path("/");
+		}else if(userRole.role === "developer"){
+			$scope.user = user;
+			$scope.userRole = userRole;
+			loadConsumptionData();
+		}else{
+			$location.path("/");
+		}
+	};
+
+	/* 
+	 * calling checkUser() function on page load 
+	 */
+	checkUser();
+
+	/* 
+	 * logout function. Removes all local storage data
+	 * and routes to login page
+	 */
+	this.logout = function () {
+		$scope.user = {};
+		$scope.userRole = {};
+		authService.logout();
+	};
+
+	/*
+	 * loadDeveloperHome function to navigate to developer home page
+	 */
+	this.loadDeveloperHome = function () {
+		$location.path("/developerhome");
+	}
+
+	/*
+	 * function loadConsumptionData to load the consumption data for 
+	 * provided plant and meter
+	 */
+	function loadConsumptionData() {
+		var plantId = $routeParams.plantId;
+		var meterNo = $routeParams.meterNo;
+		
+		//Getting Investors for bifurcation of readings
+		$http(
+				{
+					method: 'GET',
+					url: 'backend/investors/bifurcation/'+plantId
+				}
+		).then(
+				function (response) {
+					var status = response.status;
+					if (status === 200) {
+						$scope.investorsData = response.data;
+						console.log($scope.investorsData);
+					}
+				},
+				function(error){
+					console.log("error while fetching investors for bifurcation.below is error");
+					console.log(error);
+				}
+		);
+		
+		//Getting overall consumption data
+		$http(
+				{
+					method: 'GET',
+					url: 'backend/consumptions/meterno/'+meterNo
+				}
+		).then(
+				function (response) {
+					var status = response.status;
+					if (status === 200) {
+						$scope.consumption = response.data;
+					}
+				},
+				function(error){
+					console.log("unable to fetch consumption. error below");
+					console.log(error);
+				}
+		);
+	};
+
+	/*
+	 * function to save bifurcated investors wise readings
+	 * to the backend server.
+	 */
+	this.saveDistribution = function () {
+		var investors = $scope.investorsData;
+		var consumption = $scope.consumption;
+		var totalActive = 0;
+		var totalReactive = 0;
+		investors.forEach(function (item) {
+			totalActive += item.activeConsumption;
+			totalReactive += item.reactiveConsumption;
+			item.consumptionId = consumption.id;
+			item.investorId = item.investor.id;
+		});
+		if (totalActive === consumption.activeConsumption && totalReactive === consumption.reactiveConsumption) {
+			$http({
+				method: 'POST',
+				url: 'InvestorConsumptionController',
+				headers: {
+					"Content-Type": "application/json"
+				},
+				data: JSON.stringify(investors)
+			}).then(function (response) {
+				var result = response.data.Result;
+				if (result === "OK") {
+					var id = consumption.id;
+					updateBifercationFlag(id);
+				} else {
+					alert("Unable to save consumptions");
+				}
+			});
+		} else {
+			alert("Readings sum is not equal to total Consumption. Please check !");
+		}
+	};
+
+	/*
+	 * updateBifercationFlag(id) function to update the bifurcation flag of consumption data
+	 * in the backend when developer successfully bifurcates the consumption data
+	 */
+	function updateBifercationFlag(id) {
+		$http(
+				{
+					method: 'PUT',
+					url: 'backend/consumptions/bifurcation',
+					params: {
+						id: id,
+						flag: '1'
+					}
+				}
+		).then(
+				function (response) {
+					var status = response.status;
+					if (status === 200) {
+						$location.path("/viewdeveloperreading");
+					}
+				},
+				function(error){
+					console.log("error while updating flag.error below : ");
+					console.log(error);
+				}
+		);
+	}
+}]);

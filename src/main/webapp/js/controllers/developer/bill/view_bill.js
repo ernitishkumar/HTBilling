@@ -34,7 +34,7 @@ angular.module("htBillingApp").controller('ViewBillController', ['$http', '$scop
     };
 
     this.loadDeveloperHome = function () {
-        $location.path("/developerhome");
+        $location.path("/developer/home");
     }
 
     this.back = function () {

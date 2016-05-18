@@ -52,14 +52,7 @@ angular.module("htBillingApp").controller('HomeController', ['$http', '$scope', 
      * loadMeterReadingViewPage() function to route to view meter readings page
      */
     this.loadMeterReadingViewPage = function () {
-        $location.path("/viewmeterreadings");
-    };
-
-    /*
-     * loadCircleReadingViewPage() function to route to view circle readings page
-     */
-    this.loadCircleReadingViewPage = function () {
-        $location.path("/viewcirclereadings");
+        $location.path("/ht/readings");
     };
 
     /*
@@ -80,20 +73,20 @@ angular.module("htBillingApp").controller('HomeController', ['$http', '$scope', 
      * function to route to homepage
      */
     this.loadHome = function () {
-        $location.path("/home");
+        $location.path("/ht/home");
     };
     
     /*
      * function to load operator home page
      */
     this.loadOperatorHome = function () {
-        $location.path("/operatorhome");
+        $location.path("/operator/home");
     };
     
     /*
      * function to load circle home page
      */
     this.loadCircleHome = function () {
-        $location.path("/circlehome");
+        $location.path("/circle/home");
     };
 }]);

@@ -48,7 +48,7 @@ angular.module("htBillingApp").controller('BifircateReadingsController', ['$http
 	 * loadDeveloperHome function to navigate to developer home page
 	 */
 	this.loadDeveloperHome = function () {
-		$location.path("/developerhome");
+		$location.path("/developer/home");
 	}
 
 	/*
@@ -56,9 +56,9 @@ angular.module("htBillingApp").controller('BifircateReadingsController', ['$http
 	 * provided plant and meter
 	 */
 	function loadConsumptionData() {
-		
+
 		var plantId = $routeParams.plantId;
-		
+
 		var consumptionId = $routeParams.consumptionId;
 		//Getting Investors for bifurcation of readings
 		$http(
@@ -79,7 +79,7 @@ angular.module("htBillingApp").controller('BifircateReadingsController', ['$http
 					console.log(error);
 				}
 		);
-		
+
 		//Getting overall consumption data
 		$http(
 				{
@@ -116,21 +116,25 @@ angular.module("htBillingApp").controller('BifircateReadingsController', ['$http
 			item.investorId = item.investor.id;
 		});
 		if (totalActive === consumption.activeConsumption && totalReactive === consumption.reactiveConsumption) {
-			$http({
-				method: 'POST',
-				url: 'InvestorConsumptionController',
-				headers: {
-					"Content-Type": "application/json"
-				},
-				data: JSON.stringify(investors)
-			}).then(function (response) {
-				var result = response.data.Result;
-				if (result === "OK") {
-					updateBifurcationFlag(consumption);
-				} else {
-					alert("Unable to save consumptions");
-				}
-			});
+			$http(
+					{
+						method: 'POST',
+						url: 'backend/investors/consumption',
+						data: investors
+					}
+			).then(
+					function (response) {
+						var status = response.status;
+						if(status === 201){
+							var insertedInvestorsConsumption = response.data;
+							updateBifurcationFlag(consumption);
+						}
+					},
+					function(error){
+						console.log("error while saving investor wise consumptions");
+						console.log(error);
+					}
+			);
 		} else {
 			alert("Readings sum is not equal to total Consumption. Please check !");
 		}
@@ -141,7 +145,10 @@ angular.module("htBillingApp").controller('BifircateReadingsController', ['$http
 	 * in the backend when developer successfully bifurcates the consumption data
 	 */
 	function updateBifurcationFlag(consumption) {
+		//Updating the consumptionBifurcated property of the controller's local variable and passing
+		//it to the backend to update in database.
 		consumption.consumptionBifurcated = 1;
+		
 		$http(
 				{
 					method: 'PUT',
@@ -152,6 +159,7 @@ angular.module("htBillingApp").controller('BifircateReadingsController', ['$http
 				function (response) {
 					var status = response.status;
 					if (status === 200) {
+						alert("Bifurcated Successfully.")
 						$location.path("/viewdeveloperreading");
 					}
 				},

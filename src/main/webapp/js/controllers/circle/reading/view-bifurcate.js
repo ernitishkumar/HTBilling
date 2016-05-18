@@ -1,4 +1,4 @@
-angular.module("htBillingApp").controller('ViewBifircateReadingsForDeveloperController', ['$http', '$scope', '$location', '$routeParams','authService', function ($http, $scope, $location, $routeParams,authService) {
+angular.module("htBillingApp").controller('ViewBifircateReadingsForCircleController', ['$http', '$scope', '$location', '$routeParams','authService', function ($http, $scope, $location, $routeParams,authService) {
 
 	/*
 	 * var user a controller level variable to store user object.
@@ -30,7 +30,7 @@ angular.module("htBillingApp").controller('ViewBifircateReadingsForDeveloperCont
 		var userRole = authService.fetchData(authService.USER_ROLE_KEY);
 		if(user === null || user === undefined || user.username === null || user.username == undefined || userRole === null || userRole === undefined){
 			$location.path("/");
-		}else if(userRole.role === "developer"){
+		}else if(userRole.role === "circle"){
 			$scope.user = user;
 			$scope.userRole = userRole;
 			loadConsumptionData();
@@ -57,8 +57,8 @@ angular.module("htBillingApp").controller('ViewBifircateReadingsForDeveloperCont
 	/*
 	 * loadDeveloperHome function to navigate to developer home page
 	 */
-	this.loadDeveloperHome = function () {
-		$location.path("/developer/home");
+	this.loadCircleHome = function () {
+		$location.path("/circle/home");
 	}
 
 	/*
@@ -84,7 +84,7 @@ angular.module("htBillingApp").controller('ViewBifircateReadingsForDeveloperCont
 									item.generating = false;
 								}		
 						);
-						
+						console.log($scope.investorConsumptions);
 					}
 				},
 				function(error){
@@ -98,40 +98,21 @@ angular.module("htBillingApp").controller('ViewBifircateReadingsForDeveloperCont
 	 * back function to go back to the last page.
 	 */
 	this.back = function () {
-		$location.path("/developer/readings/view");
-	};
-
-	/*
-	 * generateBill function to generate the bills for corresponding investor
-	 */
-	this.generateBill = function (investorData) {
-		investorData.generating = true;
-		$http({
-			method: 'GET',
-			url: 'BillingController',
-			params: {
-				action: 'generate',
-				consumptionId: investorData.consumption.id,
-				investorId: investorData.investor.id,
-				bifurcationId:investorData.id
-			}
-		}).then(function (response) {
-			var result = response.data.Result;
-			if(result === "OK"){
-				var lastInsertedId = response.data.BillId;
-				investorData.billDetailsId= lastInsertedId;
-				investorData.generating = false;
-				investorData.billGenerated = true;
-				console.log("Object after generating bill : ");
-			}
-		});
+		$location.path("/circle/readings");
 	};
 
 	/*
 	 * viewBill function to navigate to view bill page for corresponding investor's bill
 	 */
 	this.viewBill = function (investorData) {
-		$location.path("/developer/investor/bill/view/"+investorData.billDetailsId);
+		$location.path("/viewbill/"+investorData.billDetailsId);
 	};
 
+	/*
+	 * validateConsumptions function to perform the validation function on consumptions 
+	 * by circle user.
+	 */
+	this.validateConsumptions = function(){
+		alert("Validating consumptions");
+	}
 }]);

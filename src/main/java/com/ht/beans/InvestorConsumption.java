@@ -1,5 +1,8 @@
 package com.ht.beans;
 
+import javax.xml.bind.annotation.XmlRootElement;
+
+@XmlRootElement
 public class InvestorConsumption {
 
 	private int id;
@@ -66,5 +69,15 @@ public class InvestorConsumption {
 	public void setBillGenerated(int billGenerated) {
 		this.billGenerated = billGenerated;
 	}
+	/* (non-Javadoc)
+	 * @see java.lang.Object#toString()
+	 */
+	@Override
+	public String toString() {
+		return "InvestorConsumption [id=" + id + ", consumptionId=" + consumptionId + ", investorId=" + investorId
+				+ ", activeConsumption=" + activeConsumption + ", reactiveConsumption=" + reactiveConsumption
+				+ ", circleValidation=" + circleValidation + ", billGenerated=" + billGenerated + "]";
+	}
+	
 	
 }

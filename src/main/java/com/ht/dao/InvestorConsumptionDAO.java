@@ -14,8 +14,9 @@ import com.ht.utility.GlobalResources;
 
 public class InvestorConsumptionDAO {
 
-	public boolean insert(InvestorConsumption investorConsumption){
-		boolean added=false;
+	public InvestorConsumption insert(InvestorConsumption investorConsumption){
+		InvestorConsumption insertedInvestorConsumption = null;
+		int lastInsertedId;
 		Connection connection = GlobalResources.getConnection();
 		try {
 			PreparedStatement ps = connection.prepareStatement("insert into investor_consumption (consumption_id, investor_id, active_consumption, reactive_consumption,circle_validation,bill_generated) values(?,?,?,?,?,?)");
@@ -26,13 +27,29 @@ public class InvestorConsumptionDAO {
 			ps.setInt(5,0);
 			ps.setInt(6,0);
 			ps.executeUpdate();
+			ResultSet keys = ps.getGeneratedKeys();    
+			keys.next();  
+			lastInsertedId = keys.getInt(1);
+			keys.close();
 			ps.close();
-			added=true;
+			insertedInvestorConsumption = getById(lastInsertedId);
 		} catch (SQLException e) {
-			added=false;
 			System.out.println("Exception in class : InvestorConsumptionDAO : method : [insert(Investors)] "+e.getMessage());
 		}
-		return added;
+		return insertedInvestorConsumption;
+	}
+	
+	/**
+	 * @param investorsConsumption
+	 * @return
+	 */
+	public ArrayList<InvestorConsumption> insert(ArrayList<InvestorConsumption> investorsConsumption){
+		ArrayList<InvestorConsumption> insertedInvestorConsumptions = new ArrayList<InvestorConsumption>();
+		for(InvestorConsumption ic : investorsConsumption){
+			InvestorConsumption insertedInvestorConsumption = insert(ic);
+			insertedInvestorConsumptions.add(insertedInvestorConsumption);
+		}
+		return insertedInvestorConsumptions;
 	}
 	
 	public boolean update(InvestorConsumption investorConsumption){
@@ -195,4 +212,5 @@ public class InvestorConsumptionDAO {
 		
 		return investorConsumptionView;
 	}
+	
 }

@@ -109,8 +109,13 @@ public class ReadingResource {
 				viewMeterReadings.setMeterNo(meterNo);
 				viewMeterReadings.setPlant(p);
 				viewMeterReadings.setDeveloper(developersDAO.getById(p.getDeveloperId()));
-				viewMeterReadings.setCurrentMeterReading(meterReadingsDAO.getCurrentMonthMeterReadings(meterNo, currentDate));
+				MeterReading currentMonthReading = meterReadingsDAO.getCurrentMonthMeterReadings(meterNo, currentDate);
+				viewMeterReadings.setCurrentMeterReading(currentMonthReading);
 				viewMeterReadings.setPreviousMeterReading(meterReadingsDAO.getPreviousMonthMeterReadings(meterNo, currentDate));
+				if(currentMonthReading.getDeveloperValidation() == 1){
+					//viewMeterReadings.setConsumption(consumptionDAO.getBifercationFlagByPlantIdAndDate(p.getId(),currentDate));
+					viewMeterReadings.setConsumption(consumptionDAO.getByMeterReadingId(currentMonthReading.getId()));
+				}
 				viewReadings.add(viewMeterReadings);
 			}
 		}
@@ -139,7 +144,8 @@ public class ReadingResource {
 				viewMeterReadings.setCurrentMeterReading(currentMonthReading);
 				viewMeterReadings.setPreviousMeterReading(meterReadingsDAO.getPreviousMonthMeterReadings(meterNo, currentDate));
 				if(currentMonthReading.getDeveloperValidation() == 1){
-					viewMeterReadings.setConsumption(consumptionDAO.getBifercationFlagByPlantIdAndDate(p.getId(),currentDate));
+					//viewMeterReadings.setConsumption(consumptionDAO.getBifercationFlagByPlantIdAndDate(p.getId(),currentDate));
+					viewMeterReadings.setConsumption(consumptionDAO.getByMeterReadingId(currentMonthReading.getId()));
 				}
 				viewReadings.add(viewMeterReadings);
 			}

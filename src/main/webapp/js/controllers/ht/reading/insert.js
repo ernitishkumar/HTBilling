@@ -81,9 +81,9 @@ angular.module("htBillingApp").controller('MeterReadingController', ['$http', '$
 	this.loadHome = function () {
 		var userRole = $scope.userRole;
 		if (userRole.role === 'admin' || userRole.role === 'ht') {
-			$location.path("/home");
+			$location.path("/ht/home");
 		} else if (userRole.role === 'operator') {
-			$location.path("/operatorhome");
+			$location.path("/operator/home");
 		} else {
 			$location.path("/");
 		}
@@ -94,7 +94,7 @@ angular.module("htBillingApp").controller('MeterReadingController', ['$http', '$
 	 * loadOperatorHome() function to load operator home page.
 	 */
 	this.loadOperatorHome = function () {
-		$location.path("/operatorhome");
+		$location.path("/operator/home");
 	};
 
 	/*

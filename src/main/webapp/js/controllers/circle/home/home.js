@@ -1,41 +1,57 @@
-angular.module("htBillingApp").controller('CircleHomeController', ['$http', '$scope', '$location', function ($http, $scope, $location) {
-    $scope.user = {};
+angular.module("htBillingApp").controller('CircleHomeController', ['$http', '$scope', '$location','authService', function ($http, $scope, $location,authService) {
+	/*
+	 * var user a controller level variable to store user object.
+	 */
+	$scope.user = {};
+
+	/*
+	 * var userRole a controller level variable to store userRole object.
+	 */
+	$scope.userRole = {};
+    
+    /* 
+     * checkUser function. checks whether any user is logged into the system
+     * and if he is authorized to view this page according to his role
+     *  if not then he is redirected to login page 
+     */
     var checkUser = function () {
-        $http({
-            method: 'GET',
-            url: 'ValidateSession'
-        }).then(function (response) {
-            var user = response.data;
-            if (user.username === null || user.username === "undefined") {
-                $location.path("/");
-            } else if (user.user_role === "circle") {
-                $scope.user = user;
-            } else {
-                $location.path("/");
-            }
-        });
+    	var user = authService.fetchData(authService.USER_KEY);
+    	var userRole = authService.fetchData(authService.USER_ROLE_KEY);
+    	if(user === null || user === undefined || user.username === null || user.username == undefined || userRole === null || userRole === undefined){
+    		$location.path("/");
+    	}else if(userRole.role === "circle"){
+    		$scope.user = user;
+    	}else{
+    		$location.path("/");
+    	}
     };
+    
+    /* 
+     * calling checkUser() function on page load 
+     */
     checkUser();
-
+    
+    /* 
+     * logout function. Removes all local storage data
+     * and routes to login page
+     */
     this.logout = function () {
-        $http({
-            method: 'GET',
-            url: 'Logout'
-        }).then(function (response) {
-            $location.path("/");
-        });
+    	$scope.user = {};
+    	authService.logout();
     };
 
-    this.loadReadingForm = function () {
-        $location.path("/enterreading");
-    };
-
+    /*
+     * loadCircleReadingViewPage() function to route to view meter readings page
+     */
     this.loadCircleReadingViewPage = function () {
-        //$location.path("/viewcirclereadings");
-    	$location.path("/viewcircleconsumptions");
+        $location.path("/circle/readings");
+    	//$location.path("/circle/readings/consumptions");
     };
 
+    /*
+     * loadCircleHome function to route to homepage
+     */
     this.loadCircleHome = function () {
-        $location.path("/circlehome");
+        $location.path("/circle/home");
     };
 }]);

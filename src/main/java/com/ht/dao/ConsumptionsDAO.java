@@ -39,15 +39,15 @@ public class ConsumptionsDAO {
 		return insertedConsumption;
 	}
 	
-	public boolean update(Consumption consumption){
-		boolean updated=false;
+	public Consumption update(Consumption consumption){
+		Consumption updatedConsumption = null;
 		Connection connection = GlobalResources.getConnection();
 		try {
 			PreparedStatement ps = connection.prepareStatement("update consumptions set meter_no=?, date=?, active_consumption=?, reactive_consumption=?, plant_id=?, plant_code=?, meter_reading_id=?, consumption_bifercated=? where id=?");
 			ps.setString(1,consumption.getMeterNo());
 			ps.setString(2, consumption.getDate());
 			ps.setFloat(3, consumption.getActiveConsumption());
-			ps.setFloat(3, consumption.getReactiveConsumption());
+			ps.setFloat(4, consumption.getReactiveConsumption());
 			ps.setInt(5, consumption.getPlantId());
 			ps.setString(6, consumption.getPlantCode());
 			ps.setInt(7, consumption.getMeterReadingId());
@@ -55,12 +55,11 @@ public class ConsumptionsDAO {
 			ps.setInt(9, consumption.getId());
 			ps.executeUpdate();
 			ps.close();
-			updated=true;
+			updatedConsumption = getById(consumption.getId()); 
 		} catch (SQLException e) {
-			updated=false;
 			System.out.println("Exception in class : ConsumptionsDAO : method : [update(Consumption)] "+e.getMessage());
 		}
-		return updated;
+		return updatedConsumption;
 	}
 	
 	public ArrayList<Consumption> getAllConsumption(){
@@ -90,7 +89,7 @@ public class ConsumptionsDAO {
 		return consumptionsList.get(0);
 	}
 	
-	public ArrayList<Consumption> getByMeterReadingId(int id){
+	public Consumption getByMeterReadingId(int id){
 		ArrayList<Consumption> consumptionsList = new ArrayList<Consumption>();
 		Connection connection = GlobalResources.getConnection();
 		try {
@@ -101,7 +100,7 @@ public class ConsumptionsDAO {
 		} catch (SQLException e) {
 			System.out.println("Exception in class : ConsumptionsDAO : method : [getByMeterNo(String)] "+e.getMessage());
 		}
-		return consumptionsList;
+		return consumptionsList.size()>0?consumptionsList.get(0):null;
 	}
 	
 	public Consumption getById(int id){

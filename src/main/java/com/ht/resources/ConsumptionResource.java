@@ -140,10 +140,10 @@ public class ConsumptionResource {
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response updateBifurcationFlag(Consumption consumption){
-		boolean updated = consumptionsDAO.update(consumption);
-		if(updated){
+		Consumption updatedConsumption = consumptionsDAO.update(consumption);
+		if(updatedConsumption != null){
 			return Response.status(Status.OK)
-					.entity(new MessageBean("Updated successfully"))
+					.entity(updatedConsumption)
 					.build();
 		}else{
 			return Response.status(Status.EXPECTATION_FAILED)

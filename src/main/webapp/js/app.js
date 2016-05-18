@@ -8,75 +8,79 @@
 	 * scope.
 	 */
 	var app = angular.module('htBillingApp', ['ngRoute','LocalStorageModule']);
-
+	
 	/*
 	 * Defining complete routing for the application and wiring them with appropriate pages.
 	 */
-	angular.module('htBillingApp').config(function ($routeProvider) {
+	app.config(function ($routeProvider) {
 		$routeProvider.when('/', {
 			templateUrl: 'templates/pages/login/login.html',
 			controller: 'FormController',
 			controllerAs: 'fc'
 		})
-		.when('/home', {
-			templateUrl: 'templates/pages/home/home.html',
+		.when('/ht/home', {
+			templateUrl: 'templates/pages/ht/home.html',
 			controller: 'HomeController',
 			controllerAs: 'homeCtrl'
-		}).when('/operatorhome', {
-			templateUrl: 'templates/pages/home/operatorhome.html',
+		}).when('/operator/home', {
+			templateUrl: 'templates/pages/operator/operatorhome.html',
 			controller: 'OperatorHomeController',
 			controllerAs: 'homeCtrl'
-		}).when('/circlehome', {
-			templateUrl: 'templates/pages/home/circlehome.html',
+		}).when('/circle/home', {
+			templateUrl: 'templates/pages/circle/circlehome.html',
 			controller: 'CircleHomeController',
 			controllerAs: 'homeCtrl'
-		}).when('/developerhome', {
-			templateUrl: 'templates/pages/home/developerhome.html',
+		}).when('/developer/home', {
+			templateUrl: 'templates/pages/developer/developerhome.html',
 			controller: 'DeveloperController',
 			controllerAs: 'developerCtrl'
 		})
 		.when('/enterreading', {
-			templateUrl: 'templates/pages/meter/meterreading.html',
+			templateUrl: 'templates/pages/ht/meterreading.html',
 			controller: 'MeterReadingController',
 			controllerAs: 'readingCtrl'
 		}).when('/saved/:message', {
-			templateUrl: 'templates/pages/meter/metersaved.html',
+			templateUrl: 'templates/pages/ht/metersaved.html',
 			controller: 'SaveController',
 			controllerAs: 'saveCtrl'
-		}).when('/viewmeterreadings', {
-			templateUrl: 'templates/pages/meter/viewmeterreading2.html',
+		}).when('/ht/readings', {
+			templateUrl: 'templates/pages/ht/viewmeterreading2.html',
 			controller: 'ViewMeterReadingsController',
 			controllerAs: 'viewMeterReadingsCtrl'
 		}).when('/addmeter', {
-			templateUrl: 'templates/pages/meter/addmeter.html',
+			templateUrl: 'templates/pages/ht/addmeter.html',
 			controller: 'AddMeterController',
 			controllerAs: 'addMeterCtrl'
 		}).when('/addplant', {
-			templateUrl: 'templates/pages/plant/addplant.html',
+			templateUrl: 'templates/pages/ht/addplant.html',
 			controller: 'AddPlantController',
 			controllerAs: 'addPlantCtrl'
-		}).when('/viewdeveloperreading', {
-			templateUrl: 'templates/pages/meter/viewdeveloperreading.html',
+		}).when('/developer/readings/view', {
+			templateUrl: 'templates/pages/developer/viewdeveloperreading.html',
 			controller: 'DeveloperViewMeterReadingsController',
 			controllerAs: 'viewMeterReadingsCtrl'
-		}).when('/splitreadings/:plantId/:consumptionId', {
-			templateUrl: 'templates/pages/meter/readingsbifircationpage.html',
+		}).when('/developer/readings/split/:plantId/:consumptionId', {
+			templateUrl: 'templates/pages/developer/readingsbifircationpage.html',
 			controller: 'BifircateReadingsController',
 			controllerAs: 'viewMeterReadingsCtrl'
-		}).when('/viewsplitedreadings/:plantId/:meterNo', {
-			templateUrl: 'templates/pages/meter/viewbifircationpage.html',
-			controller: 'ViewBifircateReadingsController',
+		}).when('/developer/readings/viewsplited/:consumptionId', {
+			templateUrl: 'templates/pages/developer/viewbifircationpage.html',
+			controller: 'ViewBifircateReadingsForDeveloperController',
 			controllerAs: 'viewMeterReadingsCtrl'
-		}).when('/viewbill/:billDetailsId', {
-			templateUrl: 'templates/pages/meter/viewbill.html',
+		}).when('/developer/investor/bill/view/:billDetailsId', {
+			templateUrl: 'templates/pages/developer/viewbill.html',
 			controller: 'ViewBillController',
 			controllerAs: 'viewBillCtrl'
-		}).when('/viewcirclereadings', {
-			templateUrl: 'templates/pages/meter/viewcirclereading.html',
-			controller: 'ViewMeterReadingsController',
+		}).when('/circle/readings', {
+			templateUrl: 'templates/pages/circle/viewcirclereading.html',
+			controller: 'CircleViewMeterReadingsController',
 			controllerAs: 'viewMeterReadingsCtrl'
-		}).when('/viewcircleconsumptions', {
-			templateUrl: 'templates/pages/meter/circle_consumption_validation_page.html',
+		}).when('/circle/readings/viewsplited/:consumptionId', {
+			templateUrl: 'templates/pages/circle/viewbifircationpage.html',
+			controller: 'ViewBifircateReadingsForCircleController',
+			controllerAs: 'viewMeterReadingsCtrl'
+		}).when('/circle/readings/consumptions', {
+			templateUrl: 'templates/pages/circle/circle_consumption_validation_page.html',
 			controller: 'CircleConsumptionValidationController',
 			controllerAs: 'circleConsumptionValidationController'
 		});
@@ -275,6 +279,30 @@
 		 */
 		utilService.calculateReadingData = calculateReadingData;
 
+		/*
+		 * declaring constant HT_PATH variable & wiring with utilService object's.
+		 */
+		const HT_PATH = '/ht';
+		utilService.HT_PATH = HT_PATH;
+		
+		/*
+		 * declaring constant DEVELOPER_PATH variable & wiring with utilService object's.
+		 */
+		const DEVELOPER_PATH = '/developer';
+		utilService.DEVELOPER_PATH = DEVELOPER_PATH;
+		
+		/*
+		 * declaring constant CIRLCE_PATH variable & wiring with utilService object's.
+		 */
+		const CIRCLE_PATH = '/circle';
+		utilService.CIRCLE_PATH = CIRCLE_PATH;
+		
+		/*
+		 * declaring constant OPERATOR_PATH variable & wiring with utilService object's.
+		 */
+		const OPERATOR_PATH = '/operator';
+		utilService.OPERATOR_PATH = OPERATOR_PATH;
+		
 		/*
 		 * returning utilService object to the required callee.
 		 */

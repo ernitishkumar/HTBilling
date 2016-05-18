@@ -45,7 +45,7 @@ angular.module('htBillingApp').controller('DeveloperController', ['$http', '$sco
      * developerHome function to load developer homepage when invoked.
      */
     this.developerHome = function () {
-        $location.path("/developerhome");
+        $location.path("/developer/home");
     };
 
     /*
@@ -53,7 +53,7 @@ angular.module('htBillingApp').controller('DeveloperController', ['$http', '$sco
      * developed by logged in developer
      */
     this.loadViewReadingForm = function () {
-        $location.path("/viewdeveloperreading");
+        $location.path("/developer/readings/view");
     }
 
 }]);

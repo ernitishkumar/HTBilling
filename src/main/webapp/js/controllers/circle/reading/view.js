@@ -1,4 +1,4 @@
-angular.module("htBillingApp").controller('ViewMeterReadingsController', ['$http', '$scope', '$location', '$routeParams','authService','utilService', function ($http, $scope, $location, $routeParams, authService,utilService) {
+angular.module("htBillingApp").controller('CircleViewMeterReadingsController', ['$http', '$scope', '$location', '$routeParams','authService','utilService', function ($http, $scope, $location, $routeParams,authService,utilService) {
 
 	/*
 	 * var user a controller level variable to store user object.
@@ -20,10 +20,10 @@ angular.module("htBillingApp").controller('ViewMeterReadingsController', ['$http
 		var userRole = authService.fetchData(authService.USER_ROLE_KEY);
 		if(user === null || user === undefined || user.username === null || user.username == undefined || userRole === null || userRole === undefined){
 			$location.path("/");
-		}else if(userRole.role === "admin" || userRole.role === "operator"){
+		}else if(userRole.role === "circle"){
 			$scope.user = user;
 			$scope.userRole = userRole;
-			loadReadings();
+			loadCircleReadings();
 		}else{
 			$location.path("/");
 		}
@@ -45,28 +45,21 @@ angular.module("htBillingApp").controller('ViewMeterReadingsController', ['$http
 	};
 
 	/*
-	 * function to navigate to home page
+	 * loadDeveloperHome function to navigate to developer's homepage.
 	 */
-	this.loadHome = function () {
-		$location.path("/ht/home");
-	};
+	this.loadCircleHome = function () {
+		$location.path("/circle/home");
+	}
 
 	/*
-	 * function to navigate to operator home page
+	 * loadDeveloperReadings function to load readings for all the corresponding plants 
+	 * of logged in developer.
 	 */
-	this.loadOperatorHome = function () {
-		$location.path("/operator/home");
-	};
-
-	/*
-	 * function to load all the readings for all the meters from backend
-	 * and assign it to the view to display on front end
-	 */
-	function loadReadings() {
+	function loadCircleReadings() {
 		$http(
 				{
 					method: 'GET',
-					url: 'backend/readings'
+					url: 'backend/readings/circle/'+$scope.userRole.circle
 				}
 		).then(
 				function (response) {
@@ -106,15 +99,48 @@ angular.module("htBillingApp").controller('ViewMeterReadingsController', ['$http
 					var status = response.status;
 					//checking status code for successful response from server
 					if (status === 200) {
+						var found = false;
+						var consumptionData = {};
 						$scope.readingData.forEach(
 								function (item) {
 									if (item.meterNo === reading.meterNo) {
-										if ($scope.userRole.role === 'admin' || $scope.userRole.role === 'htcell') {
-											item.currentMeterReading.htCellValidation = 1;
+										if ($scope.userRole.role === 'developer') {
+											
+											item.currentMeterReading.developerValidation = 1;
+											//creating consumption data to be inserted into backend
+											consumptionData.meterNo = item.meterNo;
+											consumptionData.activeConsumption = parseFloat(item.activeEnergyConsumption);
+											consumptionData.meterReadingId = item.currentMeterReading.id;
+											consumptionData.plantId = item.plant.id;
+											consumptionData.plantCode = item.plant.code;
+											consumptionData.reactiveConsumption = parseFloat(item.quadrantOneConsumption)+parseFloat(item.quadrantTwoConsumption)
+											                                      + parseFloat(item.quadrantThreeConsumption) + parseFloat(item.quadrantFourConsumption)
+											found = true;
 										}
 									}
 								}
 						);
+						if(found){
+							$http(
+									{
+										method: 'POST',
+										url: 'backend/consumptions',
+										data : consumptionData
+									}
+							).then(
+									function (response) {
+										var status = response.status;
+										console.log(response);
+										if(status === 201){
+                                           var insertedConsumption = response.data;
+										}
+									},
+									function(error){
+                                        console.log("error inserting consumption. below is error ");
+                                        console.log(error);
+									}
+							);
+						}
 					}
 				},
 				function(error){
@@ -123,5 +149,13 @@ angular.module("htBillingApp").controller('ViewMeterReadingsController', ['$http
 				}
 		);
 	};
-	
+
+	/*
+	 * viewInvestorData function to navigate to view bifurcated readings page
+	 * where circle user can see investor's wise bifurcation page of particular plant.
+	 */
+	this.viewInvestorsData = function (reading) {
+		$location.path("/circle/readings/viewsplited/" + reading.consumption.id);
+	};
+
 }]);

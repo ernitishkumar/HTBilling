@@ -35,6 +35,6 @@ angular.module('htBillingApp').controller('OperatorHomeController', ['$http', '$
     };
 
     this.loadOperatorHome = function () {
-        $location.path("/operatorhome");
+        $location.path("/operator/home");
     };
 }]);

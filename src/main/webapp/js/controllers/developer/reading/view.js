@@ -48,7 +48,7 @@ angular.module("htBillingApp").controller('DeveloperViewMeterReadingsController'
 	 * loadDeveloperHome function to navigate to developer's homepage.
 	 */
 	this.loadDeveloperHome = function () {
-		$location.path("/developerhome");
+		$location.path("/developer/home");
 	}
 
 	/*
@@ -155,7 +155,7 @@ angular.module("htBillingApp").controller('DeveloperViewMeterReadingsController'
 	 * where investor wise bifurcation of readings is done.
 	 */
 	this.getInvestorsData = function (reading) {
-		$location.path("/splitreadings/" + reading.plant.id + "/" + reading.consumption.id);
+		$location.path("/developer/readings/split/" + reading.plant.id + "/" + reading.consumption.id);
 	};
 
 	/*
@@ -163,15 +163,6 @@ angular.module("htBillingApp").controller('DeveloperViewMeterReadingsController'
 	 * where developer can see investor's wise bifurcation page of particular plant.
 	 */
 	this.viewInvestorsData = function (reading) {
-		console.log(reading);
-		$location.path("/viewsplitedreadings/" + reading.plant.id + "/" + reading.meterNo);
-	};
-
-	/*
-	 * viewBill function to navigate to view bill page, where developer can view already generated
-	 * bills.
-	 */
-	this.viewBill = function(){
-		$location.path("/viewbill");
+		$location.path("/developer/readings/viewsplited/" + reading.consumption.id);
 	};
 }]);

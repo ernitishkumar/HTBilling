@@ -1,4 +1,4 @@
-angular.module("htBillingApp").controller('FormController', ['$http', '$scope', '$location','authService','localStorageService',function ($http, $scope, $location,authService,localStorageService) {
+angular.module("htBillingApp").controller('FormController', ['$http', '$scope', '$location','authService','localStorageService','utilService',function ($http, $scope, $location,authService,utilService,localStorageService) {
 	/*
 	 * controller level variable formData to hold login form data
 	 */
@@ -11,18 +11,18 @@ angular.module("htBillingApp").controller('FormController', ['$http', '$scope', 
 	 */
 	this.processForm = function () {
         authService.login($scope.formData).then(
-				function (response) {
+        		function (response) {
 					authService.storeData(authService.USER_KEY,response.data.user);
 					authService.storeData(authService.USER_ROLE_KEY,response.data.userRoles);
 					var userRoles = response.data.userRoles;
 					if (userRoles.role === "admin") {
-						$location.path("/home");
+						$location.path("/ht/home");
 					} else if (userRoles.role === "operator") {
-						$location.path("/operatorhome");
+						$location.path("/operator/home");
 					} else if (userRoles.role === "circle") {
-						$location.path("/circlehome");
+						$location.path("/circle/home");
 					} else if (userRoles.role === "developer") {
-						$location.path("/developerhome");
+						$location.path("/developer/home");
 					}
 				},
 				function(error){

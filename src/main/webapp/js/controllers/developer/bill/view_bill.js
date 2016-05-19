@@ -1,67 +1,99 @@
-angular.module("htBillingApp").controller('ViewBillController', ['$http', '$scope', '$location', '$routeParams','$window', function ($http, $scope, $location, $routeParams) {
+angular.module("htBillingApp").controller('ViewBillController', ['$http', '$scope', '$location', '$routeParams','$window','authService', function ($http, $scope, $location, $routeParams,$window,authService) {
 
-    $scope.user = {};
-    $scope.sno = 0;
-    var checkUser = function () {
-        $http({
-            method: 'GET',
-            url: 'ValidateSession'
-        }).then(function (response) {
-            var user = response.data;
-            if (user.username === null || user.username === undefined) {
-                $location.path("/");
-            } else {
-                $scope.user = user;
-                if ($scope.user.username != null && $scope.user.user_role === 'developer') {
-                    loadBill();
-                } else {
-                    $location.path("/");
-                    $scope.user = {};
-                }
-            }
-        });
-    };
+	/*
+	 * var user a controller level variable to store user object.
+	 */
+	$scope.user = {};
 
-    checkUser();
+	/*
+	 * var userRole a controller level variable to store userRole object.
+	 */
+	$scope.userRole = {};
 
-    this.logout = function () {
-        $http({
-            method: 'GET',
-            url: 'Logout'
-        }).then(function (response) {
-            $location.path("/");
-        });
-    };
+	/*
+	 * var sno a controller level variable to store Serial No.
+	 */
+	$scope.sno = 0;
 
-    this.loadDeveloperHome = function () {
-        $location.path("/developer/home");
-    }
+	/* 
+	 * checkUser function. checks whether any user is logged into the system
+	 * and if he is authorized to view this page according to his role
+	 *  if not then he is redirected to login page 
+	 */
+	var checkUser = function () {
+		var user = authService.fetchData(authService.USER_KEY);
+		var userRole = authService.fetchData(authService.USER_ROLE_KEY);
+		if(user === null || user === undefined || user.username === null || user.username == undefined || userRole === null || userRole === undefined){
+			$location.path("/");
+		}else if(userRole.role === "developer"){
+			$scope.user = user;
+			$scope.userRole = userRole;
+			loadBill();
+		}else{
+			$location.path("/");
+		}
+	};
 
-    this.back = function () {
-    	window.history.back();
-    };
-    
-    function loadBill(){
-    	var billId = $routeParams.billDetailsId;
-    	$http({
-            method: 'GET',
-            url: 'BillingController',
-            params: {
-                action: 'fetch_bill',
-                billDetailsId: billId
-            }
-        }).then(function (response) {
-            var result = response.data.Result;
-            if(result === "OK"){
-            	var billDetails = response.data.BillDetails;
-            	console.log(billDetails);
-            	if(billDetails.id == billId){
-            		$scope.billDetails = billDetails;
-            	}else{
-            		alert("Got incorrect bill please check");
-            	}
-            }
-        });
-    }
+	/* 
+	 * calling checkUser() function on page load 
+	 */
+	checkUser();
+
+	/* 
+	 * logout function. Removes all local storage data
+	 * and routes to login page
+	 */
+	this.logout = function () {
+		$scope.user = {};
+		$scope.userRole = {};
+		authService.logout();
+	};
+
+	/*
+	 * loadDeveloperHome function to navigate to developer home page
+	 */
+	this.loadDeveloperHome = function () {
+		$location.path("/developer/home");
+	}
+
+	/*
+	 * back function to go back to the last page.
+	 */
+	this.back = function () {
+		window.history.back();
+	};
+
+	/*
+	 * function to load bill from backend as per passed billId
+	 */
+	function loadBill(){
+
+		var billId = $routeParams.billDetailsId;
+
+		$http(
+				{
+					method: 'GET',
+					url: 'backend/bill/'+billId
+				}
+		).then(
+				function (response) {
+					var status = response.status;
+					if(status === 200){
+						var billDetails = response.data;
+						if(billDetails.id == billId){
+							$scope.billDetails = billDetails;
+						}else{
+							alert("Got incorrect bill please check");
+						}
+					}
+				},
+				function(error){
+					console.log("error while getting bill for id");
+					console.log(error);
+					alert("Bill doesnot exists.");
+					window.history.back();
+				}
+		);
+	}
 
 }]);

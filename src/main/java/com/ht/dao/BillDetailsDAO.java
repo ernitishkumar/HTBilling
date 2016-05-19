@@ -17,14 +17,14 @@ import com.ht.utility.GlobalResources;
 
 public class BillDetailsDAO {
 
-	public int insert(BillDetails billDetails){
-		boolean added=false;
+	public BillDetails insert(BillDetails billDetails){
+		BillDetails insertedBillDetails = null;
 		Connection connection = GlobalResources.getConnection();
 		int lastInsertedId = -1;
 		try {
 			PreparedStatement ps = connection.prepareStatement("insert into bill_details (bill_no, invoice_no, meter_readings_id, investor_id, consumption_id, consumption_bifurcation_id,meter_no, reading_date, bill_generation_date, total_kwh, total_rkvh, kwh_rate, rkvh_rate, active_amount, reactive_amount, total_amount, total_amount_roundoff) values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)",Statement.RETURN_GENERATED_KEYS);
 			ps.setString(1,"");
-			ps.setString(2, "");
+			ps.setString(2, billDetails.getInvoiceNo());
 			ps.setInt(3, billDetails.getMeterReadingId());
 			ps.setInt(4, billDetails.getInvestorId());
 			ps.setInt(5, billDetails.getConsumptionId());
@@ -44,20 +44,18 @@ public class BillDetailsDAO {
 			ResultSet keys = ps.getGeneratedKeys();    
 			keys.next();  
 			lastInsertedId = keys.getInt(1);
-			System.out.println("Last inserted id for bill details is : "+lastInsertedId);
+            insertedBillDetails = getById(lastInsertedId);
 			keys.close();
 			ps.close();
-			added=true;
 		} catch (SQLException e) {
-			added=false;
 			System.out.println("Exception in class : BillDetailsDAO : method : [insert(BillDetails)] "+e.getMessage());
 			e.printStackTrace();
 		}
-		return lastInsertedId;
+		return insertedBillDetails;
 	}
 	
-	public boolean update(BillDetails billDetails){
-		boolean updated=false;
+	public BillDetails update(BillDetails billDetails){
+		BillDetails updatedBillDetails = null;
 		Connection connection = GlobalResources.getConnection();
 		try {
 			PreparedStatement ps = connection.prepareStatement("update bill_details set bill_no=?, invoice_no=?, meter_readings_id=?, investor_id=?, consumption_id=?, consumption_bifurcation_id=?,meter_no=?, reading_date=?, bill_generation_date=?, total_kwh=?, total_rkvh=?, kwh_rate=?, rkvh_rate=?, active_amount=?, reactive_amount=?, total_amount=?, total_amount_roundoff=? where id = ?");
@@ -81,12 +79,11 @@ public class BillDetailsDAO {
 			ps.setInt(18, billDetails.getId());
 			ps.executeUpdate();
 			ps.close();
-			updated=true;
+			updatedBillDetails = getById(billDetails.getId());
 		} catch (SQLException e) {
-			updated=false;
 			System.out.println("Exception in class : BillDetailsDAO : method : [update(BillDetails)] "+e.getMessage());
 		}
-		return updated;
+		return updatedBillDetails;
 	}
 	
 	public BillDetails getById(int id){

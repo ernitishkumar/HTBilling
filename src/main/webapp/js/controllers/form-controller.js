@@ -58,9 +58,9 @@ htBillingApp.controller('SaveController', ['$http', '$scope', '$location', '$rou
         var userRole = $scope.userRole;
         var path = '/';
         if (userRole.role === 'admin' || userRole.role === 'ht') {
-            path = '/home';
+            path = '/ht/home';
         }else if (userRole.role === 'operator') {
-            path = '/operatorhome';
+            path = '/operator/home';
         }
         $location.path(path);
     };

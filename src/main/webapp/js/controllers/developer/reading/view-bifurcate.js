@@ -84,7 +84,7 @@ angular.module("htBillingApp").controller('ViewBifircateReadingsForDeveloperCont
 									item.generating = false;
 								}		
 						);
-						
+						console.log($scope.investorConsumptions);
 					}
 				},
 				function(error){
@@ -98,7 +98,7 @@ angular.module("htBillingApp").controller('ViewBifircateReadingsForDeveloperCont
 	 * back function to go back to the last page.
 	 */
 	this.back = function () {
-		$location.path("/developer/readings/view");
+		window.history.back();
 	};
 
 	/*
@@ -106,25 +106,27 @@ angular.module("htBillingApp").controller('ViewBifircateReadingsForDeveloperCont
 	 */
 	this.generateBill = function (investorData) {
 		investorData.generating = true;
-		$http({
-			method: 'GET',
-			url: 'BillingController',
-			params: {
-				action: 'generate',
-				consumptionId: investorData.consumption.id,
-				investorId: investorData.investor.id,
-				bifurcationId:investorData.id
-			}
-		}).then(function (response) {
-			var result = response.data.Result;
-			if(result === "OK"){
-				var lastInsertedId = response.data.BillId;
-				investorData.billDetailsId= lastInsertedId;
-				investorData.generating = false;
-				investorData.billGenerated = true;
-				console.log("Object after generating bill : ");
-			}
-		});
+		$http(
+				{
+					method: 'POST',
+					url: 'backend/bill/'+investorData.id
+				}
+		).then(
+				function (response) {
+					var status = response.status;
+					if(status === 201){
+						console.log(response);
+						var generatedBill = response.data;
+						investorData.billDetailsId= generatedBill.id;
+						investorData.generating = false;
+						investorData.billGenerated = true;
+					}
+				},
+				function(error){
+					console.log("error while generating bill.");
+					console.log(error);
+				}
+		);
 	};
 
 	/*

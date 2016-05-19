@@ -52,8 +52,8 @@ public class InvestorConsumptionDAO {
 		return insertedInvestorConsumptions;
 	}
 	
-	public boolean update(InvestorConsumption investorConsumption){
-		boolean added=false;
+	public InvestorConsumption update(InvestorConsumption investorConsumption){
+		InvestorConsumption updatedConsumption = null;
 		Connection connection = GlobalResources.getConnection();
 		try {
 			PreparedStatement ps = connection.prepareStatement("update investor_consumption set active_consumption = ?, reactive_consumption=?,bill_generated=?,circle_validation=? where id = ?");
@@ -64,12 +64,20 @@ public class InvestorConsumptionDAO {
 			ps.setInt(5, investorConsumption.getId());
 			ps.executeUpdate();
 			ps.close();
-			added=true;
+			updatedConsumption = getById(investorConsumption.getId());
 		} catch (SQLException e) {
-			added=false;
 			System.out.println("Exception in class : InvestorConsumptionDAO : method : [update(InvestorConsumption)] "+e.getMessage());
 		}
-		return added;
+		return updatedConsumption;
+	}
+	
+	public ArrayList<InvestorConsumption> update(ArrayList<InvestorConsumption> investorConsumptions){
+		ArrayList<InvestorConsumption> updatedInvestorConsumptions = new ArrayList<InvestorConsumption>();
+		for(InvestorConsumption ic : investorConsumptions){
+			InvestorConsumption updatedInvestorConsumption = update(ic);
+			updatedInvestorConsumptions.add(updatedInvestorConsumption);
+		}
+		return updatedInvestorConsumptions;
 	}
 	
 	public ArrayList<InvestorConsumption> getAllInvestorConsumption(){

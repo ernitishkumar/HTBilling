@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
+import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
@@ -22,11 +23,13 @@ import com.ht.beans.Investor;
 import com.ht.beans.InvestorConsumption;
 import com.ht.beans.InvestorConsumptionView;
 import com.ht.beans.InvestorPlantMapping;
+import com.ht.beans.MeterReading;
 import com.ht.dao.ConsumptionsDAO;
 import com.ht.dao.InvestorConsumptionDAO;
 import com.ht.dao.InvestorPlantMappingDAO;
 import com.ht.dao.InvestorsDAO;
 import com.ht.dao.MachinesDAO;
+import com.ht.dao.MeterReadingsDAO;
 
 /**
  * @author NITISH
@@ -40,6 +43,7 @@ public class InvestorResource {
 	private MachinesDAO machinesDAO = new MachinesDAO();
 	private ConsumptionsDAO consumptionsDAO = new ConsumptionsDAO();
 	private InvestorConsumptionDAO investorConsumptionDAO = new InvestorConsumptionDAO();
+	private MeterReadingsDAO meterReadingsDAO = new MeterReadingsDAO();
 
 	@GET
 	@Path("/bifurcation/{plantId}")
@@ -99,6 +103,40 @@ public class InvestorResource {
 		}else{
 			return Response.status(Status.NO_CONTENT)
 					.entity(new ErrorBean("No data found for given consumption id."))
+					.build();
+		}
+	}
+	
+	@PUT
+	@Path("/consumption/{consumptionId}")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response validateInvestorsConsumption(@PathParam("consumptionId")int consumptionId){
+		System.out.println("ValidateInvestorsConsumption for Investors Consumption called");
+		Consumption consumption = consumptionsDAO.getById(consumptionId);
+		ArrayList<InvestorConsumptionView> investorConsumptionViews = null;
+		if(consumption != null){
+			ArrayList<InvestorConsumption> investorConsumptionList = investorConsumptionDAO.getByConsumptionId(consumptionId);
+			for(InvestorConsumption ic : investorConsumptionList){
+				ic.setCircleValidation(1);
+			}
+			ArrayList<InvestorConsumption> updatedInvestorConsumptions = investorConsumptionDAO.update(investorConsumptionList);
+			if(updatedInvestorConsumptions.size() == investorConsumptionList.size() && updatedInvestorConsumptions.size()>0){
+				//Now updating the circle_cell_validation flag of corresponding reading of this consumption in database.
+				MeterReading meterReading = meterReadingsDAO.getById(consumption.getMeterReadingId());
+				meterReading.setCircleCellValidation(1);
+				meterReadingsDAO.update(meterReading);
+				investorConsumptionViews= investorConsumptionDAO.getViewFromList(updatedInvestorConsumptions, consumption);
+			}	
+		}
+		if(investorConsumptionViews != null){
+			//This is a way to convert List,ArrayList to jsonString using JAX-RS(jersey's moxy conversion)
+			GenericEntity<ArrayList<InvestorConsumptionView>> responseEntity = new GenericEntity<ArrayList<InvestorConsumptionView>>(investorConsumptionViews){};
+			return Response.status(Status.OK)
+					.entity(responseEntity)
+					.build();
+		}else{
+			return Response.status(Status.NO_CONTENT)
+					.entity(new ErrorBean("No data found for given consumption id.Unable to validate consumptions."))
 					.build();
 		}
 	}

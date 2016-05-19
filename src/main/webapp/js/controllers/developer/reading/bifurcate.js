@@ -159,8 +159,8 @@ angular.module("htBillingApp").controller('BifircateReadingsController', ['$http
 				function (response) {
 					var status = response.status;
 					if (status === 200) {
-						alert("Bifurcated Successfully.")
-						$location.path("/viewdeveloperreading");
+						alert("Bifurcated Successfully.");
+						$location.path("/developer/readings/view");
 					}
 				},
 				function(error){

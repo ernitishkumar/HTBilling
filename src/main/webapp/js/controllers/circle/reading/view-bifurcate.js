@@ -79,12 +79,6 @@ angular.module("htBillingApp").controller('ViewBifircateReadingsForCircleControl
 					var status = response.status;
 					if(status === 200){
 						$scope.investorConsumptions = response.data;
-						$scope.investorConsumptions.forEach(
-								function(item){
-									item.generating = false;
-								}		
-						);
-						console.log($scope.investorConsumptions);
 					}
 				},
 				function(error){
@@ -112,7 +106,25 @@ angular.module("htBillingApp").controller('ViewBifircateReadingsForCircleControl
 	 * validateConsumptions function to perform the validation function on consumptions 
 	 * by circle user.
 	 */
-	this.validateConsumptions = function(){
-		alert("Validating consumptions");
+	this.validateConsumptions = function(consumptionToValidate){
+		$http(
+				{
+					method: 'PUT',
+					url: 'backend/investors/consumption/'+consumptionToValidate.id
+				}
+		).then(
+				function (response) {
+					var status = response.status;
+					if(status === 200){
+						$scope.investorConsumptions = response.data;
+						console.log($scope.investorConsumptions);
+						alert("Consumption Validated.");
+					}
+				},
+				function(error){
+					console.log("error while fetching investors consumption from backend");
+					console.log(error);
+				}
+		);
 	}
 }]);

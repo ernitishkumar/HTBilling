@@ -3,6 +3,8 @@
  */
 package com.ht.resources;
 
+import java.util.ArrayList;
+
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
@@ -59,6 +61,7 @@ public class PlantResource {
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
 	public Response insert(Plant plant){
+		System.out.println("Adding Plant : "+plant);
 		Plant insertedPlant = null;
 		if(plant != null){
 			insertedPlant = plantsDAO.insert(plant);
@@ -72,5 +75,12 @@ public class PlantResource {
 					.entity(insertedPlant)
 					.build();
 		}
+	}
+	
+	@GET
+	@Produces(MediaType.APPLICATION_JSON)
+	public ArrayList<Plant> getAllPlants(){
+		System.out.println("Getting all plants");
+		return plantsDAO.getAll();
 	}
 }

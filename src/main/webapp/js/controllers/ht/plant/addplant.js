@@ -1,95 +1,160 @@
-angular.module("htBillingApp").controller('AddPlantController', ['$http', '$scope', '$location', function ($http, $scope, $location) {
+angular.module("htBillingApp").controller('AddPlantController', ['$http', '$scope', '$location','authService', function ($http, $scope, $location,authService) {
 
-    $scope.user = {};
+	/*
+	 * var user a controller level variable to store user object.
+	 */
+	$scope.user = {};
 
-    $scope.formData = {};
+	/*
+	 * var userRole a controller level variable to store userRole object.
+	 */
+	$scope.userRole = {};
 
-    $scope.showdetails = {
-        show: false
-    };
+	/* 
+	 * checkUser function. checks whether any user is logged into the system
+	 * and if he is authorized to view this page according to his role
+	 *  if not then he is redirected to login page 
+	 */
+	var checkUser = function () {
+		var user = authService.fetchData(authService.USER_KEY);
+		var userRole = authService.fetchData(authService.USER_ROLE_KEY);
+		if(user === null || user === undefined || user.username === null || user.username == undefined || userRole === null || userRole === undefined){
+			$location.path("/");
+		}else if(userRole.role === "admin"){
+			$scope.user = user;
+			$scope.userRole = userRole;
+			//populating all the developers
+			getDevelopers();
+			//populating all the available meters
+			getMetersNotInUse();
+		}else{
+			$location.path("/");
+		}
+	};
 
+	/* 
+	 * calling checkUser() function on page load 
+	 */
+	checkUser();
 
-    var checkUser = function () {
-        $http({
-            method: 'GET',
-            url: 'ValidateSession'
-        }).then(function (response) {
-            var user = response.data;
-            if (user.username === null || user.username === "undefined") {
-                $location.path("/");
-            } else {
-                $scope.user.username = user.username;
-                $scope.user.name = user.name;
-            }
-        });
-    };
+	/* 
+	 * logout function. Removes all local storage data
+	 * and routes to login page
+	 */
+	this.logout = function () {
+		$scope.user = {};
+		$scope.userRole = {};
+		authService.logout();
+	};
 
-    checkUser();
+	/*
+	 * formData controller to hold form data from the add plant page.
+	 */
+	$scope.formData = {};
 
-    var getDevelopers = function () {
+	/*
+	 * getDevelopers function to fetch all the developers from the backend
+	 * to show in drop down
+	 */
+	function getDevelopers(){
 
-        $http({
-            method: 'GET',
-            url: 'DeveloperController',
-            params: {
-                action: 'getalldeveloper',
-            }
-        }).then(function (response) {
-            $scope.developers = response.data;
-            console.log( response.data);
-            alert(response.data);
-        });
-    };
-    
-    getDevelopers();
-    this.logout = function () {
-        $http({
-            method: 'GET',
-            url: 'Logout'
-        }).then(function (response) {
-            $location.path("/");
-        });
-    };
+		$http(
+				{
+					method: 'GET',
+					url: 'backend/developers'
+				}
+		).then(
+				function (response) {
+					var status = response.status;
+					if(status === 200){
+						$scope.developers = response.data;	
+					}
+				},
+				function(error){
+					console.log("Error while getting all developers");
+					console.log(error);
+				}
+		);
+	}
 
-    this.loadHome = function () {
-        $location.path("/home");
-    };
+	/*
+	 * getMetersNotInUse fucntion to fetch all the available meters 
+	 * to be installed on a plant
+	 */
+	function getMetersNotInUse(){
 
-    this.processForm = function () {
+		$http(
+				{
+					method: 'GET',
+					url: 'backend/meter/unused'
+				}
+		).then(
+				function (response) {
+					var status = response.status;
+					if(status === 200){
+						$scope.metersNotInUse = response.data;
+						console.log($scope.metersNotInUse);
+					}
+				},
+				function(error){
+					console.log("unable to load all unused meters");
+					console.log(error);
+				}
+		);
+	}
 
-        $http({
-            method: 'GET',
-            url: 'PlantController',
-            params: {
-                action: 'create',
-                plantCode: this.formData.plantCode,
-                name: this.formData.name,
-                address: this.formData.address,
-                contactNo: this.formData.contactNo,
-                contactPerson: this.formData.contactPerson,
-                email: this.formData.email,
-                commissionedDate: this.formData.commissionedDate,
-                type: this.formData.type,
-                circuitVoltage: this.formData.circuitVoltage,
-                injectingSubstation: this.formData.injectingSubstation,
-                feederName: this.formData.feederName,
-                region: this.formData.region,
-                circle: this.formData.circle,
-                division: this.formData.division,
-                mainMeterNo: this.formData.mainMeterNo,
-                checkMeterNo: this.formData.checkMeterNo,
-                standbyMeterNo: this.formData.standbyMeterNo,
-                developerId: this.formData.developerId
-            }
-        }).success(function (response) {
-            $location.path("/saved/Plant Saved Successfully!");
-            $scope.formData = {};
-        });
-    };
+	/*
+	 * loadHome function to navigate to the home page
+	 */
+	this.loadHome = function () {
+		$location.path("/ht/home");
+	};
 
-    
-    this.clearForm = function () {
-        $scope.formData = {};
-    };
+	/*
+	 * processForm function to submit the formdata to the backend.
+	 */
+	this.processForm = function () {
+		var d = new Date($scope.formData.commissionedDate);
+		var year = d.getFullYear();
+		var month = d.getMonth() + 1;
+
+		if (month < 10) {
+			month = "0" + month;
+		}
+		var day = d.getDate();
+		if (day < 10) {
+			day = "0" + day;
+		}
+		var readingDate = day + "-" + month + "-" + year;
+		var formData = $scope.formData;
+		formData.commissionedDate = readingDate;
+		$http(
+				{
+					method: 'POST',
+					url: 'backend/plants',
+					data : formData
+				}
+		).then(
+				function (response) {
+					//$location.path("/saved/Plant Saved Successfully!");
+					var status = response.status;
+					if(status === 201){
+						alert("Plant saved successfully.")
+						$scope.formData = {};	
+					}
+				},
+				function(error){
+					console.log("Error while creating plant.");
+					console.log(error);
+				}
+		);
+	};
+
+	/*
+	 * clearForm function to clear the form
+	 */
+	this.clearForm = function () {
+		$scope.formData = {};
+	};
 
 }]);

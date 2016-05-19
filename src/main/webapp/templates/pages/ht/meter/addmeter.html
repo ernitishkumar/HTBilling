@@ -28,7 +28,8 @@
         </div>
     </div>
 </div>
-
+<br>
+<br>
 <div class="container">
     <div class="col-md-6 col-md-offset-3">
         <div class="page-header text-center">
@@ -43,63 +44,63 @@
         </div>-->
 
         <!--Form-->
-        <form name="meternoForm" id="meternoForm" ng-submit="addMeterCtrl.processForm()">
+        <form name="addMeterForm" id="addMeterForm" ng-submit="addMeterCtrl.processForm()">
             <div class="form-group has-feedback">
                 <span class="glyphicon glyphicon-asterisk">
                 </span>
                 <label for="meterno">Enter Meter No.</label>
-                <input class="form-control" type="text" placeholder="Meter No" ng-model="addMeterCtrl.formData.meterNo" required>
+                <input class="form-control" type="text" placeholder="Meter No" ng-model="formData.meterNo" required>
             </div>
             <div class="form-group">
                 <span class="glyphicon glyphicon-star"></span>
                 <label>Make:</label>
-                <input class="form-control" type="text" placeholder="Make" ng-model="addMeterCtrl.formData.make" required>
+                <input class="form-control" type="text" placeholder="Make" ng-model="formData.make" required>
 
             </div>
             <div class="form-group">
                 <span class="glyphicon glyphicon-star"></span>
                 <label>Category:</label>
-                <input class="form-control" type="text" placeholder="Category" ng-model="addMeterCtrl.formData.category" required>
+                <input class="form-control" type="text" placeholder="Category" ng-model="formData.category" required>
             </div>
             <div class="form-group">
                 <span class="glyphicon glyphicon-star"></span>
                 <label>Type:</label>
-                <input class="form-control" type="text" placeholder="Type" ng-model="addMeterCtrl.formData.type" required>
+                <input class="form-control" type="text" placeholder="Type" ng-model="formData.type" required>
             </div>
             <div class="form-group">
                 <span class="glyphicon glyphicon-pencil"></span>
                 <label>Meter Class:</label>
-                <input class="form-control" type="text" placeholder="Meter Class" ng-model="addMeterCtrl.formData.meterClass" required>
+                <input class="form-control" type="text" placeholder="Meter Class" ng-model="formData.meterClass" required>
             </div>
             <div class="form-group">
                 <span class="glyphicon glyphicon-pencil"></span>
                 <label>CTR:</label>
-                <input class="form-control" type="text" placeholder="CTR" ng-model="addMeterCtrl.formData.ctr" required>
+                <input class="form-control" type="text" placeholder="CTR" ng-model="formData.ctr" required>
             </div>
             <div class="form-group">
                 <span class="glyphicon glyphicon-pencil"></span>
                 <label>PTR:</label>
-                <input class="form-control" type="text" placeholder="PTR" ng-model="addMeterCtrl.formData.ptr" required>
+                <input class="form-control" type="text" placeholder="PTR" ng-model="formData.ptr" required>
             </div>
             <div class=" form-group ">
                 <span class="glyphicon glyphicon-pencil "></span>
                 <label>MF</label>
-                <input class="form-control " type="number" placeholder="MF" ng-model="addMeterCtrl.formData.mf" required>
+                <input class="form-control " type="number" placeholder="MF" ng-model="formData.mf" required>
             </div>
             <div class="form-group">
                 <span class="glyphicon glyphicon-pencil "></span>
                 <label>Equipment Class:</label>
-                <input class="form-control" type="text" placeholder="Equipment Class" ng-model="addMeterCtrl.formData.equipmentClass" required>
+                <input class="form-control" type="text" placeholder="Equipment Class" ng-model="formData.equipmentClass" required>
             </div>
             <div class="form-group">
                 <span class="glyphicon glyphicon-star"></span>
                 <label>Phase:</label>
-                <input class="form-control" type="text" placeholder="Phase" ng-model="addMeterCtrl.formData.phase" required>
+                <input class="form-control" type="text" placeholder="Phase" ng-model="formData.phase" required>
             </div>
             <div class="form-group">
                 <span class="glyphicon glyphicon-star"></span>
                 <label>Mater Group:</label>
-                <input class="form-control" type="text" placeholder="Meter Group" ng-model="addMeterCtrl.formData.meterGroup" required>
+                <input class="form-control" type="text" placeholder="Meter Group" ng-model="formData.meterGroup" required>
             </div>
             <div class="form-group ">
                 <div class="col-md-6 ">
@@ -108,11 +109,12 @@
                     </button>
                 </div>
                 <div class="col-md-6 ">
-                    <button class="btn btn-danger btn-lg btn-block " type="reset" ng-click="addMeterCtrl.clearForm()">
+                    <button class="btn btn-danger btn-lg btn-block " type="reset" ng-click="clearForm()">
                         Clear
                     </button>
                 </div>
             </div>
         </form>
     </div>
-</div>
+</div><br>
+<br>

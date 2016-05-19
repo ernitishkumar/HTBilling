@@ -143,5 +143,17 @@ public class Plant {
 	public void setDeveloperId(int developerId) {
 		this.developerId = developerId;
 	}
+	/* (non-Javadoc)
+	 * @see java.lang.Object#toString()
+	 */
+	@Override
+	public String toString() {
+		return "Plant [id=" + id + ", code=" + code + ", name=" + name + ", address=" + address + ", contactNo="
+				+ contactNo + ", contactPerson=" + contactPerson + ", email=" + email + ", commissionedDate="
+				+ commissionedDate + ", type=" + type + ", circuitVoltage=" + circuitVoltage + ", injectingSubstation="
+				+ injectingSubstation + ", feederName=" + feederName + ", region=" + region + ", circle=" + circle
+				+ ", division=" + division + ", mainMeterNo=" + mainMeterNo + ", checkMeterNo=" + checkMeterNo
+				+ ", standByMeterNo=" + standByMeterNo + ", developerId=" + developerId + "]";
+	}
 
 }

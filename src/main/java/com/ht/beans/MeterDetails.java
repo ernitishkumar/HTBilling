@@ -1,5 +1,8 @@
 package com.ht.beans;
 
+import javax.xml.bind.annotation.XmlRootElement;
+
+@XmlRootElement
 public class MeterDetails {
 
 	private String meterNo;
@@ -10,7 +13,7 @@ public class MeterDetails {
 	private String ctr;
 	private String ptr;
 	private int mf;
-	private String equipmemntClass;
+	private String equipmentClass;
 	private String phase;
 	private String meterGroup;
 	public String getMeterNo() {
@@ -61,11 +64,11 @@ public class MeterDetails {
 	public void setMf(int mf) {
 		this.mf = mf;
 	}
-	public String getEquipmemntClass() {
-		return equipmemntClass;
+	public String getEquipmentClass() {
+		return equipmentClass;
 	}
-	public void setEquipmemntClass(String equipmemntClass) {
-		this.equipmemntClass = equipmemntClass;
+	public void setEquipmentClass(String equipmentClass) {
+		this.equipmentClass = equipmentClass;
 	}
 	public String getPhase() {
 		return phase;
@@ -90,7 +93,7 @@ public class MeterDetails {
 		this.ctr = ctr;
 		this.ptr = ptr;
 		this.mf = mf;
-		this.equipmemntClass = equipmemntClass;
+		this.equipmentClass = equipmemntClass;
 		this.phase = phase;
 		this.meterGroup = meterGroup;
 	}
@@ -105,7 +108,7 @@ public class MeterDetails {
 		return "MeterDetails [meterNo=" + meterNo + ", make=" + make
 				+ ", category=" + category + ", type=" + type + ", meterClass="
 				+ meterClass + ", ctr=" + ctr + ", ptr=" + ptr + ", mf=" + mf
-				+ ", equipmemntClass=" + equipmemntClass + ", phase=" + phase
+				+ ", equipmemntClass=" + equipmentClass + ", phase=" + phase
 				+ ", meterGroup=" + meterGroup + "]";
 	}
 	

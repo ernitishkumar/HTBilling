@@ -79,5 +79,7 @@ footer h6 {
     }
 }
 
- /* Loader CSS lines */
+.table > tbody > tr > td {
+	vertical-align: middle;
+}
  

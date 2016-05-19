@@ -8,7 +8,7 @@
 	 * scope.
 	 */
 	var app = angular.module('htBillingApp', ['ngRoute','LocalStorageModule']);
-	
+
 	/*
 	 * Defining complete routing for the application and wiring them with appropriate pages.
 	 */
@@ -36,26 +36,38 @@
 			controllerAs: 'developerCtrl'
 		})
 		.when('/enterreading', {
-			templateUrl: 'templates/pages/ht/meterreading.html',
+			templateUrl: 'templates/pages/ht/reading/meterreading.html',
 			controller: 'MeterReadingController',
 			controllerAs: 'readingCtrl'
 		}).when('/saved/:message', {
-			templateUrl: 'templates/pages/ht/metersaved.html',
+			templateUrl: 'templates/pages/ht/reading/metersaved.html',
 			controller: 'SaveController',
 			controllerAs: 'saveCtrl'
 		}).when('/ht/readings', {
-			templateUrl: 'templates/pages/ht/viewmeterreading2.html',
+			templateUrl: 'templates/pages/ht/reading/viewmeterreading2.html',
 			controller: 'ViewMeterReadingsController',
 			controllerAs: 'viewMeterReadingsCtrl'
-		}).when('/addmeter', {
-			templateUrl: 'templates/pages/ht/addmeter.html',
+		}).when('/meter/add', {
+			templateUrl: 'templates/pages/ht/meter/addmeter.html',
 			controller: 'AddMeterController',
 			controllerAs: 'addMeterCtrl'
-		}).when('/addplant', {
-			templateUrl: 'templates/pages/ht/addplant.html',
+		})
+		.when('/meter/view', {
+			templateUrl: 'templates/pages/ht/meter/viewmeterdetails.html',
+			controller: 'ViewMeterDetailsController',
+			controllerAs: 'viewMeterDetailsCtrl'
+		})
+		.when('/plant/add', {
+			templateUrl: 'templates/pages/ht/plant/addplant.html',
 			controller: 'AddPlantController',
 			controllerAs: 'addPlantCtrl'
-		}).when('/developer/readings/view', {
+		})
+		.when('/plant/view', {
+			templateUrl: 'templates/pages/ht/plant/viewplantdetails.html',
+			controller: 'ViewPlantDetailsController',
+			controllerAs: 'viewPlantDetailsCtrl'
+		})
+		.when('/developer/readings/view', {
 			templateUrl: 'templates/pages/developer/viewdeveloperreading.html',
 			controller: 'DeveloperViewMeterReadingsController',
 			controllerAs: 'viewMeterReadingsCtrl'
@@ -98,13 +110,13 @@
 		 * var authService;
 		 */
 		var authService = {};
-		
+
 		/*
 		 * declaring user key to be used while storing and fetching data from local storage
 		 */
 		const USER_KEY = 'user';
-        authService.USER_KEY = USER_KEY;
-        
+		authService.USER_KEY = USER_KEY;
+
 		/*
 		 * declaring user_role key to be used while storing and fetching data from local storage
 		 */
@@ -148,7 +160,7 @@
 		 */
 		var logout = function(){
 			removeData();
-	    	$location.path("/");
+			$location.path("/");
 		}
 
 		/*
@@ -176,7 +188,7 @@
 				return localStorageService.set(LOGIN_FORM_DATA_KEY);
 			}
 		}
-		
+
 		/*
 		 * removeData() function to remove any data in browsers localStorage as per key provided 
 		 */
@@ -191,12 +203,12 @@
 				return localStorageService.clearAll();
 			}
 		}
-		
+
 		/*
 		 * wiring login() function to authService object's variable,which will be returned to the callee
 		 */
 		authService.login = login;
-		
+
 		/*
 		 * wiring logout() function to authService object's variable,which will be returned to the callee
 		 */
@@ -206,12 +218,12 @@
 		 * wiring storeData() function to authService object's variable,which will be returned to the callee
 		 */
 		authService.storeData = storeData;
-		
+
 		/*
 		 * wiring fetchData() function to authService object's variable,which will be returned to the callee
 		 */
 		authService.fetchData = fetchData;
-		
+
 		/*
 		 * wiring removeData() function to authService object's variable,which will be returned to the callee
 		 */
@@ -228,13 +240,13 @@
 	 * used across the apps
 	 */
 	app.factory('utilService',['$http','$q','$location',function($http,$q,$location){
-		
+
 		/* 
 		 * object of this serice which will be returned to the caller of this service.
 		 * var utilService;
 		 */
 		var utilService = {};
-		
+
 		/*
 		 * function calculateData(reading) to calculate the difference between the 
 		 * previous month's readings and current month's readings using JavaScript floating subtraction 
@@ -273,7 +285,7 @@
 
 			reading.quadrantFourConsumption = (reading.quadrantFourDifference * reading.currentMeterReading.mf).toFixed(2);
 		};
-		
+
 		/*
 		 * wiring removeData() function to utilService object's variable,which will be returned to the callee
 		 */
@@ -284,31 +296,31 @@
 		 */
 		const HT_PATH = '/ht';
 		utilService.HT_PATH = HT_PATH;
-		
+
 		/*
 		 * declaring constant DEVELOPER_PATH variable & wiring with utilService object's.
 		 */
 		const DEVELOPER_PATH = '/developer';
 		utilService.DEVELOPER_PATH = DEVELOPER_PATH;
-		
+
 		/*
 		 * declaring constant CIRLCE_PATH variable & wiring with utilService object's.
 		 */
 		const CIRCLE_PATH = '/circle';
 		utilService.CIRCLE_PATH = CIRCLE_PATH;
-		
+
 		/*
 		 * declaring constant OPERATOR_PATH variable & wiring with utilService object's.
 		 */
 		const OPERATOR_PATH = '/operator';
 		utilService.OPERATOR_PATH = OPERATOR_PATH;
-		
+
 		/*
 		 * returning utilService object to the required callee.
 		 */
 		return utilService;
 	}]);
-	
+
 	/*
 	 * Injector service to inject username & password to every request made to the 
 	 * backedn api service

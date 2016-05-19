@@ -37,11 +37,11 @@ public class PlantsDAO {
 			ps.setString(17, plant.getStandByMeterNo());
 			ps.setInt(18, plant.getDeveloperId());
 			ps.executeUpdate();
-			ps.close();
 			ResultSet keys = ps.getGeneratedKeys();    
 			keys.next();  
 			lastInsertedId = keys.getInt(1);
 			keys.close();
+			ps.close();
 			insertedPlant = getById(lastInsertedId);
 		} catch (SQLException e) {
 			System.out.println("Exception in class : PlantDetailsDAO : method : [insert(PlantDetails)] "+e);

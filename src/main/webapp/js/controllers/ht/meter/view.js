@@ -1,4 +1,4 @@
-angular.module("htBillingApp").controller('AddMeterController', ['$http', '$scope', '$location','authService', function ($http, $scope, $location,authService) {
+angular.module("htBillingApp").controller('ViewMeterDetailsController', ['$http', '$scope', '$location','authService', function ($http, $scope, $location,authService) {
 
 	/*
 	 * var user a controller level variable to store user object.
@@ -23,6 +23,7 @@ angular.module("htBillingApp").controller('AddMeterController', ['$http', '$scop
 		}else if(userRole.role === "admin"){
 			$scope.user = user;
 			$scope.userRole = userRole;
+			loadAllMeters();
 		}else{
 			$location.path("/");
 		}
@@ -44,57 +45,31 @@ angular.module("htBillingApp").controller('AddMeterController', ['$http', '$scop
 	};
 
 	/*
-	 * controller level variable formData to hold login form data
-	 */
-	$scope.formData = {};
-
-	/*
-	 * controller level variable showDetails
-	 */
-	$scope.showdetails = {
-			show: false
-	};
-
-	/*
-	 * function to route to homepage
+	 * function to navigate to the home page
 	 */
 	this.loadHome = function () {
 		$location.path("/ht/home");
 	};
 
 	/*
-	 * function processForm which gets executed when user clicks add meter on the page.
-	 * It passes the add meter form data to backend servers for inserting in databse;
+	 * function to load all the meters from the backend and display them.
 	 */
-	this.processForm = function () {
+	function loadAllMeters() {
+
 		$http(
 				{
-					method: 'POST',
-					url: 'backend/meter',
-					data: $scope.formData
+					method: 'GET',
+					url: 'backend/meter'
 				}
 		).then(
 				function (response) {
-					var status = response.status;
-					if(status === 201){
-						var insertedMeter = response.data;
-						//$location.path("/saved/Meter Saved Successfully!");
-						alert("Meter Saved Successfully!");
-						$scope.clearForm();
-					}
+					$scope.meters = response.data;
 				},
 				function(error){
-					console.log("Error while inserting meter details.");
+					console.log("Error while fetching all meters");
 					console.log(error);
 				}
 		);
-	};
-
-	/*
-	 * function clearForm
-	 */
-	$scope.clearForm = function () {
-		$scope.formData = {};
-	};
+	}
 
 }]);

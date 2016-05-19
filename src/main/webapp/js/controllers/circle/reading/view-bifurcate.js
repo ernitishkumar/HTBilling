@@ -117,7 +117,6 @@ angular.module("htBillingApp").controller('ViewBifircateReadingsForCircleControl
 					var status = response.status;
 					if(status === 200){
 						$scope.investorConsumptions = response.data;
-						console.log($scope.investorConsumptions);
 						alert("Consumption Validated.");
 					}
 				},

@@ -22,6 +22,7 @@ angular.module("htBillingApp").controller('HomeController', ['$http', '$scope', 
     		$location.path("/");
     	}else if(userRole.role === "admin"){
     		$scope.user = user;
+    		$scope.userRole = userRole;
     	}else{
     		$location.path("/");
     	}
@@ -38,6 +39,7 @@ angular.module("htBillingApp").controller('HomeController', ['$http', '$scope', 
      */
     this.logout = function () {
     	$scope.user = {};
+    	$scope.userRole = {};
     	authService.logout();
     };
 
@@ -59,16 +61,30 @@ angular.module("htBillingApp").controller('HomeController', ['$http', '$scope', 
      * function to route to add meter page
      */
     this.loadAddMeterPage = function () {
-        $location.path("/addmeter");
+        $location.path("/meter/add");
     };
+    
+    /*
+     * function to route to view meter details page
+     */
+    this.loadViewMeterPage = function(){
+    	$location.path("/meter/view");
+    }
     
     /*
      * function to route to add plant page
      */
     this.loadAddPlantPage = function () {
-        $location.path("/addplant");
+        $location.path("/plant/add");
     };
 
+    /*
+     * function to route to add plant page
+     */
+    this.loadViewPlantPage = function(){
+    	$location.path("/plant/view")
+    }
+    
     /*
      * function to route to homepage
      */

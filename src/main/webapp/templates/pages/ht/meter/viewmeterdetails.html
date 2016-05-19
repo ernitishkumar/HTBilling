@@ -33,7 +33,7 @@
         <h2><span class="glyphicon glyphicon-certificate"></span>View Meter Details</h2>
     </div>
     <table class="table table-bordered table-hover">
-                <thead class="text-center sucess">
+                <thead>
                     <th class="text-center success">Meter No. {{reading.meterNo}}</th>
                     <th class="text-center success">Make</th>
                     <th class="text-center success">Category</th>
@@ -45,6 +45,8 @@
                     <th class="text-center success">Equipment Class</th>
                     <th class="text-center success">Phase</th>
                     <th class="text-center success">Meter Group</th>
+                    <th class="text-center success">Edit</th>
+                    <th class="text-center success">Delete</th>
                 </thead>
                 <tbody class="text-center">
                     <tr ng-repeat="meter in meters">
@@ -56,9 +58,11 @@
                         <td>{{meter.ctr}}</td>
                         <td>{{meter.ptr}}</td>
                         <td>{{meter.mf}}</td>
-                        <td>{{meter.equipmemntClass}}</td>
+                        <td>{{meter.equipmentClass}}</td>
                         <td>{{meter.phase}}</td>
                         <td>{{meter.meterGroup}}</td>
+                        <td><a href="javascript:void(0);"><span class="glyphicon glyphicon-pencil"></span></a></td>
+                        <td><a href="javascript:void(0);"><span class="glyphicon glyphicon-trash"></span></a></td>
                     </tr>
                  </tbody>
                  </table>

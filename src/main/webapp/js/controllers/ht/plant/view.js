@@ -1,5 +1,5 @@
-angular.module("htBillingApp").controller('AddMeterController', ['$http', '$scope', '$location','authService', function ($http, $scope, $location,authService) {
-
+angular.module("htBillingApp").controller('ViewPlantDetailsController', ['$http', '$scope', '$location','authService', function ($http, $scope, $location,authService) {
+	
 	/*
 	 * var user a controller level variable to store user object.
 	 */
@@ -23,6 +23,9 @@ angular.module("htBillingApp").controller('AddMeterController', ['$http', '$scop
 		}else if(userRole.role === "admin"){
 			$scope.user = user;
 			$scope.userRole = userRole;
+			
+			//fetching all the plants
+			getPlants();
 		}else{
 			$location.path("/");
 		}
@@ -44,57 +47,39 @@ angular.module("htBillingApp").controller('AddMeterController', ['$http', '$scop
 	};
 
 	/*
-	 * controller level variable formData to hold login form data
+	 * formData controller to hold form data from the add plant page.
 	 */
 	$scope.formData = {};
 
 	/*
-	 * controller level variable showDetails
-	 */
-	$scope.showdetails = {
-			show: false
-	};
-
-	/*
-	 * function to route to homepage
+	 * loadHome function to navigate to the home page
 	 */
 	this.loadHome = function () {
 		$location.path("/ht/home");
 	};
 
 	/*
-	 * function processForm which gets executed when user clicks add meter on the page.
-	 * It passes the add meter form data to backend servers for inserting in databse;
+	 * function getPlants() to fetch all the plants from backend
 	 */
-	this.processForm = function () {
+	function getPlants() {
+
 		$http(
 				{
-					method: 'POST',
-					url: 'backend/meter',
-					data: $scope.formData
+					method: 'GET',
+					url: 'backend/plants'
 				}
 		).then(
 				function (response) {
 					var status = response.status;
-					if(status === 201){
-						var insertedMeter = response.data;
-						//$location.path("/saved/Meter Saved Successfully!");
-						alert("Meter Saved Successfully!");
-						$scope.clearForm();
+					if(status === 200){
+						$scope.plants = response.data;
 					}
 				},
 				function(error){
-					console.log("Error while inserting meter details.");
+					console.log("Error while fetching all the plants");
 					console.log(error);
 				}
 		);
-	};
-
-	/*
-	 * function clearForm
-	 */
-	$scope.clearForm = function () {
-		$scope.formData = {};
-	};
+	}
 
 }]);

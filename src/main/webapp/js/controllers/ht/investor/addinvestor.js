@@ -1,81 +1,92 @@
-angular.module("htBillingApp").controller('AddInvestorController', ['$http', '$scope', '$location', function ($http, $scope, $location) {
+angular.module("htBillingApp").controller('AddInvestorController', ['$http', '$scope', '$location','authService', function ($http, $scope, $location,authService) {
 
-    $scope.user = {};
+	/*
+	 * var user a controller level variable to store user object.
+	 */
+	$scope.user = {};
 
-    $scope.formData = {};
+	/*
+	 * var userRole a controller level variable to store userRole object.
+	 */
+	$scope.userRole = {};
 
-    $scope.showdetails = {
-        show: false
-    };
+	/* 
+	 * checkUser function. checks whether any user is logged into the system
+	 * and if he is authorized to view this page according to his role
+	 *  if not then he is redirected to login page 
+	 */
+	var checkUser = function () {
+		var user = authService.fetchData(authService.USER_KEY);
+		var userRole = authService.fetchData(authService.USER_ROLE_KEY);
+		if(user === null || user === undefined || user.username === null || user.username == undefined || userRole === null || userRole === undefined){
+			$location.path("/");
+		}else if(userRole.role === "admin"){
+			$scope.user = user;
+			$scope.userRole = userRole;
+		}else{
+			$location.path("/");
+		}
+	};
 
+	/* 
+	 * calling checkUser() function on page load 
+	 */
+	checkUser();
 
-    var checkUser = function () {
-        $http({
-            method: 'GET',
-            url: 'ValidateSession'
-        }).then(function (response) {
-            var user = response.data;
-            if (user.username === null || user.username === "undefined") {
-                $location.path("/");
-            } else {
-                $scope.user.username = user.username;
-                $scope.user.name = user.name;
-            }
-        });
-    };
+	/* 
+	 * logout function. Removes all local storage data
+	 * and routes to login page
+	 */
+	this.logout = function () {
+		$scope.user = {};
+		$scope.userRole = {};
+		authService.logout();
+	};
 
-    checkUser();
+	/*
+	 * formData controller to hold form data from the add plant page.
+	 */
+	$scope.formData = {};
 
+	/*
+	 * loadHome function to navigate to the home page
+	 */
+	this.loadHome = function () {
+		$location.path("/ht/home");
+	};
 
-    this.logout = function () {
-        $http({
-            method: 'GET',
-            url: 'Logout'
-        }).then(function (response) {
-            $location.path("/");
-        });
-    };
+	/*
+	 * processForm function to submit the formdata to the backend.
+	 */
+	this.processForm = function () {
+		$http(
+				{
+					method: 'POST',
+					url: 'backend/investors',
+					data: $scope.formData
+				}
+		).then(
+				function (response) {
+					var status = response.status;
+					if(status === 201){
+						alert("Investor added successfully.");
+						$scope.formData = {};
+					}
+				},
+				function(error){
+					console.log("Error while adding investor");
+					console.log(error);
+					$scope.error = error.data.errorMessage;
+				}
+		);
+	};
 
-    this.loadHome = function () {
-        $location.path("/home");
-    };
-
-    this.processForm = function () {
-        $http({
-            method: 'GET',
-            url: 'InvestorController',
-            params: {
-                action: 'create',
-                name:this.formData.name,
-                code:this.formData.code,
-                cin: this.formData.cin,
-                tin: this.formData.tin,
-                vat: this.formData.vat,
-                invoiceNo: this.formData.invoiceNo,
-                officeAddress: this.formData.officeAddress,
-                officeContactNo: this.formData.officeContactNo,
-                officeContactPerson: this.formData.officeContactPerson,
-                officeEmail: this.formData.officeEmail,
-                siteAddress: this.formData.siteAddress,
-                siteContactNo: this.formData.siteContactNo,
-                siteContactPerson: this.formData.siteContactPerson,
-                siteEmail: this.formData.siteEmail
-            }
-        }).then(function (response) {
-        	 var result = response.data;
-        	 console.log(result);
-             if(result.Result === 'Success'){
-	            $location.path("/saved/"+result.Message);
-             }else{
-             	alert(result.Message);
-             }
-             $scope.formData = {};
-        });
-    };
-
-    
-    this.clearForm = function () {
-        $scope.formData = {};
-    };
+	/*
+	 * clearForm function to clear the form
+	 */
+	this.clearForm = function () {
+		$scope.formData = {};
+		$scope.error = null;
+	};
 
 }]);

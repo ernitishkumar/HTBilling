@@ -83,6 +83,25 @@ public class InvestorResource {
 	}
 
 	@GET
+	@Path("/plant/{plantId}")
+	@Produces(MediaType.APPLICATION_JSON)
+	public ArrayList<Investor> getInvestorsByPlantId(@PathParam("plantId")int plantId){
+		System.out.println("GetInvestorsByPlantId for Investors called for plantId : "+plantId);
+		ArrayList<Investor> investors = null;
+        ArrayList<InvestorPlantMapping> investorPlantMappings = investorPlantMappingDAO.getByPlantId(plantId);
+        if(investorPlantMappings != null && investorPlantMappings.size()>0){
+        	investors = new ArrayList<Investor>();
+        	for(InvestorPlantMapping ipm : investorPlantMappings){
+        		Investor investor = investorsDAO.getById(ipm.getInvestorId());
+        		if(investor!=null){
+        			investors.add(investor);
+        		}
+        	}
+        }
+		return investors;
+	}
+	
+	@GET
 	@Path("/consumption/{consumptionId}")
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response getInvestorsConsumption(@PathParam("consumptionId")int consumptionId){
@@ -106,7 +125,7 @@ public class InvestorResource {
 					.build();
 		}
 	}
-	
+
 	@PUT
 	@Path("/consumption/{consumptionId}")
 	@Produces(MediaType.APPLICATION_JSON)
@@ -140,4 +159,29 @@ public class InvestorResource {
 					.build();
 		}
 	}
+
+	@GET
+	@Produces(MediaType.APPLICATION_JSON)
+	public ArrayList<Investor> getAllInvestors(){
+		return investorsDAO.getAll();
+	}
+
+	@POST
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response insertInvestor(Investor investor){
+		System.err.println("POST for investor insert called");
+		Investor insertedInvestor = null;
+		insertedInvestor = investorsDAO.insert(investor);
+		if(insertedInvestor != null){
+			return Response.status(Status.CREATED)
+					.entity(insertedInvestor)
+					.build();
+		}else{
+			return Response.status(Status.EXPECTATION_FAILED)
+					.entity(new ErrorBean("Unable to create investor"))
+					.build();
+		}	
+	}
+
 }

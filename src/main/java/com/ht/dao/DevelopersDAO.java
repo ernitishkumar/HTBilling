@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 
 import com.ht.beans.Developer;
@@ -11,11 +12,12 @@ import com.ht.utility.GlobalResources;
 
 public class DevelopersDAO {
 
-	public boolean insert(Developer developer){
-		boolean added=false;
+	public Developer insert(Developer developer){
+		Developer createdDeveloper = null;
 		Connection connection = GlobalResources.getConnection();
+		int lastInsertedId = -1;
 		try {
-			PreparedStatement ps = connection.prepareStatement("insert into developers (name, cin, office_address, office_contact_no, office_contact_person, office_email, site_address, site_contact_no, site_contact_person, site_email, username) values(?,?,?,?,?,?,?,?,?,?,?)");
+			PreparedStatement ps = connection.prepareStatement("insert into developers (name, cin, office_address, office_contact_no, office_contact_person, office_email, site_address, site_contact_no, site_contact_person, site_email, username) values(?,?,?,?,?,?,?,?,?,?,?)",Statement.RETURN_GENERATED_KEYS);
 			ps.setString(1, developer.getName());
 			ps.setString(2, developer.getCin());
 			ps.setString(3, developer.getOfficeAddress());
@@ -28,18 +30,21 @@ public class DevelopersDAO {
 			ps.setString(10, developer.getSiteEmail());
             ps.setString(11, developer.getUsername());
 			ps.executeUpdate();
+			ResultSet keys = ps.getGeneratedKeys();    
+			keys.next();  
+			lastInsertedId = keys.getInt(1);
+			createdDeveloper = getById(lastInsertedId);
+			keys.close();
 			ps.close();
-            added=true;
 		} catch (SQLException e) {
-			added=false;
 			System.out.println("Exception in class : DevelpersDAO : method : [insert(Developer)] "+e.getMessage());
 			e.printStackTrace();
 		}
-		return added;
+		return createdDeveloper;
 	}
 	
-	public boolean update(Developer developer){
-		boolean updated=false;
+	public Developer update(Developer developer){
+		Developer updatedDeveloper = null;
 		Connection connection = GlobalResources.getConnection();
 		try {
 			PreparedStatement ps = connection.prepareStatement("update developers set name=?, cin=?, office_address=?, office_contact_no=?, office_contact_person=?, office_email=?, site_address=?, site_contact_no=?, site_contact_person=?, site_email=?, username=? where id =?");
@@ -57,12 +62,11 @@ public class DevelopersDAO {
 			ps.setInt(12, developer.getId());
 			ps.executeUpdate();
 			ps.close();
-			updated=true;
+			updatedDeveloper = getById(developer.getId());
 		} catch (SQLException e) {
-			updated=false;
 			System.out.println("Exception in class : DevelpersDAO : method : [update(Developer)] "+e.getMessage());
 		}
-		return updated;
+		return updatedDeveloper;
 	}
 	
 	public ArrayList<Developer> getAllDevelopers(){

@@ -9,8 +9,6 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
-
 import com.ht.beans.MeterDetails;
 import com.ht.beans.MeterReading;
 import com.ht.utility.GlobalResources;

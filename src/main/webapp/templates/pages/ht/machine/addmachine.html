@@ -44,11 +44,11 @@
 			<div class="form-group has-feedback">
 				<label>Enter Machine Code</label> <input class="form-control"
 					type="text" placeholder="Machine Code"
-					ng-model="addMachineCtrl.formData.code" required>
+					ng-model="formData.code" required>
 			</div>
 			<div class="form-group">
 				<label>Capacity:</label> <input class="form-control" type="text"
-					placeholder="Capacity" ng-model="addMachineCtrl.formData.capacity" required>
+					placeholder="Capacity" ng-model="formData.capacity" required>
 
 			</div>
 			<div class="form-group">
@@ -56,7 +56,7 @@
 					Date:</label>
 				<div class='input-group date' id='datetimepicker1'>
 					<input type='date' class="form-control"
-						ng-model="addMachineCtrl.formData.commissionedDate" required /> <span
+						ng-model="formData.commissionedDate" required /> <span
 						class="input-group-addon"> <span
 						class="glyphicon glyphicon-calendar"></span>
 					</span>
@@ -65,17 +65,17 @@
 			
 			<div class="form-group">
 				<label>Active Rate:</label> <input class="form-control" type="text"
-					placeholder="Active Rate" ng-model="addMachineCtrl.formData.activeRate"
+					placeholder="Active Rate" ng-model="formData.activeRate"
 					required>
 			</div>
 			<div class="form-group">
 				<label>Reactive Rate:</label> <input class="form-control" type="text"
-					placeholder="Reactive Rate" ng-model="addMachineCtrl.formData.reactiveRate"
+					placeholder="Reactive Rate" ng-model="formData.reactiveRate"
 					required>
 			</div>
 			<div class="form-group">
 				<label>PPA Letter No:</label> <input class="form-control" type="text"
-					placeholder="PPA Letter No" ng-model="addMachineCtrl.formData.ppaLetterNo"
+					placeholder="PPA Letter No" ng-model="formData.ppaLetterNo"
 					required>
 			</div>
 			
@@ -84,7 +84,7 @@
 					Date:</label>
 				<div class='input-group date' id='datetimepicker2'>
 					<input type='date' class="form-control"
-						ng-model="addMachineCtrl.formData.ppaDate" required /> <span
+						ng-model="formData.ppaDate" required /> <span
 						class="input-group-addon"> <span
 						class="glyphicon glyphicon-calendar"></span>
 					</span>
@@ -94,7 +94,6 @@
 				<label>Developer Id: </label>
 				<br> 
 				<select name="developerId" id="developerId" ng-model="formData.developerId" ng-change="addMachineCtrl.getPlantsByDeveloper()" >
-						<option value="-1" selected>Select Developer</option>
 						<option ng-repeat="developer in developers" value="{{developer.id}}">{{developer.name}}</option>
 				</select>
 			</div>
@@ -102,22 +101,20 @@
 				<label>Plant Id:</label>
 				<br> 
 				<select name="plantId" id="plantId" ng-model="formData.plantId" ng-change="addMachineCtrl.getInvestorsByPlant()">
-						<option value="-1" selected>Select Plant</option>
-						<option ng-repeat="plant in plants" value="{{plant.id}}" >{{plant.name}}</option>
+						<option ng-repeat="plant in plants" value="{{plant.id}}" >{{plant.code}} : {{plant.name}}</option>
 				</select>
 			</div>
 			<div class="form-group">
 				<label>Investor Id:</label>
 				<br> 
 				<select name="investorId" id="investorId" ng-model="formData.investorId">
-						<option value="-1" selected>Select Investor</option>
-						<option ng-repeat="investor in investors" value="{{investor.investorId}}">{{investor.investorCode}}</option>
+						<option ng-repeat="investor in investors" value="{{investor.id}}">{{investor.name}}</option>
 				</select>
 			</div>
 			<div class="form-group ">
 				<div class="col-md-6 ">
 					<button type="submit " class="btn btn-success btn-lg btn-block ">
-						<span class="glyphicon glyphicon-flash "></span> Add Plant!
+						<span class="glyphicon glyphicon-flash "></span> Add Machine!
 					</button>
 				</div>
 				<div class="col-md-6 ">

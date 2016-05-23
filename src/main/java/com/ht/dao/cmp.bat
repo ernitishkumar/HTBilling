@@ -1,1 +1,0 @@
-javac -classpath c:\tomcat7\webapps\HTBilling\WEB-INF\classes;C:\tomcat7\webapps\HTBilling\WEB-INF\lib\gson-2.2.2.jar. *.java

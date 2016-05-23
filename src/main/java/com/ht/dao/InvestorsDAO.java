@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 
 import com.ht.beans.Investor;
@@ -11,12 +12,13 @@ import com.ht.utility.GlobalResources;
 
 public class InvestorsDAO {
 
-	public boolean insert(Investor investor){
+	public Investor insert(Investor investor){
 		Connection connection = GlobalResources.getConnection();
-		boolean added = false;
+		Investor createdInvestor = null;
+		int lastInsertedId = -1;
 		try {
 			PreparedStatement ps = connection
-					.prepareStatement("insert into investors(code,name,cin,tin,vat,invoice_no,office_address, office_contact_no, office_contact_person, office_email, site_address, site_contact_no, site_contact_person, site_email) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
+					.prepareStatement("insert into investors(code,name,cin,tin,vat,invoice_no,office_address, office_contact_no, office_contact_person, office_email, site_address, site_contact_no, site_contact_person, site_email) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?)",Statement.RETURN_GENERATED_KEYS);
 			ps.setString(1, investor.getCode());
 			ps.setString(2, investor.getName());
 			ps.setString(3, investor.getCin());
@@ -31,18 +33,21 @@ public class InvestorsDAO {
 			ps.setString(12, investor.getSiteContactNo());
 			ps.setString(13, investor.getSiteContactPerson());
 			ps.setString(14, investor.getSiteEmail());
-			
 			ps.executeUpdate();
+			ResultSet keys = ps.getGeneratedKeys();    
+			keys.next();  
+			lastInsertedId = keys.getInt(1);
+			createdInvestor = getById(lastInsertedId);
+			keys.close();
 			ps.close();
-			added = true;
 		} catch (SQLException e) {
-			added = false;
 			System.out.println("Exception in class : InvestorDAO : method : [insert(Investor)] "+e);
 		}
-		return added;
+		return createdInvestor;
 	}
 	
-	public void update(Investor investor){
+	public Investor update(Investor investor){
+		Investor updatedInvestor = null;
 		Connection connection = GlobalResources.getConnection();
 		try {
 			PreparedStatement ps = connection
@@ -64,9 +69,26 @@ public class InvestorsDAO {
 			ps.setInt(15, investor.getId());
 			ps.executeUpdate();
 			ps.close();
+			updatedInvestor = getById(investor.getId());
 		} catch (SQLException e) {
 			System.out.println("Exception in class : InvestorDAO : method : [update(Investor)] "+e);
 		}
+		return updatedInvestor;
+	}
+	
+	public ArrayList<Investor> getAll(){
+		ArrayList<Investor> investorList = new ArrayList<Investor>();
+		Connection connection = GlobalResources.getConnection();
+		try {
+			PreparedStatement ps = connection.prepareStatement("select * from investors");
+			ResultSet rs = ps .executeQuery();
+			investorList = investorMapper(rs);
+			rs.close();
+			ps.close();
+		} catch (SQLException e) {
+			System.out.println("Exception in class : InvestorDAO : method : [getAll()] "+e);
+		}
+		return investorList;
 	}
 	
 	public Investor getById(int id){

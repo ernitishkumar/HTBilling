@@ -12,9 +12,7 @@ import javax.ws.rs.ext.Provider;
 import org.glassfish.jersey.internal.util.Base64;
 
 import com.ht.beans.User;
-import com.ht.beans.UserRoles;
 import com.ht.dao.UserDAO;
-import com.ht.dao.UserRolesDAO;
 
 @Provider
 public class SecurityFilter implements ContainerRequestFilter{

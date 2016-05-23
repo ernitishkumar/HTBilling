@@ -54,6 +54,8 @@
 				<th class="text-center success">Site Contact No</th>
 				<th class="text-center success">Site Contact Person</th>
 				<th class="text-center success">Site Email</th>
+				<th class="text-center success">Edit</th>
+				<th class="text-center success">Delete</th>
 			</thead>
 			<tbody class="text-center">
 				<tr ng-repeat="investor in investors">
@@ -71,6 +73,10 @@
 					<td>{{investor.siteContactNo}}</td>
 					<td>{{investor.siteContactPerson}}</td>
 					<td>{{investor.siteEmail}}</td>
+					<td><a href="javascript:void(0);"><span
+							class="glyphicon glyphicon-pencil"></span></a></td>
+					<td><a href="javascript:void(0);"><span
+							class="glyphicon glyphicon-trash"></span></a></td>
 				</tr>
 			</tbody>
 		</table>

@@ -8,16 +8,18 @@ import java.util.ArrayList;
 
 import com.ht.beans.Machine;
 import com.ht.utility.GlobalResources;
+import com.mysql.jdbc.Statement;
 
 public class MachinesDAO {
 
 	
-	public boolean insert(Machine machine){
+	public Machine insert(Machine machine){
+		Machine insertedMachine = null;
 		Connection connection = GlobalResources.getConnection();
-		boolean added = false;
+		int lastInsertedId = -1;
 		try {
 			PreparedStatement ps = connection
-					.prepareStatement("insert into machines(code,capacity,commissioned_date,active_rate,reactive_rate,ppa_letter_no,ppa_date,developer_id,plant_id,investor_id) VALUES(?,?,?,?,?,?,?,?,?,?)");
+					.prepareStatement("insert into machines(code,capacity,commissioned_date,active_rate,reactive_rate,ppa_letter_no,ppa_date,developer_id,plant_id,investor_id) VALUES(?,?,?,?,?,?,?,?,?,?)",Statement.RETURN_GENERATED_KEYS);
 			ps.setString(1, machine.getCode());
 			ps.setString(2, machine.getCapacity());
 			ps.setString(3, machine.getCommissionedDate());
@@ -29,17 +31,21 @@ public class MachinesDAO {
 			ps.setInt(9, machine.getPlantId());
 			ps.setInt(10, machine.getInvestorId());
 			ps.executeUpdate();
+			ResultSet keys = ps.getGeneratedKeys();    
+			keys.next();  
+			lastInsertedId = keys.getInt(1);
+			insertedMachine = getById(lastInsertedId);
+			keys.close();
 			ps.close();
-			added = true;
 		} catch (SQLException e) {
-			added = false;
 			System.out.println("Exception in class : MachineDAO : method : [insert(Machine)] "+e);
 		}
-		return added;
+		return insertedMachine;
 	}
 	
-	public void update(Machine machine){
+	public Machine update(Machine machine){
 		Connection connection = GlobalResources.getConnection();
+		Machine updatedMachine = null;
 		try {
 			PreparedStatement ps = connection
 					.prepareStatement("update machines set code=?,capacity=?,commissioned_date=?,active_rate=?,reactive_rate=?,ppa_letter_no=?,ppa_date=?,developer_id=?,plant_id=?,investor_id=? where id=?");
@@ -56,9 +62,26 @@ public class MachinesDAO {
 			ps.setInt(11, machine.getId());
 			ps.executeUpdate();
 			ps.close();
+			updatedMachine = getById(machine.getId());
 		} catch (SQLException e) {
 			System.out.println("Exception in class : MachineDAO : method : [update(Machine)] "+e);
 		}
+		return updatedMachine;
+	}
+	
+	public ArrayList<Machine> getAll(){
+		ArrayList<Machine> machineList = new ArrayList<Machine>();
+		Connection connection = GlobalResources.getConnection();
+		try {
+			PreparedStatement ps = connection.prepareStatement("select * from machines");
+			ResultSet rs = ps .executeQuery();
+			machineList = machineMapper(rs);
+			rs.close();
+			ps.close();
+		} catch (SQLException e) {
+			System.out.println("Exception in class : MachineDAO : method : [getAll()] "+e);
+		}
+		return machineList;
 	}
 	
 	public Machine getById(int id){

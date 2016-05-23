@@ -146,6 +146,7 @@ angular.module("htBillingApp").controller('AddPlantController', ['$http', '$scop
 				function(error){
 					console.log("Error while creating plant.");
 					console.log(error);
+					$scope.error = error.data.errorMessage;
 				}
 		);
 	};
@@ -155,6 +156,7 @@ angular.module("htBillingApp").controller('AddPlantController', ['$http', '$scop
 	 */
 	this.clearForm = function () {
 		$scope.formData = {};
+		$scope.error = null;
 	};
 
 }]);

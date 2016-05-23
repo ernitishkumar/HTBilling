@@ -1,4 +1,4 @@
-/*
+﻿/*
 Created		08-04-2016
 Modified		30-04-2016
 Project		
@@ -10,19 +10,9 @@ Database		mySQL 5
 */
 
 
+create database IF NOT EXISTS ht_test;
 
-
-
-
-
-
-
-
-
-
-
-
-
+use ht_test;
 
 
 drop table IF EXISTS bill_details;
@@ -265,7 +255,6 @@ Alter table consumptions add Foreign Key (plant_id) references plants (id) on de
 
 
 /* Users permissions */
-
 
 
 

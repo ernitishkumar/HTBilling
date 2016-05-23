@@ -39,7 +39,7 @@ public class PlantResource {
 	@Path("/meterno/{meterno}")
 	@Produces(MediaType.APPLICATION_JSON)
 	public MeterData getByMeterNo(@PathParam("meterno")String meterno){
-		System.out.println("Got Validated meter request for "+meterno);
+		System.out.println("GET GetByMeterNo request for "+meterno);
 		MeterData meterData = null;
 		if(meterno != null){
 			MeterDetailsDAO meterDetailsDAO = new MeterDetailsDAO();
@@ -55,6 +55,14 @@ public class PlantResource {
 			}
 		}
 		return meterData;
+	}
+	
+	@GET
+	@Path("/developer/{developerId}")
+	@Produces(MediaType.APPLICATION_JSON)
+	public ArrayList<Plant> getByDeveloperId(@PathParam("developerId")int developerId){
+		System.out.println("GET getByDeveloperId request for "+developerId);
+		return plantsDAO.getByDeveloperId(developerId);
 	}
 	
 	@POST

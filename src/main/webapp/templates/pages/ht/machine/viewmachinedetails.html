@@ -50,6 +50,8 @@
 				<th class="text-center success">Developer Id</th>
 				<th class="text-center success">Plant Id</th>
 				<th class="text-center success">Investor Id</th>
+				<th class="text-center success">Edit</th>
+				<th class="text-center success">Delete</th>
 			</thead>
 			<tbody class="text-center">
 				<tr ng-repeat="machine in machines">
@@ -63,6 +65,10 @@
 					<td>{{machine.developerId}}</td>
 					<td>{{machine.plantId}}</td>
 					<td>{{machine.investorId}}</td>
+					<td><a href="javascript:void(0);"><span
+							class="glyphicon glyphicon-pencil"></span></a></td>
+					<td><a href="javascript:void(0);"><span
+							class="glyphicon glyphicon-trash"></span></a></td>
 				</tr>
 			</tbody>
 		</table>

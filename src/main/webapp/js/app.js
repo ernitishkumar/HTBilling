@@ -67,31 +67,67 @@
 			controller: 'ViewPlantDetailsController',
 			controllerAs: 'viewPlantDetailsCtrl'
 		})
+		.when('/developer/add', {
+			templateUrl: 'templates/pages/developer/adddeveloper.html',
+			controller: 'AddDeveloperController',
+			controllerAs: 'addDeveloperCtrl'
+		})
+		.when('/developer/view', {
+			templateUrl: 'templates/pages/developer/viewdeveloperdetails.html',
+			controller: 'ViewDeveloperDetailsController',
+			controllerAs: 'viewDeveloperDetailsCtrl'
+		})
+		.when('/investor/add', {
+			templateUrl: 'templates/pages/ht/investor/addinvestor.html',
+			controller: 'AddInvestorController',
+			controllerAs: 'addInvestorCtrl'
+		})
+		.when('/investor/view', {
+			templateUrl: 'templates/pages/ht/investor/viewinvestordetails.html',
+			controller: 'ViewInvestorDetailsController',
+			controllerAs: 'viewInvestorDetailsCtrl'
+		})
+		.when('/machine/add', {
+			templateUrl: 'templates/pages/ht/machine/addmachine.html',
+			controller: 'AddMachineController',
+			controllerAs: 'addMachineCtrl'
+		})
+		.when('/machine/view', {
+			templateUrl: 'templates/pages/ht/machine/viewmachinedetails.html',
+			controller: 'ViewMachineDetailsController',
+			controllerAs: 'viewMachineDetailsCtrl'
+		})
 		.when('/developer/readings/view', {
 			templateUrl: 'templates/pages/developer/viewdeveloperreading.html',
 			controller: 'DeveloperViewMeterReadingsController',
 			controllerAs: 'viewMeterReadingsCtrl'
-		}).when('/developer/readings/split/:plantId/:consumptionId', {
+		})
+		.when('/developer/readings/split/:plantId/:consumptionId', {
 			templateUrl: 'templates/pages/developer/readingsbifircationpage.html',
 			controller: 'BifircateReadingsController',
 			controllerAs: 'viewMeterReadingsCtrl'
-		}).when('/developer/readings/viewsplited/:consumptionId', {
+		})
+		.when('/developer/readings/viewsplited/:consumptionId', {
 			templateUrl: 'templates/pages/developer/viewbifircationpage.html',
 			controller: 'ViewBifircateReadingsForDeveloperController',
 			controllerAs: 'viewMeterReadingsCtrl'
-		}).when('/developer/investor/bill/view/:billDetailsId', {
+		})
+		.when('/developer/investor/bill/view/:billDetailsId', {
 			templateUrl: 'templates/pages/developer/viewbill.html',
 			controller: 'ViewBillController',
 			controllerAs: 'viewBillCtrl'
-		}).when('/circle/readings', {
+		})
+		.when('/circle/readings', {
 			templateUrl: 'templates/pages/circle/viewcirclereading.html',
 			controller: 'CircleViewMeterReadingsController',
 			controllerAs: 'viewMeterReadingsCtrl'
-		}).when('/circle/readings/viewsplited/:consumptionId', {
+		})
+		.when('/circle/readings/viewsplited/:consumptionId', {
 			templateUrl: 'templates/pages/circle/viewbifircationpage.html',
 			controller: 'ViewBifircateReadingsForCircleController',
 			controllerAs: 'viewMeterReadingsCtrl'
-		}).when('/circle/readings/consumptions', {
+		})
+		.when('/circle/readings/consumptions', {
 			templateUrl: 'templates/pages/circle/circle_consumption_validation_page.html',
 			controller: 'CircleConsumptionValidationController',
 			controllerAs: 'circleConsumptionValidationController'

@@ -42,7 +42,7 @@
 			<thead>
 				<th class="text-center success">Name</th>
 				<th class="text-center success">CIN</th>
-				<th class="text-center success">USER Name</th>
+				<th class="text-center success">Username</th>
 				<th class="text-center success">Office Address</th>
 				<th class="text-center success">Office Contact No</th>
 				<th class="text-center success">Office Contact Person</th>
@@ -51,6 +51,8 @@
 				<th class="text-center success">Site Contact No</th>
 				<th class="text-center success">Site Contact Person</th>
 				<th class="text-center success">Site Email</th>
+				<th class="text-center success">Edit</th>
+				<th class="text-center success">Delete</th>
 			</thead>
 			<tbody class="text-center">
 				<tr ng-repeat="developer in developers">
@@ -65,7 +67,12 @@
 					<td>{{developer.siteContactNo}}</td>
 					<td>{{developer.siteContactPerson}}</td>
 					<td>{{developer.siteEmail}}</td>
-					
+					<td><a href="javascript:void(0);"> <span
+							class="glyphicon glyphicon-pencil"> </span>
+					</a></td>
+					<td><a href="javascript:void(0);"> <span
+							class="glyphicon glyphicon-trash"> </span>
+					</a></td>
 				</tr>
 			</tbody>
 		</table>

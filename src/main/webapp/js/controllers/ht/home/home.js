@@ -79,10 +79,52 @@ angular.module("htBillingApp").controller('HomeController', ['$http', '$scope', 
     };
 
     /*
-     * function to route to add plant page
+     * function to route to view plants page
      */
     this.loadViewPlantPage = function(){
     	$location.path("/plant/view")
+    }
+    
+    /*
+     * function to route to add developer page
+     */
+    this.loadAddDeveloperPage = function(){
+    	$location.path("/developer/add");
+    }
+    
+    /*
+     * function to route to view developers page
+     */
+    this.loadViewDeveloperPage = function(){
+    	$location.path("/developer/view");
+    }
+    
+    /*
+     * function to route to add investor page
+     */
+    this.loadAddInvestorPage = function(){
+    	$location.path("/investor/add");
+    }
+
+    /*
+     * function to route to view investors page
+     */
+    this.loadViewInvestorPage = function(){
+    	$location.path("/investor/view");
+    }
+    
+    /*
+     * function to route to add machine page
+     */
+    this.loadAddMachinePage = function(){
+    	$location.path("/machine/add");
+    }
+    
+    /*
+     * function to route to view machines page
+     */
+    this.loadViewMachinePage = function(){
+    	$location.path("/machine/view");
     }
     
     /*

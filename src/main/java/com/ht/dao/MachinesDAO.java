@@ -8,7 +8,7 @@ import java.util.ArrayList;
 
 import com.ht.beans.Machine;
 import com.ht.utility.GlobalResources;
-import com.mysql.jdbc.Statement;
+import java.sql.Statement;
 
 public class MachinesDAO {
 

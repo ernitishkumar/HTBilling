@@ -8,7 +8,7 @@ import java.util.ArrayList;
 
 import com.ht.beans.MeterDetails;
 import com.ht.utility.GlobalResources;
-import com.mysql.jdbc.Statement;
+import java.sql.Statement;
 
 public class MeterDetailsDAO {
 

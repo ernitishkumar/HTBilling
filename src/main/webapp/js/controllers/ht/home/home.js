@@ -128,6 +128,20 @@ angular.module("htBillingApp").controller('HomeController', ['$http', '$scope', 
     }
     
     /*
+     * function to route to add investor to plants page.
+     */
+    this.loadInvestorPlantMapping = function(){
+    	$location.path("/plant/investor/add");
+    }
+    
+    /*
+     * function to route to view investors of a plant
+     */
+    this.loadViewInvestorPlantMapping = function(){
+    	$location.path("/plant/investor/view");
+    }
+    
+    /*
      * function to route to homepage
      */
     this.loadHome = function () {

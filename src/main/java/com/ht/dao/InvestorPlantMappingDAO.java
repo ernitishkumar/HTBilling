@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 
 import com.ht.beans.InvestorPlantMapping;
@@ -11,27 +12,31 @@ import com.ht.utility.GlobalResources;
 
 public class InvestorPlantMappingDAO {
 
-	public boolean insert(InvestorPlantMapping investorPlantMapping){
-		boolean added = false;
+	public InvestorPlantMapping insert(InvestorPlantMapping investorPlantMapping){
+		InvestorPlantMapping insertedMapping = null;
+		int lastInsertedId = -1;
 		Connection connection = GlobalResources.getConnection();
 		try {
-			PreparedStatement ps = connection.prepareStatement("insert into investor_plant_mapping (plant_id,plant_code,investor_id,investor_code) values(?,?,?,?)");
+			PreparedStatement ps = connection.prepareStatement("insert into investor_plant_mapping (plant_id,plant_code,investor_id,investor_code) values(?,?,?,?)",Statement.RETURN_GENERATED_KEYS);
 			ps.setInt(1, investorPlantMapping.getPlantId());
 			ps.setString(2, investorPlantMapping.getPlantCode());
 			ps.setInt(3, investorPlantMapping.getInvestorId());
 			ps.setString(4, investorPlantMapping.getInvestorCode());
 			ps.executeUpdate();
+			ResultSet keys = ps.getGeneratedKeys();    
+			keys.next();  
+			lastInsertedId = keys.getInt(1);
+			insertedMapping = getById(lastInsertedId);
+			keys.close();
 			ps.close();
-			added =true;
 		} catch (SQLException e) {
-			added = false;
 			System.out.println("Exception in class : InvestorPlantMappingDAO : method : [insert(InvestorPlantMapping)] "+e.getMessage());
 		}
-		return added;
+		return insertedMapping;
 	}
 	
-	public boolean update(InvestorPlantMapping investorPlantMapping){
-		boolean updated = false;
+	public InvestorPlantMapping update(InvestorPlantMapping investorPlantMapping){
+		InvestorPlantMapping updatedMapping = null;
 		Connection connection = GlobalResources.getConnection();
 		try {
 			PreparedStatement ps = connection.prepareStatement("update investor_plant_mapping set plant_id=?,plant_code=?,investor_id=?,investor_code=? where id=?");
@@ -42,12 +47,11 @@ public class InvestorPlantMappingDAO {
 			ps.setInt(5, investorPlantMapping.getId());
 			ps.executeUpdate();
 			ps.close();
-			updated =true;
+			updatedMapping = getById(investorPlantMapping.getId());
 		} catch (SQLException e) {
-			updated = false;
 			System.out.println("Exception in class : InvestorPlantMappingDAO : method : [insert(InvestorPlantMapping)] "+e.getMessage());
 		}
-		return updated;
+		return updatedMapping;
 	}
 	
 	public ArrayList<InvestorPlantMapping> getAllMappings(){
@@ -148,11 +152,11 @@ public class InvestorPlantMappingDAO {
 		return mappingList;
 	}
 	
-	public ArrayList<InvestorPlantMapping> getByPlantIdAndInvestorId(int plantId, int investorId){
+	public InvestorPlantMapping getByPlantIdAndInvestorId(int plantId, int investorId){
 		ArrayList<InvestorPlantMapping> mappingList = new ArrayList<InvestorPlantMapping>();
 		Connection connection = GlobalResources.getConnection();
 		try {
-			PreparedStatement ps = connection.prepareStatement("select * from investor_plant_mapping where plant_code=? and investor_code=?");
+			PreparedStatement ps = connection.prepareStatement("select * from investor_plant_mapping where plant_id=? and investor_id=?");
 			ps.setInt(1,plantId);
 			ps.setInt(2,investorId);
 			ResultSet rs = ps.executeQuery();
@@ -160,7 +164,7 @@ public class InvestorPlantMappingDAO {
 		} catch (SQLException e) {
 			System.out.println("Exception in class : InvestorPlantMappingDAO : method : [getByPlantIdAndInvestorId(int,int)] "+e.getMessage());
 		}
-		return mappingList;
+		return mappingList.size()>0?mappingList.get(0):null;
 	}
 	
 	private ArrayList<InvestorPlantMapping> investorPlantMappingParser(ResultSet rs) {

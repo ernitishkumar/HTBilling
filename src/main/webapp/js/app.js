@@ -67,6 +67,16 @@
 			controller: 'ViewPlantDetailsController',
 			controllerAs: 'viewPlantDetailsCtrl'
 		})
+		.when('/plant/investor/add', {
+			templateUrl: 'templates/pages/ht/plant/mapinvestor.html',
+			controller: 'AddInvestorMappingController',
+			controllerAs: 'addInvestorMappingCtrl'
+		})
+		.when('/plant/investor/view', {
+			templateUrl: 'templates/pages/ht/plant/viewinvestormapping.html',
+			controller: 'ViewInvestorMappingController',
+			controllerAs: 'viewInvestorMappingCtrl'
+		})
 		.when('/developer/add', {
 			templateUrl: 'templates/pages/developer/adddeveloper.html',
 			controller: 'AddDeveloperController',

@@ -20,7 +20,7 @@ public class MeterReadingsDAO {
 
 	/*
 	 * Method isReadingAlreadyAdded to check whether provided readings are already added for a
-	 * particular meterno and readingDate
+	 * particular meterNo and readingDate
 	 * @param MeterReading
 	 * @return boolean
 	 */
@@ -277,6 +277,26 @@ public class MeterReadingsDAO {
 		}
 		return readings;
 	}
+	
+	public MeterReading getPreviousInsertedByMeterNo(String meterNo){
+		Connection connection = GlobalResources.getConnection();
+		MeterReading readings = new MeterReading();
+		int id = -1;
+		try {
+			PreparedStatement ps = connection.prepareStatement("select max(id) as mid from meter_readings where meter_no=? and id not in (select max(id) as mid from meter_readings where meter_no=?)");
+			ps.setString(1,meterNo);
+			ps.setString(2,meterNo);
+			ResultSet resultSet = ps.executeQuery();
+			while(resultSet.next()){
+				id = resultSet.getInt(1);
+			}
+			readings = getById(id);
+		} catch (SQLException e) {
+			System.out.println("Exception in class : MeterDetailsDAO : method : [getPreviousInsertedByMeterNo(String)] "+e.getMessage());
+		}
+		return readings;
+	}
+	
 
 	public MeterReading getCurrentMonthMeterReadings(String meterNo, String date){
 		Connection connection = GlobalResources.getConnection();

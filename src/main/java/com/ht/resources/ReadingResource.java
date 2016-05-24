@@ -85,8 +85,10 @@ public class ReadingResource {
 			viewMeterReadings.setMeterNo(meterNo);
 			viewMeterReadings.setPlant(p);
 			viewMeterReadings.setDeveloper(developersDAO.getById(p.getDeveloperId()));
-			viewMeterReadings.setCurrentMeterReading(meterReadingsDAO.getCurrentMonthMeterReadings(meterNo, currentDate));
-			viewMeterReadings.setPreviousMeterReading(meterReadingsDAO.getPreviousMonthMeterReadings(meterNo, currentDate));
+			//viewMeterReadings.setCurrentMeterReading(meterReadingsDAO.getCurrentMonthMeterReadings(meterNo, currentDate));
+			//viewMeterReadings.setPreviousMeterReading(meterReadingsDAO.getPreviousMonthMeterReadings(meterNo, currentDate));
+			viewMeterReadings.setPreviousMeterReading(meterReadingsDAO.getPreviousInsertedByMeterNo(meterNo));
+			viewMeterReadings.setCurrentMeterReading(meterReadingsDAO.getLatestInsertedByMeterNo(meterNo));
 			viewReadings.add(viewMeterReadings);
 		}
 		return viewReadings;

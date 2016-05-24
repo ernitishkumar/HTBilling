@@ -25,4 +25,20 @@ public class UserDAO {
 	  }
 	  return user;
   }
+  public boolean insert(User user){
+	  boolean added= false;
+	  try {
+		PreparedStatement ps = connection.prepareStatement("insert into users (username,password,name) values(?,?,?)");
+		ps.setString(1, user.getUsername());
+		ps.setString(2, user.getPassword());
+		ps.setString(3, user.getName());
+		ps.executeUpdate();
+		added = true;
+	} catch (SQLException e) {
+		added = false;
+		System.out.println("Exception in class UserDAO : method : insert(User) : "+e);
+		e.printStackTrace();
+	}
+	  return added;
+  }
 }

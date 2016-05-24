@@ -128,6 +128,13 @@ angular.module("htBillingApp").controller('HomeController', ['$http', '$scope', 
     }
     
     /*
+     * function to route to add user page
+     */
+    this.loadAddUserPage = function(){
+    	$location.path("/user/add");
+    }
+    
+    /*
      * function to route to add investor to plants page.
      */
     this.loadInvestorPlantMapping = function(){

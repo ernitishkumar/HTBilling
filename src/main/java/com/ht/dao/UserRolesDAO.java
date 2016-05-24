@@ -11,12 +11,12 @@ import com.ht.utility.GlobalResources;
 
 public class UserRolesDAO {
 
-	public void insert(UserRoles userRoles){
+	public boolean insert(UserRoles userRoles){
 		Connection connection = GlobalResources.getConnection();
-		
+		boolean added = false;
 		try {
 			PreparedStatement ps = connection
-					.prepareStatement("insert into user_roles (username, user_role, region, circle, division) values(?,?,?,?)");
+					.prepareStatement("insert into user_roles (username, user_role, region, circle, division) values(?,?,?,?,?)");
 			ps.setString(1, userRoles.getUsername());
 			ps.setString(2, userRoles.getRole());
 			ps.setString(3, userRoles.getRegion());
@@ -24,9 +24,12 @@ public class UserRolesDAO {
 			ps.setString(5, userRoles.getDivision());
 			ps.executeUpdate();
 			ps.close();
+			added=true;
 		} catch (SQLException e) {
+			added = false;
 			System.out.println("Exception in class : UserRolesDAO : method : [insert(USerRoles)] "+e);
 		}
+		return added;
 	}
 	
 	public void update(UserRoles userRoles){

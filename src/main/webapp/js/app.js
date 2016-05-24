@@ -96,6 +96,10 @@
 			templateUrl: 'templates/pages/ht/investor/viewinvestordetails.html',
 			controller: 'ViewInvestorDetailsController',
 			controllerAs: 'viewInvestorDetailsCtrl'
+		}).when('/user/add', {
+			templateUrl: 'templates/pages/ht/user/adduser.html',
+			controller: 'AddUserController',
+			controllerAs: 'addUserCtrl'
 		})
 		.when('/machine/add', {
 			templateUrl: 'templates/pages/ht/machine/addmachine.html',

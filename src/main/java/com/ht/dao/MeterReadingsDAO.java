@@ -36,7 +36,10 @@ public class MeterReadingsDAO {
 				c.setTime(formatter.parse(reading.getReadingDate()));
 				int currentReadingMonth = c.get(Calendar.MONTH)+1;
 				int result = currentReadingMonth - lastReadingMonth;
-				if(result == 1 || result == -11){
+				/*if(result == 1 || result == -11){
+					isAlreadyAdded = false;
+				}*/
+				if(result != 0){
 					isAlreadyAdded = false;
 				}
 			}catch(ParseException parseException){
@@ -261,6 +264,7 @@ public class MeterReadingsDAO {
 	}
 
 	public MeterReading getLatestInsertedByMeterNo(String meterNo){
+		System.out.println("Getting lates reading for meter no : "+meterNo);
 		Connection connection = GlobalResources.getConnection();
 		MeterReading readings = new MeterReading();
 		int id = -1;
@@ -271,6 +275,7 @@ public class MeterReadingsDAO {
 			while(resultSet.next()){
 				id = resultSet.getInt(1);
 			}
+			System.out.println("Current id : "+id);
 			readings = getById(id);
 		} catch (SQLException e) {
 			System.out.println("Exception in class : MeterDetailsDAO : method : [getByMeterNo(String)] "+e.getMessage());
@@ -279,6 +284,7 @@ public class MeterReadingsDAO {
 	}
 	
 	public MeterReading getPreviousInsertedByMeterNo(String meterNo){
+		System.out.println("Getting prev reading for meter no : "+meterNo);
 		Connection connection = GlobalResources.getConnection();
 		MeterReading readings = new MeterReading();
 		int id = -1;
@@ -290,6 +296,7 @@ public class MeterReadingsDAO {
 			while(resultSet.next()){
 				id = resultSet.getInt(1);
 			}
+			System.out.println("Previous id : "+id);
 			readings = getById(id);
 		} catch (SQLException e) {
 			System.out.println("Exception in class : MeterDetailsDAO : method : [getPreviousInsertedByMeterNo(String)] "+e.getMessage());
@@ -352,6 +359,45 @@ public class MeterReadingsDAO {
 
 		return meterReadings;
 	}
+	
+	public MeterReading getCurrentMonthMeterReadings(String meterNo){
+		Connection connection = GlobalResources.getConnection();
+		MeterReading meterReading = new MeterReading();
+		int id = -1;
+		try {
+			PreparedStatement ps = connection.prepareStatement("select max(id) from meter_readings where meter_no=?");
+			ps.setString(1, meterNo);
+			ResultSet rs = ps.executeQuery();
+			while(rs.next()){
+				id = rs.getInt(1);
+			}
+			meterReading = getById(id);
+			if(meterReading == null){
+				meterReading = new MeterReading();
+				MeterDetailsDAO meterDetailsDAO = new MeterDetailsDAO();
+				MeterDetails meterDetails = meterDetailsDAO.getByMeterNo(meterNo);
+				meterReading.setId(-1);
+				meterReading.setMeterno(meterNo);
+				meterReading.setMf(meterDetails.getMf());
+				meterReading.setActiveEnergy(0);
+				meterReading.setActiveTodOne(0);
+				meterReading.setActiveTodTwo(0);
+				meterReading.setActiveTodThree(0);
+				meterReading.setReactiveQuadrantOne(0);
+				meterReading.setReactiveQuadrantTwo(0);
+				meterReading.setReactiveQuadrantThree(0);
+				meterReading.setReactiveQuadrantFour(0);
+				meterReading.setHtCellValidation(0);
+				meterReading.setCircleCellValidation(0);
+				meterReading.setDeveloperValidation(0);
+				meterReading.setDiscardedFlag(0);
+			}
+		}catch (SQLException e)   {
+			System.out.println("Exception in class : MeterReadingsDAO : method : [getCurrentMonthMeterReadings(String,String)] "+e.getMessage());
+		}
+
+		return meterReading;
+	}
 
 	public MeterReading getPreviousMonthMeterReadings(String meterNo, String date){
 		Connection connection = GlobalResources.getConnection();
@@ -413,34 +459,74 @@ public class MeterReadingsDAO {
 		return meterReadings;
 	}
 
+	public MeterReading getPreviousMonthMeterReadings(String meterNo){
+		Connection connection = GlobalResources.getConnection();
+		ArrayList<MeterReading> readings = new ArrayList<MeterReading>();
+		MeterReading meterReading = new MeterReading();
+		int id = -1;
+		try {
+			PreparedStatement ps = connection.prepareStatement("select max(id) as mid from meter_readings where meter_no=? and id not in (select max(id) as mid from meter_readings where meter_no=?)");
+			ps.setString(1, meterNo);
+			ps.setString(2, meterNo);
+			ResultSet rs = ps.executeQuery();
+			while(rs.next()){
+				id = rs.getInt(1);
+			}
+			meterReading = getById(id);
+			if(meterReading == null){
+				meterReading = new MeterReading();
+				MeterDetailsDAO meterDetailsDAO = new MeterDetailsDAO();
+				MeterDetails meterDetails = meterDetailsDAO.getByMeterNo(meterNo);
+				meterReading.setId(-1);
+				meterReading.setMeterno(meterNo);
+				meterReading.setMf(meterDetails.getMf());
+				meterReading.setActiveEnergy(0);
+				meterReading.setActiveTodOne(0);
+				meterReading.setActiveTodTwo(0);
+				meterReading.setActiveTodThree(0);
+				meterReading.setReactiveQuadrantOne(0);
+				meterReading.setReactiveQuadrantTwo(0);
+				meterReading.setReactiveQuadrantThree(0);
+				meterReading.setReactiveQuadrantFour(0);
+				meterReading.setHtCellValidation(0);
+				meterReading.setCircleCellValidation(0);
+				meterReading.setDeveloperValidation(0);
+				meterReading.setDiscardedFlag(0);
+			}
+		}catch (SQLException e)   {
+			System.out.println("Exception in class : MeterReadingsDAO : method : [getPreviousMonthMeterReadings(String)] "+e.getMessage());
+		}
 
+		return meterReading;
+	}
 
 	private void resultSetParser(ResultSet resultSet,ArrayList<MeterReading> readings){
 		try{
 			while(resultSet.next()){
-				MeterReading meterReadings=new MeterReading();
-				meterReadings.setId(resultSet.getInt(1));
-				meterReadings.setMeterno(resultSet.getString(2));
-				meterReadings.setMf(resultSet.getInt(3));
-				meterReadings.setReadingDate(resultSet.getString(4));
-				meterReadings.setActiveEnergy(resultSet.getFloat(5));
-				meterReadings.setActiveTodOne(resultSet.getFloat(6));
-				meterReadings.setActiveTodTwo(resultSet.getFloat(7));
-				meterReadings.setActiveTodThree(resultSet.getFloat(8));
-				meterReadings.setReactiveQuadrantOne(resultSet.getFloat(9));
-				meterReadings.setReactiveQuadrantTwo(resultSet.getFloat(10));
-				meterReadings.setReactiveQuadrantThree(resultSet.getFloat(11));
-				meterReadings.setReactiveQuadrantFour(resultSet.getFloat(12));
-				meterReadings.setHtCellValidation(resultSet.getInt(13));
-				meterReadings.setCircleCellValidation(resultSet.getInt(14));
-				meterReadings.setDeveloperValidation(resultSet.getInt(15));
-				meterReadings.setDiscardedFlag(resultSet.getInt(16));
-				meterReadings.setDiscardedBy(resultSet.getString(17));
-				meterReadings.setDiscardedOn(resultSet.getString(18));
-				readings.add(meterReadings);
+				MeterReading meterReading=new MeterReading();
+				meterReading.setId(resultSet.getInt(1));
+				meterReading.setMeterno(resultSet.getString(2));
+				meterReading.setMf(resultSet.getInt(3));
+				meterReading.setReadingDate(resultSet.getString(4));
+				meterReading.setActiveEnergy(resultSet.getFloat(5));
+				meterReading.setActiveTodOne(resultSet.getFloat(6));
+				meterReading.setActiveTodTwo(resultSet.getFloat(7));
+				meterReading.setActiveTodThree(resultSet.getFloat(8));
+				meterReading.setReactiveQuadrantOne(resultSet.getFloat(9));
+				meterReading.setReactiveQuadrantTwo(resultSet.getFloat(10));
+				meterReading.setReactiveQuadrantThree(resultSet.getFloat(11));
+				meterReading.setReactiveQuadrantFour(resultSet.getFloat(12));
+				meterReading.setHtCellValidation(resultSet.getInt(13));
+				meterReading.setCircleCellValidation(resultSet.getInt(14));
+				meterReading.setDeveloperValidation(resultSet.getInt(15));
+				meterReading.setDiscardedFlag(resultSet.getInt(16));
+				meterReading.setDiscardedBy(resultSet.getString(17));
+				meterReading.setDiscardedOn(resultSet.getString(18));
+				readings.add(meterReading);
 			}
 		}catch(Exception e){
 			System.out.println("Exception in class : MeterReadingsDAO : method : resultSetParser(resultSet,arrayList) "+e.getMessage());
+			e.printStackTrace();
 		}
 	}
 

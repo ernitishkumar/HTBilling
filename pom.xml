@@ -31,7 +31,7 @@
 				<configuration>
 					<scanIntervalSeconds>5</scanIntervalSeconds>
 					<webApp>
-						<contextPath>/onlinestore</contextPath>
+						<contextPath>/htbilling</contextPath>
 					</webApp>
 					<httpConnector>
 						<!--host>localhost</host -->

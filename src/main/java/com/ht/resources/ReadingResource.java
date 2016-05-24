@@ -85,10 +85,12 @@ public class ReadingResource {
 			viewMeterReadings.setMeterNo(meterNo);
 			viewMeterReadings.setPlant(p);
 			viewMeterReadings.setDeveloper(developersDAO.getById(p.getDeveloperId()));
-			//viewMeterReadings.setCurrentMeterReading(meterReadingsDAO.getCurrentMonthMeterReadings(meterNo, currentDate));
-			//viewMeterReadings.setPreviousMeterReading(meterReadingsDAO.getPreviousMonthMeterReadings(meterNo, currentDate));
-			viewMeterReadings.setPreviousMeterReading(meterReadingsDAO.getPreviousInsertedByMeterNo(meterNo));
-			viewMeterReadings.setCurrentMeterReading(meterReadingsDAO.getLatestInsertedByMeterNo(meterNo));
+			MeterReading currentMonthReading = meterReadingsDAO.getCurrentMonthMeterReadings(meterNo);
+			viewMeterReadings.setPreviousMeterReading(meterReadingsDAO.getPreviousMonthMeterReadings(meterNo));
+			viewMeterReadings.setCurrentMeterReading(currentMonthReading);
+			if(currentMonthReading != null && currentMonthReading.getDeveloperValidation() == 1){
+				viewMeterReadings.setConsumption(consumptionDAO.getByMeterReadingId(currentMonthReading.getId()));
+			}
 			viewReadings.add(viewMeterReadings);
 		}
 		return viewReadings;
@@ -111,11 +113,10 @@ public class ReadingResource {
 				viewMeterReadings.setMeterNo(meterNo);
 				viewMeterReadings.setPlant(p);
 				viewMeterReadings.setDeveloper(developersDAO.getById(p.getDeveloperId()));
-				MeterReading currentMonthReading = meterReadingsDAO.getCurrentMonthMeterReadings(meterNo, currentDate);
+				MeterReading currentMonthReading = meterReadingsDAO.getCurrentMonthMeterReadings(meterNo);
+				viewMeterReadings.setPreviousMeterReading(meterReadingsDAO.getPreviousMonthMeterReadings(meterNo));
 				viewMeterReadings.setCurrentMeterReading(currentMonthReading);
-				viewMeterReadings.setPreviousMeterReading(meterReadingsDAO.getPreviousMonthMeterReadings(meterNo, currentDate));
-				if(currentMonthReading.getDeveloperValidation() == 1){
-					//viewMeterReadings.setConsumption(consumptionDAO.getBifercationFlagByPlantIdAndDate(p.getId(),currentDate));
+				if(currentMonthReading != null && currentMonthReading.getDeveloperValidation() == 1){
 					viewMeterReadings.setConsumption(consumptionDAO.getByMeterReadingId(currentMonthReading.getId()));
 				}
 				viewReadings.add(viewMeterReadings);
@@ -142,11 +143,10 @@ public class ReadingResource {
 				viewMeterReadings.setMeterNo(meterNo);
 				viewMeterReadings.setPlant(p);
 				viewMeterReadings.setDeveloper(developersDAO.getById(p.getDeveloperId()));
-				MeterReading currentMonthReading = meterReadingsDAO.getCurrentMonthMeterReadings(meterNo, currentDate);
+				MeterReading currentMonthReading = meterReadingsDAO.getCurrentMonthMeterReadings(meterNo);
+				viewMeterReadings.setPreviousMeterReading(meterReadingsDAO.getPreviousMonthMeterReadings(meterNo));
 				viewMeterReadings.setCurrentMeterReading(currentMonthReading);
-				viewMeterReadings.setPreviousMeterReading(meterReadingsDAO.getPreviousMonthMeterReadings(meterNo, currentDate));
-				if(currentMonthReading.getDeveloperValidation() == 1){
-					//viewMeterReadings.setConsumption(consumptionDAO.getBifercationFlagByPlantIdAndDate(p.getId(),currentDate));
+				if(currentMonthReading != null && currentMonthReading.getDeveloperValidation() == 1){
 					viewMeterReadings.setConsumption(consumptionDAO.getByMeterReadingId(currentMonthReading.getId()));
 				}
 				viewReadings.add(viewMeterReadings);
@@ -171,10 +171,10 @@ public class ReadingResource {
 			viewMeterReadings.setMeterNo(meterNo);
 			viewMeterReadings.setPlant(plant);
 			viewMeterReadings.setDeveloper(developersDAO.getById(plant.getDeveloperId()));
-			MeterReading currentMonthReading = meterReadingsDAO.getCurrentMonthMeterReadings(meterNo, currentDate);
+			MeterReading currentMonthReading = meterReadingsDAO.getCurrentMonthMeterReadings(meterNo);
+			viewMeterReadings.setPreviousMeterReading(meterReadingsDAO.getPreviousMonthMeterReadings(meterNo));
 			viewMeterReadings.setCurrentMeterReading(currentMonthReading);
-			viewMeterReadings.setPreviousMeterReading(meterReadingsDAO.getPreviousMonthMeterReadings(meterNo, currentDate));
-			if(currentMonthReading.getDeveloperValidation() == 1){
+			if(currentMonthReading != null && currentMonthReading.getDeveloperValidation() == 1){
 				viewMeterReadings.setConsumption(consumptionDAO.getBifercationFlagByPlantIdAndDate(plant.getId(),currentDate));
 			}		
 		}

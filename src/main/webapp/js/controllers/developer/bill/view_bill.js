@@ -25,7 +25,7 @@ angular.module("htBillingApp").controller('ViewBillController', ['$http', '$scop
 		var userRole = authService.fetchData(authService.USER_ROLE_KEY);
 		if(user === null || user === undefined || user.username === null || user.username == undefined || userRole === null || userRole === undefined){
 			$location.path("/");
-		}else if(userRole.role === "developer"){
+		}else if(userRole.role === "developer" || userRole.role === "circle" || userRole.role === "admin"){
 			$scope.user = user;
 			$scope.userRole = userRole;
 			loadBill();
@@ -52,8 +52,38 @@ angular.module("htBillingApp").controller('ViewBillController', ['$http', '$scop
 	/*
 	 * loadDeveloperHome function to navigate to developer home page
 	 */
+	this.loadHome = function () {
+		if($scope.userRole.role === "developer"){
+			this.loadDeveloperHome();
+		}else if($scope.userRole.role === "circle"){
+			this.loadCircleHome();
+		}else if($scope.userRole.role === "admin"){
+			this.loadHtHome();
+		}else{
+			this.logout();
+			$location.path("/");
+		}
+	}
+	
+	/*
+	 * loadDeveloperHome function to navigate to developer home page
+	 */
 	this.loadDeveloperHome = function () {
 		$location.path("/developer/home");
+	}
+	
+	/*
+	 * loadDeveloperHome function to navigate to developer home page
+	 */
+	this.loadCircleHome = function () {
+		$location.path("/circle/home");
+	}
+	
+	/*
+	 * loadDeveloperHome function to navigate to developer home page
+	 */
+	this.loadHtHome = function () {
+		$location.path("/ht/home");
 	}
 
 	/*

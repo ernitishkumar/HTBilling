@@ -99,7 +99,7 @@ angular.module("htBillingApp").controller('ViewBifircateReadingsForCircleControl
 	 * viewBill function to navigate to view bill page for corresponding investor's bill
 	 */
 	this.viewBill = function (investorData) {
-		$location.path("/viewbill/"+investorData.billDetailsId);
+		$location.path("/developer/investor/bill/view/"+investorData.billDetailsId);
 	};
 
 	/*

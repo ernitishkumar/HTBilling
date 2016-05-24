@@ -23,6 +23,7 @@ angular.module("htBillingApp").controller('AddDeveloperController', ['$http', '$
 		}else if(userRole.role === "admin"){
 			$scope.user = user;
 			$scope.userRole = userRole;
+			getDeveloperUsername();
 		}else{
 			$location.path("/");
 		}
@@ -80,7 +81,33 @@ angular.module("htBillingApp").controller('AddDeveloperController', ['$http', '$
 				}
 		);
 	};
-
+	
+	
+	/*
+	 * getDeveloperUsername function to fetch different usename of role developer
+	 * which are not in use currently
+	 */
+	function getDeveloperUsername() {
+		$scope.investors = null;
+		$http(
+				{
+					method: 'GET',
+					url: 'backend/developers/username'
+				}
+		).then(
+				function (response) {
+					var status = response.status;
+					if(status === 200){
+						$scope.developers = response.data;
+					}
+				},
+				function(error){
+					console.log("Unable to fetch Developer username");
+					console.log(error);
+				}
+		);
+	}
+	
 	/*
 	 * clearForm function to clear the form
 	 */

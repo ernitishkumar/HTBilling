@@ -80,6 +80,21 @@ public class UserRolesDAO {
 		return userRoles.get(0);
 	}
 	
+	public ArrayList<UserRoles> getByDeveloperRole(){
+		ArrayList<UserRoles> userRoles = new ArrayList<UserRoles>();
+		Connection connection = GlobalResources.getConnection();
+		try {
+			PreparedStatement ps = connection.prepareStatement("select * from user_roles where user_role=? && username not in (select username from developers)");
+			ps.setString(1, "developer");
+			ResultSet rs = ps.executeQuery();
+			userRoles = userMapper(rs);
+		} catch (SQLException e) {
+			System.out.println("Exception in class : UserRolesDAO : method : [getByDeveloperRole()] "+e);
+		}
+		
+		return userRoles;
+	}
+	
 	public ArrayList<UserRoles> getByCircle(String circle){
 		ArrayList<UserRoles> userRoles = new ArrayList<UserRoles>();
 		Connection connection = GlobalResources.getConnection();

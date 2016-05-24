@@ -53,7 +53,7 @@
 			<div class="form-group has-feedback">
 				<label>Enter Developer Name</label> <input class="form-control"
 					type="text" placeholder="Developer Name"
-					ng-model="formData.developerName" required>
+					ng-model="formData.name" required>
 			</div>
 			<div class="form-group">
 				<label>CIN:</label> <input class="form-control" type="text"
@@ -101,10 +101,15 @@
 					required>
 			</div>
 			
-			<div class=" form-group ">
-				<label>Username:</label> <input class="form-control" type="text"
-					placeholder="Username" ng-model="formData.username" required>
+			
+			<div class="form-group">
+				<label>Select Developer Username: </label>
+				<br> 
+				<select name="username" id="username" ng-model="formData.username" >
+						<option ng-repeat="developer in developers" value="{{developer.username}}">{{developer.username}}</option>
+				</select>
 			</div>
+			
 			<div class="form-group ">
 				<div class="col-md-6 ">
 					<button type="submit " class="btn btn-success btn-lg btn-block ">

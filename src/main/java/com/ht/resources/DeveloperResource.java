@@ -16,7 +16,9 @@ import javax.ws.rs.core.Response.Status;
 
 import com.ht.beans.Developer;
 import com.ht.beans.ErrorBean;
+import com.ht.beans.UserRoles;
 import com.ht.dao.DevelopersDAO;
+import com.ht.dao.UserRolesDAO;
 
 /**
  * @author Hp
@@ -26,7 +28,7 @@ import com.ht.dao.DevelopersDAO;
 public class DeveloperResource {
 
 	private DevelopersDAO developersDAO = new DevelopersDAO();
-	
+	UserRolesDAO userRolesDAO = new UserRolesDAO();
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
 	public ArrayList<Developer> getAllDevelopers(){
@@ -53,4 +55,13 @@ public class DeveloperResource {
 					.build();
 		}
 	}
+	
+	@GET
+	@Path("/username")
+	@Produces(MediaType.APPLICATION_JSON)
+	public ArrayList<UserRoles> getDeveloperUsername(){
+		System.out.println("GET All getDeveloperUsername started");
+		return userRolesDAO.getByDeveloperRole();
+	}
+	
 }

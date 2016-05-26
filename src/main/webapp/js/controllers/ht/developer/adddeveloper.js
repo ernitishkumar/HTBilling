@@ -99,6 +99,7 @@ angular.module("htBillingApp").controller('AddDeveloperController', ['$http', '$
 					var status = response.status;
 					if(status === 200){
 						$scope.developers = response.data;
+						console.log($scope.developers);
 					}
 				},
 				function(error){

@@ -63,7 +63,10 @@ angular.module("htBillingApp").controller('ViewMeterDetailsController', ['$http'
 				}
 		).then(
 				function (response) {
-					$scope.meters = response.data;
+					var status = response.status;
+					if(status === 200){
+						$scope.meters = response.data;	
+					}
 				},
 				function(error){
 					console.log("Error while fetching all meters");
@@ -72,4 +75,30 @@ angular.module("htBillingApp").controller('ViewMeterDetailsController', ['$http'
 		);
 	}
 
+	/*
+	 * function to delete selected meter
+	 */
+	this.remove = function(meter){
+		$http(
+				{
+					method: 'DELETE',
+					url: 'backend/meter/'+meter.meterNo
+				}
+		).then(
+				function (response) {
+					var status = response.status;
+					if(status === 200){
+						var deletedMeter = response.data;
+						var index = $scope.meters.indexOf(deletedMeter);
+						if(index != -1){
+							$scope.meters.slice(index,1);
+						}
+					}
+				},
+				function(error){
+					console.log("Error while fetching all meters");
+					console.log(error);
+				}
+		);
+	};
 }]);

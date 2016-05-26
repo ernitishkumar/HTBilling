@@ -9,11 +9,9 @@ Version
 Database		mySQL 5 
 */
 
-
 create database IF NOT EXISTS ht_test;
 
-use ht_test;
-
+USE ht_test;
 
 drop table IF EXISTS bill_details;
 drop table IF EXISTS user_roles;
@@ -27,9 +25,6 @@ drop table IF EXISTS investor_plant_mapping;
 drop table IF EXISTS investor_consumption;
 drop table IF EXISTS developers;
 drop table IF EXISTS consumptions;
-
-
-
 
 Create table consumptions (
 	id Int NOT NULL AUTO_INCREMENT,
@@ -46,7 +41,7 @@ Create table consumptions (
 Create table developers (
 	id Int NOT NULL AUTO_INCREMENT,
 	name Varchar(200),
-	cin Varchar(20),
+	cin Varchar(100),
 	office_address Varchar(200),
 	office_contact_no Varchar(20),
 	office_contact_person Varchar(50),
@@ -81,10 +76,10 @@ Create table investors (
 	id Int NOT NULL AUTO_INCREMENT,
 	code Varchar(50),
 	name Varchar(200),
-	cin Varchar(50),
-	tin Varchar(50),
-	vat Varchar(50),
-	invoice_no Varchar(50),
+	cin Varchar(100),
+	tin Varchar(100),
+	vat Varchar(100),
+	invoice_no Varchar(100),
 	office_address Varchar(300),
 	office_contact_no Char(30),
 	office_email Varchar(100),
@@ -255,8 +250,5 @@ Alter table consumptions add Foreign Key (plant_id) references plants (id) on de
 
 
 /* Users permissions */
-
-
-
 
 

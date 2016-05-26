@@ -88,8 +88,13 @@
 				</div>
 			</div>
 			<div class=" form-group ">
-				<label>Type:</label> <input class="form-control " type="text"
-					placeholder="Type" ng-model="formData.type" required>
+				<label>Type:</label>
+				<select name="type" id="type" ng-model="formData.type" required>
+                        <option value="SOLAR">SOLAR</option>
+						<option value="WIND">WIND</option>
+				</select>
+				 <!-- <input class="form-control " type="text"
+					placeholder="Type" ng-model="formData.type" required> -->
 			</div>
 			<div class="form-group">
 				<label>Circuit Voltage:</label> <input class="form-control"
@@ -104,14 +109,41 @@
 			<div class="form-group">
 				<label>Feeder Name:</label> <input class="form-control" type="text"
 					placeholder="Feeder Name" ng-model="formData.feederName" required>
-			</div>
+			</div><!-- 
 			<div class="form-group">
 				<label>Region:</label> <input class="form-control" type="text"
 					placeholder="Region" ng-model="formData.region" required>
-			</div>
+			</div> -->
 			<div class="form-group">
+				<label>Region: &nbsp;</label> &nbsp;&nbsp;<select name="region" id="region"
+					ng-model="formData.region">
+					<option value="INDORE" selected>Indore</option>
+					<option value="UJJAIN">Ujjain</option>
+				</select>
+			</div>
+			<!-- <div class="form-group">
 				<label>Circle:</label> <input class="form-control" type="text"
 					placeholder="Circle" ng-model="formData.circle" required>
+			</div> -->
+			<div class="form-group">
+				<label>Circle: &nbsp;&nbsp;&nbsp;</label> &nbsp;&nbsp;<select name="circle" id="circle"
+					ng-model="formData.circle">
+					<option value="Indore" selected>Indore</option>
+					<option value="Indore O&M" >Indore O&M</option>
+					<option value="Indore City" >Indore City</option>
+					<option value="Barwani" >Barwani</option>
+					<option value="Shajapur" >Shajapur</option>
+					<option value="Dwewas" >Dewas</option>
+					<option value="Burhanpur" >Burhanpur</option>
+					<option value="Khandwa" >Khandwa</option>
+					<option value="Mandsaur" >Mandsaur</option>
+					<option value="Neemuch" >Neemuch</option>
+					<option value="Ratlam" >Ratlam</option>
+					<option value="Ujjain" >Ujjain</option>
+					<option value="Dhar" >Dhar</option>
+					<option value="Jhabua" >Jhabua</option>
+					<option value="Khargone" >Khargone</option>
+				</select>
 			</div>
 			<div class="form-group">
 				<label>Division:</label> <input class="form-control" type="text"
@@ -120,28 +152,26 @@
 			<div class="form-group">
 				<label>Main Meter No:</label> &nbsp;&nbsp;<select name="mainMeterNo"
 					id="mainMeterNo" ng-model="formData.mainMeterNo">
-					<option ng-repeat="meter in metersNotInUse" value="{{meter.meterNo}}"
-						selected>{{meter.meterNo}}</option>
+					<option ng-repeat="main in metersNotInUse" value="{{main.meterNo}}">{{main.meterNo}}</option>
 				</select>
 			</div>
 			<div class="form-group">
 				<label>Check Meter No:</label> &nbsp;&nbsp;<select
 					name="checkMeterNo" id="checkMeterNo"
 					ng-model="formData.checkMeterNo">
-					<option ng-repeat="meter in metersNotInUse" value="{{meter.meterNo}}"
-						selected>{{meter.meterNo}}</option>
+					<option ng-repeat="check in metersNotInUse" value="{{check.meterNo}}">{{check.meterNo}}</option>
 				</select>
 			</div>
 			<div class="form-group">
 				<label>Standby Meter No:</label> &nbsp;&nbsp;<select
 					name="standbyMeterNo" id="standbyMeterNo"
 					ng-model="formData.standByMeterNo">
-					<option ng-repeat="meter in metersNotInUse" value="{{meter.meterNo}}"
-						selected>{{meter.meterNo}}</option>
+					<option ng-repeat="standby in metersNotInUse" value="{{standby.meterNo}}">{{standby.meterNo}}</option>
+					<option value="NA">NA</option>
 				</select>
 			</div>
 			<div class="form-group">
-				<label>Developer Id:</label> &nbsp;&nbsp; <select name="developerId"
+				<label>Developer Name:</label> &nbsp;&nbsp; <select name="developerId"
 					id="developerId" ng-model="formData.developerId">
 					<option ng-repeat="developer in developers" value="{{developer.id}}">{{developer.name}}</option>
 				</select>

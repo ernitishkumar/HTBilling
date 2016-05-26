@@ -111,10 +111,11 @@ public class UserRolesDAO {
 	}
 	
 	private ArrayList<UserRoles> userMapper(ResultSet resultSet){
-		UserRoles userRoles = new UserRoles();
+		UserRoles userRoles =null;
 		ArrayList<UserRoles> userRolesArray = new ArrayList<UserRoles>();
 		try {
 			while(resultSet.next()){
+				userRoles = new UserRoles();
 				userRoles.setId(resultSet.getInt(1));
 				userRoles.setUsername(resultSet.getString(2));
 				userRoles.setRole(resultSet.getString(3));

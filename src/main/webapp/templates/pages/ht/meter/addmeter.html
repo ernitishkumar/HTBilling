@@ -59,13 +59,22 @@
             </div>
             <div class="form-group">
                 <span class="glyphicon glyphicon-star"></span>
-                <label>Category:</label>
-                <input class="form-control" type="text" placeholder="Category" ng-model="formData.category" required>
+                <label>Category :</label>
+                <select name="category" id="category" ng-model="formData.category" required>
+                        <option value="MAIN">MAIN</option>
+						<option value="CHECK">CHECK</option>
+						<option value="STANDBY">STANDBY</option>
+				</select>
+                <!-- <input class="form-control" type="text" placeholder="Category" ng-model="formData.category" required> -->
             </div>
             <div class="form-group">
                 <span class="glyphicon glyphicon-star"></span>
                 <label>Type:</label>
-                <input class="form-control" type="text" placeholder="Type" ng-model="formData.type" required>
+                <select name="type" id="type" ng-model="formData.type" required>
+                       <option value="ABT">ABT</option>
+						<option value="NONABT">NON-ABT</option>
+				</select>
+                <!-- <input class="form-control" type="text" placeholder="Type" ng-model="formData.type" required> -->
             </div>
             <div class="form-group">
                 <span class="glyphicon glyphicon-pencil"></span>
@@ -100,7 +109,11 @@
             <div class="form-group">
                 <span class="glyphicon glyphicon-star"></span>
                 <label>Mater Group:</label>
-                <input class="form-control" type="text" placeholder="Meter Group" ng-model="formData.meterGroup" required>
+                <select name="meterGroup" id="meterGroup" ng-model="formData.meterGroup" required>
+                        <option value="SOLAR">SOLAR</option>
+						<option value="WIND">WIND</option>
+				</select>
+                <!-- <input class="form-control" type="text" placeholder="Meter Group" ng-model="formData.meterGroup" required> -->
             </div>
             <div class="form-group ">
                 <div class="col-md-6 ">

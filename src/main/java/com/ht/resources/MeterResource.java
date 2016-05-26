@@ -3,9 +3,11 @@ package com.ht.resources;
 import java.util.ArrayList;
 
 import javax.ws.rs.Consumes;
+import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
@@ -57,5 +59,22 @@ public class MeterResource {
 	public ArrayList<MeterDetails> getAllUnusedMeters(){
 		System.out.println("Getting all unused meters");
 		return meterDetailsDAO.getMetersNotInUse();
+	}
+	
+	@DELETE
+	@Path("/{meterno}")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response removeMeterDetails(@PathParam("meterno")String meterno){
+		MeterDetails removedMeter = null;
+		removedMeter = meterDetailsDAO.delete(meterno);
+		if(removedMeter != null){
+			return Response.status(Status.OK)
+					.entity(removedMeter)
+					.build();
+		}else{
+			return Response.status(Status.EXPECTATION_FAILED)
+					.entity(new ErrorBean("Unable to delete meter."))
+					.build();
+		}
 	}
 }

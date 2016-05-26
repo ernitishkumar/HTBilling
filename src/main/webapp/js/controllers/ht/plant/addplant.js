@@ -93,7 +93,6 @@ angular.module("htBillingApp").controller('AddPlantController', ['$http', '$scop
 					var status = response.status;
 					if(status === 200){
 						$scope.metersNotInUse = response.data;
-						console.log($scope.metersNotInUse);
 					}
 				},
 				function(error){
@@ -128,6 +127,8 @@ angular.module("htBillingApp").controller('AddPlantController', ['$http', '$scop
 		var readingDate = day + "-" + month + "-" + year;
 		var formData = $scope.formData;
 		formData.commissionedDate = readingDate;
+		console.log("Adding plant as");
+		console.log(formData);
 		$http(
 				{
 					method: 'POST',

@@ -15,6 +15,7 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
 
+import com.ht.beans.ErrorBean;
 import com.ht.beans.MeterData;
 import com.ht.beans.MeterDetails;
 import com.ht.beans.MeterReading;
@@ -80,7 +81,7 @@ public class PlantResource {
 					.build();
 		}else{
 			return Response.status(Status.EXPECTATION_FAILED)
-					.entity(insertedPlant)
+					.entity(new ErrorBean("Unable to add plant. Try Again !"))
 					.build();
 		}
 	}

@@ -36,15 +36,15 @@
             <h1><span class="glyphicon glyphicon-certificate"></span> Enter Meter Details.</h1>
         </div>
 
-        <!--Show error messages
+        <!--Show error messages -->
         <div align='center'>
             <h3><span class="label label-danger" ng-show="error">{{error}}</span>
         </h3>
             <br>
-        </div>-->
+        </div>
 
         <!--Form-->
-        <form name="addMeterForm" id="addMeterForm" ng-submit="addMeterCtrl.processForm()">
+        <form name="addMeterForm" id="addMeterForm" ng-submit="addMeterCtrl.processForm()" class="well">
             <div class="form-group has-feedback">
                 <span class="glyphicon glyphicon-asterisk">
                 </span>
@@ -115,14 +115,14 @@
 				</select>
                 <!-- <input class="form-control" type="text" placeholder="Meter Group" ng-model="formData.meterGroup" required> -->
             </div>
-            <div class="form-group ">
+            <div class="row">
                 <div class="col-md-6 ">
-                    <button type="submit " class="btn btn-success btn-lg btn-block ">
+                    <button type="submit " class="btn btn-success btn-lg btn-block">
                         <span class="glyphicon glyphicon-flash "></span> Add Meter!
                     </button>
                 </div>
                 <div class="col-md-6 ">
-                    <button class="btn btn-danger btn-lg btn-block " type="reset" ng-click="clearForm()">
+                    <button class="btn btn-danger btn-lg btn-block" type="reset" ng-click="clearForm()">
                         Clear
                     </button>
                 </div>

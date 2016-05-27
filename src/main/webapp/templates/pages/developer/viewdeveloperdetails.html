@@ -40,6 +40,7 @@
 	<div class="table-responsive">
 		<table class="table table-bordered table-hover">
 			<thead>
+				<th class="text-center success">S.No</th>
 				<th class="text-center success">Name</th>
 				<th class="text-center success">CIN</th>
 				<th class="text-center success">Username</th>
@@ -56,6 +57,7 @@
 			</thead>
 			<tbody class="text-center">
 				<tr ng-repeat="developer in developers">
+					<td>{{$index + 1}}</td>
 					<td>{{developer.name}}</td>
 					<td>{{developer.cin}}</td>
 					<td>{{developer.username}}</td>

@@ -145,6 +145,10 @@ angular.module("htBillingApp").controller('MeterReadingController', ['$http', '$
 	this.processForm = function (ae,td1,td2,td3,q1,q2,q3,q4) {
 
 		if(ae && td1 && td2 && td3 && q1 && q2 && q3 && q4){
+			if(this.formData.activeEnergy !== (this.formData.activeTodOne + this.formData.activeTodTwo + this.formData.activeTodThree)){
+				$scope.error = "Active Energy should be equal to sum of Tod 1, Tod 2, Tod 3";
+				return;
+			}
 			var d = new Date(this.formData.date);
 			var year = d.getFullYear();
 			var month = d.getMonth() + 1;
@@ -201,6 +205,10 @@ angular.module("htBillingApp").controller('MeterReadingController', ['$http', '$
 
 	};
 
+	function validateActiveEnergy(){
+	  return ;	
+	}
+	
 	this.isReadingValid = function(input1,input2){
 		if(input1 === null || input1 === undefined){
 			return false;

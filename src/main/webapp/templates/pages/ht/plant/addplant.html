@@ -40,16 +40,16 @@
 			</h1>
 		</div>
 
-		<!--Show error messages
+		<!--Show error messages -->
         <div align='center'>
             <h3><span class="label label-danger" ng-show="error">{{error}}</span>
         </h3>
             <br>
-        </div>-->
+        </div>
 
 		<!--Form-->
 		<form name="addPlantForm" id="addPlantForm"
-			ng-submit="addPlantCtrl.processForm()">
+			ng-submit="addPlantCtrl.processForm()" class="well">
 			<div class="form-group has-feedback">
 				<label>Enter Plant Code</label> <input class="form-control"
 					type="text" placeholder="Plant Code"
@@ -176,7 +176,7 @@
 					<option ng-repeat="developer in developers" value="{{developer.id}}">{{developer.name}}</option>
 				</select>
 			</div>
-			<div class="form-group ">
+			<div class="row">
 				<div class="col-md-6 ">
 					<button type="submit" class="btn btn-success btn-lg btn-block ">
 						<span class="glyphicon glyphicon-flash "></span> Add Plant!

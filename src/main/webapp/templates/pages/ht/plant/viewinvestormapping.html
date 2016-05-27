@@ -33,13 +33,14 @@
 	<br> <br>
 	<div class="page-header text-center">
 		<h2>
-			<span class="glyphicon glyphicon-certificate"></span>View Investor Plant
-			Mappings
+			<span class="glyphicon glyphicon-certificate"></span>View Investor
+			Plant Mappings
 		</h2>
 	</div>
 	<div class="table-responsive">
 		<table class="table table-bordered table-hover">
 			<thead>
+				<th class="text-center success">S.No</th>
 				<th class="text-center success">Plant Id</th>
 				<th class="text-center success">Plant Code</th>
 				<th class="text-center success">Investor Id</th>
@@ -49,6 +50,7 @@
 			</thead>
 			<tbody class="text-center">
 				<tr ng-repeat="mapping in mappings">
+					<td>{{$index + 1}}</td>
 					<td>{{mapping.plantId}}</td>
 					<td>{{mapping.plantCode}}</td>
 					<td>{{mapping.investorId}}</td>

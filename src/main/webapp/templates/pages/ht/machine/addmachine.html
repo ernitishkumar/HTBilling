@@ -40,7 +40,7 @@
 			</h1>
 		</div>
 		<form name="machineForm" id="machineForm"
-			ng-submit="addMachineCtrl.processForm()">
+			ng-submit="addMachineCtrl.processForm()" class="well">
 			<div class="form-group has-feedback">
 				<label>Enter Machine Code</label> <input class="form-control"
 					type="text" placeholder="Machine Code"
@@ -111,7 +111,7 @@
 						<option ng-repeat="investor in investors" value="{{investor.id}}">{{investor.name}}</option>
 				</select>
 			</div>
-			<div class="form-group ">
+			<div class="row">
 				<div class="col-md-6 ">
 					<button type="submit " class="btn btn-success btn-lg btn-block ">
 						<span class="glyphicon glyphicon-flash "></span> Add Machine!

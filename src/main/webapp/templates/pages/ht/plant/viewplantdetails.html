@@ -40,6 +40,7 @@
 	<div class="table-responsive">
 		<table class="table table-bordered table-hover">
 			<thead>
+				<th class="text-center success">S.No</th>
 				<th class="text-center success">Code</th>
 				<th class="text-center success">Name</th>
 				<th class="text-center success">Address</th>
@@ -61,6 +62,7 @@
 			</thead>
 			<tbody class="text-center">
 				<tr ng-repeat="plant in plants">
+				    <td>{{$index+1}}</td>
 					<td>{{plant.code}}</td>
 					<td>{{plant.name}}</td>
 					<td>{{plant.address}}</td>

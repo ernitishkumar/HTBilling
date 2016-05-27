@@ -78,20 +78,20 @@ angular.module("htBillingApp").controller('ViewMeterDetailsController', ['$http'
 	/*
 	 * function to delete selected meter
 	 */
-	this.remove = function(meter){
+	this.remove = function(index){
 		$http(
 				{
 					method: 'DELETE',
-					url: 'backend/meter/'+meter.meterNo
+					url: 'backend/meter/'+$scope.meters[index].meterNo
 				}
 		).then(
 				function (response) {
 					var status = response.status;
 					if(status === 200){
 						var deletedMeter = response.data;
-						var index = $scope.meters.indexOf(deletedMeter);
-						if(index != -1){
-							$scope.meters.slice(index,1);
+						console.log(deletedMeter);
+						if(deletedMeter !== null){
+							$scope.meters.splice(index,1);
 						}
 					}
 				},

@@ -71,10 +71,12 @@ public class MeterDetailsDAO {
 		try {
 			deletedMeter = getByMeterNo(meterNo.trim());
 			PreparedStatement ps = connection
-					.prepareStatement("delete from meter_details where meter_no="+meterNo);
+					.prepareStatement("delete from meter_details where meter_no=?");
+			ps.setString(1, meterNo);
 			ps.executeUpdate();
 			ps.close();
 		} catch (SQLException e) {
+			deletedMeter = null;
 			System.out.println("Exception in class : MeterDetailsDAO : method : [delete(String)] "+ e);
 		}
 		return deletedMeter;

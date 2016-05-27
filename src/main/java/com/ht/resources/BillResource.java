@@ -113,7 +113,7 @@ public class BillResource {
 				float activeAmount = activeConsumption * activeRate;
 				float reactiveAmount = reactiveConsumption * reactiveRate;
 
-				float totalAmount = activeAmount + reactiveAmount;
+				float totalAmount = activeAmount - reactiveAmount;
 				float totalAmountRoundOff = Math.round (totalAmount);
 
 				billDetails.setTotalKWH(activeConsumption);

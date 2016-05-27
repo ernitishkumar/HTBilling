@@ -19,6 +19,8 @@ public class AllExceptionMapper implements ExceptionMapper<Exception>{
 
 	@Override
 	public Response toResponse(Exception exception) {
+		System.out.println("Printing Exception occured : "+exception.getMessage());
+		exception.printStackTrace();
 		ErrorBean errorBean = new ErrorBean(exception.getMessage());
 		return Response.status(Status.BAD_REQUEST)
 			   .entity(errorBean)

@@ -114,7 +114,7 @@ public class BillResource {
 				float reactiveAmount = reactiveConsumption * reactiveRate;
 
 				float totalAmount = activeAmount + reactiveAmount;
-				float totalAmountRoundOff = Math.round(totalAmount);
+				float totalAmountRoundOff = Math.round (totalAmount);
 
 				billDetails.setTotalKWH(activeConsumption);
 				billDetails.setTotalRKVH(reactiveConsumption);

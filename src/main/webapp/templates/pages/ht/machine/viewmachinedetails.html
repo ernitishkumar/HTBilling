@@ -55,7 +55,8 @@
 				<th class="text-center success">Delete</th>
 			</thead>
 			<tbody class="text-center">
-				<tr ng-repeat="machine in machines">
+				<tr dir-paginate="machine in machines | itemsPerPage: pageSize"
+					current-page="currentPage">
 					<td>{{$index+1}}</td>
 					<td>{{machine.code}}</td>
 					<td>{{machine.capacity}}</td>
@@ -75,7 +76,10 @@
 			</tbody>
 		</table>
 	</div>
-
+	<div class="text-center">
+		<dir-pagination-controls boundary-links="true"
+			on-page-change="pageChangeHandler(newPageNumber)" template-url="js/angular/dirPagination.tpl.html"></dir-pagination-controls>
+	</div>
 </div>
 <br>
 <br>

@@ -79,7 +79,7 @@ angular.module("htBillingApp").controller('AddMeterController', ['$http', '$scop
 					if(status === 201){
 						var insertedMeter = response.data;
 						//$location.path("/saved/Meter Saved Successfully!");
-						alert("Meter Saved Successfully!");
+						bootbox.alert("Meter Saved Successfully!");
 						$scope.clearForm();
 					}
 				},

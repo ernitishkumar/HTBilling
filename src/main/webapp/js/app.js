@@ -7,7 +7,7 @@
 	 * Getting core app object in app variable to be used through out this script in current's functions
 	 * scope.
 	 */
-	var app = angular.module('htBillingApp', ['ngRoute','LocalStorageModule']);
+	var app = angular.module('htBillingApp', ['ngRoute','ngAnimate','LocalStorageModule','angularUtils.directives.dirPagination']);
 
 	/*
 	 * Defining complete routing for the application and wiring them with appropriate pages.

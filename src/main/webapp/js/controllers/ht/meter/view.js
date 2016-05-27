@@ -79,26 +79,30 @@ angular.module("htBillingApp").controller('ViewMeterDetailsController', ['$http'
 	 * function to delete selected meter
 	 */
 	this.remove = function(index){
-		$http(
-				{
-					method: 'DELETE',
-					url: 'backend/meter/'+$scope.meters[index].meterNo
-				}
-		).then(
-				function (response) {
-					var status = response.status;
-					if(status === 200){
-						var deletedMeter = response.data;
-						console.log(deletedMeter);
-						if(deletedMeter !== null){
-							$scope.meters.splice(index,1);
+		bootbox.confirm("Are you sure to delete?",function(answer){
+			if(answer === true){
+				$http(
+						{
+							method: 'DELETE',
+							url: 'backend/meter/'+$scope.meters[index].meterNo
 						}
-					}
-				},
-				function(error){
-					console.log("Error while fetching all meters");
-					console.log(error);
-				}
-		);
+				).then(
+						function (response) {
+							var status = response.status;
+							if(status === 200){
+								var deletedMeter = response.data;
+								console.log(deletedMeter);
+								if(deletedMeter !== null){
+									$scope.meters.splice(index,1);
+								}
+							}
+						},
+						function(error){
+							console.log("Error while fetching all meters");
+							console.log(error);
+						}
+				);
+			}
+		});
 	};
 }]);

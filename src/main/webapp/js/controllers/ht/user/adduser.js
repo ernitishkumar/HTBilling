@@ -71,7 +71,7 @@ angular.module("htBillingApp").controller('AddUserController', ['$http', '$scope
 					//$location.path("/saved/Plant Saved Successfully!");
 					var status = response.status;
 					if(status === 201){
-						alert("User saved successfully.")
+						bootbox.alert("User saved successfully");
 						$scope.formData = {};	
 					}
 				},

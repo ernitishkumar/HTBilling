@@ -140,7 +140,7 @@ angular.module("htBillingApp").controller('AddPlantController', ['$http', '$scop
 					//$location.path("/saved/Plant Saved Successfully!");
 					var status = response.status;
 					if(status === 201){
-						alert("Plant saved successfully.")
+						bootbox.alert("Plant saved successfully.")
 						$scope.formData = {};	
 					}
 				},

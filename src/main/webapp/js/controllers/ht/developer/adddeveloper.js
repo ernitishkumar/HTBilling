@@ -70,7 +70,7 @@ angular.module("htBillingApp").controller('AddDeveloperController', ['$http', '$
 				function (response) {
 					var status = response.status;
 					if(status === 201){
-						alert("Developer Added.");
+						bootbox.alert("Developer Added.");
 						$scope.formData = {};	
 					}
 				},

@@ -54,8 +54,8 @@
 			<th class="text-center success">Delete</th>
 		</thead>
 		<tbody class="text-center">
-			<tr ng-repeat="meter in meters">
-			    <td>{{$index+1}}</td>
+			<tr dir-paginate="meter in meters | itemsPerPage: pageSize" current-page="currentPage">
+				<td>{{(currentPage-1)*pageSize + $index+1}}</td>
 				<td>{{meter.meterNo}}</td>
 				<td>{{meter.make}}</td>
 				<td>{{meter.category}}</td>
@@ -70,9 +70,14 @@
 				<td><a href="javascript:void(0);"><span
 						class="glyphicon glyphicon-pencil"></span></a></td>
 				<td><a href="javascript:void(0);"
-					ng-click="viewMeterDetailsCtrl.remove($index)"><span
+					ng-click="viewMeterDetailsCtrl.remove((currentPage - 1)*pageSize + $index)"><span
 						class="glyphicon glyphicon-trash"></span></a></td>
 			</tr>
 		</tbody>
 	</table>
+</div>
+<div class="text-center">
+	<dir-pagination-controls boundary-links="true"
+		on-page-change="pageChangeHandler(newPageNumber)"
+		template-url="js/angular/dirPagination.tpl.html"></dir-pagination-controls>
 </div>

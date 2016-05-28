@@ -6,6 +6,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+
+import com.ht.beans.MeterDetails;
 import com.ht.beans.Plant;
 import com.ht.utility.GlobalResources;
 
@@ -49,7 +51,8 @@ public class PlantsDAO {
 		return insertedPlant;
 	}
 	
-	public void update(Plant plant){
+	public Plant update(Plant plant){
+		Plant updatedPlant = null;
 		Connection connection = GlobalResources.getConnection();
 		try {
 			PreparedStatement ps = connection
@@ -75,9 +78,28 @@ public class PlantsDAO {
 			ps.setInt(19, plant.getId());
 			ps.executeUpdate();
 			ps.close();
+			updatedPlant = getById(plant.getId());
 		} catch (SQLException e) {
 			System.out.println("Exception in class : PlantDetailsDAO : method : [update(PlantDetails)] "+e);
 		}
+		return updatedPlant;
+	}
+	
+	public Plant delete(int id) {
+		Plant deletedPlant = null;
+		Connection connection = GlobalResources.getConnection();
+		try {
+			deletedPlant = getById(id);
+			PreparedStatement ps = connection
+					.prepareStatement("delete from plants where id=?");
+			ps.setInt(1, id);
+			ps.executeUpdate();
+			ps.close();
+		} catch (SQLException e) {
+			deletedPlant = null;
+			System.out.println("Exception in class : MeterDetailsDAO : method : [delete(String)] "+ e);
+		}
+		return deletedPlant;
 	}
 	
 	public Plant getById(int id){

@@ -125,7 +125,7 @@ angular.module("htBillingApp").controller('AddInvestorMappingController', ['$htt
 					//$location.path("/saved/Plant Saved Successfully!");
 					var status = response.status;
 					if(status === 201){
-						alert("Mapping saved successfully.")
+						bootbox.alert("Mapping saved successfully!");
 						$scope.formData = {};	
 						$scope.error = null;
 					}

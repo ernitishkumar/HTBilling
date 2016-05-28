@@ -57,7 +57,7 @@
 			<tbody class="text-center">
 				<tr dir-paginate="machine in machines | itemsPerPage: pageSize"
 					current-page="currentPage">
-					<td>{{$index+1}}</td>
+					<td>{{(currentPage-1)*pageSize + $index+1}}</td>
 					<td>{{machine.code}}</td>
 					<td>{{machine.capacity}}</td>
 					<td>{{machine.commissionedDate}}</td>
@@ -71,7 +71,7 @@
 					<td><a href="javascript:void(0);"><span
 							class="glyphicon glyphicon-pencil"></span></a></td>
 					<td><a href="javascript:void(0);"><span
-							class="glyphicon glyphicon-trash"></span></a></td>
+							class="glyphicon glyphicon-trash" ng-click="viewMachineDetailsCtrl.remove((currentPage - 1)*pageSize + $index)"></span></a></td>
 				</tr>
 			</tbody>
 		</table>

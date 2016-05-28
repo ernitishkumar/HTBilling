@@ -69,7 +69,7 @@ angular.module("htBillingApp").controller('AddInvestorController', ['$http', '$s
 				function (response) {
 					var status = response.status;
 					if(status === 201){
-						alert("Investor added successfully.");
+						bootbox.alert("Investor added successfully.");
 						$scope.formData = {};
 					}
 				},

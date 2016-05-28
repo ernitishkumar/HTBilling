@@ -204,10 +204,6 @@ angular.module("htBillingApp").controller('MeterReadingController', ['$http', '$
 		}
 
 	};
-
-	function validateActiveEnergy(){
-	  return ;	
-	}
 	
 	this.isReadingValid = function(input1,input2){
 		if(input1 === null || input1 === undefined){

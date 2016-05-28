@@ -174,7 +174,7 @@ angular.module("htBillingApp").controller('AddMachineController', ['$http', '$sc
 				function (response) {
 					var status = response.status;
 					if(status === 201){
-						alert("Machine saved successfully.");
+						bootbox.alert("Machine saved successfully.");
 						$scope.formData = {};
 						$scope.error = null;
 					}

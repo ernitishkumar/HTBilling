@@ -6,6 +6,7 @@ package com.ht.resources;
 import java.util.ArrayList;
 
 import javax.ws.rs.Consumes;
+import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
@@ -91,5 +92,22 @@ public class PlantResource {
 	public ArrayList<Plant> getAllPlants(){
 		System.out.println("Getting all plants");
 		return plantsDAO.getAll();
+	}
+	
+	@DELETE
+	@Path("/{id}")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response deletePlant(@PathParam("id")int id){
+		Plant deletedPlant = null;
+		deletedPlant = plantsDAO.delete(id);
+		if(deletedPlant != null){
+			return Response.status(Status.OK)
+					.entity(deletedPlant)
+					.build();
+		}else{
+			return Response.status(Status.EXPECTATION_FAILED)
+					.entity(new ErrorBean("Unable to delete plant."))
+					.build();
+		}
 	}
 }

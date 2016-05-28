@@ -82,4 +82,33 @@ angular.module("htBillingApp").controller('ViewPlantDetailsController', ['$http'
 		);
 	}
 
+	/*
+	 * function to delete selected meter
+	 */
+	this.remove = function(index){
+		bootbox.confirm("Are you sure to delete plant?",function(answer){
+			if(answer === true){
+				$http(
+						{
+							method: 'DELETE',
+							url: 'backend/plants/'+$scope.plants[index].id
+						}
+				).then(
+						function (response) {
+							var status = response.status;
+							if(status === 200){
+								var deletedPlant = response.data;
+								if(deletedPlant !== null){
+									$scope.plants.splice(index,1);
+								}
+							}
+						},
+						function(error){
+							console.log("Error while fetching all meters");
+							console.log(error);
+						}
+				);
+			}
+		});
+	};
 }]);

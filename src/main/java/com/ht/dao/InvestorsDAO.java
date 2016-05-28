@@ -76,6 +76,22 @@ public class InvestorsDAO {
 		return updatedInvestor;
 	}
 	
+	public Investor delete(int id){
+		Investor deletedInvestor = null;
+		Connection connection = GlobalResources.getConnection();
+		try {
+			deletedInvestor = getById(id);
+			PreparedStatement ps = connection
+					.prepareStatement("delete from investors where id=?");
+			ps.setInt(1, id);
+			ps.executeUpdate();
+			ps.close();
+		} catch (SQLException e) {
+			System.out.println("Exception in class : InvestorDAO : method : [update(Investor)] "+e);
+		}
+		return deletedInvestor;
+	}
+	
 	public ArrayList<Investor> getAll(){
 		ArrayList<Investor> investorList = new ArrayList<Investor>();
 		Connection connection = GlobalResources.getConnection();

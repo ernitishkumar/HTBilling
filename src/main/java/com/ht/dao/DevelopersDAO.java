@@ -69,6 +69,21 @@ public class DevelopersDAO {
 		return updatedDeveloper;
 	}
 	
+	public Developer delete(int id){
+		Developer deletedDeveloper = null;
+		Connection connection = GlobalResources.getConnection();
+		try {
+			deletedDeveloper = getById(id);
+			PreparedStatement ps = connection.prepareStatement("delete from developers where id =?");
+			ps.setInt(1, id);
+			ps.executeUpdate();
+			ps.close();
+		} catch (SQLException e) {
+			System.out.println("Exception in class : DevelpersDAO : method : [update(Developer)] "+e.getMessage());
+		}
+		return deletedDeveloper;
+	}
+	
 	public ArrayList<Developer> getAllDevelopers(){
 		Connection connection = GlobalResources.getConnection();
 		ArrayList<Developer> developersArray = new ArrayList<Developer>();

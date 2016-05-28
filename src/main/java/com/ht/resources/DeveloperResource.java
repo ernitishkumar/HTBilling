@@ -6,9 +6,11 @@ package com.ht.resources;
 import java.util.ArrayList;
 
 import javax.ws.rs.Consumes;
+import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
@@ -62,6 +64,23 @@ public class DeveloperResource {
 	public ArrayList<UserRoles> getDeveloperUsername(){
 		System.out.println("GET All getDeveloperUsername started");
 		return userRolesDAO.getByDeveloperRole();
+	}
+	
+	@DELETE
+	@Path("/{id}")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response deleteDeveloper(@PathParam("id")int id){
+		Developer deletedDeveloper = null;
+		deletedDeveloper = developersDAO.delete(id);
+		if(deletedDeveloper != null){
+			return Response.status(Status.OK)
+					.entity(deletedDeveloper)
+					.build();
+		}else{
+			return Response.status(Status.EXPECTATION_FAILED)
+					.entity(new ErrorBean("Unable to delete developer"))
+					.build();
+		}
 	}
 	
 }

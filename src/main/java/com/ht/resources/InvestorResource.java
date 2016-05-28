@@ -6,6 +6,7 @@ package com.ht.resources;
 import java.util.ArrayList;
 
 import javax.ws.rs.Consumes;
+import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
@@ -184,4 +185,20 @@ public class InvestorResource {
 		}	
 	}
 
+	@DELETE
+	@Path("/{id}")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response deleteInvestor(@PathParam("id")int id){
+		Investor deletedInvestor = null;
+		deletedInvestor = investorsDAO.delete(id);
+		if(deletedInvestor != null){
+			return Response.status(Status.OK)
+					.entity(deletedInvestor)
+					.build();
+		}else{
+			return Response.status(Status.EXPECTATION_FAILED)
+					.entity(new ErrorBean("Unable to delete investor"))
+					.build();
+		}
+	}
 }

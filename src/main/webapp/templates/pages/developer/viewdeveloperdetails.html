@@ -56,7 +56,8 @@
 				<th class="text-center success">Delete</th>
 			</thead>
 			<tbody class="text-center">
-				<tr ng-repeat="developer in developers">
+				<tr dir-paginate="developer in developers | itemsPerPage:
+					pageSize" current-page="currentPage">
 					<td>{{$index + 1}}</td>
 					<td>{{developer.name}}</td>
 					<td>{{developer.cin}}</td>
@@ -73,13 +74,20 @@
 							class="glyphicon glyphicon-pencil"> </span>
 					</a></td>
 					<td><a href="javascript:void(0);"> <span
-							class="glyphicon glyphicon-trash"> </span>
+							class="glyphicon glyphicon-trash"
+							ng-click="viewDeveloperDetailsCtrl.remove((currentPage- 1)*pageSize + $index)">
+						</span>
 					</a></td>
 				</tr>
 			</tbody>
 		</table>
 	</div>
-
+	<div class="text-center">
+		<dir-pagination-controls boundary-links="true"
+			on-page-change="pageChangeHandler(newPageNumber)"
+			template-url="js/angular/dirPagination.tpl.html">
+		</dir-pagination-controls>
+	</div>
 </div>
 <br>
 <br>

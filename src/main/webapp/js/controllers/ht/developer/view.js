@@ -77,4 +77,53 @@ angular.module("htBillingApp").controller('ViewDeveloperDetailsController', ['$h
 		);
 	}
 
+	/*
+	 * function to delete selected meter
+	 */
+	this.remove = function(index){
+		bootbox.confirm("Are you sure to delete this developer?",function(answer){
+			if(answer === true){
+				$http(
+						{
+							method: 'DELETE',
+							url: 'backend/developers/'+$scope.developers[index].id
+						}
+				).then(
+						function (response) {
+							var status = response.status;
+							if(status === 200){
+								var deletedDeveloper = response.data;
+								if(deletedDeveloper !== null){
+									$scope.developers.splice(index,1);
+								}
+							}
+						},
+						function(error){
+							console.log("Error while deleting developer");
+							console.log(error);
+						}
+				);
+			}
+		});
+	};
+	
+	/*
+	 * variable currentPage to hold value for currentpage
+	 * required for pagination
+	 */
+	$scope.currentPage = 1;
+	
+	/*
+	 * variable pageSize to hold value for currentpage
+	 * required for pagination
+	 */
+	$scope.pageSize = 10;
+	
+	/*
+	 * function pageChangeHandler gets executed when user
+	 * changes page from the pagination row
+	 */
+	$scope.pageChangeHandler = function(num) {
+	      console.log('page changed to ' + num);
+	  };
 }]);

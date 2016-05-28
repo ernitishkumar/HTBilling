@@ -74,4 +74,54 @@ angular.module("htBillingApp").controller('ViewInvestorDetailsController', ['$ht
 				}
 		);
 	}
+	
+	/*
+	 * function to delete selected meter
+	 */
+	this.remove = function(index){
+		bootbox.confirm("Are you sure to delete this Investor?",function(answer){
+			if(answer === true){
+				$http(
+						{
+							method: 'DELETE',
+							url: 'backend/investors/'+$scope.investors[index].id
+						}
+				).then(
+						function (response) {
+							var status = response.status;
+							if(status === 200){
+								var deletedInvestor = response.data;
+								if(deletedInvestor !== null){
+									$scope.investors.splice(index,1);
+								}
+							}
+						},
+						function(error){
+							console.log("Error while deleting Investor");
+							console.log(error);
+						}
+				);
+			}
+		});
+	};
+	
+	/*
+	 * variable currentPage to hold value for currentpage
+	 * required for pagination
+	 */
+	$scope.currentPage = 1;
+	
+	/*
+	 * variable pageSize to hold value for currentpage
+	 * required for pagination
+	 */
+	$scope.pageSize = 10;
+	
+	/*
+	 * function pageChangeHandler gets executed when user
+	 * changes page from the pagination row
+	 */
+	$scope.pageChangeHandler = function(num) {
+	      console.log('page changed to ' + num);
+	  };
 }]);

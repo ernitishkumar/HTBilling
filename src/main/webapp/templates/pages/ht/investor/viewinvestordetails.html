@@ -59,7 +59,10 @@
 				<th class="text-center success">Delete</th>
 			</thead>
 			<tbody class="text-center">
-				<tr ng-repeat="investor in investors">
+				<tr
+					dir-paginate="investor in investors | itemsPerPage:
+					pageSize"
+					current-page="currentPage">
 					<td>{{$index+1}}</td>
 					<td>{{investor.code}}</td>
 					<td>{{investor.name}}</td>
@@ -78,12 +81,18 @@
 					<td><a href="javascript:void(0);"><span
 							class="glyphicon glyphicon-pencil"></span></a></td>
 					<td><a href="javascript:void(0);"><span
-							class="glyphicon glyphicon-trash"></span></a></td>
+							class="glyphicon glyphicon-trash"
+							ng-click="viewInvestorDetailsCtrl.remove((currentPage- 1)*pageSize + $index)"></span></a></td>
 				</tr>
 			</tbody>
 		</table>
 	</div>
-
+	<div class="text-center">
+		<dir-pagination-controls boundary-links="true"
+			on-page-change="pageChangeHandler(newPageNumber)"
+			template-url="js/angular/dirPagination.tpl.html">
+		</dir-pagination-controls>
+	</div>
 </div>
 <br>
 <br>

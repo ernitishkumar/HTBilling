@@ -69,6 +69,23 @@ public class MachinesDAO {
 		return updatedMachine;
 	}
 	
+	public Machine delete(int id){
+		Connection connection = GlobalResources.getConnection();
+		Machine deletedMachine = null;
+		try {
+			deletedMachine = getById(id);
+			PreparedStatement ps = connection
+					.prepareStatement("delete from machines where id=?");
+			ps.setInt(1, id);
+			ps.executeUpdate();
+			ps.close();
+			
+		} catch (SQLException e) {
+			System.out.println("Exception in class : MachineDAO : method : [update(Machine)] "+e);
+		}
+		return deletedMachine;
+	}
+	
 	public ArrayList<Machine> getAll(){
 		ArrayList<Machine> machineList = new ArrayList<Machine>();
 		Connection connection = GlobalResources.getConnection();

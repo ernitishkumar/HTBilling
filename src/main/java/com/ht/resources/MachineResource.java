@@ -6,9 +6,11 @@ package com.ht.resources;
 import java.util.ArrayList;
 
 import javax.ws.rs.Consumes;
+import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
@@ -52,5 +54,22 @@ public class MachineResource {
 	public ArrayList<Machine> getAllMachines(){
 		System.out.println("GET All machines started");
 		return machinesDAO.getAll();
+	}
+	
+	@DELETE
+	@Path("/{id}")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response deleteMachine(@PathParam("id")int id){
+		Machine deletedMachine = null;
+		deletedMachine = machinesDAO.delete(id);
+		if(deletedMachine != null){
+			return Response.status(Status.OK)
+					.entity(deletedMachine)
+					.build();
+		}else{
+			return Response.status(Status.EXPECTATION_FAILED)
+					.entity(new ErrorBean("Unable to delete machine."))
+					.build();
+		}
 	}
 }

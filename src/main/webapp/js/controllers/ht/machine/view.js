@@ -77,6 +77,36 @@ angular.module("htBillingApp").controller('ViewMachineDetailsController', ['$htt
 	}
 
 	/*
+	 * function to delete selected meter
+	 */
+	this.remove = function(index){
+		bootbox.confirm("Are you sure to delete this Machine?",function(answer){
+			if(answer === true){
+				$http(
+						{
+							method: 'DELETE',
+							url: 'backend/machines/'+$scope.machines[index].id
+						}
+				).then(
+						function (response) {
+							var status = response.status;
+							if(status === 200){
+								var deletedMachine = response.data;
+								if(deletedMachine !== null){
+									$scope.machines.splice(index,1);
+								}
+							}
+						},
+						function(error){
+							console.log("Error while deleting Machine");
+							console.log(error);
+						}
+				);
+			}
+		});
+	};
+	
+	/*
 	 * variable currentPage to hold value for currentpage
 	 * required for pagination
 	 */

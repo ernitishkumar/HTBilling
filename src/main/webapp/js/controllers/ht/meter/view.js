@@ -79,7 +79,7 @@ angular.module("htBillingApp").controller('ViewMeterDetailsController', ['$http'
 	 * function to delete selected meter
 	 */
 	this.remove = function(index){
-		bootbox.confirm("Are you sure to delete?",function(answer){
+		bootbox.confirm("Are you sure to delete this meter?",function(answer){
 			if(answer === true){
 				$http(
 						{
@@ -98,7 +98,7 @@ angular.module("htBillingApp").controller('ViewMeterDetailsController', ['$http'
 							}
 						},
 						function(error){
-							console.log("Error while fetching all meters");
+							console.log("Error while deleting meter");
 							console.log(error);
 						}
 				);

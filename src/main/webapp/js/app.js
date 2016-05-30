@@ -39,6 +39,10 @@
 			templateUrl: 'templates/pages/ht/reading/meterreading.html',
 			controller: 'MeterReadingController',
 			controllerAs: 'readingCtrl'
+		}).when('/srfrenterreading', {
+			templateUrl: 'templates/pages/ht/reading/srfrmeterreading.html',
+			controller: 'SRFRMeterReadingController',
+			controllerAs: 'srfrreadingCtrl'
 		}).when('/saved/:message', {
 			templateUrl: 'templates/pages/ht/reading/metersaved.html',
 			controller: 'SaveController',

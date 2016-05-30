@@ -37,6 +37,8 @@ public class MeterReading {
 	private String discardedBy;
 	
 	private String discardedOn;
+	
+	private int srfrFlag;
 
 	public int getId() {
 		return id;
@@ -180,20 +182,33 @@ public class MeterReading {
 	public void setDiscardedOn(String discardedOn) {
 		this.discardedOn = discardedOn;
 	}
+	
+	
+
+	public int getSrfrFlag() {
+		return srfrFlag;
+	}
+
+	public void setSrfrFlag(int srfrFlag) {
+		this.srfrFlag = srfrFlag;
+	}
 
 	/* (non-Javadoc)
 	 * @see java.lang.Object#toString()
 	 */
+	
 	@Override
 	public String toString() {
-		return "MeterReading [id=" + id + ", meterNo=" + meterno + ", mf=" + mf + ", readingDate=" + readingDate
+		return "MeterReading [id=" + id + ", meterno=" + meterno + ", mf=" + mf + ", readingDate=" + readingDate
 				+ ", activeEnergy=" + activeEnergy + ", activeTodOne=" + activeTodOne + ", activeTodTwo=" + activeTodTwo
 				+ ", activeTodThree=" + activeTodThree + ", reactiveQuadrantOne=" + reactiveQuadrantOne
 				+ ", reactiveQuadrantTwo=" + reactiveQuadrantTwo + ", reactiveQuadrantThree=" + reactiveQuadrantThree
 				+ ", reactiveQuadrantFour=" + reactiveQuadrantFour + ", htCellValidation=" + htCellValidation
 				+ ", circleCellValidation=" + circleCellValidation + ", developerValidation=" + developerValidation
 				+ ", discardedFlag=" + discardedFlag + ", discardedBy=" + discardedBy + ", discardedOn=" + discardedOn
-				+ "]";
+				+ ", srfrFlag=" + srfrFlag + "]";
 	}
+
+	
 	
 }

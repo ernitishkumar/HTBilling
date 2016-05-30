@@ -1,0 +1,226 @@
+<div class="navbar navbar-fixed-top">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="javascript:void(0);">HTBilling</a>
+        </div>
+        <div class="collapse navbar-collapse" id="myNavbar">
+            <ul class="nav navbar-nav">
+                <li class="active"><a href="javascript:void(0);" ng-click="srfrreadingCtrl.loadHome()">Home</a></li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+                <li class="dropdown">
+                    <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-user"></span> {{user.name}}<strong class="caret"></strong></a>
+                    <ul class="dropdown-menu">
+                        <li>
+                            <a href="javascript:void(0);"><span class="glyphicon glyphicon-wrench"></span> Settings</a>
+                        </li>
+                        <li>
+                            <a href="javascript:void(0);" ng-click="srfrreadingCtrl.logout()"><span class="glyphicon glyphicon-off"></span> Logout</a>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+<br>
+<br>
+<div class="row">
+    <div class="col-md-6 col-md-offset-3">
+        <div class="page-header text-center">
+            <h1><span class="glyphicon glyphicon-certificate"></span> Enter Meter Readings</h1>
+        </div>
+
+        <!--Show error messages-->
+        <div align='center'>
+            <h3><span class="label label-danger" ng-show="error">{{error}}</span>
+        </h3>
+            <br>
+        </div>
+
+        <!--Form-->
+        <form name="meternoForm" id="meternoForm" ng-submit="srfrreadingCtrl.processForm(ae,td1,td2,td3,q1,q2,q3,q4)">
+            <div class="form-group has-feedback">
+                <span class="glyphicon glyphicon-asterisk">
+                </span>
+                <label for="meterno">Enter Meter No.</label>
+                <input type='text' name='meterno' id='meterno' class='form-control' ng-class="{validmeter:metervalid,invalidmeter:meternotvalid,unchecked:plainmeter}" placeholder="Enter Meter No." ng-model='srfrreadingCtrl.formData.meterno' ng-blur="srfrreadingCtrl.isValidMeterno()" ng-change="error=null" required>
+                <span class="glyphicon glyphicon-ok form-control-feedback" style="color:green" ng-show="metervalid"></span>
+                <span class="glyphicon glyphicon-remove form-control-feedback" style="color:red" ng-show="meternotvalid"></span>
+            </div>
+            <hr>
+            <div name="meterReadingPanel" ng-show="metervalid">
+                <div class="form-group">
+                    <!-- <span class="glyphicon glyphicon-star"></span> -->
+                    <label>Meter Location:  <span class="label label-default">{{formData.location|uppercase}}</span> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+                    Meter MF: <span class="label label-default">{{formData.mf}}</span></span>
+                    </label>
+                    <!-- <input class="form-control" type="text" readonly value="{{formData.location|uppercase}}"> -->
+                </div>
+                <!-- <div class="form-group">
+                    <span class="glyphicon glyphicon-star"></span>
+                    <label>Meter MF:         <span class="badge">{{formData.mf}}</span></label>
+                    <input class="form-control" type="text" value="{{formData.mf}}" readonly>
+                </div> -->
+                <div class="form-group">
+                    <span class="glyphicon glyphicon-calendar"></span>
+                    <label>Select Date:</label>
+                    <div class='input-group date' id='datetimepicker1'>
+                        <input type='date' class="form-control" ng-model="srfrreadingCtrl.formData.date" required/>
+                        <span class="input-group-addon">
+                        <span class="glyphicon glyphicon-calendar"></span>
+                        </span>
+                    </div>
+                </div>
+                <div class="form-group has-feedback">
+                    <span class="glyphicon glyphicon-pencil"></span>
+                    <label>Active Energy(KWH):</label>
+                    <input class="form-control" type="number" placeholder="Enter Current Month Active Energy" ng-model="srfrreadingCtrl.formData.activeEnergy" >
+                </div>
+                <div class="form-group has-feedback">
+                    <span class="glyphicon glyphicon-pencil"></span>
+                    <label>Enter Active Tod 1:</label>
+                    <input class="form-control" type="number" placeholder="Enter Current Month Tod 1" ng-model="srfrreadingCtrl.formData.activeTodOne" >
+                </div>
+                <div class="form-group has-feedback">
+                    <span class="glyphicon glyphicon-pencil"></span>
+                    <label>Enter Active Tod 2:</label>
+                    <input class="form-control" type="number" placeholder="Enter Current Month Tod 2" ng-model="srfrreadingCtrl.formData.activeTodTwo" >
+                </div>
+                <div class="form-group has-feedback">
+                    <span class="glyphicon glyphicon-pencil "></span>
+                    <label>Enter Active Tod 3:</label>
+                    <input class="form-control " type="number" placeholder="Enter Current Month Tod 3" ng-model="srfrreadingCtrl.formData.activeTodThree" >
+                </div>
+                <div class="form-group has-feedback">
+                    <span class="glyphicon glyphicon-pencil"></span>
+                    <label>Enter Reactive Quadrant 1:</label>
+                    <input class="form-control" type="number" placeholder="Enter Current Month Reactive Quadrant 1" ng-model="srfrreadingCtrl.formData.reactiveQuadrantOne" >
+                </div>
+                <div class="form-group has-feedback">
+                    <span class="glyphicon glyphicon-pencil"></span>
+                    <label>Enter Reactive Quadrant 2:</label>
+                    <input class="form-control" type="number" placeholder="Enter Current Month Reactive Quadrant 2" ng-model="srfrreadingCtrl.formData.reactiveQuadrantTwo" >
+                </div>
+                <div class="form-group has-feedback">
+                    <span class="glyphicon glyphicon-pencil "></span>
+                    <label>Enter Reactive Quadrant 3:</label>
+                    <input class="form-control " type="number" placeholder="Enter Current Month Reactive Quadrant 3" ng-model="srfrreadingCtrl.formData.reactiveQuadrantThree" >
+                </div>
+                <div class="form-group has-feedback">
+                    <span class="glyphicon glyphicon-pencil "></span>
+                    <label>Enter Reactive Quadrant 4:</label>
+                    <input class="form-control " type="number" placeholder="Enter Reactive Quadrant 4" ng-model="srfrreadingCtrl.formData.reactiveQuadrantFour" >
+                </div>
+                
+                Check Meter: <span class="label label-default">{{formData.checkMeterNo}}</span></span>
+                
+                <div class="form-group has-feedback">
+                    <span class="glyphicon glyphicon-pencil"></span>
+                    <label>Previous Check Meter Active Energy(KWH):</label>
+                    <input class="form-control" type="number" placeholder="Enter Previous Month Check Meter Active Energy" ng-model="srfrreadingCtrl.formData.preCheckActiveEnergy">
+                </div>
+                <div class="form-group has-feedback">
+                    <span class="glyphicon glyphicon-pencil"></span>
+                    <label>Previous Check Meter Active Tod 1:</label>
+                    <input class="form-control" type="number" placeholder="Enter Previous Month Check Meter Tod 1" ng-model="srfrreadingCtrl.formData.preCheckActiveTodOne">
+                </div>
+                <div class="form-group has-feedback">
+                    <span class="glyphicon glyphicon-pencil"></span>
+                    <label>Previous Check Meter Active Tod 2:</label>
+                    <input class="form-control" type="number" placeholder="Enter Previous Month Check Meter Tod 2" ng-model="srfrreadingCtrl.formData.preCheckActiveTodTwo">
+                </div>
+                <div class="form-group has-feedback">
+                    <span class="glyphicon glyphicon-pencil "></span>
+                    <label>Previous Check Meter Active Tod 3:</label>
+                    <input class="form-control " type="number" placeholder="Enter Previous Month Check Meter Tod 3" ng-model="srfrreadingCtrl.formData.preCheckActiveTodThree">
+                </div>
+                <div class="form-group has-feedback">
+                    <span class="glyphicon glyphicon-pencil"></span>
+                    <label>Previous Check Meter Reactive Quadrant 1:</label>
+                    <input class="form-control" type="number" placeholder="Enter Previous Month Check Meter Reactive Quadrant 1" ng-model="srfrreadingCtrl.formData.preCheckReactiveQuadrantOne">
+                </div>
+                <div class="form-group has-feedback">
+                    <span class="glyphicon glyphicon-pencil"></span>
+                    <label>Previous Check Meter Reactive Quadrant 2:</label>
+                    <input class="form-control" type="number" placeholder="Enter Previous Month Check Meter Reactive Quadrant 2" ng-model="srfrreadingCtrl.formData.preCheckReactiveQuadrantTwo" >
+                </div>
+                <div class="form-group has-feedback">
+                    <span class="glyphicon glyphicon-pencil "></span>
+                    <label>Previous Check Meter Reactive Quadrant 3:</label>
+                    <input class="form-control " type="number" placeholder="Enter Previous Month Check Meter Reactive Quadrant 3" ng-model="srfrreadingCtrl.formData.preCheckReactiveQuadrantThree" >
+                </div>
+                <div class="form-group has-feedback">
+                    <span class="glyphicon glyphicon-pencil "></span>
+                    <label>Previous Check Meter Reactive Quadrant 4:</label>
+                    <input class="form-control " type="number" placeholder="Enter Previous Month Check Meter Reactive Quadrant 4" ng-model="srfrreadingCtrl.formData.preCheckReactiveQuadrantFour" >
+                </div>
+                <div class="form-group has-feedback">
+                    <span class="glyphicon glyphicon-pencil"></span>
+                    <label>Current Check Meter Active Energy(KWH):</label>
+                    <input class="form-control" type="number" placeholder="Enter Current Month Check Meter Active Energy" ng-model="srfrreadingCtrl.formData.curCheckActiveEnergy">
+                </div>
+                <div class="form-group has-feedback">
+                    <span class="glyphicon glyphicon-pencil"></span>
+                    <label>Current Check Meter Active Tod 1:</label>
+                    <input class="form-control" type="number" placeholder="Enter Current Month Check Meter Tod 1" ng-model="srfrreadingCtrl.formData.curCheckActiveTodOne" >
+                </div>
+                <div class="form-group has-feedback">
+                    <span class="glyphicon glyphicon-pencil"></span>
+                    <label>Current Check Meter Active Tod 2:</label>
+                    <input class="form-control" type="number" placeholder="Enter Current Month Check Meter Tod 2" ng-model="srfrreadingCtrl.formData.curCheckActiveTodTwo" >
+                </div>
+                <div class="form-group has-feedback">
+                    <span class="glyphicon glyphicon-pencil "></span>
+                    <label>Current Check Meter Active Tod 3:</label>
+                    <input class="form-control " type="number" placeholder="Enter Current Month Check Meter Tod 3" ng-model="srfrreadingCtrl.formData.curCheckActiveTodThree" >
+                </div>
+                <div class="form-group has-feedback">
+                    <span class="glyphicon glyphicon-pencil"></span>
+                    <label>Current Check Meter Reactive Quadrant 1:</label>
+                    <input class="form-control" type="number" placeholder="Enter Current Month Check Meter Reactive Quadrant 1" ng-model="srfrreadingCtrl.formData.curCheckReactiveQuadrantOne" >
+                </div>
+                <div class="form-group has-feedback">
+                    <span class="glyphicon glyphicon-pencil"></span>
+                    <label>Current Check Meter Reactive Quadrant 2:</label>
+                    <input class="form-control" type="number" placeholder="Enter Current Month Check Meter Reactive Quadrant 2" ng-model="srfrreadingCtrl.formData.curCheckReactiveQuadrantTwo" >
+                </div>
+                <div class="form-group has-feedback">
+                    <span class="glyphicon glyphicon-pencil "></span>
+                    <label>Current Check Meter Reactive Quadrant 3:</label>
+                    <input class="form-control " type="number" placeholder="Enter Current Month Check Meter Reactive Quadrant 3" ng-model="srfrreadingCtrl.formData.curCheckReactiveQuadrantThree" >
+                </div>
+                <div class="form-group has-feedback">
+                    <span class="glyphicon glyphicon-pencil "></span>
+                    <label>Current Check Meter Reactive Quadrant 4:</label>
+                    <input class="form-control " type="number" placeholder="Enter Current Month Check Meter Reactive Quadrant 4" ng-model="srfrreadingCtrl.formData.curCheckReactiveQuadrantFour" >
+                </div>
+                
+                <div class="form-group ">
+                    <div class="col-md-6 ">
+                        <button type="submit " class="btn btn-success btn-lg btn-block ">
+                            <span class="glyphicon glyphicon-flash "></span> Submit Reading!
+                        </button>
+                    </div>
+                    <div class="col-md-6 ">
+                        <button class="btn btn-danger btn-lg btn-block " type="reset" ng-click="readingCtrl.clearForm();ae=aen=td1=td1n=td2=td2n=td3=td3n=q1=q1n=q2=q2n=q3=q3n=q4=q4n=false">
+                            Clear
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </form>
+        <br>
+        <br>
+        <br>
+        <div>
+            <br>
+            <hr>
+        </div>
+    </div>
+</div>

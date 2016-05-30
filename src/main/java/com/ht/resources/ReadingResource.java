@@ -3,8 +3,10 @@
  */
 package com.ht.resources;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 
 import javax.ws.rs.Consumes;
@@ -24,6 +26,7 @@ import com.ht.beans.ErrorBean;
 import com.ht.beans.MessageBean;
 import com.ht.beans.MeterReading;
 import com.ht.beans.Plant;
+import com.ht.beans.SRFRReadings;
 import com.ht.beans.ViewMeterReadings;
 import com.ht.dao.ConsumptionsDAO;
 import com.ht.dao.DevelopersDAO;
@@ -86,8 +89,18 @@ public class ReadingResource {
 			viewMeterReadings.setPlant(p);
 			viewMeterReadings.setDeveloper(developersDAO.getById(p.getDeveloperId()));
 			MeterReading currentMonthReading = meterReadingsDAO.getCurrentMonthMeterReadings(meterNo);
-			viewMeterReadings.setPreviousMeterReading(meterReadingsDAO.getPreviousMonthMeterReadings(meterNo));
-			viewMeterReadings.setCurrentMeterReading(currentMonthReading);
+			System.out.println(p.getCheckMeterNo());
+			if(currentMonthReading.getSrfrFlag()==1){
+				System.out.println("inside if of SR FR" );
+				String checkMeterNo = p.getCheckMeterNo();
+				viewMeterReadings.setMeterNo(checkMeterNo);
+				currentMonthReading = meterReadingsDAO.getCurrentMonthMeterReadings(checkMeterNo);
+				viewMeterReadings.setPreviousMeterReading(meterReadingsDAO.getPreviousMonthMeterReadings(checkMeterNo));
+				viewMeterReadings.setCurrentMeterReading(currentMonthReading);
+			}else{
+				viewMeterReadings.setPreviousMeterReading(meterReadingsDAO.getPreviousMonthMeterReadings(meterNo));
+				viewMeterReadings.setCurrentMeterReading(currentMonthReading);
+			}
 			if(currentMonthReading != null && currentMonthReading.getDeveloperValidation() == 1){
 				viewMeterReadings.setConsumption(consumptionDAO.getByMeterReadingId(currentMonthReading.getId()));
 			}
@@ -114,8 +127,18 @@ public class ReadingResource {
 				viewMeterReadings.setPlant(p);
 				viewMeterReadings.setDeveloper(developersDAO.getById(p.getDeveloperId()));
 				MeterReading currentMonthReading = meterReadingsDAO.getCurrentMonthMeterReadings(meterNo);
-				viewMeterReadings.setPreviousMeterReading(meterReadingsDAO.getPreviousMonthMeterReadings(meterNo));
-				viewMeterReadings.setCurrentMeterReading(currentMonthReading);
+				System.out.println(p.getCheckMeterNo());
+				if(currentMonthReading.getSrfrFlag()==1){
+					System.out.println("inside if of SR FR" );
+					String checkMeterNo = p.getCheckMeterNo();
+					viewMeterReadings.setMeterNo(checkMeterNo);
+					currentMonthReading = meterReadingsDAO.getCurrentMonthMeterReadings(checkMeterNo);
+					viewMeterReadings.setPreviousMeterReading(meterReadingsDAO.getPreviousMonthMeterReadings(checkMeterNo));
+					viewMeterReadings.setCurrentMeterReading(currentMonthReading);
+				}else{
+					viewMeterReadings.setPreviousMeterReading(meterReadingsDAO.getPreviousMonthMeterReadings(meterNo));
+					viewMeterReadings.setCurrentMeterReading(currentMonthReading);
+				}
 				if(currentMonthReading != null && currentMonthReading.getDeveloperValidation() == 1){
 					viewMeterReadings.setConsumption(consumptionDAO.getByMeterReadingId(currentMonthReading.getId()));
 				}
@@ -144,8 +167,18 @@ public class ReadingResource {
 				viewMeterReadings.setPlant(p);
 				viewMeterReadings.setDeveloper(developersDAO.getById(p.getDeveloperId()));
 				MeterReading currentMonthReading = meterReadingsDAO.getCurrentMonthMeterReadings(meterNo);
-				viewMeterReadings.setPreviousMeterReading(meterReadingsDAO.getPreviousMonthMeterReadings(meterNo));
-				viewMeterReadings.setCurrentMeterReading(currentMonthReading);
+				System.out.println(p.getCheckMeterNo());
+				if(currentMonthReading.getSrfrFlag()==1){
+					System.out.println("inside if of SR FR" );
+					String checkMeterNo = p.getCheckMeterNo();
+					viewMeterReadings.setMeterNo(checkMeterNo);
+					currentMonthReading = meterReadingsDAO.getCurrentMonthMeterReadings(checkMeterNo);
+					viewMeterReadings.setPreviousMeterReading(meterReadingsDAO.getPreviousMonthMeterReadings(checkMeterNo));
+					viewMeterReadings.setCurrentMeterReading(currentMonthReading);
+				}else{
+					viewMeterReadings.setPreviousMeterReading(meterReadingsDAO.getPreviousMonthMeterReadings(meterNo));
+					viewMeterReadings.setCurrentMeterReading(currentMonthReading);
+				}
 				if(currentMonthReading != null && currentMonthReading.getDeveloperValidation() == 1){
 					viewMeterReadings.setConsumption(consumptionDAO.getByMeterReadingId(currentMonthReading.getId()));
 				}
@@ -172,8 +205,18 @@ public class ReadingResource {
 			viewMeterReadings.setPlant(plant);
 			viewMeterReadings.setDeveloper(developersDAO.getById(plant.getDeveloperId()));
 			MeterReading currentMonthReading = meterReadingsDAO.getCurrentMonthMeterReadings(meterNo);
-			viewMeterReadings.setPreviousMeterReading(meterReadingsDAO.getPreviousMonthMeterReadings(meterNo));
-			viewMeterReadings.setCurrentMeterReading(currentMonthReading);
+			System.out.println(plant.getCheckMeterNo());
+			if(currentMonthReading.getSrfrFlag()==1){
+				System.out.println("inside if of SR FR" );
+				String checkMeterNo = plant.getCheckMeterNo();
+				viewMeterReadings.setMeterNo(checkMeterNo);
+				currentMonthReading = meterReadingsDAO.getCurrentMonthMeterReadings(checkMeterNo);
+				viewMeterReadings.setPreviousMeterReading(meterReadingsDAO.getPreviousMonthMeterReadings(checkMeterNo));
+				viewMeterReadings.setCurrentMeterReading(currentMonthReading);
+			}else{
+				viewMeterReadings.setPreviousMeterReading(meterReadingsDAO.getPreviousMonthMeterReadings(meterNo));
+				viewMeterReadings.setCurrentMeterReading(currentMonthReading);
+			}
 			if(currentMonthReading != null && currentMonthReading.getDeveloperValidation() == 1){
 				viewMeterReadings.setConsumption(consumptionDAO.getBifercationFlagByPlantIdAndDate(plant.getId(),currentDate));
 			}		
@@ -208,4 +251,101 @@ public class ReadingResource {
 		}
 
 	}
+	
+	
+	
+	@POST
+	@Path("/srfr")
+	@Produces(MediaType.APPLICATION_JSON)
+	@Consumes(MediaType.APPLICATION_JSON)
+	public Response saveSRFRReading(SRFRReadings srfrReading){
+		System.out.println("saveReading called ");
+		MeterReading insertedReading = null;
+		MeterReading meterReading = new MeterReading();
+		MeterReading preCheckReading = new MeterReading();
+		MeterReading currCheckReading = new MeterReading();
+		meterReading.setMeterno(srfrReading.getMeterno());
+		meterReading.setMf(srfrReading.getMf());
+		meterReading.setReadingDate(srfrReading.getReadingDate());
+		meterReading.setActiveEnergy(srfrReading.getActiveEnergy());
+		meterReading.setActiveTodOne(srfrReading.getActiveTodOne());
+		meterReading.setActiveTodTwo(srfrReading.getActiveTodTwo());
+		meterReading.setActiveTodThree(srfrReading.getActiveTodThree());
+		meterReading.setReactiveQuadrantOne(srfrReading.getReactiveQuadrantOne());
+		meterReading.setReactiveQuadrantTwo(srfrReading.getReactiveQuadrantTwo());
+		meterReading.setReactiveQuadrantThree(srfrReading.getReactiveQuadrantThree());
+		meterReading.setReactiveQuadrantFour(srfrReading.getReactiveQuadrantFour());
+		meterReading.setSrfrFlag(1);
+		SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
+			Calendar c = Calendar.getInstance();
+			try {
+				c.setTime(formatter.parse(srfrReading.getReadingDate()));
+			} catch (ParseException e) {
+				e.printStackTrace();
+			}
+			c.add(Calendar.MONTH,-1);
+			int day = c.get(Calendar.DATE);
+			String readingDay= null;
+			if(day < 10){
+				readingDay = "0"+day;
+			}else{
+				readingDay = String.valueOf(day);
+			}
+			int year = c.get(Calendar.YEAR);
+			int month = c.get(Calendar.MONTH)+1;
+			String mon = null;
+			if (month < 10) {
+				mon  = "0"+month;
+			}
+			String dateTrim = readingDay+"-"+mon+"-"+year;
+		preCheckReading.setMeterno(srfrReading.getCheckMeterNo());
+		preCheckReading.setMf(srfrReading.getMf());
+		preCheckReading.setReadingDate(dateTrim);
+		preCheckReading.setActiveEnergy(srfrReading.getPreCheckActiveEnergy());
+		preCheckReading.setActiveTodOne(srfrReading.getPreCheckActiveTodOne());
+		preCheckReading.setActiveTodTwo(srfrReading.getPreCheckActiveTodTwo());
+		preCheckReading.setActiveTodThree(srfrReading.getPreCheckActiveTodThree());
+		preCheckReading.setReactiveQuadrantOne(srfrReading.getPreCheckReactiveQuadrantOne());
+		preCheckReading.setReactiveQuadrantTwo(srfrReading.getPreCheckReactiveQuadrantTwo());
+		preCheckReading.setReactiveQuadrantThree(srfrReading.getPreCheckReactiveQuadrantThree());
+		preCheckReading.setReactiveQuadrantFour(srfrReading.getPreCheckReactiveQuadrantFour());
+		preCheckReading.setSrfrFlag(1);
+		
+		currCheckReading.setMeterno(srfrReading.getCheckMeterNo());
+		currCheckReading.setMf(srfrReading.getMf());
+		currCheckReading.setReadingDate(srfrReading.getReadingDate());
+		currCheckReading.setActiveEnergy(srfrReading.getCurCheckActiveEnergy());
+		currCheckReading.setActiveTodOne(srfrReading.getCurCheckActiveTodOne());
+		currCheckReading.setActiveTodTwo(srfrReading.getCurCheckActiveTodTwo());
+		currCheckReading.setActiveTodThree(srfrReading.getCurCheckActiveTodThree());
+		currCheckReading.setReactiveQuadrantOne(srfrReading.getCurCheckReactiveQuadrantOne());
+		currCheckReading.setReactiveQuadrantTwo(srfrReading.getCurCheckReactiveQuadrantTwo());
+		currCheckReading.setReactiveQuadrantThree(srfrReading.getCurCheckReactiveQuadrantThree());
+		currCheckReading.setReactiveQuadrantFour(srfrReading.getCurCheckReactiveQuadrantFour());
+		currCheckReading.setSrfrFlag(1);
+		boolean isReadingAlreadyAdded = false;		
+		    isReadingAlreadyAdded = meterReadingsDAO.isReadingAlreadyAdded(meterReading);
+			if(!isReadingAlreadyAdded){
+				insertedReading = meterReadingsDAO.insert(meterReading);
+				meterReadingsDAO.insert(preCheckReading);
+				meterReadingsDAO.insert(currCheckReading);
+			}
+		if(insertedReading != null){
+			return Response.status(Status.CREATED)
+					.entity(insertedReading)
+					.build();
+		}else{
+			ErrorBean error = new ErrorBean();
+			if(isReadingAlreadyAdded){
+				error.setErrorMessage("Readings for meter already exists for this month.");
+			}
+			return Response.status(Status.EXPECTATION_FAILED)
+					.entity(error)
+					.build();
+		}
+		
+	}
+	
+	
+	
 }

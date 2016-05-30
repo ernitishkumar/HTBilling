@@ -44,9 +44,12 @@ public class PlantResource {
 		if(meterno != null){
 			MeterDetailsDAO meterDetailsDAO = new MeterDetailsDAO();
 			MeterDetails meterDetails = meterDetailsDAO.getByMeterNo(meterno);
+			System.out.println(meterDetails.getMake());
 			Plant plant = plantsDAO.getByMainMeterNo(meterno);
+			System.out.println(plant.getCode());
 			MeterReadingsDAO meterReadingsDAO = new MeterReadingsDAO();
 			MeterReading currentReadings = meterReadingsDAO.getLatestInsertedByMeterNo(meterno);
+			//System.out.println(currentReadings.getActiveEnergy());
 			if(meterDetails != null && plant != null){
 				meterData = new MeterData();
 				meterData.setMeter(meterDetails);

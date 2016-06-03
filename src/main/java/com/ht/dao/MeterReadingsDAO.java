@@ -58,7 +58,7 @@ public class MeterReadingsDAO {
 		if(reading != null){
 			try {
 				PreparedStatement ps = connection
-						.prepareStatement("insert into meter_readings(meter_no, mf, reading_date, active_reading, active_tod1, active_tod2, active_tod3, reactive_q1, reactive_q2, reactive_q3, reactive_q4, ht_cell_validation, circle_cell_validation, developer_validation, discarded_flag, discarded_by, discarded_on) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)",Statement.RETURN_GENERATED_KEYS);
+						.prepareStatement("insert into meter_readings(meter_no, mf, reading_date, active_reading, active_tod1, active_tod2, active_tod3, reactive_q1, reactive_q2, reactive_q3, reactive_q4, ht_cell_validation, circle_cell_validation, developer_validation, discarded_flag, discarded_by, discarded_on, sr_fr_flag) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)",Statement.RETURN_GENERATED_KEYS);
 				ps.setString(1, reading.getMeterno());
 				ps.setInt(2, reading.getMf());
 				ps.setString(3, reading.getReadingDate());
@@ -76,6 +76,7 @@ public class MeterReadingsDAO {
 				ps.setInt(15,0);
 				ps.setString(16,null);
 				ps.setString(17,null);
+				ps.setInt(18, reading.getSrfrFlag());
 				ps.executeUpdate();
 				ResultSet keys = ps.getGeneratedKeys();    
 				keys.next();  
@@ -97,7 +98,7 @@ public class MeterReadingsDAO {
 		if(reading != null){
 			try {
 				PreparedStatement ps = connection
-						.prepareStatement("update meter_readings set meter_no=?, mf=?, reading_date=?, active_reading=?, active_tod1=?, active_tod2=?, active_tod3=?, reactive_q1=?, reactive_q2=?, reactive_q3=?, reactive_q4=?, ht_cell_validation=?, circle_cell_validation=?, developer_validation=?, discarded_flag=?, discarded_by=?, discarded_on=? where id=?");
+						.prepareStatement("update meter_readings set meter_no=?, mf=?, reading_date=?, active_reading=?, active_tod1=?, active_tod2=?, active_tod3=?, reactive_q1=?, reactive_q2=?, reactive_q3=?, reactive_q4=?, ht_cell_validation=?, circle_cell_validation=?, developer_validation=?, discarded_flag=?, discarded_by=?, discarded_on=?, sr_fr_flag=? where id=?");
 				ps.setString(1, reading.getMeterno());
 				ps.setInt(2, reading.getMf());
 				ps.setString(3, reading.getReadingDate());
@@ -115,7 +116,8 @@ public class MeterReadingsDAO {
 				ps.setInt(15,reading.getDiscardedFlag());
 				ps.setString(16,reading.getDiscardedBy());
 				ps.setString(17,reading.getDiscardedOn());
-				ps.setInt(18, reading.getId());
+				ps.setInt(18, reading.getSrfrFlag());
+				ps.setInt(19, reading.getId());
 				ps.executeUpdate();
 				ps.close();
 			} catch (SQLException e) {
@@ -348,6 +350,7 @@ public class MeterReadingsDAO {
 				meterReadings.setDiscardedFlag(0);
 				meterReadings.setDiscardedBy("null");
 				meterReadings.setDiscardedOn("null");
+				meterReadings.setSrfrFlag(0);
 			}else{
 				meterReadings = readings.get(0);
 			}
@@ -391,6 +394,7 @@ public class MeterReadingsDAO {
 				meterReading.setCircleCellValidation(0);
 				meterReading.setDeveloperValidation(0);
 				meterReading.setDiscardedFlag(0);
+				meterReading.setSrfrFlag(0);
 			}
 		}catch (SQLException e)   {
 			System.out.println("Exception in class : MeterReadingsDAO : method : [getCurrentMonthMeterReadings(String,String)] "+e.getMessage());
@@ -447,6 +451,7 @@ public class MeterReadingsDAO {
 				meterReadings.setDiscardedFlag(0);
 				meterReadings.setDiscardedBy("null");
 				meterReadings.setDiscardedOn("null");
+				meterReadings.setSrfrFlag(0);
 			}else{
 				meterReadings = readings.get(0);
 			}
@@ -492,6 +497,7 @@ public class MeterReadingsDAO {
 				meterReading.setCircleCellValidation(0);
 				meterReading.setDeveloperValidation(0);
 				meterReading.setDiscardedFlag(0);
+				meterReading.setSrfrFlag(0);
 			}
 		}catch (SQLException e)   {
 			System.out.println("Exception in class : MeterReadingsDAO : method : [getPreviousMonthMeterReadings(String)] "+e.getMessage());
@@ -522,6 +528,7 @@ public class MeterReadingsDAO {
 				meterReading.setDiscardedFlag(resultSet.getInt(16));
 				meterReading.setDiscardedBy(resultSet.getString(17));
 				meterReading.setDiscardedOn(resultSet.getString(18));
+				meterReading.setSrfrFlag(resultSet.getInt(19));
 				readings.add(meterReading);
 			}
 		}catch(Exception e){

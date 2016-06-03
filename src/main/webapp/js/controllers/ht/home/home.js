@@ -51,6 +51,13 @@ angular.module("htBillingApp").controller('HomeController', ['$http', '$scope', 
     };
 
     /*
+     * loadSRFRReadingForm() function to route to enter srfrreading page
+     */
+    this.loadSRFRReadingForm = function () {
+        $location.path("/srfrenterreading");
+    };
+    
+    /*
      * loadMeterReadingViewPage() function to route to view meter readings page
      */
     this.loadMeterReadingViewPage = function () {

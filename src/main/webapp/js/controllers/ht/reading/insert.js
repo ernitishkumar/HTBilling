@@ -145,7 +145,8 @@ angular.module("htBillingApp").controller('MeterReadingController', ['$http', '$
 	this.processForm = function (ae,td1,td2,td3,q1,q2,q3,q4) {
 
 		if(ae && td1 && td2 && td3 && q1 && q2 && q3 && q4){
-			if(this.formData.activeEnergy !== (this.formData.activeTodOne + this.formData.activeTodTwo + this.formData.activeTodThree)){
+			var res = this.formData.activeTodOne + this.formData.activeTodTwo + this.formData.activeTodThree;
+			if(this.formData.activeEnergy.toFixed(2) !== res.toFixed(2)){
 				$scope.error = "Active Energy should be equal to sum of Tod 1, Tod 2, Tod 3";
 				return;
 			}

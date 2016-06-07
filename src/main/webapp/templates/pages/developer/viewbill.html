@@ -1,5 +1,6 @@
 <br>
 <br>
+<br>
 <div class="navbar navbar-fixed-top">
 	<div class="container">
 		<div class="navbar-header">
@@ -32,10 +33,10 @@
 		</div>
 	</div>
 </div>
-<div class="container">
+<div class="container" style="border:1px solid grey">
 	<div class="page-header text-center">
 		<h2>
-			<span class="glyphicon glyphicon-certificate"></span>Generated Bill
+			<span class="glyphicon glyphicon-certificate"></span>Power Purchase Bill
 		</h2>
 	</div>
 	<div class="row text-center">
@@ -144,8 +145,9 @@
 <br>
 <br>
 <div class="container">
-	<button class="btn btn-primary btn-lg" type="button"
+	<button class="NonPrintable" type="button"
 		ng-click="viewBillCtrl.back()">Back to Bifurcation Page</button>
+	<button class="NonPrintable" onclick="window.print()" style="float: right">Print Bill</button>
 </div>
 <br>
 <br>

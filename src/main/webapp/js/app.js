@@ -65,6 +65,10 @@
 			templateUrl: 'templates/pages/ht/plant/addplant.html',
 			controller: 'AddPlantController',
 			controllerAs: 'addPlantCtrl'
+		}).when('/plant/updateplant/:plantId', {
+			templateUrl: 'templates/pages/ht/plant/updateplant.html',
+			controller: 'UpdatePlantController',
+			controllerAs: 'updatePlantCtrl'
 		})
 		.when('/plant/view', {
 			templateUrl: 'templates/pages/ht/plant/viewplantdetails.html',

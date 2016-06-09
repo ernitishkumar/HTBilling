@@ -1,0 +1,191 @@
+<div class="navbar navbar-fixed-top">
+	<div class="container">
+		<div class="navbar-header">
+			<button type="button" class="navbar-toggle" data-toggle="collapse"
+				data-target="#myNavbar">
+				<span class="icon-bar"></span> <span class="icon-bar"></span> <span
+					class="icon-bar"></span>
+			</button>
+			<a class="navbar-brand" href="javascript:void(0);">HTBilling</a>
+		</div>
+		<div class="collapse navbar-collapse" id="myNavbar">
+			<ul class="nav navbar-nav">
+				<li class="active"><a href="javascript:void(0);"
+					ng-click="updatePlantCtrl.loadHome()">Home</a></li>
+			</ul>
+			<ul class="nav navbar-nav navbar-right">
+				<li class="dropdown"><a class="dropdown-toggle"
+					data-toggle="dropdown" href="javascript:void(0);"><span
+						class="glyphicon glyphicon-user"></span> {{user.name}}<strong
+						class="caret"></strong></a>
+					<ul class="dropdown-menu">
+						<li><a href="javascript:void(0);"><span
+								class="glyphicon glyphicon-wrench"></span> Settings</a></li>
+						<li><a href="javascript:void(0);"
+							ng-click="updatePlantCtrl.logout()"><span
+								class="glyphicon glyphicon-off"></span> Logout</a></li>
+					</ul></li>
+			</ul>
+		</div>
+	</div>
+</div>
+<br>
+<br>
+<div class="container">
+	<div class="col-md-6 col-md-offset-3">
+		<div class="page-header text-center">
+			<h1>
+				<span class="glyphicon glyphicon-certificate"></span> Update Plant
+				Details.
+			</h1>
+		</div>
+
+		<!--Show error messages -->
+        <div align='center'>
+            <h3><span class="label label-danger" ng-show="error">{{error}}</span>
+        </h3>
+            <br>
+        </div>
+		<!--Form-->
+		<form name="addPlantForm" id="addPlantForm"
+			ng-submit="updatePlantCtrl.processForm()" class="well">
+			<div class="form-group has-feedback">
+				<label>Enter Plant Code</label> <input class="form-control"
+					type="text" placeholder="Plant Code"
+					value="{{plant.code}}" ng-model="plant.code" required>
+			</div>
+			<div class="form-group">
+				<label>Name:</label> <input class="form-control" type="text"
+					placeholder="Name" value="{{plant.name}}" ng-model="plant.name"required>
+			</div>
+			<div class="form-group">
+				<label>Address:</label> <input class="form-control" type="text"
+					placeholder="Address" value="{{plant.address}}" ng-model="plant.address" required>
+			</div>
+			<div class="form-group">
+				<label>Contact No:</label> <input class="form-control" type="text"
+					placeholder="Contact No" value="{{plant.contactNo}}" ng-model="plant.contactNo" required>
+			</div>
+			<div class="form-group">
+				<label>Contact Person:</label> <input class="form-control"
+					type="text" placeholder="Contact Person"
+					value="{{plant.contactPerson}}" ng-model="plant.contactPerson" required>
+			</div>
+			<div class="form-group">
+				<label>email:</label> <input class="form-control" type="text"
+					placeholder="E-MAIL" value="{{plant.email}}" ng-model="plant.email"  required>
+			</div>
+			<div class="form-group">
+				<span class="glyphicon glyphicon-calendar"></span> <label>Commissioned
+					Date:</label>
+				<div class='input-group date'>
+					<input type='date' class="form-control" 
+						value="{{plant.commissionedDate}}" ng-model="plant.commissionedDate" required /> <span
+						class="input-group-addon"> <span
+						class="glyphicon glyphicon-calendar"></span>
+					</span>
+				</div>
+			</div>
+			<div class=" form-group ">
+				<label>Type:</label>
+				<select name="type" id="type" ng-model="plant.type" required>
+				<option value="{{plant.type}}" selected>{{plant.type}}</option>
+                        <option value="SOLAR">SOLAR</option>
+						<option value="WIND">WIND</option>
+				</select>
+			</div>
+			<div class="form-group">
+				<label>Circuit Voltage:</label> <input class="form-control"
+					type="text" placeholder="Circuit Voltage"
+					value="{{plant.circuitVoltage}}" ng-model="plant.circuitVoltage" required>
+			</div>
+			<div class="form-group">
+				<label>Injecting Substation:</label> <input class="form-control"
+					type="text" placeholder="Injecting Substation"
+					value="{{plant.injectingSubstation}}" ng-model="plant.injectingSubstation" required>
+			</div>
+			<div class="form-group">
+				<label>Feeder Name:</label> <input class="form-control" type="text"
+					placeholder="Feeder Name" value="{{plant.feederName}}" ng-model="plant.feederName" required>
+			</div> 
+			<div class="form-group">
+				<label>Region: &nbsp;</label> &nbsp;&nbsp;<select name="region" id="region"
+					ng-model="plant.region">
+					<option value="{{plant.region}}" selected>{{plant.region}}</option>
+					<option value="INDORE" selected>Indore</option>
+					<option value="UJJAIN">Ujjain</option>
+				</select>
+			</div>
+			<div class="form-group">
+				<label>Circle: &nbsp;&nbsp;&nbsp;</label> &nbsp;&nbsp;<select name="circle" id="circle"
+					ng-model="plant.circle">
+					<option value="{{plant.circle}}" selected>{{plant.circle}}</option>
+					<option value="Indore" >Indore</option>
+					<option value="Indore O&M" >Indore O&M</option>
+					<option value="Indore City" >Indore City</option>
+					<option value="Barwani" >Barwani</option>
+					<option value="Shajapur" >Shajapur</option>
+					<option value="Dwewas" >Dewas</option>
+					<option value="Burhanpur" >Burhanpur</option>
+					<option value="Khandwa" >Khandwa</option>
+					<option value="Mandsaur" >Mandsaur</option>
+					<option value="Neemuch" >Neemuch</option>
+					<option value="Ratlam" >Ratlam</option>
+					<option value="Ujjain" >Ujjain</option>
+					<option value="Dhar" >Dhar</option>
+					<option value="Jhabua" >Jhabua</option>
+					<option value="Khargone" >Khargone</option>
+				</select>
+			</div>
+			<div class="form-group">
+				<label>Division:</label> <input class="form-control" type="text"
+					placeholder="Division" value="{{plant.division}}" ng-model="plant.division" required>
+			</div>
+			<div class="form-group">
+				<label>Main Meter No:</label> &nbsp;&nbsp;<select name="mainMeterNo"
+					id="mainMeterNo" ng-model="plant.mainMeterNo">
+					<option value="{{plant.mainMeterNo}}" selected>{{plant.mainMeterNo}}</option>
+					<option ng-repeat="main in metersNotInUse" value="{{main.meterNo}}">{{main.meterNo}}</option>
+				</select>
+			</div>
+			<div class="form-group">
+				<label>Check Meter No:</label> &nbsp;&nbsp;<select
+					name="checkMeterNo" id="checkMeterNo"
+					ng-model="plant.checkMeterNo">
+					<option value="{{plant.checkMeterNo}}" selected>{{plant.checkMeterNo}}</option>
+					<option ng-repeat="check in metersNotInUse" value="{{check.meterNo}}">{{check.meterNo}}</option>
+					<option value="NA">NA</option>
+				</select>
+			</div>
+			<div class="form-group">
+				<label>Standby Meter No:</label> &nbsp;&nbsp;<select
+					name="standbyMeterNo" id="standbyMeterNo"
+					ng-model="plant.standByMeterNo">
+					<option value="{{plant.standByMeterNo}}" selected>{{plant.standByMeterNo}}</option>
+					<option ng-repeat="standby in metersNotInUse" value="{{standby.meterNo}}">{{standby.meterNo}}</option>
+					<option value="NA">NA</option>
+				</select>
+			</div>
+			<div class="form-group">
+				<label>Developer Name:</label> &nbsp;&nbsp; <select name="developerId"
+					id="developerId" ng-model="plant.developerId">
+					<option value="{{plant.developerId}}" selected >{{plant.developerId}}</option>
+					<option ng-repeat="developer in developers" value="{{developer.id}}">{{developer.name}}</option>
+				</select>
+			</div>
+			<div class="row">
+				<div class="col-md-6 ">
+					<button type="submit" class="btn btn-success btn-lg btn-block ">
+						<span class="glyphicon glyphicon-flash "></span> Update Plant!
+					</button>
+				</div>
+				<div class="col-md-6 ">
+					<button class="btn btn-danger btn-lg btn-block "
+						ng-click="updatePlantCtrl.backToView()">Cancel</button>
+				</div>
+			</div>
+		</form>
+	</div>
+</div>
+<br>
+<br>

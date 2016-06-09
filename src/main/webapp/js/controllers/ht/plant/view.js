@@ -111,4 +111,15 @@ angular.module("htBillingApp").controller('ViewPlantDetailsController', ['$http'
 			}
 		});
 	};
+	
+	/*
+	 * function to route to update plant page
+	 */
+	this.updatePage = function(i){
+		var plantId = $scope.plants[i].id;
+		console.log(plantId);
+		$location.path("/plant/updateplant/"+plantId);
+	};
+	
+	
 }]);

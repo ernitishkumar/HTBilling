@@ -68,6 +68,27 @@ public class PlantResource {
 	}
 	
 	@POST
+	@Path("/update")
+	@Produces(MediaType.APPLICATION_JSON)
+	@Consumes(MediaType.APPLICATION_JSON)
+	public Response update(Plant plant){
+		System.out.println("Adding Plant : "+plant);
+		Plant updatededPlant = null;
+		if(plant != null){
+			updatededPlant = plantsDAO.update(plant);
+		}
+		if(updatededPlant != null){
+			return Response.status(Status.CREATED)
+					.entity(updatededPlant)
+					.build();
+		}else{
+			return Response.status(Status.EXPECTATION_FAILED)
+					.entity(new ErrorBean("Unable to update plant. Try Again !"))
+					.build();
+		}
+	}
+	
+	@POST
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
 	public Response insert(Plant plant){
@@ -87,11 +108,20 @@ public class PlantResource {
 		}
 	}
 	
+	
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
 	public ArrayList<Plant> getAllPlants(){
 		System.out.println("Getting all plants");
 		return plantsDAO.getAll();
+	}
+	
+	@GET()
+	@Path("/plantId/{plantId}")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Plant getPlantById(@PathParam("plantId") int plantId){
+		System.out.println("Getting all plants");
+		return plantsDAO.getById(plantId);
 	}
 	
 	@DELETE

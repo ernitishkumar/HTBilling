@@ -83,6 +83,9 @@ footer h6 {
 	vertical-align: middle;
 }
  
+#billTable{
+	border: 1px solid #2980B9;
+} 
 /*  tr.ng-leave{
   animation : bounceOut 1s;
  } */

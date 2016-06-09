@@ -83,9 +83,12 @@ footer h6 {
 	vertical-align: middle;
 }
  
-#billTable{
-	border: 1px solid #2980B9;
-} 
+#billTable1 > tbody > tr > td{
+	border: 2px solid #020608;
+}
+#billTable2 > tbody > tr > td{
+	border: 2px solid #020608;
+}  
 /*  tr.ng-leave{
   animation : bounceOut 1s;
  } */

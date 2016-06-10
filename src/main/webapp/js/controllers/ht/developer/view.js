@@ -52,6 +52,12 @@ angular.module("htBillingApp").controller('ViewDeveloperDetailsController', ['$h
 		$location.path("/ht/home");
 	};
 
+	
+	this.update = function (id) {
+		$location.path("/developer/update/"+id);
+	};
+	
+	
 	/*
 	 * function getAllDevelopers to fetch all the developers
 	 * from backend to list on the page

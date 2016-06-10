@@ -1,0 +1,134 @@
+<div class="navbar navbar-fixed-top">
+	<div class="container">
+		<div class="navbar-header">
+			<button type="button" class="navbar-toggle" data-toggle="collapse"
+				data-target="#myNavbar">
+				<span class="icon-bar"></span> <span class="icon-bar"></span> <span
+					class="icon-bar"></span>
+			</button>
+			<a class="navbar-brand" href="javascript:void(0);">HTBilling</a>
+		</div>
+		<div class="collapse navbar-collapse" id="myNavbar">
+			<ul class="nav navbar-nav">
+				<li class="active"><a href="javascript:void(0);"
+					ng-click="updateInvestorCtrl.loadHome()">Home</a></li>
+			</ul>
+			<ul class="nav navbar-nav navbar-right">
+				<li class="dropdown"><a class="dropdown-toggle"
+					data-toggle="dropdown" href="javascript:void(0);"><span
+						class="glyphicon glyphicon-user"></span>{{user.name}}<strong
+						class="caret"></strong></a>
+					<ul class="dropdown-menu">
+						<li><a href="javascript:void(0);"><span
+								class="glyphicon glyphicon-wrench"></span> Settings</a></li>
+						<li><a href="javascript:void(0);"
+							ng-click="updateInvestorCtrl.logout()"><span
+								class="glyphicon glyphicon-off"></span> Logout</a></li>
+					</ul></li>
+			</ul>
+		</div>
+	</div>
+</div>
+<br>
+<br>
+<div class="container">
+	<div class="col-md-6 col-md-offset-3">
+		<div class="page-header text-center">
+			<h1>
+				<span class="glyphicon glyphicon-certificate"></span> Enter Investor
+				Details
+			</h1>
+		</div>
+
+		<!--Show error messages -->
+        <div align='center'>
+            <h3><span class="label label-danger" ng-show="error">{{error}}</span>
+        </h3>
+            <br>
+        </div>
+
+		<!--Form-->
+		<form name="investorForm" id="investorForm"
+			ng-submit="updateInvestorCtrl.processForm()" class="well">
+			<div class="form-group has-feedback">
+				<label>Enter Code</label> <input class="form-control"
+					type="text" placeholder="Investor Code" value="{{investor.code}}"
+					ng-model="investor.code" required>
+			</div>
+			<div class="form-group">
+				<label>Name:</label> <input class="form-control" type="text"
+					placeholder="Investor Name" value="{{investor.name}}" ng-model="investor.name" required>
+
+			</div>
+			<div class=" form-group ">
+				<label>CIN:</label> <input class="form-control" type="text"
+					placeholder="CIN" ng-model="investor.cin" value="{{investor.cin}}" required>
+			</div>
+			<div class=" form-group ">
+				<label>TIN:</label> <input class="form-control" type="text"
+					placeholder="TIN" ng-model="investor.tin" value="{{investor.tin}}"required>
+			</div>
+			<div class=" form-group ">
+				<label>VAT:</label> <input class="form-control" type="text"
+					placeholder="VAT" ng-model="investor.vat" value="{{investor.vat}}"required>
+			</div>
+			<div class=" form-group ">
+				<label>Invoice No:</label> <input class="form-control" type="text"
+					placeholder="Invoice No" ng-model="investor.invoiceNo" value="{{investor.invoiceNo}}" required>
+			</div>
+			<div class="form-group">
+				<label>Office Address:</label> <input class="form-control" type="text"
+					placeholder="Office Address" ng-model="investor.officeAddress" value={{investor.officeAddress}}
+					required>
+			</div>
+			<div class="form-group">
+				<label>Office Contact No:</label> <input class="form-control" type="text"
+					placeholder="Office Contact No" ng-model="investor.officeContactNo" value="{{investor.officeContactNo}}"
+					required>
+			</div>
+			<div class="form-group">
+				<label>Office Contact Person:</label> <input class="form-control"
+					type="text" placeholder="Office Contact Person"
+					ng-model="investor.officeContactPerson" value="{{investor.officeContactPerson}}"required>
+			</div>
+			<div class="form-group">
+				<label>Office email:</label> <input class="form-control" type="text"
+					placeholder="Office E-MAIL" ng-model="investor.officeEmail" value="{{investor.officeEmail}}"
+					required>
+			</div>
+			<div class="form-group">
+				<label>Site Address:</label> <input class="form-control" type="text"
+					placeholder="Site Address" ng-model="investor.siteAddress" value="{{investor.siteAddress}}"
+					required>
+			</div>
+			<div class="form-group">
+				<label>Site Contact No:</label> <input class="form-control" type="text"
+					placeholder="Site Contact No" ng-model="investor.siteContactNo" value="{{investor.siteContactNo}}"
+					required>
+			</div>
+			<div class="form-group">
+				<label>Site Contact Person:</label> <input class="form-control"
+					type="text" placeholder="Site Contact Person"
+					ng-model="investor.siteContactPerson" value="{{investor.siteContactPerson}}" required>
+			</div>
+			<div class="form-group">
+				<label>Site email:</label> <input class="form-control" type="text"
+					placeholder="Site E-MAIL" ng-model="investor.siteEmail" value="{{investor.siteEmail}}"
+					required>
+			</div>
+			
+			<div class="row">
+				<div class="col-md-6 ">
+					<button type="submit " class="btn btn-success btn-lg btn-block ">
+						<span class="glyphicon glyphicon-flash "></span>Update Investor!
+					</button>
+				</div>
+				<div class="col-md-6 ">
+					<button class="btn btn-danger btn-lg btn-block " type="reset"
+						ng-click="updateInvestorCtrl.back()">Cancel</button>
+				</div>
+			</div>
+		</form>
+	</div>
+</div><br>
+<br>

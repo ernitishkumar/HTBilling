@@ -93,6 +93,10 @@
 			templateUrl: 'templates/pages/developer/adddeveloper.html',
 			controller: 'AddDeveloperController',
 			controllerAs: 'addDeveloperCtrl'
+		}).when('/developer/update/:id', {
+			templateUrl: 'templates/pages/developer/updatedeveloper.html',
+			controller: 'UpdateDeveloperController',
+			controllerAs: 'updateDeveloperCtrl'
 		})
 		.when('/developer/view', {
 			templateUrl: 'templates/pages/developer/viewdeveloperdetails.html',
@@ -103,6 +107,10 @@
 			templateUrl: 'templates/pages/ht/investor/addinvestor.html',
 			controller: 'AddInvestorController',
 			controllerAs: 'addInvestorCtrl'
+		}).when('/investor/update/:id', {
+			templateUrl: 'templates/pages/ht/investor/updateinvestor.html',
+			controller: 'UpdateInvestorController',
+			controllerAs: 'updateInvestorCtrl'
 		})
 		.when('/investor/view', {
 			templateUrl: 'templates/pages/ht/investor/viewinvestordetails.html',
@@ -117,6 +125,10 @@
 			templateUrl: 'templates/pages/ht/machine/addmachine.html',
 			controller: 'AddMachineController',
 			controllerAs: 'addMachineCtrl'
+		}).when('/machine/update/:id', {
+			templateUrl: 'templates/pages/ht/machine/updatemachine.html',
+			controller: 'UpdateMachineController',
+			controllerAs: 'updateMachineCtrl'
 		})
 		.when('/machine/view', {
 			templateUrl: 'templates/pages/ht/machine/viewmachinedetails.html',

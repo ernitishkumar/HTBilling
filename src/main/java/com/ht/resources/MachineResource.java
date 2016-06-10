@@ -9,6 +9,7 @@ import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
+import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
@@ -56,6 +57,24 @@ public class MachineResource {
 		return machinesDAO.getAll();
 	}
 	
+	@GET
+	@Path("/{machineId}")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response getInvestorById(@PathParam("machineId")int machineId){
+		System.out.println(machineId);
+		Machine machine = null;
+		machine = machinesDAO.getById(machineId);
+		if(machine != null){
+			return Response.status(Status.OK)
+					.entity(machine)
+					.build();
+		}else{
+			return Response.status(Status.EXPECTATION_FAILED)
+					.entity(new ErrorBean("Unable to fetch Machine."))
+					.build();
+		}
+	}
+	
 	@DELETE
 	@Path("/{id}")
 	@Produces(MediaType.APPLICATION_JSON)
@@ -69,6 +88,23 @@ public class MachineResource {
 		}else{
 			return Response.status(Status.EXPECTATION_FAILED)
 					.entity(new ErrorBean("Unable to delete machine."))
+					.build();
+		}
+	}
+	
+	@PUT
+	@Path("/{id}")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response updateMachine(Machine machine){
+		Machine updatedMachine = null;
+		updatedMachine = machinesDAO.update(machine);
+		if(updatedMachine != null){
+			return Response.status(Status.OK)
+					.entity(updatedMachine)
+					.build();
+		}else{
+			return Response.status(Status.EXPECTATION_FAILED)
+					.entity(new ErrorBean("Unable to update Machine."))
 					.build();
 		}
 	}

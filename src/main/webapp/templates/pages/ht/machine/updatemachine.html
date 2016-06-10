@@ -1,0 +1,132 @@
+<div class="navbar navbar-fixed-top">
+	<div class="container">
+		<div class="navbar-header">
+			<button type="button" class="navbar-toggle" data-toggle="collapse"
+				data-target="#myNavbar">
+				<span class="icon-bar"></span> <span class="icon-bar"></span> <span
+					class="icon-bar"></span>
+			</button>
+			<a class="navbar-brand" href="javascript:void(0);">HTBilling</a>
+		</div>
+		<div class="collapse navbar-collapse" id="myNavbar">
+			<ul class="nav navbar-nav">
+				<li class="active"><a href="javascript:void(0);"
+					ng-click="updateMachineCtrl.loadHome()">Home</a></li>
+			</ul>
+			<ul class="nav navbar-nav navbar-right">
+				<li class="dropdown"><a class="dropdown-toggle"
+					data-toggle="dropdown" href="javascript:void(0);"><span
+						class="glyphicon glyphicon-user"></span>{{user.name}}<strong
+						class="caret"></strong></a>
+					<ul class="dropdown-menu">
+						<li><a href="javascript:void(0);"><span
+								class="glyphicon glyphicon-wrench"></span> Settings</a></li>
+						<li><a href="javascript:void(0);"
+							ng-click="updateMachineCtrl.logout()"><span
+								class="glyphicon glyphicon-off"></span> Logout</a></li>
+					</ul></li>
+			</ul>
+		</div>
+	</div>
+</div>
+<br>
+<br>
+<div class="container">
+	<div class="col-md-6 col-md-offset-3">
+		<div class="page-header text-center">
+			<h1>
+				<span class="glyphicon glyphicon-certificate"></span> Update Machine
+				Details.
+			</h1>
+		</div>
+		<form name="machineForm" id="machineForm"
+			ng-submit="updateMachineCtrl.processForm()" class="well">
+			<div class="form-group has-feedback">
+				<label> Machine Code</label> <input class="form-control"
+					type="text" placeholder="Machine Code"
+					ng-model="machine.code" value="{{machine.code}}"required>
+			</div>
+			<div class="form-group">
+				<label>Capacity:</label> <input class="form-control" type="text"
+					placeholder="Capacity" ng-model="machine.capacity" value="{{machine.capacity}}" required>
+
+			</div>
+			<div class="form-group">
+				<span class="glyphicon glyphicon-calendar"></span> <label>Commissioned
+					Date:</label>
+				<div class='input-group date' id='datetimepicker1'>
+					<input type='date' class="form-control"
+						ng-model="machine.commissionedDate" value="{{machine.commissionedDate}}"required /> <span
+						class="input-group-addon"> <span
+						class="glyphicon glyphicon-calendar"></span>
+					</span>
+				</div>
+			</div>
+			
+			<div class="form-group">
+				<label>Active Rate:</label> <input class="form-control" type="text"
+					placeholder="Active Rate" ng-model="machine.activeRate" value="{{machine.activeRate}}"
+					required>
+			</div>
+			<div class="form-group">
+				<label>Reactive Rate:</label> <input class="form-control" type="text"
+					placeholder="Reactive Rate" ng-model="machine.reactiveRate" value="{{machine.reactiveRate}}"
+					required>
+			</div>
+			<div class="form-group">
+				<label>PPA Letter No:</label> <input class="form-control" type="text"
+					placeholder="PPA Letter No" ng-model="machine.ppaLetterNo" value="{{machine.ppaLetterNo}}"
+					required>
+			</div>
+			
+			<div class="form-group">
+				<span class="glyphicon glyphicon-calendar"></span> <label>PPA Date
+					Date:</label>
+				<div class='input-group date' id='datetimepicker2'>
+					<input type='date' class="form-control"
+						ng-model="machine.ppaDate" value="{{machine.ppaDate}}"required /> <span
+						class="input-group-addon"> <span
+						class="glyphicon glyphicon-calendar"></span>
+					</span>
+				</div>
+			</div>
+			<div class="form-group">
+				<label>Developer Id: </label>
+				<br> 
+				<select name="developerId" id="developerId" ng-model="machine.developerId" value="{{machine.developerId}}"ng-change="updateMachineCtrl.getPlantsByDeveloper()" >
+						<option value="{{machine.developerId}}" selected>{{machine.developerId}}</option>
+						<option ng-repeat="developer in developers" value="{{developer.id}}">{{developer.name}}</option>
+				</select>
+			</div>
+			<div class="form-group">
+				<label>Plant Id:</label>
+				<br> 
+				<select name="plantId" id="plantId" ng-model="machine.plantId" value="{{machine.plantId}}" ng-change="updateMachineCtrl.getInvestorsByPlant()">
+						<option value="{{machine.plantId}}" selected>{{machine.plantId}}</option>
+						<option ng-repeat="plant in plants" value="{{plant.id}}" >{{plant.code}} : {{plant.name}}</option>
+				</select>
+			</div>
+			<div class="form-group">
+				<label>Investor Id:</label>
+				<br> 
+				<select name="investorId" id="investorId" ng-model="machine.investorId" value="{{machine.investorId}}">
+						<option value="{{machine.investorId}}" selected>{{machine.investorId}}</option>
+						<option ng-repeat="investor in investors" value="{{investor.id}}">{{investor.name}}</option>
+				</select>
+			</div>
+			<div class="row">
+				<div class="col-md-6 ">
+					<button type="submit " class="btn btn-success btn-lg btn-block ">
+						<span class="glyphicon glyphicon-flash "></span> Update Machine!
+					</button>
+				</div>
+				<div class="col-md-6 ">
+					<button class="btn btn-danger btn-lg btn-block " type="reset"
+						ng-click="addPlantCtrl.back()">Cancel</button>
+				</div>
+			</div>
+		</form>
+	</div>
+</div>
+<br>
+<br>

@@ -51,6 +51,11 @@ angular.module("htBillingApp").controller('ViewMachineDetailsController', ['$htt
 		$location.path("/ht/home");
 	};
 
+	
+	this.update = function (id) {
+		$location.path("/machine/update/"+id);
+	};
+	
 	/*
 	 * function getAllMachines to fetch all the machines from backend to display 
 	 * on the page.

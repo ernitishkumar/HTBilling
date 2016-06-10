@@ -162,9 +162,44 @@ public class InvestorResource {
 	}
 
 	@GET
+	@Path("/{investorId}")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response getInvestorById(@PathParam("investorId")int investorId){
+		Investor investor = null;
+		investor = investorsDAO.getById(investorId);
+		if(investor != null){
+			return Response.status(Status.OK)
+					.entity(investor)
+					.build();
+		}else{
+			return Response.status(Status.EXPECTATION_FAILED)
+					.entity(new ErrorBean("Unable to fetch Investor."))
+					.build();
+		}
+	}
+	
+	@GET
 	@Produces(MediaType.APPLICATION_JSON)
 	public ArrayList<Investor> getAllInvestors(){
 		return investorsDAO.getAll();
+	}
+	
+	
+	@PUT
+	@Path("/{id}")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response updateInvestor(Investor investor){
+		Investor updatedInvestor = null;
+		updatedInvestor = investorsDAO.update(investor);
+		if(updatedInvestor != null){
+			return Response.status(Status.OK)
+					.entity(updatedInvestor)
+					.build();
+		}else{
+			return Response.status(Status.EXPECTATION_FAILED)
+					.entity(new ErrorBean("Unable to update Investor."))
+					.build();
+		}
 	}
 
 	@POST

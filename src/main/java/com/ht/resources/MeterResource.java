@@ -101,7 +101,6 @@ public class MeterResource {
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response updateMeterDetails(@PathParam("meterno")String meterno, MeterDetails meterToUpdate){
 		MeterDetails updatedMeterDetails = null;
-		System.out.println(meterToUpdate);
 		updatedMeterDetails = meterDetailsDAO.update(meterToUpdate);
 		if(updatedMeterDetails != null){
 			return Response.status(Status.OK)

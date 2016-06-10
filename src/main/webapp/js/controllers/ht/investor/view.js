@@ -51,6 +51,11 @@ angular.module("htBillingApp").controller('ViewInvestorDetailsController', ['$ht
 		$location.path("/ht/home");
 	};
 
+	
+	this.update = function (id) {
+		$location.path("/investor/update/"+id);
+	};
+	
 	/*
 	 * getAllInvestors function to fetch all the investors
 	 * from backend to display on the page.

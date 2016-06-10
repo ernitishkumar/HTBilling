@@ -79,7 +79,7 @@
 					<td>{{investor.siteContactPerson}}</td>
 					<td>{{investor.siteEmail}}</td>
 					<td><a href="javascript:void(0);"><span
-							class="glyphicon glyphicon-pencil"></span></a></td>
+							class="glyphicon glyphicon-pencil" ng-click="viewInvestorDetailsCtrl.update(investor.id)"></span></a></td>
 					<td><a href="javascript:void(0);"><span
 							class="glyphicon glyphicon-trash"
 							ng-click="viewInvestorDetailsCtrl.remove((currentPage- 1)*pageSize + $index)"></span></a></td>

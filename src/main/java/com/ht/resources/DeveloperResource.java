@@ -9,6 +9,7 @@ import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
+import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
@@ -66,6 +67,24 @@ public class DeveloperResource {
 		return userRolesDAO.getByDeveloperRole();
 	}
 	
+	@GET
+	@Path("/{id}")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response getDeveloper(@PathParam("id")int id){
+
+		Developer developer = null;
+		developer = developersDAO.getById(id);
+		if(developer != null){
+			return Response.status(Status.OK)
+					.entity(developer)
+					.build();
+		}else{
+			return Response.status(Status.EXPECTATION_FAILED)
+					.entity(new ErrorBean("Unable to fetch developer."))
+					.build();
+		}
+	}
+	
 	@DELETE
 	@Path("/{id}")
 	@Produces(MediaType.APPLICATION_JSON)
@@ -79,6 +98,22 @@ public class DeveloperResource {
 		}else{
 			return Response.status(Status.EXPECTATION_FAILED)
 					.entity(new ErrorBean("Unable to delete developer"))
+					.build();
+		}
+	}
+	@PUT
+	@Path("/{id}")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response updateMeterDetails(Developer developer){
+		Developer updatedDeveloper = null;
+		updatedDeveloper = developersDAO.update(developer);
+		if(updatedDeveloper != null){
+			return Response.status(Status.OK)
+					.entity(updatedDeveloper)
+					.build();
+		}else{
+			return Response.status(Status.EXPECTATION_FAILED)
+					.entity(new ErrorBean("Unable to update Developer."))
 					.build();
 		}
 	}

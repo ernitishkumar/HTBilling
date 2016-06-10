@@ -43,7 +43,7 @@ public class MeterDetailsDAO {
 		MeterDetails updatedMeter = null;
 		try {
 			PreparedStatement ps = connection
-					.prepareStatement("update meter_details set make=?, category=?, type=?, meter_class=?, ctr=?, ptr=?, mf=?, equip_class=?, phase=?, meter_group=? where  meter_no=?)");
+					.prepareStatement("update meter_details set make=?, category=?, type=?, meter_class=?, ctr=?, ptr=?, mf=?, equip_class=?, phase=?, meter_group=? where  meter_no=?");
 			ps.setString(1, meterDetails.getMake());
 			ps.setString(2, meterDetails.getCategory());
 			ps.setString(3, meterDetails.getType());

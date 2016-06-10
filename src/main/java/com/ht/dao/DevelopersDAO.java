@@ -163,8 +163,7 @@ public class DevelopersDAO {
 		try {
 			while(resultSet.next()){
                 Developer developer = new Developer();
-                System.out.println(resultSet.getInt(1));
-				developer.setId(resultSet.getInt(1));
+                developer.setId(resultSet.getInt(1));
 				developer.setName(resultSet.getString(2));
 				developer.setCin(resultSet.getString(3));
 				developer.setOfficeAddress(resultSet.getString(4));

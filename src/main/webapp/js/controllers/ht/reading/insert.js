@@ -96,6 +96,13 @@ angular.module("htBillingApp").controller('MeterReadingController', ['$http', '$
 	this.loadOperatorHome = function () {
 		$location.path("/operator/home");
 	};
+	
+	/*
+     * loadSRFRReadingForm() function to route to enter srfrreading page
+     */
+    this.loadSRFRReadingForm = function () {
+        $location.path("/srfrenterreading");
+    };
 
 	/*
 	 * isValidMeterno function to check validity of meterno provided by the user

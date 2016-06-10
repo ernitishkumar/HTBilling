@@ -157,8 +157,8 @@ angular.module("htBillingApp").controller('UpdatePlantController', ['$http', '$s
 	/*
 	 * function to route to view plant page
 	 */
-	this.backToView = function(){
-		$location.path("/plant/view");
+	this.back = function(){
+		window.history.back();
 	};
 	
 	
@@ -182,17 +182,17 @@ angular.module("htBillingApp").controller('UpdatePlantController', ['$http', '$s
 		
 		$http(
 				{
-					method: 'POST',
-					url: 'backend/plants/update',
+					method: 'PUT',
+					url: 'backend/plants/'+formData.id,
 					data : formData
 				}
 		).then(
 				function (response) {
 					//$location.path("/saved/Plant Saved Successfully!");
 					var status = response.status;
-					if(status === 201){
+					if(status === 200){
 						bootbox.alert("Plant updated successfully.")
-						$location.path("/plant/view");	
+						window.history.back();	
 					}
 				},
 				function(error){

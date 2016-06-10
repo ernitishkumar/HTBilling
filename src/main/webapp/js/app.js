@@ -55,6 +55,10 @@
 			templateUrl: 'templates/pages/ht/meter/addmeter.html',
 			controller: 'AddMeterController',
 			controllerAs: 'addMeterCtrl'
+		}).when('/meter/update/:meterNo', {
+			templateUrl: 'templates/pages/ht/meter/updatemeter.html',
+			controller: 'UpdateMeterController',
+			controllerAs: 'updateMeterCtrl'
 		})
 		.when('/meter/view', {
 			templateUrl: 'templates/pages/ht/meter/viewmeterdetails.html',

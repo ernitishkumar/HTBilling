@@ -6,6 +6,7 @@ import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
+import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
@@ -74,6 +75,41 @@ public class MeterResource {
 		}else{
 			return Response.status(Status.EXPECTATION_FAILED)
 					.entity(new ErrorBean("Unable to delete meter."))
+					.build();
+		}
+	}
+	
+	@GET
+	@Path("/{meterno}")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response getMeterDetails(@PathParam("meterno")String meterno){
+		MeterDetails meterDetails = null;
+		meterDetails = meterDetailsDAO.getByMeterNo(meterno);
+		if(meterDetails != null){
+			return Response.status(Status.OK)
+					.entity(meterDetails)
+					.build();
+		}else{
+			return Response.status(Status.EXPECTATION_FAILED)
+					.entity(new ErrorBean("Unable to fetch meter."))
+					.build();
+		}
+	}
+	
+	@PUT
+	@Path("/{meterno}")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response updateMeterDetails(@PathParam("meterno")String meterno, MeterDetails meterToUpdate){
+		MeterDetails updatedMeterDetails = null;
+		System.out.println(meterToUpdate);
+		updatedMeterDetails = meterDetailsDAO.update(meterToUpdate);
+		if(updatedMeterDetails != null){
+			return Response.status(Status.OK)
+					.entity(updatedMeterDetails)
+					.build();
+		}else{
+			return Response.status(Status.EXPECTATION_FAILED)
+					.entity(new ErrorBean("Unable to update meter."))
 					.build();
 		}
 	}

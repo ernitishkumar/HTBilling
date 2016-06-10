@@ -121,7 +121,7 @@ angular.module("htBillingApp").controller('ViewMachineDetailsController', ['$htt
 	 * variable pageSize to hold value for currentpage
 	 * required for pagination
 	 */
-	$scope.pageSize = 5;
+	$scope.pageSize = 10;
 	
 	/*
 	 * function pageChangeHandler gets executed when user

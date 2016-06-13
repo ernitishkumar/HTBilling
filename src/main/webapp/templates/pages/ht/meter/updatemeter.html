@@ -75,25 +75,25 @@
 			<div class="form-group">
 				<span class="glyphicon glyphicon-star"></span> <label>Type:</label>
 				<select name="type" id="type" ng-model="meter.type" required>
-					<option value="SOLAR">SOLAR</option>
-					<option value="WIND">WIND</option>
+					<option value="ABT">ABT</option>
+					<option value="NONABT">NON-ABT</option>
+
 				</select>
 			</div>
 			<div class="form-group">
 				<span class="glyphicon glyphicon-pencil"></span> <label>Meter
 					Class:</label> <input class="form-control" type="text"
-					placeholder="Meter Class"
-					ng-model="meter.meterClass" required>
+					placeholder="Meter Class" ng-model="meter.meterClass" required>
 			</div>
 			<div class="form-group">
 				<span class="glyphicon glyphicon-pencil"></span> <label>CTR:</label>
 				<input class="form-control" type="text" placeholder="CTR"
-					 ng-model="meter.ctr" required>
+					ng-model="meter.ctr" required>
 			</div>
 			<div class="form-group">
 				<span class="glyphicon glyphicon-pencil"></span> <label>PTR:</label>
 				<input class="form-control" type="text" placeholder="PTR"
-					 ng-model="meter.ptr" required>
+					ng-model="meter.ptr" required>
 			</div>
 			<div class=" form-group ">
 				<span class="glyphicon glyphicon-pencil "></span> <label>MF</label>
@@ -103,20 +103,20 @@
 			<div class="form-group">
 				<span class="glyphicon glyphicon-pencil "></span> <label>Equipment
 					Class:</label> <input class="form-control" type="text"
-					placeholder="Equipment Class" 
-					ng-model="meter.equipmentClass" required>
+					placeholder="Equipment Class" ng-model="meter.equipmentClass"
+					required>
 			</div>
 			<div class="form-group">
 				<span class="glyphicon glyphicon-star"></span> <label>Phase:</label>
 				<input class="form-control" type="text" placeholder="Phase"
-					 ng-model="meter.phase" required>
+					ng-model="meter.phase" required>
 			</div>
 			<div class="form-group">
 				<span class="glyphicon glyphicon-star"></span> <label>Meter
 					Group:</label> <select name="meterGroup" id="meterGroup"
 					ng-model="meter.meterGroup" required>
-					<option value="ABT">ABT</option>
-					<option value="NONABT">NON-ABT</option>
+					<option value="SOLAR">SOLAR</option>
+					<option value="WIND">WIND</option>
 				</select>
 				<!-- <input class="form-control" type="text" placeholder="Meter Group" ng-model="formData.meterGroup" required> -->
 			</div>

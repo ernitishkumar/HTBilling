@@ -53,7 +53,7 @@ public class GlobalResources {
 		return meterReadingsDAO;
 	}
     
-	private String convertLessThanOneThousand(int number) {
+	private static String convertLessThanOneThousand(int number) {
 	    String soFar;
 
 	    if (number % 100 < 20){
@@ -72,7 +72,7 @@ public class GlobalResources {
 	  }
 
 	
-	 public String convert(float number) {
+	 public static String convert(float number) {
 		 long l = (long)number;
 		    if (l == 0) { return "Zero"; }
 		    String snumber = Long.toString(l);

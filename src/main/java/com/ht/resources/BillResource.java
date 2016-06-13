@@ -27,6 +27,7 @@ import com.ht.dao.ConsumptionsDAO;
 import com.ht.dao.InvestorConsumptionDAO;
 import com.ht.dao.MachinesDAO;
 import com.ht.dao.MeterReadingsDAO;
+import com.ht.utility.GlobalResources;
 
 /**
  * @author NITISH
@@ -129,8 +130,8 @@ public class BillResource {
 				billDetails.setTotalAmountRoundOff(totalAmountRoundOff);
 				
 				//getting amounts in words.
-				//String amountInWords = GlobalResources.ankitKaFunction(totalAmountRoundOff);
-				//billDetails.setTotalAmountInWords(amountInWords);
+				String amountInWords = GlobalResources.convert(totalAmountRoundOff);
+				billDetails.setTotalAmountInWords(amountInWords);
 				
 				//Inserting the created bill details in database
 				generatedBillDetails = billDetailsDAO.insert(billDetails);

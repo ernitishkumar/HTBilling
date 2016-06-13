@@ -58,9 +58,17 @@ public class MachineResource {
 	}
 	
 	@GET
+	@Path("/plant/{plantId}/investor/{investorId}")
+	@Produces(MediaType.APPLICATION_JSON)
+	public ArrayList<Machine> getMachinesByPlantIdAndInvestorId(@PathParam("plantId")int plantId,@PathParam("investorId")int investorId){
+		System.out.println("GET machines by plantId and InvestorId started");
+		return machinesDAO.getByPlantIdAndInvestorId(plantId, investorId);
+	}
+	
+	@GET
 	@Path("/{machineId}")
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response getInvestorById(@PathParam("machineId")int machineId){
+	public Response getMachineById(@PathParam("machineId")int machineId){
 		System.out.println(machineId);
 		Machine machine = null;
 		machine = machinesDAO.getById(machineId);

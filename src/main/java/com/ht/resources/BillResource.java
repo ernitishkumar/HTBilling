@@ -22,11 +22,13 @@ import com.ht.beans.ErrorBean;
 import com.ht.beans.InvestorConsumption;
 import com.ht.beans.Machine;
 import com.ht.beans.MeterReading;
+import com.ht.beans.Plant;
 import com.ht.dao.BillDetailsDAO;
 import com.ht.dao.ConsumptionsDAO;
 import com.ht.dao.InvestorConsumptionDAO;
 import com.ht.dao.MachinesDAO;
 import com.ht.dao.MeterReadingsDAO;
+import com.ht.dao.PlantsDAO;
 import com.ht.utility.GlobalResources;
 
 /**
@@ -46,6 +48,7 @@ public class BillResource {
 	
 	private MachinesDAO machinesDAO = new MachinesDAO();
 	
+	private PlantsDAO plantsDAO = new PlantsDAO();
 	/*
 	 * currentDate an object variable to hold current date of the system.
 	 */
@@ -94,7 +97,8 @@ public class BillResource {
 			Consumption consumption = consumptionsDAO.getById(investorConsumption.getConsumptionId());
 			MeterReading meterReadings = meterReadingsDAO.getById(consumption.getMeterReadingId());
 			Machine machine = machinesDAO.getByInvestorId(investorConsumption.getInvestorId()).get(0);
-			if(consumption != null && meterReadings!=null && machine != null){
+			Plant plant = plantsDAO.getByMainMeterNo(meterReadings.getMeterno());
+			if(consumption != null && meterReadings!=null && machine != null && plant!=null){
 				
 				BillDetails billDetails = new BillDetails();
 				billDetails.setMeterReadingId(consumption.getMeterReadingId());
@@ -105,6 +109,7 @@ public class BillResource {
 				billDetails.setReadingDate(meterReadings.getReadingDate());
 				billDetails.setBillGenerationDate(currentDate);
 				billDetails.setParticulars(machine.getParticulars());
+				billDetails.setPlantId(plant.getId());
 				
 				float activeConsumption = investorConsumption.getActiveConsumption();
 				float reactiveConsumption = investorConsumption.getReactiveConsumption();
@@ -131,6 +136,7 @@ public class BillResource {
 				
 				//getting amounts in words.
 				String amountInWords = GlobalResources.convert(totalAmountRoundOff);
+				System.out.println("Total Amounts in words is : "+amountInWords);
 				billDetails.setTotalAmountInWords(amountInWords);
 				
 				//Inserting the created bill details in database

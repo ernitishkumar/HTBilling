@@ -22,6 +22,7 @@ public class BillDetails {
 	private float totalAmountRoundOff;
 	private String totalAmountInWords;
 	private String particulars;
+	private int plantId;
 	
 	public int getId() {
 		return id;
@@ -165,6 +166,20 @@ public class BillDetails {
 		this.particulars = particulars;
 	}
 	
+	
+	/**
+	 * @return the plantId
+	 */
+	public int getPlantId() {
+		return plantId;
+	}
+	/**
+	 * @param plantId the plantId to set
+	 */
+	public void setPlantId(int plantId) {
+		this.plantId = plantId;
+	}
+	
 	/**
 	 * @param id
 	 * @param billNo
@@ -190,7 +205,7 @@ public class BillDetails {
 	public BillDetails(int id, String billNo, String invoiceNo, int meterReadingId, int investorId, int consumptionId,
 			int consumptionBifurcationId, String meterNo, String readingDate, String billGenerationDate, float totalKWH,
 			float totalRKVH, float kwhRate, float rkvhRate, float activeAmount, float reactiveAmount, float totalAmount,
-			float totalAmountRoundOff, String totalAmountInWords, String particulars) {
+			float totalAmountRoundOff, String totalAmountInWords, String particulars,int plantId) {
 		this.id = id;
 		this.billNo = billNo;
 		this.invoiceNo = invoiceNo;
@@ -211,6 +226,7 @@ public class BillDetails {
 		this.totalAmountRoundOff = totalAmountRoundOff;
 		this.totalAmountInWords = totalAmountInWords;
 		this.particulars = particulars;
+		this.plantId = plantId;
 	}
 	
 	/**
@@ -237,7 +253,7 @@ public class BillDetails {
 	public BillDetails(String billNo, String invoiceNo, int meterReadingId, int investorId, int consumptionId,
 			int consumptionBifurcationId, String meterNo, String readingDate, String billGenerationDate, float totalKWH,
 			float totalRKVH, float kwhRate, float rkvhRate, float activeAmount, float reactiveAmount, float totalAmount,
-			float totalAmountRoundOff, String totalAmountInWords, String particulars) {
+			float totalAmountRoundOff, String totalAmountInWords, String particulars,int plantId) {
 		this.billNo = billNo;
 		this.invoiceNo = invoiceNo;
 		this.meterReadingId = meterReadingId;
@@ -257,6 +273,7 @@ public class BillDetails {
 		this.totalAmountRoundOff = totalAmountRoundOff;
 		this.totalAmountInWords = totalAmountInWords;
 		this.particulars = particulars;
+		this.plantId = plantId;
 	}
 	
 	/* (non-Javadoc)
@@ -271,6 +288,7 @@ public class BillDetails {
 				+ totalRKVH + ", kwhRate=" + kwhRate + ", rkvhRate=" + rkvhRate + ", activeAmount=" + activeAmount
 				+ ", reactiveAmount=" + reactiveAmount + ", totalAmount=" + totalAmount + ", totalAmountRoundOff="
 				+ totalAmountRoundOff + ", totalAmountInWords=" + totalAmountInWords + ", particulars=" + particulars
+				+ ", plantId="+plantId
 				+ "]";
 	}
 	

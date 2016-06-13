@@ -22,7 +22,7 @@ public class BillDetailsDAO {
 		Connection connection = GlobalResources.getConnection();
 		int lastInsertedId = -1;
 		try {
-			PreparedStatement ps = connection.prepareStatement("insert into bill_details (bill_no, invoice_no, meter_readings_id, investor_id, consumption_id, consumption_bifurcation_id,meter_no, reading_date, bill_generation_date, total_kwh, total_rkvh, kwh_rate, rkvh_rate, active_amount, reactive_amount, total_amount, total_amount_roundoff) values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)",Statement.RETURN_GENERATED_KEYS);
+			PreparedStatement ps = connection.prepareStatement("insert into bill_details (bill_no, invoice_no, meter_readings_id, investor_id, consumption_id, consumption_bifurcation_id,meter_no, reading_date, bill_generation_date, total_kwh, total_rkvh, kwh_rate, rkvh_rate, active_amount, reactive_amount, total_amount, total_amount_roundoff,total_amount_in_words,particulars,plant_id) values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)",Statement.RETURN_GENERATED_KEYS);
 			ps.setString(1,"");
 			ps.setString(2, billDetails.getInvoiceNo());
 			ps.setInt(3, billDetails.getMeterReadingId());
@@ -40,6 +40,9 @@ public class BillDetailsDAO {
 			ps.setFloat(15, billDetails.getReactiveAmount());
 			ps.setFloat(16, billDetails.getTotalAmount());
 			ps.setFloat(17, billDetails.getTotalAmountRoundOff());
+			ps.setString(18,billDetails.getTotalAmountInWords());
+			ps.setString(19,billDetails.getParticulars());
+			ps.setInt(20,billDetails.getPlantId());
 			ps.executeUpdate();
 			ResultSet keys = ps.getGeneratedKeys();    
 			keys.next();  
@@ -58,7 +61,7 @@ public class BillDetailsDAO {
 		BillDetails updatedBillDetails = null;
 		Connection connection = GlobalResources.getConnection();
 		try {
-			PreparedStatement ps = connection.prepareStatement("update bill_details set bill_no=?, invoice_no=?, meter_readings_id=?, investor_id=?, consumption_id=?, consumption_bifurcation_id=?,meter_no=?, reading_date=?, bill_generation_date=?, total_kwh=?, total_rkvh=?, kwh_rate=?, rkvh_rate=?, active_amount=?, reactive_amount=?, total_amount=?, total_amount_roundoff=? where id = ?");
+			PreparedStatement ps = connection.prepareStatement("update bill_details set bill_no=?, invoice_no=?, meter_readings_id=?, investor_id=?, consumption_id=?, consumption_bifurcation_id=?,meter_no=?, reading_date=?, bill_generation_date=?, total_kwh=?, total_rkvh=?, kwh_rate=?, rkvh_rate=?, active_amount=?, reactive_amount=?, total_amount=?, total_amount_roundoff=?,total_amount_in_words=?,particulars=?,plant_id=? where id = ?");
 			ps.setString(1,billDetails.getBillNo());
 			ps.setString(2, billDetails.getInvoiceNo());
 			ps.setInt(3, billDetails.getMeterReadingId());
@@ -76,7 +79,10 @@ public class BillDetailsDAO {
 			ps.setFloat(15, billDetails.getReactiveAmount());
 			ps.setFloat(16, billDetails.getTotalAmount());
 			ps.setFloat(17, billDetails.getTotalAmountRoundOff());
-			ps.setInt(18, billDetails.getId());
+			ps.setString(18,billDetails.getTotalAmountInWords());
+			ps.setString(19,billDetails.getParticulars());
+			ps.setInt(20,billDetails.getPlantId());
+			ps.setInt(21, billDetails.getId());
 			ps.executeUpdate();
 			ps.close();
 			updatedBillDetails = getById(billDetails.getId());
@@ -199,6 +205,9 @@ public class BillDetailsDAO {
 				billDetails.setReactiveAmount(rs.getFloat(16));
 				billDetails.setTotalAmount(rs.getFloat(17));
 				billDetails.setTotalAmountRoundOff(rs.getFloat(18));
+				billDetails.setTotalAmountInWords(rs.getString(19));
+				billDetails.setParticulars(rs.getString(20));
+				billDetails.setPlantId(rs.getInt(21));
 				billDetailsList.add(billDetails);
 			}
 		} catch (SQLException e) {
@@ -211,6 +220,11 @@ public class BillDetailsDAO {
 		BillDetailsView billDetailsView = new BillDetailsView();
 		billDetailsView.setId(billDetails.getId());
 		billDetailsView.setBillNo(billDetails.getBillNo());
+		billDetailsView.setTotalAmountInWords(billDetails.getTotalAmountInWords());
+		billDetailsView.setParticulars(billDetails.getParticulars());
+		
+		PlantsDAO plantsDAO = new PlantsDAO();
+		billDetailsView.setPlant(plantsDAO.getById(billDetails.getPlantId()));
 		//uncomment below code once invoice is being set
 		//billDetailsView.setInvoiceNo(billDetails.getInvoiceNo());
 		

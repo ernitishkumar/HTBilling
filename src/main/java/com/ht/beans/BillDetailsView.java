@@ -38,8 +38,12 @@ public class BillDetailsView {
 	
 	private float totalAmountRoundoff;
 	
-	private String amountInWords;
+	private String totalAmountInWords;
 
+	private String particulars;
+	
+	private Plant plant;
+	
 	/**
 	 * @return the id
 	 */
@@ -295,15 +299,44 @@ public class BillDetailsView {
 	/**
 	 * @return the amountInWords
 	 */
-	public String getAmountInWords() {
-		return amountInWords;
+	public String getTotalAmountInWords() {
+		return totalAmountInWords;
 	}
 
 	/**
 	 * @param amountInWords the amountInWords to set
 	 */
-	public void setAmountInWords(String amountInWords) {
-		this.amountInWords = amountInWords;
+	public void setTotalAmountInWords(String amountInWords) {
+		this.totalAmountInWords = amountInWords;
+	}
+
+	
+	/**
+	 * @return the particulars
+	 */
+	public String getParticulars() {
+		return particulars;
+	}
+
+	/**
+	 * @param particulars the particulars to set
+	 */
+	public void setParticulars(String particulars) {
+		this.particulars = particulars;
+	}
+
+	/**
+	 * @return the plant
+	 */
+	public Plant getPlant() {
+		return plant;
+	}
+
+	/**
+	 * @param plant the plant to set
+	 */
+	public void setPlant(Plant plant) {
+		this.plant = plant;
 	}
 
 	/* (non-Javadoc)
@@ -317,7 +350,7 @@ public class BillDetailsView {
 				+ readingDate + ", billGenerationDate=" + billGenerationDate + ", totalKWH=" + totalKWH + ", totalRKVH="
 				+ totalRKVH + ", kwhRate=" + kwhRate + ", rkvhRate=" + rkvhRate + ", activeAmount=" + activeAmount
 				+ ", reactiveAmount=" + reactiveAmount + ", totalAmount=" + totalAmount + ", totalAmountRoundoff="
-				+ totalAmountRoundoff + ", amountInWords=" + amountInWords + "]";
+				+ totalAmountRoundoff + ", amountInWords=" + totalAmountInWords + "]";
 	}
 	
 }

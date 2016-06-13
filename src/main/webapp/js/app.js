@@ -151,7 +151,7 @@
 			controllerAs: 'viewMeterReadingsCtrl'
 		})
 		.when('/developer/investor/bill/view/:billDetailsId', {
-			templateUrl: 'templates/pages/developer/viewbill.html',
+			templateUrl: 'templates/pages/developer/viewbill2.html',
 			controller: 'ViewBillController',
 			controllerAs: 'viewBillCtrl'
 		})

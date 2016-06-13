@@ -201,6 +201,23 @@ public class MachinesDAO {
 		return machineList;
 	}	
 	
+	public ArrayList<Machine> getByPlantIdAndInvestorId(int plantId, int investorId){
+		ArrayList<Machine> machineList = new ArrayList<Machine>();
+		Connection connection = GlobalResources.getConnection();
+		try {
+			PreparedStatement ps = connection.prepareStatement("select * from machines where plant_id=?,investor_id = ?");
+			ps.setInt(1,plantId);
+			ps.setInt(2,investorId);
+			ResultSet rs = ps .executeQuery();
+			machineList = machineMapper(rs);
+			rs.close();
+			ps.close();
+		} catch (SQLException e) {
+			System.out.println("Exception in class : MachineDAO : method : [getByPlantIdAndInvestorId(int,int)] "+e);
+		}
+		return machineList;
+	}	
+	
 	private ArrayList<Machine> machineMapper(ResultSet rs) {
 		ArrayList<Machine> machineList = new ArrayList<Machine>();
 		

@@ -20,6 +20,8 @@ public class BillDetails {
 	private float reactiveAmount;
 	private float totalAmount;
 	private float totalAmountRoundOff;
+	private String totalAmountInWords;
+	private String particulars;
 	
 	public int getId() {
 		return id;
@@ -137,6 +139,32 @@ public class BillDetails {
 	public void setTotalAmountRoundOff(float totalAmountRoundOff) {
 		this.totalAmountRoundOff = totalAmountRoundOff;
 	}
+	
+	/**
+	 * @return the totalAmountInWords
+	 */
+	public String getTotalAmountInWords() {
+		return totalAmountInWords;
+	}
+	/**
+	 * @param totalAmountInWords the totalAmountInWords to set
+	 */
+	public void setTotalAmountInWords(String totalAmountInWords) {
+		this.totalAmountInWords = totalAmountInWords;
+	}
+	/**
+	 * @return the particulars
+	 */
+	public String getParticulars() {
+		return particulars;
+	}
+	/**
+	 * @param particulars the particulars to set
+	 */
+	public void setParticulars(String particulars) {
+		this.particulars = particulars;
+	}
+	
 	/**
 	 * @param id
 	 * @param billNo
@@ -156,11 +184,13 @@ public class BillDetails {
 	 * @param reactiveAmount
 	 * @param totalAmount
 	 * @param totalAmountRoundOff
+	 * @param totalAmountInWords
+	 * @param particulars
 	 */
 	public BillDetails(int id, String billNo, String invoiceNo, int meterReadingId, int investorId, int consumptionId,
 			int consumptionBifurcationId, String meterNo, String readingDate, String billGenerationDate, float totalKWH,
 			float totalRKVH, float kwhRate, float rkvhRate, float activeAmount, float reactiveAmount, float totalAmount,
-			float totalAmountRoundOff) {
+			float totalAmountRoundOff, String totalAmountInWords, String particulars) {
 		this.id = id;
 		this.billNo = billNo;
 		this.invoiceNo = invoiceNo;
@@ -179,7 +209,10 @@ public class BillDetails {
 		this.reactiveAmount = reactiveAmount;
 		this.totalAmount = totalAmount;
 		this.totalAmountRoundOff = totalAmountRoundOff;
+		this.totalAmountInWords = totalAmountInWords;
+		this.particulars = particulars;
 	}
+	
 	/**
 	 * @param billNo
 	 * @param invoiceNo
@@ -198,11 +231,13 @@ public class BillDetails {
 	 * @param reactiveAmount
 	 * @param totalAmount
 	 * @param totalAmountRoundOff
+	 * @param totalAmountInWords
+	 * @param particulars
 	 */
 	public BillDetails(String billNo, String invoiceNo, int meterReadingId, int investorId, int consumptionId,
 			int consumptionBifurcationId, String meterNo, String readingDate, String billGenerationDate, float totalKWH,
 			float totalRKVH, float kwhRate, float rkvhRate, float activeAmount, float reactiveAmount, float totalAmount,
-			float totalAmountRoundOff) {
+			float totalAmountRoundOff, String totalAmountInWords, String particulars) {
 		this.billNo = billNo;
 		this.invoiceNo = invoiceNo;
 		this.meterReadingId = meterReadingId;
@@ -220,7 +255,10 @@ public class BillDetails {
 		this.reactiveAmount = reactiveAmount;
 		this.totalAmount = totalAmount;
 		this.totalAmountRoundOff = totalAmountRoundOff;
+		this.totalAmountInWords = totalAmountInWords;
+		this.particulars = particulars;
 	}
+	
 	/* (non-Javadoc)
 	 * @see java.lang.Object#toString()
 	 */
@@ -232,9 +270,10 @@ public class BillDetails {
 				+ readingDate + ", billGenerationDate=" + billGenerationDate + ", totalKWH=" + totalKWH + ", totalRKVH="
 				+ totalRKVH + ", kwhRate=" + kwhRate + ", rkvhRate=" + rkvhRate + ", activeAmount=" + activeAmount
 				+ ", reactiveAmount=" + reactiveAmount + ", totalAmount=" + totalAmount + ", totalAmountRoundOff="
-				+ totalAmountRoundOff + "]";
+				+ totalAmountRoundOff + ", totalAmountInWords=" + totalAmountInWords + ", particulars=" + particulars
+				+ "]";
 	}
-
+	
 	public BillDetails(){
 		
 	}

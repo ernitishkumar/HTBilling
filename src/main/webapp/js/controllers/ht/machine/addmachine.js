@@ -148,7 +148,6 @@ angular.module("htBillingApp").controller('AddMachineController', ['$http', '$sc
 			day1 = "0" + day1;
 		}
 		var commissionedDate = day1 + "-" + m1 + "-" + y1;
-		console.log(commissionedDate);
 		$scope.formData.commissionedDate = commissionedDate;
 		var d2 = new Date($scope.formData.ppaDate);
 		var y2 = d1.getFullYear();
@@ -161,9 +160,7 @@ angular.module("htBillingApp").controller('AddMachineController', ['$http', '$sc
 			day2 = "0" + day2;
 		}
 		var ppaDate = day2 + "-" + m2 + "-" + y2;
-		console.log(ppaDate);
 		$scope.formData.ppaDate = ppaDate;
-
 		$http(
 				{
 					method: 'POST',

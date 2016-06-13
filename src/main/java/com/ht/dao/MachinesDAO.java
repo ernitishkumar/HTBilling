@@ -19,7 +19,7 @@ public class MachinesDAO {
 		int lastInsertedId = -1;
 		try {
 			PreparedStatement ps = connection
-					.prepareStatement("insert into machines(code,capacity,commissioned_date,active_rate,reactive_rate,ppa_letter_no,ppa_date,developer_id,plant_id,investor_id) VALUES(?,?,?,?,?,?,?,?,?,?)",Statement.RETURN_GENERATED_KEYS);
+					.prepareStatement("insert into machines(code,capacity,commissioned_date,active_rate,reactive_rate,ppa_letter_no,ppa_date,developer_id,plant_id,investor_id,particulars) VALUES(?,?,?,?,?,?,?,?,?,?,?)",Statement.RETURN_GENERATED_KEYS);
 			ps.setString(1, machine.getCode());
 			ps.setString(2, machine.getCapacity());
 			ps.setString(3, machine.getCommissionedDate());
@@ -30,6 +30,7 @@ public class MachinesDAO {
 			ps.setInt(8, machine.getDeveloperId());
 			ps.setInt(9, machine.getPlantId());
 			ps.setInt(10, machine.getInvestorId());
+			ps.setString(11, machine.getParticulars());
 			ps.executeUpdate();
 			ResultSet keys = ps.getGeneratedKeys();    
 			keys.next();  
@@ -48,7 +49,7 @@ public class MachinesDAO {
 		Machine updatedMachine = null;
 		try {
 			PreparedStatement ps = connection
-					.prepareStatement("update machines set code=?,capacity=?,commissioned_date=?,active_rate=?,reactive_rate=?,ppa_letter_no=?,ppa_date=?,developer_id=?,plant_id=?,investor_id=? where id=?");
+					.prepareStatement("update machines set code=?,capacity=?,commissioned_date=?,active_rate=?,reactive_rate=?,ppa_letter_no=?,ppa_date=?,developer_id=?,plant_id=?,investor_id=?,particulars=? where id=?");
 			ps.setString(1, machine.getCode());
 			ps.setString(2, machine.getCapacity());
 			ps.setString(3, machine.getCommissionedDate());
@@ -59,7 +60,8 @@ public class MachinesDAO {
 			ps.setInt(8, machine.getDeveloperId());
 			ps.setInt(9, machine.getPlantId());
 			ps.setInt(10, machine.getInvestorId());
-			ps.setInt(11, machine.getId());
+			ps.setString(11, machine.getParticulars());
+			ps.setInt(12, machine.getId());
 			ps.executeUpdate();
 			ps.close();
 			updatedMachine = getById(machine.getId());
@@ -216,6 +218,7 @@ public class MachinesDAO {
 				machine.setDeveloperId(rs.getInt(9));
 				machine.setPlantId(rs.getInt(10));
 				machine.setInvestorId(rs.getInt(11));
+				machine.setParticulars(rs.getString(12));
 				machineList.add(machine);
 			}
 		} catch (SQLException e) {

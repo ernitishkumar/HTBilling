@@ -23,6 +23,8 @@ public class Machine {
 	
 	private int developerId;
 	
+	private String particulars;
+	
 	public int getDeveloperId() {
 		return developerId;
 	}
@@ -113,6 +115,31 @@ public class Machine {
 
 	public void setInvestorId(int investorId) {
 		this.investorId = investorId;
+	}
+
+	/**
+	 * @return the particulars
+	 */
+	public String getParticulars() {
+		return particulars;
+	}
+
+	/**
+	 * @param particulars the particulars to set
+	 */
+	public void setParticulars(String particulars) {
+		this.particulars = particulars;
+	}
+
+	/* (non-Javadoc)
+	 * @see java.lang.Object#toString()
+	 */
+	@Override
+	public String toString() {
+		return "Machine [id=" + id + ", code=" + code + ", capacity=" + capacity + ", commissionedDate="
+				+ commissionedDate + ", activeRate=" + activeRate + ", reactiveRate=" + reactiveRate + ", ppaDate="
+				+ ppaDate + ", ppaLetterNo=" + ppaLetterNo + ", developerId=" + developerId + ", particulars="
+				+ particulars + ", plantId=" + plantId + ", investorId=" + investorId + "]";
 	}
 	
 }

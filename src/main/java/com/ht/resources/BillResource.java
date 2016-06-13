@@ -103,6 +103,7 @@ public class BillResource {
 				billDetails.setMeterNo(consumption.getMeterNo());
 				billDetails.setReadingDate(meterReadings.getReadingDate());
 				billDetails.setBillGenerationDate(currentDate);
+				billDetails.setParticulars(machine.getParticulars());
 				
 				float activeConsumption = investorConsumption.getActiveConsumption();
 				float reactiveConsumption = investorConsumption.getReactiveConsumption();
@@ -126,6 +127,10 @@ public class BillResource {
 
 				billDetails.setTotalAmount(totalAmount);
 				billDetails.setTotalAmountRoundOff(totalAmountRoundOff);
+				
+				//getting amounts in words.
+				//String amountInWords = GlobalResources.ankitKaFunction(totalAmountRoundOff);
+				//billDetails.setTotalAmountInWords(amountInWords);
 				
 				//Inserting the created bill details in database
 				generatedBillDetails = billDetailsDAO.insert(billDetails);

@@ -91,10 +91,10 @@
 				</div>
 			</div>
 			<div class="form-group">
-				<label>Developer Id: </label>
+				<label>Developer :</label>
 				<br> 
 				<select name="developerId" id="developerId" ng-model="formData.developerId" ng-change="addMachineCtrl.getPlantsByDeveloper()" >
-						<option ng-repeat="developer in developers" value="{{developer.id}}">{{developer.name}}</option>
+						<option ng-repeat="developer in developers" value="{{developer.id}}">{{developer.id}} : {{developer.name}}</option>
 				</select>
 			</div>
 			<div class="form-group">
@@ -110,6 +110,12 @@
 				<select name="investorId" id="investorId" ng-model="formData.investorId">
 						<option ng-repeat="investor in investors" value="{{investor.id}}">{{investor.name}}</option>
 				</select>
+			</div>
+			<div class="form-group">
+				<label>Particulars :</label> <textarea class="form-control" rows="3"
+					placeholder="Enter Particulars" ng-model="formData.particulars"
+					required max-length="500">
+					</textarea>
 			</div>
 			<div class="row">
 				<div class="col-md-6 ">

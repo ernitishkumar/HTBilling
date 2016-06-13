@@ -51,6 +51,7 @@
 				<th class="text-center success">Developer Id</th>
 				<th class="text-center success">Plant Id</th>
 				<th class="text-center success">Investor Id</th>
+				<th class="text-center success">Particulars</th>
 				<th class="text-center success">Edit</th>
 				<th class="text-center success">Delete</th>
 			</thead>
@@ -68,17 +69,21 @@
 					<td>{{machine.developerId}}</td>
 					<td>{{machine.plantId}}</td>
 					<td>{{machine.investorId}}</td>
+					<td>{{machine.particulars}}</td>
 					<td><a href="javascript:void(0);"><span
-							class="glyphicon glyphicon-pencil" ng-click="viewMachineDetailsCtrl.update(machine.id)"></span></a></td>
+							class="glyphicon glyphicon-pencil"
+							ng-click="viewMachineDetailsCtrl.update(machine.id)"></span></a></td>
 					<td><a href="javascript:void(0);"><span
-							class="glyphicon glyphicon-trash" ng-click="viewMachineDetailsCtrl.remove((currentPage - 1)*pageSize + $index)"></span></a></td>
+							class="glyphicon glyphicon-trash"
+							ng-click="viewMachineDetailsCtrl.remove((currentPage - 1)*pageSize + $index)"></span></a></td>
 				</tr>
 			</tbody>
 		</table>
 	</div>
 	<div class="text-center">
 		<dir-pagination-controls boundary-links="true"
-			on-page-change="pageChangeHandler(newPageNumber)" template-url="js/angular/dirPagination.tpl.html"></dir-pagination-controls>
+			on-page-change="pageChangeHandler(newPageNumber)"
+			template-url="js/angular/dirPagination.tpl.html"></dir-pagination-controls>
 	</div>
 </div>
 <br>

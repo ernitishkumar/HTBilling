@@ -81,4 +81,50 @@ angular.module("htBillingApp").controller('ViewInvestorMappingController', ['$ht
 		);
 	}
 
+	this.remove = function(index){
+		bootbox.confirm("Are you sure to delete Mapping?",function(answer){
+			if(answer === true){
+				$http(
+						{
+							method: 'DELETE',
+							url: 'backend/investor-plant-mapping/'+$scope.mappings[index].id
+						}
+				).then(
+						function (response) {
+							var status = response.status;
+							if(status === 200){
+								var deletedMapping = response.data;
+								if(deletedMapping !== null){
+									$scope.mappings.splice(index,1);
+								}
+							}
+						},
+						function(error){
+							console.log("Error while deleting mappings");
+							console.log(error);
+						}
+				);
+			}
+		});
+	};
+	
+	/*
+	 * variable currentPage to hold value for currentpage
+	 * required for pagination
+	 */
+	$scope.currentPage = 1;
+	
+	/*
+	 * variable pageSize to hold value for currentpage
+	 * required for pagination
+	 */
+	$scope.pageSize = 10;
+	
+	/*
+	 * function pageChangeHandler gets executed when user
+	 * changes page from the pagination row
+	 */
+	$scope.pageChangeHandler = function(num) {
+	      
+	  };
 }]);

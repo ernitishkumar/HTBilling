@@ -54,6 +54,22 @@ public class InvestorPlantMappingDAO {
 		return updatedMapping;
 	}
 	
+	public InvestorPlantMapping delete(int id){
+		InvestorPlantMapping deletedMapping = null;
+		Connection connection = GlobalResources.getConnection();
+		try {
+			deletedMapping = getById(id);
+			PreparedStatement ps = connection.prepareStatement("delete from investor_plant_mapping where id=?");
+			ps.setInt(1, id);
+			ps.executeUpdate();
+			ps.close();
+		} catch (SQLException e) {
+			deletedMapping = null;
+			System.out.println("Exception in class : InvestorPlantMappingDAO : method : [delete(id)] "+e.getMessage());
+		}
+		return deletedMapping;
+	}
+	
 	public ArrayList<InvestorPlantMapping> getAllMappings(){
 		ArrayList<InvestorPlantMapping> mappingList = new ArrayList<InvestorPlantMapping>();
 		Connection connection = GlobalResources.getConnection();

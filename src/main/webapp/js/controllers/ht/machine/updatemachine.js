@@ -87,7 +87,7 @@ angular.module("htBillingApp").controller('UpdateMachineController', ['$http', '
 		$http(
 				{
 					method: 'GET',
-					url: 'backend/plants/developer/'+$scope.formData.developerId
+					url: 'backend/plants/developer/'+$scope.machine.developerId
 				}
 		).then(
 				function (response) {
@@ -109,7 +109,6 @@ angular.module("htBillingApp").controller('UpdateMachineController', ['$http', '
 	
 	function getMachine() {
 		var machineId = $routeParams.id;
-		console.log(machineId);
 		$http(
 				{
 					method: 'GET',
@@ -169,7 +168,7 @@ angular.module("htBillingApp").controller('UpdateMachineController', ['$http', '
 		$http(
 				{
 					method: 'GET',
-					url: 'backend/investors/plant/'+$scope.formData.plantId
+					url: 'backend/investors/plant/'+$scope.machine.plantId
 				}
 		).then(
 				function (response) {
@@ -203,7 +202,6 @@ angular.module("htBillingApp").controller('UpdateMachineController', ['$http', '
 			day1 = "0" + day1;
 		}
 		var commissionedDate = day1 + "-" + m1 + "-" + y1;
-		console.log(commissionedDate);
 		$scope.machine.commissionedDate = commissionedDate;
 		var d2 = new Date($scope.machine.ppaDate);
 		var y2 = d1.getFullYear();
@@ -216,9 +214,7 @@ angular.module("htBillingApp").controller('UpdateMachineController', ['$http', '
 			day2 = "0" + day2;
 		}
 		var ppaDate = day2 + "-" + m2 + "-" + y2;
-		console.log(ppaDate);
 		$scope.machine.ppaDate = ppaDate;
-
 		$http(
 				{
 					method: 'PUT',
@@ -229,9 +225,10 @@ angular.module("htBillingApp").controller('UpdateMachineController', ['$http', '
 				function (response) {
 					var status = response.status;
 					if(status === 200){
-						bootbox.alert("Machine Updated successfully.");
-						$scope.error = null;
-						window.history.back();
+						bootbox.alert("Machine Updated successfully.",function(answer){
+							$scope.error = null;
+							window.history.back();	
+						});
 					}
 				},
 				function(error){

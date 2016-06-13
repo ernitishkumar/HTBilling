@@ -63,8 +63,8 @@ footer {
     position: absolute;
     left: 0;
     bottom: 0;
-    background: #333;
-    color: #eee;
+    background: #000000;
+    color: white;
     font-size: 11px;
     padding: inherit;
 }

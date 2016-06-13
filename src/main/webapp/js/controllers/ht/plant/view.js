@@ -121,5 +121,24 @@ angular.module("htBillingApp").controller('ViewPlantDetailsController', ['$http'
 		$location.path("/plant/updateplant/"+plantId);
 	};
 	
+	/*
+	 * variable currentPage to hold value for currentpage
+	 * required for pagination
+	 */
+	$scope.currentPage = 1;
+	
+	/*
+	 * variable pageSize to hold value for currentpage
+	 * required for pagination
+	 */
+	$scope.pageSize = 10;
+	
+	/*
+	 * function pageChangeHandler gets executed when user
+	 * changes page from the pagination row
+	 */
+	$scope.pageChangeHandler = function(num) {
+	      
+	  };
 	
 }]);

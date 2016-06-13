@@ -91,7 +91,6 @@ angular.module("htBillingApp").controller('ViewMeterDetailsController', ['$http'
 							var status = response.status;
 							if(status === 200){
 								var deletedMeter = response.data;
-								console.log(deletedMeter);
 								if(deletedMeter !== null){
 									$scope.meters.splice(index,1);
 								}
@@ -108,7 +107,6 @@ angular.module("htBillingApp").controller('ViewMeterDetailsController', ['$http'
 	
 	this.update = function (index) {
 		var meterNo = $scope.meters[index].meterNo;
-		console.log(meterNo);
 		$location.path("/meter/update/"+meterNo);
 	};
 	

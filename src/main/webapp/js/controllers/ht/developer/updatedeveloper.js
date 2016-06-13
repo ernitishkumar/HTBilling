@@ -70,8 +70,10 @@ angular.module("htBillingApp").controller('UpdateDeveloperController', ['$http',
 				function (response) {
 					var status = response.status;
 					if(status === 200){
-						bootbox.alert("Developer Updated.");
-						window.history.back();	
+						bootbox.alert("Developer updated successfully.",function(answer){
+							//navigating back to view page
+							window.history.back();			
+						});
 					}
 				},
 				function(error){

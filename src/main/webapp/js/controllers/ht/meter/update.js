@@ -68,7 +68,6 @@ angular.module("htBillingApp").controller('UpdateMeterController', ['$http', '$s
 	 * It passes the add meter form data to backend servers for inserting in databse;
 	 */
 	this.processForm = function () {
-		console.log($scope.meter);
 		$http(
 				{
 					method: 'PUT',
@@ -80,9 +79,10 @@ angular.module("htBillingApp").controller('UpdateMeterController', ['$http', '$s
 					var status = response.status;
 					if(status === 200){
 						var updatedMeter = response.data;
-						//$location.path("/saved/Meter Saved Successfully!");
-						bootbox.alert("Meter Updated Successfully!");
-						window.history.back();
+						bootbox.alert("Meter Updated Successfully!",function(answer){
+							//navigating back to view page
+							window.history.back();	
+						});
 					}
 				},
 				function(error){
@@ -108,7 +108,6 @@ angular.module("htBillingApp").controller('UpdateMeterController', ['$http', '$s
 					var status = response.status;
 					if(status === 200){
 						$scope.meter = response.data;
-						console.log($scope.meter);
 					}
 				},
 				function(error){

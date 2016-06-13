@@ -33,14 +33,15 @@
     <div class="page-header text-center container">
         <h2><span class="glyphicon glyphicon-certificate"></span>View Meter Readings</h2>
     </div>
-    <div name="panelsHolder" ng-repeat="reading in readingData" class="container col-md-offset-1 col-md-10">
+    <div name="panelsHolder" dir-paginate="reading in readingData| itemsPerPage: pageSize"
+		current-page="currentPage" class="container col-md-offset-1 col-md-10">
         <div class="panel panel-success">
             <div class="panel-heading text-center">Meter Readings For {{reading.meterNo}}</div>
             <div class="panel-body">
              <p class="text-center">
                 Developer Name: {{reading.developer.name|uppercase}} &nbsp;&nbsp;&nbsp; <br><br>Mf of Meter: {{reading.currentMeterReading.mf}} &nbsp;&nbsp;&nbsp; Location: {{reading.plant.circle|uppercase}} &nbsp;&nbsp;&nbsp;
                 &nbsp;&nbsp;&nbsp;
-                <button type="button" class="btn btn-success" data-toggle="modal" ng-show="reading.consumption.consumptionBifurcated" ng-click="viewMeterReadingsCtrl.viewInvestorsData(reading)">View Bifurcation & Validate</button>
+                <button type="button" class="btn btn-success" ng-show="reading.consumption.consumptionBifurcated" ng-click="viewMeterReadingsCtrl.viewInvestorsData(reading)">View Bifurcation & Validate</button>
                 <br>
                 <br> 
                 <span ng-show="reading.currentMeterReading.htCellValidation" class="label label-primary">Validated by HTCell</span>
@@ -153,6 +154,11 @@
             </table>
         </div>
     </div>
+    <div class="text-center">
+		<dir-pagination-controls boundary-links="true"
+			on-page-change="pageChangeHandler(newPageNumber)"
+			template-url="js/angular/dirPagination.tpl.html"></dir-pagination-controls>
+	</div>
 </div>
 <br>
 <br>

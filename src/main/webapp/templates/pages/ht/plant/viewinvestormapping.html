@@ -49,21 +49,25 @@
 				<th class="text-center success">Delete</th>
 			</thead>
 			<tbody class="text-center">
-				<tr ng-repeat="mapping in mappings">
-					<td>{{$index + 1}}</td>
+				<tr dir-paginate="mapping in mappings | itemsPerPage: pageSize" current-page="currentPage">
+					<td>{{(currentPage-1)*pageSize + $index+1}}</td>
 					<td>{{mapping.plantId}}</td>
 					<td>{{mapping.plantCode}}</td>
 					<td>{{mapping.investorId}}</td>
 					<td>{{mapping.investorCode}}</td>
 					<td><a href="javascript:void(0);"><span
 							class="glyphicon glyphicon-pencil"></span></a></td>
-					<td><a href="javascript:void(0);"><span
+					<td><a href="javascript:void(0);" ng-click="viewInvestorMappingCtrl.remove((currentPage - 1)*pageSize + $index)"><span
 							class="glyphicon glyphicon-trash"></span></a></td>
 				</tr>
 			</tbody>
 		</table>
 	</div>
-
+<div class="text-center">
+	<dir-pagination-controls boundary-links="true"
+		on-page-change="pageChangeHandler(newPageNumber)"
+		template-url="js/angular/dirPagination.tpl.html"></dir-pagination-controls>
+</div>
 </div>
 <br>
 <br>

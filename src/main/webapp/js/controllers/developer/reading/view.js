@@ -165,4 +165,24 @@ angular.module("htBillingApp").controller('DeveloperViewMeterReadingsController'
 	this.viewInvestorsData = function (reading) {
 		$location.path("/developer/readings/viewsplited/" + reading.consumption.id);
 	};
+	
+	/*
+	 * variable currentPage to hold value for currentpage
+	 * required for pagination
+	 */
+	$scope.currentPage = 1;
+	
+	/*
+	 * variable pageSize to hold value for currentpage
+	 * required for pagination
+	 */
+	$scope.pageSize = 5;
+	
+	/*
+	 * function pageChangeHandler gets executed when user
+	 * changes page from the pagination row
+	 */
+	$scope.pageChangeHandler = function(num) {
+	      console.log('page changed to ' + num);
+	  };
 }]);

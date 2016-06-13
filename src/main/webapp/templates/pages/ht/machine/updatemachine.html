@@ -44,19 +44,19 @@
 			<div class="form-group has-feedback">
 				<label> Machine Code</label> <input class="form-control"
 					type="text" placeholder="Machine Code"
-					ng-model="machine.code" value="{{machine.code}}"required>
+					ng-model="machine.code" required>
 			</div>
 			<div class="form-group">
 				<label>Capacity:</label> <input class="form-control" type="text"
-					placeholder="Capacity" ng-model="machine.capacity" value="{{machine.capacity}}" required>
+					placeholder="Capacity" ng-model="machine.capacity" required>
 
 			</div>
 			<div class="form-group">
 				<span class="glyphicon glyphicon-calendar"></span> <label>Commissioned
 					Date:</label>
-				<div class='input-group date' id='datetimepicker1'>
+				<div class='input-group date'>
 					<input type='date' class="form-control"
-						ng-model="machine.commissionedDate" value="{{machine.commissionedDate}}"required /> <span
+						ng-model="machine.commissionedDate" required /> <span
 						class="input-group-addon"> <span
 						class="glyphicon glyphicon-calendar"></span>
 					</span>
@@ -65,18 +65,15 @@
 			
 			<div class="form-group">
 				<label>Active Rate:</label> <input class="form-control" type="text"
-					placeholder="Active Rate" ng-model="machine.activeRate" value="{{machine.activeRate}}"
-					required>
+					placeholder="Active Rate" ng-model="machine.activeRate"	required>
 			</div>
 			<div class="form-group">
 				<label>Reactive Rate:</label> <input class="form-control" type="text"
-					placeholder="Reactive Rate" ng-model="machine.reactiveRate" value="{{machine.reactiveRate}}"
-					required>
+					placeholder="Reactive Rate" ng-model="machine.reactiveRate"	required>
 			</div>
 			<div class="form-group">
 				<label>PPA Letter No:</label> <input class="form-control" type="text"
-					placeholder="PPA Letter No" ng-model="machine.ppaLetterNo" value="{{machine.ppaLetterNo}}"
-					required>
+					placeholder="PPA Letter No" ng-model="machine.ppaLetterNo" required>
 			</div>
 			
 			<div class="form-group">
@@ -84,7 +81,7 @@
 					Date:</label>
 				<div class='input-group date' id='datetimepicker2'>
 					<input type='date' class="form-control"
-						ng-model="machine.ppaDate" value="{{machine.ppaDate}}"required /> <span
+						ng-model="machine.ppaDate" required /> <span
 						class="input-group-addon"> <span
 						class="glyphicon glyphicon-calendar"></span>
 					</span>
@@ -93,7 +90,7 @@
 			<div class="form-group">
 				<label>Developer Id: </label>
 				<br> 
-				<select name="developerId" id="developerId" ng-model="machine.developerId" value="{{machine.developerId}}"ng-change="updateMachineCtrl.getPlantsByDeveloper()" >
+				<select name="developerId" id="developerId" ng-model="machine.developerId" ng-change="updateMachineCtrl.getPlantsByDeveloper()" >
 						<option value="{{machine.developerId}}" selected>{{machine.developerId}}</option>
 						<option ng-repeat="developer in developers" value="{{developer.id}}">{{developer.name}}</option>
 				</select>
@@ -101,17 +98,17 @@
 			<div class="form-group">
 				<label>Plant Id:</label>
 				<br> 
-				<select name="plantId" id="plantId" ng-model="machine.plantId" value="{{machine.plantId}}" ng-change="updateMachineCtrl.getInvestorsByPlant()">
+				<select name="plantId" id="plantId" ng-model="machine.plantId" ng-change="updateMachineCtrl.getInvestorsByPlant()">
 						<option value="{{machine.plantId}}" selected>{{machine.plantId}}</option>
-						<option ng-repeat="plant in plants" value="{{plant.id}}" >{{plant.code}} : {{plant.name}}</option>
+						<option ng-repeat="plant in plants" value="{{plant.id}}" >{{plant.id}} : {{plant.name}}</option>
 				</select>
 			</div>
 			<div class="form-group">
 				<label>Investor Id:</label>
 				<br> 
-				<select name="investorId" id="investorId" ng-model="machine.investorId" value="{{machine.investorId}}">
+				<select name="investorId" id="investorId" ng-model="machine.investorId">
 						<option value="{{machine.investorId}}" selected>{{machine.investorId}}</option>
-						<option ng-repeat="investor in investors" value="{{investor.id}}">{{investor.name}}</option>
+						<option ng-repeat="investor in investors" value="{{investor.id}}">{{investor.id}} : {{investor.name}}</option>
 				</select>
 			</div>
 			<div class="row">

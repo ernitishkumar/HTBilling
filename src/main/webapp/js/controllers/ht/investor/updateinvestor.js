@@ -70,8 +70,9 @@ angular.module("htBillingApp").controller('UpdateInvestorController', ['$http', 
 				function (response) {
 					var status = response.status;
 					if(status === 200){
-						bootbox.alert("Investor updated successfully.");
-						window.history.back();
+						bootbox.alert("Investor updated successfully.",function(answer){
+							window.history.back();
+						});
 					}
 				},
 				function(error){
@@ -96,7 +97,6 @@ angular.module("htBillingApp").controller('UpdateInvestorController', ['$http', 
 					var status = response.status;
 					if(status === 200){
 						$scope.investor = response.data;
-						console.log($scope.investor);
 					}
 				},
 				function(error){

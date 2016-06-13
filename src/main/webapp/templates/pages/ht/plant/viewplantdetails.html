@@ -61,8 +61,8 @@
 				<th class="text-center success">Delete</th>
 			</thead>
 			<tbody class="text-center">
-				<tr ng-repeat="plant in plants">
-				    <td>{{$index+1}}</td>
+				<tr dir-paginate="plant in plants | itemsPerPage: pageSize" current-page="currentPage">
+				    <td>{{(currentPage-1)*pageSize + $index+1}}</td>
 					<td>{{plant.code}}</td>
 					<td>{{plant.name}}</td>
 					<td>{{plant.address}}</td>
@@ -80,12 +80,16 @@
 					<td>{{plant.standByMeterNo}}</td>
 					<td>{{plant.developerId}}</td>
 					<td><a href="javascript:void(0);"><span class="glyphicon glyphicon-pencil" ng-click="viewPlantDetailsCtrl.updatePage($index)"></span></a></td>
-					<td><a href="javascript:void(0);"><span class="glyphicon glyphicon-trash" ng-click="viewPlantDetailsCtrl.remove($index)"></span></a></td>
+					<td><a href="javascript:void(0);"><span class="glyphicon glyphicon-trash" ng-click="viewPlantDetailsCtrl.remove((currentPage - 1)*pageSize + $index)"></span></a></td>
 				</tr>
 			</tbody>
 		</table>
 	</div>
-
+<div class="text-center">
+	<dir-pagination-controls boundary-links="true"
+		on-page-change="pageChangeHandler(newPageNumber)"
+		template-url="js/angular/dirPagination.tpl.html"></dir-pagination-controls>
+</div>
 </div>
 <br>
 <br>

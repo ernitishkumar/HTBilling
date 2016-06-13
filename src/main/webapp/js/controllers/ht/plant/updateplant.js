@@ -191,8 +191,10 @@ angular.module("htBillingApp").controller('UpdatePlantController', ['$http', '$s
 					//$location.path("/saved/Plant Saved Successfully!");
 					var status = response.status;
 					if(status === 200){
-						bootbox.alert("Plant updated successfully.")
-						window.history.back();	
+						bootbox.alert("Plant updated successfully.",function(answer){
+							//navigating back to view page
+							window.history.back();
+						});
 					}
 				},
 				function(error){

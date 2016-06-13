@@ -33,7 +33,8 @@
     <div class="page-header text-center container">
         <h2><span class="glyphicon glyphicon-certificate"></span>View Meter Readings</h2>
     </div>
-    <div name="panelsHolder" ng-repeat="reading in readingData" class="container col-md-offset-1 col-md-10">
+    <div name="panelsHolder" dir-paginate="reading in readingData | itemsPerPage: pageSize"
+		current-page="currentPage" class="container col-md-offset-1 col-md-10">
         <div class="panel panel-success">
             <div class="panel-heading text-center">Meter Readings For {{reading.meterNo}}</div>
             <div class="panel-body">
@@ -157,6 +158,11 @@
             </table>
         </div>
     </div>
+    <div class="text-center">
+		<dir-pagination-controls boundary-links="true"
+			on-page-change="pageChangeHandler(newPageNumber)"
+			template-url="js/angular/dirPagination.tpl.html"></dir-pagination-controls>
+	</div>
 </div>
 <br>
 <br>

@@ -137,10 +137,11 @@ angular.module("htBillingApp").controller('ViewBillController', ['$http', '$scop
 	 */
 	function loadMachines(){
 		if($scope.billDetails !== undefined && $scope.billDetails !== null){
+			//console.log("plant id is : "+$scope.billDetails.plant.id+" and investor Id is : "+$scope.billDetails.investor.id);
 			$http(
 					{
 						method: 'GET',
-						url: 'backend/machines/plant/'+$scope.billDetails.plantId+'/investor/'+$scope.billDetails.investorId
+						url: 'backend/machines/plant/'+$scope.billDetails.plant.id+'/investor/'+$scope.billDetails.investor.id
 					}
 			).then(
 					function (response) {

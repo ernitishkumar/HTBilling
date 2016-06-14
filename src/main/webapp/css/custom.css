@@ -84,10 +84,10 @@ footer h6 {
 }
  
 #billTable1 > tbody > tr > td{
-	border: 2px solid #020608;
+	border: 1px solid #020608;
 }
 #billTable2 > tbody > tr > td{
-	border: 2px solid #020608;
+	border: 1px solid #020608;
 }  
 /*  tr.ng-leave{
   animation : bounceOut 1s;

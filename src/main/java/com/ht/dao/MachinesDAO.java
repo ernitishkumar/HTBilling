@@ -205,7 +205,7 @@ public class MachinesDAO {
 		ArrayList<Machine> machineList = new ArrayList<Machine>();
 		Connection connection = GlobalResources.getConnection();
 		try {
-			PreparedStatement ps = connection.prepareStatement("select * from machines where plant_id=?,investor_id = ?");
+			PreparedStatement ps = connection.prepareStatement("select * from machines where plant_id=? and investor_id = ?");
 			ps.setInt(1,plantId);
 			ps.setInt(2,investorId);
 			ResultSet rs = ps .executeQuery();
@@ -213,6 +213,7 @@ public class MachinesDAO {
 			rs.close();
 			ps.close();
 		} catch (SQLException e) {
+			e.printStackTrace();
 			System.out.println("Exception in class : MachineDAO : method : [getByPlantIdAndInvestorId(int,int)] "+e);
 		}
 		return machineList;

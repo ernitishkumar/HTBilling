@@ -39,16 +39,16 @@
 			<span class="glyphicon glyphicon-certificate"></span>Power Purchase Bill
 		</h2>
 	</div> -->
+	<br>
 	<div class="row">
 		<div class="col-md-12">
-			<table class="table table-bordered" id="billTable1">
+			<table class="table" id="billTable1">
 				<tbody>
 					<tr>
 						<td colspan="6" class="text-center"><b><p>{{billDetails.investor.name}}</p></b>
 							<p>{{billDetails.investor.officeAddress}}</p></td>
-					</tr>
 					<tr>
-						<td colspan="6" class="text-center"><strong>BILL NO: {{billDetails.billNo}}</strong></td>
+						<td colspan="6" class="text-center"><strong>INVOICE/BILL NO: {{billDetails.billNo}}</strong></td>
 					</tr>
 					<tr>
 						<td colspan="3"><b> To,<br> The Superintending
@@ -120,7 +120,21 @@
 						<td>{{billDetails.totalAmountRoundoff}}</td>
 					</tr>
 					<tr class="text-center">
-					   	<td colspan="6"><b>{{billDetails.totalAmountInWords}}</b></td>
+						<td></td>
+						<td colspan="2"><b>Amount in Words</b></td>
+					   	<td colspan="3"><b>{{billDetails.totalAmountInWords}}</b></td>
+					</tr>
+					<tr>
+					<td colspan="6">
+					<br>
+					<br>
+					<br>
+					<br>
+					<br>
+					<br>
+					<br>
+					<br>
+					</td>
 					</tr>
 				</tbody>
 			</table>

@@ -71,6 +71,7 @@ footer {
 
 footer h6 {
     color: darkorange;
+    font-size: 12px;
 }
 
 @media screen and (min-width:768px) {

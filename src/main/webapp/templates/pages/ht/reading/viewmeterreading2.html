@@ -53,12 +53,14 @@
 					&nbsp;&nbsp;&nbsp;
 					<button type="button" class="btn btn-success" name="validateButton"
 						ng-click="viewMeterReadingsCtrl.validateReading(reading)"
-						ng-hide="reading.currentMeterReading.htCellValidation">Validate
+						ng-hide="reading.currentMeterReading.discardedFlag || reading.currentMeterReading.htCellValidation">Validate
 						Readings</button>
 					&nbsp;&nbsp;&nbsp;
 					<button type="button" class="btn btn-danger" name="discardButton"
-						ng-hide="reading.currentMeterReading.htCellValidation">Discard
+						ng-click="viewMeterReadingsCtrl.discardReading(reading)"
+						ng-hide="reading.currentMeterReading.discardedFlag || reading.currentMeterReading.htCellValidation">Discard
 						Readings</button>
+					
 					<br> <br> <span
 						ng-show="reading.currentMeterReading.htCellValidation"
 						class="label label-primary">Validated by HTCell</span> <span

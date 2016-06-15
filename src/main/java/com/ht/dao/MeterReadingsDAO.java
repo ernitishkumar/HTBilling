@@ -39,7 +39,7 @@ public class MeterReadingsDAO {
 				/*if(result == 1 || result == -11){
 					isAlreadyAdded = false;
 				}*/
-				if(result != 0){
+				if(result != 0 || latestInsertedReading.getDiscardedFlag()==1){
 					isAlreadyAdded = false;
 				}
 			}catch(ParseException parseException){
@@ -348,8 +348,8 @@ public class MeterReadingsDAO {
 				meterReadings.setCircleCellValidation(0);
 				meterReadings.setDeveloperValidation(0);
 				meterReadings.setDiscardedFlag(0);
-				meterReadings.setDiscardedBy("null");
-				meterReadings.setDiscardedOn("null");
+				meterReadings.setDiscardedBy("");
+				meterReadings.setDiscardedOn("");
 				meterReadings.setSrfrFlag(0);
 			}else{
 				meterReadings = readings.get(0);
@@ -449,8 +449,8 @@ public class MeterReadingsDAO {
 				meterReadings.setCircleCellValidation(0);
 				meterReadings.setDeveloperValidation(0);
 				meterReadings.setDiscardedFlag(0);
-				meterReadings.setDiscardedBy("null");
-				meterReadings.setDiscardedOn("null");
+				meterReadings.setDiscardedBy("");
+				meterReadings.setDiscardedOn("");
 				meterReadings.setSrfrFlag(0);
 			}else{
 				meterReadings = readings.get(0);
@@ -535,6 +535,41 @@ public class MeterReadingsDAO {
 			System.out.println("Exception in class : MeterReadingsDAO : method : resultSetParser(resultSet,arrayList) "+e.getMessage());
 			e.printStackTrace();
 		}
+	}
+
+	public boolean updateDiscardedFlag(int readingId, int discardedFlag, String username) {
+		Connection connection = GlobalResources.getConnection();
+		boolean validated = false;
+		SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
+		Calendar c = Calendar.getInstance();
+		int day = c.get(Calendar.DATE);
+		String readingDay= null;
+		if(day < 10){
+			readingDay = "0"+day;
+		}else{
+			readingDay = String.valueOf(day);
+		}
+		int year = c.get(Calendar.YEAR);
+		int month = c.get(Calendar.MONTH)+1;
+		String mon = null;
+		if (month < 10) {
+			mon  = "0"+month;
+		}
+		String dateTrim = readingDay+"-"+mon+"-"+year;
+		try {
+			System.out.println("dicarding Readings for id "+readingId+" by user "+username);
+			PreparedStatement ps = connection.prepareStatement("update meter_readings set discarded_flag=?, discarded_by=?, discarded_on=? where id=?");
+			ps.setInt(1,discardedFlag);
+			ps.setString(2,username);
+			ps.setString(3,dateTrim);
+			ps.setInt(4,readingId);
+			ps.executeUpdate();
+			validated=true;
+			ps.close();
+		} catch (SQLException e) {
+			System.out.println("Exception in class : MeterDetailsDAO : method : [updateDiscardedFlag(int,int,String)] "+e.getMessage());
+		}
+		return validated;
 	}
 
 }

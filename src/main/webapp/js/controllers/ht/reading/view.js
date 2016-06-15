@@ -126,6 +126,44 @@ angular.module("htBillingApp").controller('ViewMeterReadingsController', ['$http
 	
 	
 	/*
+	 * function discardReading to implement discard action event
+	 * this function runs when user clicks Discard reading button on page.
+	 */
+	this.discardReading = function (reading) {
+		$http(
+				{
+					method: 'PUT',
+					url: 'backend/readings/discard',
+					params: {
+						readingId: reading.currentMeterReading.id
+					},
+					data: $scope.userRole
+				}
+		).then(
+				function (response) {
+					var status = response.status;
+					//checking status code for successful response from server
+					if (status === 200) {
+						$scope.readingData.forEach(
+								function (item) {
+									if (item.meterNo === reading.meterNo) {
+										if ($scope.userRole.role === 'admin' || $scope.userRole.role === 'htcell') {
+											item.currentMeterReading.discardedFlag = 1;
+										}
+									}
+								}
+						);
+					}
+				},
+				function(error){
+					console.log("error in discarding readings. response is below");
+					console.log(error);
+				}
+		);
+	};
+	
+	
+	/*
 	 * variable currentPage to hold value for currentpage
 	 * required for pagination
 	 */

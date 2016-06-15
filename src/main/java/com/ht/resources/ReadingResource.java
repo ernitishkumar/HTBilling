@@ -27,6 +27,7 @@ import com.ht.beans.MessageBean;
 import com.ht.beans.MeterReading;
 import com.ht.beans.Plant;
 import com.ht.beans.SRFRReadings;
+import com.ht.beans.UserRoles;
 import com.ht.beans.ViewMeterReadings;
 import com.ht.dao.ConsumptionsDAO;
 import com.ht.dao.DevelopersDAO;
@@ -48,62 +49,61 @@ public class ReadingResource {
 	@POST
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
-	public Response saveReading(MeterReading meterReading){
+	public Response saveReading(MeterReading meterReading) {
 		System.out.println("saveReading called ");
 		MeterReading insertedReading = null;
 		boolean isReadingAlreadyAdded = false;
-		if(meterReading !=null){
-		    isReadingAlreadyAdded = meterReadingsDAO.isReadingAlreadyAdded(meterReading);
-			if(!isReadingAlreadyAdded){
+		if (meterReading != null) {
+			isReadingAlreadyAdded = meterReadingsDAO.isReadingAlreadyAdded(meterReading);
+			if (!isReadingAlreadyAdded) {
 				insertedReading = meterReadingsDAO.insert(meterReading);
 			}
 		}
-		if(insertedReading != null){
-			return Response.status(Status.CREATED)
-					.entity(insertedReading)
-					.build();
-		}else{
+		if (insertedReading != null) {
+			return Response.status(Status.CREATED).entity(insertedReading).build();
+		} else {
 			ErrorBean error = new ErrorBean();
-			if(isReadingAlreadyAdded){
+			if (isReadingAlreadyAdded) {
 				error.setErrorMessage("Readings for meter already exists for this month.");
 			}
-			return Response.status(Status.EXPECTATION_FAILED)
-					.entity(error)
-					.build();
+			return Response.status(Status.EXPECTATION_FAILED).entity(error).build();
 		}
 	}
 
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
-	public ArrayList<ViewMeterReadings> getAll(){
+	public ArrayList<ViewMeterReadings> getAll() {
 		System.out.println("GetAllReadings started ");
 		ArrayList<ViewMeterReadings> viewReadings = new ArrayList<ViewMeterReadings>();
 		ArrayList<Plant> plants = plantsDAO.getAll();
 		SimpleDateFormat formater = new SimpleDateFormat("dd-MM-YYYY");
 		Date date = new Date();
 		String currentDate = formater.format(date);
-		for(Plant p:plants){
+		for (Plant p : plants) {
 			ViewMeterReadings viewMeterReadings = new ViewMeterReadings();
-			String meterNo=p.getMainMeterNo();
+			String meterNo = p.getMainMeterNo();
 			viewMeterReadings.setMeterNo(meterNo);
 			viewMeterReadings.setPlant(p);
 			viewMeterReadings.setDeveloper(developersDAO.getById(p.getDeveloperId()));
 			MeterReading currentMonthReading = meterReadingsDAO.getCurrentMonthMeterReadings(meterNo);
-			if(currentMonthReading.getSrfrFlag()==1){
-				System.out.println("inside if of SR FR" );
-				String checkMeterNo = p.getCheckMeterNo();
-				viewMeterReadings.setMeterNo(checkMeterNo);
-				currentMonthReading = meterReadingsDAO.getCurrentMonthMeterReadings(checkMeterNo);
-				viewMeterReadings.setPreviousMeterReading(meterReadingsDAO.getPreviousMonthMeterReadings(checkMeterNo));
-				viewMeterReadings.setCurrentMeterReading(currentMonthReading);
-			}else{
-				viewMeterReadings.setPreviousMeterReading(meterReadingsDAO.getPreviousMonthMeterReadings(meterNo));
-				viewMeterReadings.setCurrentMeterReading(currentMonthReading);
+			if (currentMonthReading.getDiscardedFlag() == 0) {
+				if (currentMonthReading.getSrfrFlag() == 1) {
+					// System.out.println("inside if of SR FR" );
+					String checkMeterNo = p.getCheckMeterNo();
+					viewMeterReadings.setMeterNo(checkMeterNo);
+					currentMonthReading = meterReadingsDAO.getCurrentMonthMeterReadings(checkMeterNo);
+					viewMeterReadings
+							.setPreviousMeterReading(meterReadingsDAO.getPreviousMonthMeterReadings(checkMeterNo));
+					viewMeterReadings.setCurrentMeterReading(currentMonthReading);
+				} else {
+					viewMeterReadings.setPreviousMeterReading(meterReadingsDAO.getPreviousMonthMeterReadings(meterNo));
+					viewMeterReadings.setCurrentMeterReading(currentMonthReading);
+				}
+				if (currentMonthReading != null && currentMonthReading.getDeveloperValidation() == 1) {
+					viewMeterReadings.setConsumption(consumptionDAO.getByMeterReadingId(currentMonthReading.getId()));
+				}
+				viewReadings.add(viewMeterReadings);
 			}
-			if(currentMonthReading != null && currentMonthReading.getDeveloperValidation() == 1){
-				viewMeterReadings.setConsumption(consumptionDAO.getByMeterReadingId(currentMonthReading.getId()));
-			}
-			viewReadings.add(viewMeterReadings);
 		}
 		return viewReadings;
 	}
@@ -111,36 +111,41 @@ public class ReadingResource {
 	@GET
 	@Path("/circle/{circleName}")
 	@Produces(MediaType.APPLICATION_JSON)
-	public ArrayList<ViewMeterReadings> getByCircle(@PathParam("circleName")String circle){
-		System.out.println("GetReadings by circle started for circle : "+circle);
+	public ArrayList<ViewMeterReadings> getByCircle(@PathParam("circleName") String circle) {
+		System.out.println("GetReadings by circle started for circle : " + circle);
 		ArrayList<ViewMeterReadings> viewReadings = new ArrayList<ViewMeterReadings>();
-		if(circle!=null){
+		if (circle != null) {
 			ArrayList<Plant> plants = plantsDAO.getByCircle(circle);
 			SimpleDateFormat formater = new SimpleDateFormat("dd-MM-YYYY");
 			Date date = new Date();
 			String currentDate = formater.format(date);
-			for(Plant p:plants){
+			for (Plant p : plants) {
 				ViewMeterReadings viewMeterReadings = new ViewMeterReadings();
-				String meterNo=p.getMainMeterNo();
+				String meterNo = p.getMainMeterNo();
 				viewMeterReadings.setMeterNo(meterNo);
 				viewMeterReadings.setPlant(p);
 				viewMeterReadings.setDeveloper(developersDAO.getById(p.getDeveloperId()));
 				MeterReading currentMonthReading = meterReadingsDAO.getCurrentMonthMeterReadings(meterNo);
-				if(currentMonthReading.getSrfrFlag()==1){
-					System.out.println("inside if of SR FR" );
-					String checkMeterNo = p.getCheckMeterNo();
-					viewMeterReadings.setMeterNo(checkMeterNo);
-					currentMonthReading = meterReadingsDAO.getCurrentMonthMeterReadings(checkMeterNo);
-					viewMeterReadings.setPreviousMeterReading(meterReadingsDAO.getPreviousMonthMeterReadings(checkMeterNo));
-					viewMeterReadings.setCurrentMeterReading(currentMonthReading);
-				}else{
-					viewMeterReadings.setPreviousMeterReading(meterReadingsDAO.getPreviousMonthMeterReadings(meterNo));
-					viewMeterReadings.setCurrentMeterReading(currentMonthReading);
+				if (currentMonthReading.getDiscardedFlag() == 0) {
+					if (currentMonthReading.getSrfrFlag() == 1) {
+						// System.out.println("inside if of SR FR" );
+						String checkMeterNo = p.getCheckMeterNo();
+						viewMeterReadings.setMeterNo(checkMeterNo);
+						currentMonthReading = meterReadingsDAO.getCurrentMonthMeterReadings(checkMeterNo);
+						viewMeterReadings
+								.setPreviousMeterReading(meterReadingsDAO.getPreviousMonthMeterReadings(checkMeterNo));
+						viewMeterReadings.setCurrentMeterReading(currentMonthReading);
+					} else {
+						viewMeterReadings
+								.setPreviousMeterReading(meterReadingsDAO.getPreviousMonthMeterReadings(meterNo));
+						viewMeterReadings.setCurrentMeterReading(currentMonthReading);
+					}
+					if (currentMonthReading != null && currentMonthReading.getDeveloperValidation() == 1) {
+						viewMeterReadings
+								.setConsumption(consumptionDAO.getByMeterReadingId(currentMonthReading.getId()));
+					}
+					viewReadings.add(viewMeterReadings);
 				}
-				if(currentMonthReading != null && currentMonthReading.getDeveloperValidation() == 1){
-					viewMeterReadings.setConsumption(consumptionDAO.getByMeterReadingId(currentMonthReading.getId()));
-				}
-				viewReadings.add(viewMeterReadings);
 			}
 		}
 		return viewReadings;
@@ -149,37 +154,42 @@ public class ReadingResource {
 	@GET
 	@Path("/developer/{username}")
 	@Produces(MediaType.APPLICATION_JSON)
-	public ArrayList<ViewMeterReadings> getByDeveloperUsername(@PathParam("username")String username){
-		System.out.println("GetReadings by Developer username started for username : "+username);
+	public ArrayList<ViewMeterReadings> getByDeveloperUsername(@PathParam("username") String username) {
+		System.out.println("GetReadings by Developer username started for username : " + username);
 		ArrayList<ViewMeterReadings> viewReadings = new ArrayList<ViewMeterReadings>();
-		if(username!=null){
-			Developer developer=developersDAO.getByUsername(username);
+		if (username != null) {
+			Developer developer = developersDAO.getByUsername(username);
 			ArrayList<Plant> plants = plantsDAO.getByDeveloperId(developer.getId());
 			SimpleDateFormat formater = new SimpleDateFormat("dd-MM-YYYY");
 			Date date = new Date();
 			String currentDate = formater.format(date);
-			for(Plant p:plants){
+			for (Plant p : plants) {
 				ViewMeterReadings viewMeterReadings = new ViewMeterReadings();
-				String meterNo=p.getMainMeterNo();
+				String meterNo = p.getMainMeterNo();
 				viewMeterReadings.setMeterNo(meterNo);
 				viewMeterReadings.setPlant(p);
 				viewMeterReadings.setDeveloper(developersDAO.getById(p.getDeveloperId()));
 				MeterReading currentMonthReading = meterReadingsDAO.getCurrentMonthMeterReadings(meterNo);
-				if(currentMonthReading.getSrfrFlag()==1){
-					System.out.println("inside if of SR FR" );
-					String checkMeterNo = p.getCheckMeterNo();
-					viewMeterReadings.setMeterNo(checkMeterNo);
-					currentMonthReading = meterReadingsDAO.getCurrentMonthMeterReadings(checkMeterNo);
-					viewMeterReadings.setPreviousMeterReading(meterReadingsDAO.getPreviousMonthMeterReadings(checkMeterNo));
-					viewMeterReadings.setCurrentMeterReading(currentMonthReading);
-				}else{
-					viewMeterReadings.setPreviousMeterReading(meterReadingsDAO.getPreviousMonthMeterReadings(meterNo));
-					viewMeterReadings.setCurrentMeterReading(currentMonthReading);
+				if (currentMonthReading.getDiscardedFlag() == 0) {
+					if (currentMonthReading.getSrfrFlag() == 1) {
+						// System.out.println("inside if of SR FR" );
+						String checkMeterNo = p.getCheckMeterNo();
+						viewMeterReadings.setMeterNo(checkMeterNo);
+						currentMonthReading = meterReadingsDAO.getCurrentMonthMeterReadings(checkMeterNo);
+						viewMeterReadings
+								.setPreviousMeterReading(meterReadingsDAO.getPreviousMonthMeterReadings(checkMeterNo));
+						viewMeterReadings.setCurrentMeterReading(currentMonthReading);
+					} else {
+						viewMeterReadings
+								.setPreviousMeterReading(meterReadingsDAO.getPreviousMonthMeterReadings(meterNo));
+						viewMeterReadings.setCurrentMeterReading(currentMonthReading);
+					}
+					if (currentMonthReading != null && currentMonthReading.getDeveloperValidation() == 1) {
+						viewMeterReadings
+								.setConsumption(consumptionDAO.getByMeterReadingId(currentMonthReading.getId()));
+					}
+					viewReadings.add(viewMeterReadings);
 				}
-				if(currentMonthReading != null && currentMonthReading.getDeveloperValidation() == 1){
-					viewMeterReadings.setConsumption(consumptionDAO.getByMeterReadingId(currentMonthReading.getId()));
-				}
-				viewReadings.add(viewMeterReadings);
 			}
 		}
 		return viewReadings;
@@ -188,34 +198,38 @@ public class ReadingResource {
 	@GET
 	@Path("/meterno/{meterno}")
 	@Produces(MediaType.APPLICATION_JSON)
-	public ViewMeterReadings getByMainMeterno(@PathParam("meterno")String meterno){
-		System.out.println("GetReadings by meterno started for meterno : "+meterno);
+	public ViewMeterReadings getByMainMeterno(@PathParam("meterno") String meterno) {
+		System.out.println("GetReadings by meterno started for meterno : " + meterno);
 		ViewMeterReadings viewReading = null;
-		if(meterno!=null){
+		if (meterno != null) {
 			Plant plant = plantsDAO.getByMainMeterNo(meterno);
 			SimpleDateFormat formater = new SimpleDateFormat("dd-MM-YYYY");
 			Date date = new Date();
 			String currentDate = formater.format(date);
 			ViewMeterReadings viewMeterReadings = new ViewMeterReadings();
-			String meterNo=plant.getMainMeterNo();
+			String meterNo = plant.getMainMeterNo();
 			viewMeterReadings.setMeterNo(meterNo);
 			viewMeterReadings.setPlant(plant);
 			viewMeterReadings.setDeveloper(developersDAO.getById(plant.getDeveloperId()));
 			MeterReading currentMonthReading = meterReadingsDAO.getCurrentMonthMeterReadings(meterNo);
-			if(currentMonthReading.getSrfrFlag()==1){
-				System.out.println("inside if of SR FR" );
-				String checkMeterNo = plant.getCheckMeterNo();
-				viewMeterReadings.setMeterNo(checkMeterNo);
-				currentMonthReading = meterReadingsDAO.getCurrentMonthMeterReadings(checkMeterNo);
-				viewMeterReadings.setPreviousMeterReading(meterReadingsDAO.getPreviousMonthMeterReadings(checkMeterNo));
-				viewMeterReadings.setCurrentMeterReading(currentMonthReading);
-			}else{
-				viewMeterReadings.setPreviousMeterReading(meterReadingsDAO.getPreviousMonthMeterReadings(meterNo));
-				viewMeterReadings.setCurrentMeterReading(currentMonthReading);
+			if (currentMonthReading.getDiscardedFlag() == 0) {
+				if (currentMonthReading.getSrfrFlag() == 1) {
+					System.out.println("inside if of SR FR");
+					String checkMeterNo = plant.getCheckMeterNo();
+					viewMeterReadings.setMeterNo(checkMeterNo);
+					currentMonthReading = meterReadingsDAO.getCurrentMonthMeterReadings(checkMeterNo);
+					viewMeterReadings
+							.setPreviousMeterReading(meterReadingsDAO.getPreviousMonthMeterReadings(checkMeterNo));
+					viewMeterReadings.setCurrentMeterReading(currentMonthReading);
+				} else {
+					viewMeterReadings.setPreviousMeterReading(meterReadingsDAO.getPreviousMonthMeterReadings(meterNo));
+					viewMeterReadings.setCurrentMeterReading(currentMonthReading);
+				}
+				if (currentMonthReading != null && currentMonthReading.getDeveloperValidation() == 1) {
+					viewMeterReadings.setConsumption(
+							consumptionDAO.getBifercationFlagByPlantIdAndDate(plant.getId(), currentDate));
+				}
 			}
-			if(currentMonthReading != null && currentMonthReading.getDeveloperValidation() == 1){
-				viewMeterReadings.setConsumption(consumptionDAO.getBifercationFlagByPlantIdAndDate(plant.getId(),currentDate));
-			}		
 		}
 		return viewReading;
 	}
@@ -223,37 +237,57 @@ public class ReadingResource {
 	@PUT
 	@Path("/validate")
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response validateReadings(@QueryParam("role")String role,@QueryParam("readingId")int readingId){
-		System.out.println("validateReadings called for role "+role);
+	public Response validateReadings(@QueryParam("role") String role, @QueryParam("readingId") int readingId) {
+		System.out.println("validateReadings called for role " + role);
 		boolean validated = false;
-		if(role!=null){
-			if(role.equalsIgnoreCase("htcell")||role.equalsIgnoreCase("admin")){
-				validated=meterReadingsDAO.updateHTCellValidation(readingId,1);
-			}else if(role.equalsIgnoreCase("circle")){
-				validated=meterReadingsDAO.updateCircleCellValidation(readingId,1);
-			}
-			else if(role.equalsIgnoreCase("developer")){
-				validated=meterReadingsDAO.updateDeveloperValidation(readingId,1); 
+		if (role != null) {
+			if (role.equalsIgnoreCase("htcell") || role.equalsIgnoreCase("admin")) {
+				validated = meterReadingsDAO.updateHTCellValidation(readingId, 1);
+			} else if (role.equalsIgnoreCase("circle")) {
+				validated = meterReadingsDAO.updateCircleCellValidation(readingId, 1);
+			} else if (role.equalsIgnoreCase("developer")) {
+				validated = meterReadingsDAO.updateDeveloperValidation(readingId, 1);
 			}
 		}
-		if(role!=null && validated){
-			return Response.status(Status.OK)
-					.entity(new MessageBean("validated"))
-					.build();
-		}else{
-			return Response.status(Status.EXPECTATION_FAILED)
-					.entity(new ErrorBean("not validated"))
-					.build();
+		if (role != null && validated) {
+			return Response.status(Status.OK).entity(new MessageBean("validated")).build();
+		} else {
+			return Response.status(Status.EXPECTATION_FAILED).entity(new ErrorBean("not validated")).build();
 		}
 
 	}
-	
-	
+
+	@PUT
+	@Path("/discard")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response discardReadings(UserRoles role, @QueryParam("readingId") int readingId) {
+		System.out.println("discardReadings called for role " + role);
+		boolean validated = false;
+		if (role != null) {
+			if (role.getRole().equalsIgnoreCase("htcell") || role.getRole().equalsIgnoreCase("admin")) {
+				String username = role.getUsername();
+				validated = meterReadingsDAO.updateDiscardedFlag(readingId, 1, username);
+			} /*
+				 * else if(role.equalsIgnoreCase("circle")){
+				 * validated=meterReadingsDAO.updateCircleCellValidation(
+				 * readingId,1); } else if(role.equalsIgnoreCase("developer")){
+				 * validated=meterReadingsDAO.updateDeveloperValidation(
+				 * readingId,1); }
+				 */
+		}
+		if (role != null && validated) {
+			return Response.status(Status.OK).entity(new MessageBean("discarded")).build();
+		} else {
+			return Response.status(Status.EXPECTATION_FAILED).entity(new ErrorBean("not discarded")).build();
+		}
+
+	}
+
 	@POST
 	@Path("/srfr")
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
-	public Response saveSRFRReading(SRFRReadings srfrReading){
+	public Response saveSRFRReading(SRFRReadings srfrReading) {
 		System.out.println("saveReading called ");
 		MeterReading insertedReading = null;
 		MeterReading meterReading = new MeterReading();
@@ -272,27 +306,27 @@ public class ReadingResource {
 		meterReading.setReactiveQuadrantFour(srfrReading.getReactiveQuadrantFour());
 		meterReading.setSrfrFlag(1);
 		SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
-			Calendar c = Calendar.getInstance();
-			try {
-				c.setTime(formatter.parse(srfrReading.getReadingDate()));
-			} catch (ParseException e) {
-				e.printStackTrace();
-			}
-			c.add(Calendar.MONTH,-1);
-			int day = c.get(Calendar.DATE);
-			String readingDay= null;
-			if(day < 10){
-				readingDay = "0"+day;
-			}else{
-				readingDay = String.valueOf(day);
-			}
-			int year = c.get(Calendar.YEAR);
-			int month = c.get(Calendar.MONTH)+1;
-			String mon = null;
-			if (month < 10) {
-				mon  = "0"+month;
-			}
-			String dateTrim = readingDay+"-"+mon+"-"+year;
+		Calendar c = Calendar.getInstance();
+		try {
+			c.setTime(formatter.parse(srfrReading.getReadingDate()));
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+		c.add(Calendar.MONTH, -1);
+		int day = c.get(Calendar.DATE);
+		String readingDay = null;
+		if (day < 10) {
+			readingDay = "0" + day;
+		} else {
+			readingDay = String.valueOf(day);
+		}
+		int year = c.get(Calendar.YEAR);
+		int month = c.get(Calendar.MONTH) + 1;
+		String mon = null;
+		if (month < 10) {
+			mon = "0" + month;
+		}
+		String dateTrim = readingDay + "-" + mon + "-" + year;
 		preCheckReading.setMeterno(srfrReading.getCheckMeterNo());
 		preCheckReading.setMf(srfrReading.getMf());
 		preCheckReading.setReadingDate(dateTrim);
@@ -305,7 +339,7 @@ public class ReadingResource {
 		preCheckReading.setReactiveQuadrantThree(srfrReading.getPreCheckReactiveQuadrantThree());
 		preCheckReading.setReactiveQuadrantFour(srfrReading.getPreCheckReactiveQuadrantFour());
 		preCheckReading.setSrfrFlag(1);
-		
+
 		currCheckReading.setMeterno(srfrReading.getCheckMeterNo());
 		currCheckReading.setMf(srfrReading.getMf());
 		currCheckReading.setReadingDate(srfrReading.getReadingDate());
@@ -318,26 +352,22 @@ public class ReadingResource {
 		currCheckReading.setReactiveQuadrantThree(srfrReading.getCurCheckReactiveQuadrantThree());
 		currCheckReading.setReactiveQuadrantFour(srfrReading.getCurCheckReactiveQuadrantFour());
 		currCheckReading.setSrfrFlag(1);
-		boolean isReadingAlreadyAdded = false;		
-		    isReadingAlreadyAdded = meterReadingsDAO.isReadingAlreadyAdded(meterReading);
-			if(!isReadingAlreadyAdded){
-				insertedReading = meterReadingsDAO.insert(meterReading);
-				meterReadingsDAO.insert(preCheckReading);
-				meterReadingsDAO.insert(currCheckReading);
-			}
-		if(insertedReading != null){
-			return Response.status(Status.CREATED)
-					.entity(insertedReading)
-					.build();
-		}else{
+		boolean isReadingAlreadyAdded = false;
+		isReadingAlreadyAdded = meterReadingsDAO.isReadingAlreadyAdded(meterReading);
+		if (!isReadingAlreadyAdded) {
+			insertedReading = meterReadingsDAO.insert(meterReading);
+			meterReadingsDAO.insert(preCheckReading);
+			meterReadingsDAO.insert(currCheckReading);
+		}
+		if (insertedReading != null) {
+			return Response.status(Status.CREATED).entity(insertedReading).build();
+		} else {
 			ErrorBean error = new ErrorBean();
-			if(isReadingAlreadyAdded){
+			if (isReadingAlreadyAdded) {
 				error.setErrorMessage("Readings for meter already exists for this month.");
 			}
-			return Response.status(Status.EXPECTATION_FAILED)
-					.entity(error)
-					.build();
+			return Response.status(Status.EXPECTATION_FAILED).entity(error).build();
 		}
-		
+
 	}
 }

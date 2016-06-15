@@ -45,10 +45,10 @@
 			<table class="table" id="billTable1">
 				<tbody>
 					<tr>
-						<td colspan="6" class="text-center"><b><p>{{billDetails.investor.name}}</p></b>
+						<td colspan="6" class="text-center"><b><p>{{billDetails.investor.name | uppercase}}</p></b>
 							<p>{{billDetails.investor.officeAddress}}</p></td>
 					<tr>
-						<td colspan="6" class="text-center"><strong>INVOICE/BILL NO: {{billDetails.billNo}}</strong></td>
+						<td colspan="6" class="text-center"><strong>INVOICE</strong></td>
 					</tr>
 					<tr>
 						<td colspan="3"><b> To,<br> The Superintending
@@ -56,6 +56,7 @@
 								{{userRole.circle}} (M.P)
 						</b></td>
 						<td colspan="3">Invoice No. :<b>{{billDetails.investor.invoiceNo}}</b><br>
+						    BILL NO: <b>{{billDetails.billNo}}</b><br>
 							Bill Date :<b>{{billDetails.billGenerationDate}}</b><br>
 							Ref. :<b>PPA Dated
 								{{billDetails.investorConsumptionView.machines[0].ppaDate}}
@@ -127,10 +128,12 @@
 					<tr>
 					<td colspan="6">
 					<br>
+					<p style='float:right;'>for {{billDetails.investor.name | uppercase}}</p>
 					<br>
 					<br>
 					<br>
 					<br>
+					<p style='float:right;'>Authorized Signatory</p>
 					<br>
 					<br>
 					<br>

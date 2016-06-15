@@ -112,22 +112,29 @@ public class BillResource {
 				billDetails.setPlantId(plant.getId());
 				
 				float activeConsumption = investorConsumption.getActiveConsumption();
-				System.out.println("activeConsumption "+activeConsumption);
+				//System.out.println("activeConsumption "+activeConsumption);
+				
 				float reactiveConsumption = investorConsumption.getReactiveConsumption();
-				System.out.println("reactiveConsumption "+reactiveConsumption);
+				//System.out.println("reactiveConsumption "+reactiveConsumption);
+				
 				float activeRate = machine.getActiveRate();
-				System.out.println("activeRate "+activeRate);
+				//System.out.println("activeRate "+activeRate);
+				
 				float reactiveRate = machine.getReactiveRate();
-				System.out.println("reactiveRate "+reactiveRate);
-				float activeAmount = (float) (Math.round(activeConsumption * activeRate*1e2)/1e2);
-				System.out.println("activeAmount "+activeAmount);
-				float reactiveAmount = (float) (Math.round(reactiveConsumption * reactiveRate*1e2)/1e2);
-				System.out.println("reactiveAmount "+reactiveAmount);
-				float totalAmount = activeAmount - reactiveAmount;
-				System.out.println("activeAmount "+activeAmount);
-				System.out.println("rounded value: "+Math.round(totalAmount*1e2)/1e2 );
+				//System.out.println("reactiveRate "+reactiveRate);
+				
+				float activeAmount = activeConsumption * activeRate;
+				//System.out.println("activeAmount "+activeAmount);
+				
+				float reactiveAmount = reactiveConsumption * reactiveRate;
+				//System.out.println("reactiveAmount "+reactiveAmount);
+				
+				float totalAmount = (float)activeAmount - reactiveAmount;
+				//System.out.println("total amount "+totalAmount);
+				
 				float totalAmountRoundOff = Math.round(totalAmount);
-
+				//System.out.println("rounded total amount : "+ totalAmountRoundOff);
+				
 				billDetails.setTotalKWH(activeConsumption);
 				billDetails.setTotalRKVH(reactiveConsumption);
 				billDetails.setKwhRate(activeRate);

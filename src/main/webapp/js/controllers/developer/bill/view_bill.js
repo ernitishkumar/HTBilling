@@ -114,7 +114,6 @@ angular.module("htBillingApp").controller('ViewBillController', ['$http', '$scop
 							$scope.billDetails = billDetails;
 							console.log("printing bill details");
 							console.log($scope.billDetails);
-							loadMachines();
 						}else{
 							alert("Got incorrect bill please check");
 						}
@@ -127,34 +126,6 @@ angular.module("htBillingApp").controller('ViewBillController', ['$http', '$scop
 					window.history.back();
 				}
 		);
-
-
 	}
 
-	/*
-	 * function to load Machines for the particular bill
-	 * to display particulars and other informations
-	 */
-	function loadMachines(){
-		if($scope.billDetails !== undefined && $scope.billDetails !== null){
-			//console.log("plant id is : "+$scope.billDetails.plant.id+" and investor Id is : "+$scope.billDetails.investor.id);
-			$http(
-					{
-						method: 'GET',
-						url: 'backend/machines/plant/'+$scope.billDetails.plant.id+'/investor/'+$scope.billDetails.investor.id
-					}
-			).then(
-					function (response) {
-						var status = response.status;
-						if(status === 200){
-							$scope.billDetails.machines = response.data;
-						}
-					},
-					function(error){
-						console.log("error while getting machines for bill id");
-						console.log(error);
-					}
-			);
-		}
-	}
 }]);

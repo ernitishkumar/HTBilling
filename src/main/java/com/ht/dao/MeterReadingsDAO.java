@@ -284,7 +284,7 @@ public class MeterReadingsDAO {
 		}
 		return readings;
 	}
-	
+
 	public MeterReading getPreviousInsertedByMeterNo(String meterNo){
 		System.out.println("Getting prev reading for meter no : "+meterNo);
 		Connection connection = GlobalResources.getConnection();
@@ -305,7 +305,7 @@ public class MeterReadingsDAO {
 		}
 		return readings;
 	}
-	
+
 
 	public MeterReading getCurrentMonthMeterReadings(String meterNo, String date){
 		Connection connection = GlobalResources.getConnection();
@@ -362,7 +362,7 @@ public class MeterReadingsDAO {
 
 		return meterReadings;
 	}
-	
+
 	public MeterReading getCurrentMonthMeterReadings(String meterNo){
 		Connection connection = GlobalResources.getConnection();
 		MeterReading meterReading = new MeterReading();
@@ -539,8 +539,7 @@ public class MeterReadingsDAO {
 
 	public boolean updateDiscardedFlag(int readingId, int discardedFlag, String username) {
 		Connection connection = GlobalResources.getConnection();
-		boolean validated = false;
-		SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
+		boolean discarded = false;
 		Calendar c = Calendar.getInstance();
 		int day = c.get(Calendar.DATE);
 		String readingDay= null;
@@ -564,12 +563,13 @@ public class MeterReadingsDAO {
 			ps.setString(3,dateTrim);
 			ps.setInt(4,readingId);
 			ps.executeUpdate();
-			validated=true;
+			discarded=true;
 			ps.close();
 		} catch (SQLException e) {
+			discarded= false;
 			System.out.println("Exception in class : MeterDetailsDAO : method : [updateDiscardedFlag(int,int,String)] "+e.getMessage());
 		}
-		return validated;
+		return discarded;
 	}
 
 }

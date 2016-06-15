@@ -262,11 +262,11 @@ public class ReadingResource {
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response discardReadings(UserRoles role, @QueryParam("readingId") int readingId) {
 		System.out.println("discardReadings called for role " + role);
-		boolean validated = false;
+		boolean discarded = false;
 		if (role != null) {
 			if (role.getRole().equalsIgnoreCase("htcell") || role.getRole().equalsIgnoreCase("admin")) {
 				String username = role.getUsername();
-				validated = meterReadingsDAO.updateDiscardedFlag(readingId, 1, username);
+				discarded = meterReadingsDAO.updateDiscardedFlag(readingId, 1, username);
 			} /*
 				 * else if(role.equalsIgnoreCase("circle")){
 				 * validated=meterReadingsDAO.updateCircleCellValidation(
@@ -275,7 +275,7 @@ public class ReadingResource {
 				 * readingId,1); }
 				 */
 		}
-		if (role != null && validated) {
+		if (discarded) {
 			return Response.status(Status.OK).entity(new MessageBean("discarded")).build();
 		} else {
 			return Response.status(Status.EXPECTATION_FAILED).entity(new ErrorBean("not discarded")).build();

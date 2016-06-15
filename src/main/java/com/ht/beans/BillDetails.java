@@ -21,7 +21,6 @@ public class BillDetails {
 	private float totalAmount;
 	private float totalAmountRoundOff;
 	private String totalAmountInWords;
-	private String particulars;
 	private int plantId;
 	
 	public int getId() {
@@ -153,19 +152,6 @@ public class BillDetails {
 	public void setTotalAmountInWords(String totalAmountInWords) {
 		this.totalAmountInWords = totalAmountInWords;
 	}
-	/**
-	 * @return the particulars
-	 */
-	public String getParticulars() {
-		return particulars;
-	}
-	/**
-	 * @param particulars the particulars to set
-	 */
-	public void setParticulars(String particulars) {
-		this.particulars = particulars;
-	}
-	
 	
 	/**
 	 * @return the plantId
@@ -205,7 +191,7 @@ public class BillDetails {
 	public BillDetails(int id, String billNo, String invoiceNo, int meterReadingId, int investorId, int consumptionId,
 			int consumptionBifurcationId, String meterNo, String readingDate, String billGenerationDate, float totalKWH,
 			float totalRKVH, float kwhRate, float rkvhRate, float activeAmount, float reactiveAmount, float totalAmount,
-			float totalAmountRoundOff, String totalAmountInWords, String particulars,int plantId) {
+			float totalAmountRoundOff, String totalAmountInWords,int plantId) {
 		this.id = id;
 		this.billNo = billNo;
 		this.invoiceNo = invoiceNo;
@@ -225,7 +211,6 @@ public class BillDetails {
 		this.totalAmount = totalAmount;
 		this.totalAmountRoundOff = totalAmountRoundOff;
 		this.totalAmountInWords = totalAmountInWords;
-		this.particulars = particulars;
 		this.plantId = plantId;
 	}
 	
@@ -253,7 +238,7 @@ public class BillDetails {
 	public BillDetails(String billNo, String invoiceNo, int meterReadingId, int investorId, int consumptionId,
 			int consumptionBifurcationId, String meterNo, String readingDate, String billGenerationDate, float totalKWH,
 			float totalRKVH, float kwhRate, float rkvhRate, float activeAmount, float reactiveAmount, float totalAmount,
-			float totalAmountRoundOff, String totalAmountInWords, String particulars,int plantId) {
+			float totalAmountRoundOff, String totalAmountInWords,int plantId) {
 		this.billNo = billNo;
 		this.invoiceNo = invoiceNo;
 		this.meterReadingId = meterReadingId;
@@ -272,7 +257,6 @@ public class BillDetails {
 		this.totalAmount = totalAmount;
 		this.totalAmountRoundOff = totalAmountRoundOff;
 		this.totalAmountInWords = totalAmountInWords;
-		this.particulars = particulars;
 		this.plantId = plantId;
 	}
 	
@@ -287,7 +271,7 @@ public class BillDetails {
 				+ readingDate + ", billGenerationDate=" + billGenerationDate + ", totalKWH=" + totalKWH + ", totalRKVH="
 				+ totalRKVH + ", kwhRate=" + kwhRate + ", rkvhRate=" + rkvhRate + ", activeAmount=" + activeAmount
 				+ ", reactiveAmount=" + reactiveAmount + ", totalAmount=" + totalAmount + ", totalAmountRoundOff="
-				+ totalAmountRoundOff + ", totalAmountInWords=" + totalAmountInWords + ", particulars=" + particulars
+				+ totalAmountRoundOff + ", totalAmountInWords=" + totalAmountInWords
 				+ ", plantId="+plantId
 				+ "]";
 	}

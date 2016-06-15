@@ -108,7 +108,7 @@ public class BillResource {
 				billDetails.setMeterNo(consumption.getMeterNo());
 				billDetails.setReadingDate(meterReadings.getReadingDate());
 				billDetails.setBillGenerationDate(currentDate);
-				billDetails.setParticulars(machine.getParticulars());
+				
 				billDetails.setPlantId(plant.getId());
 				
 				float activeConsumption = investorConsumption.getActiveConsumption();

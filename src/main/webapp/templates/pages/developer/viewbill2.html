@@ -45,112 +45,97 @@
 			<table class="table" id="billTable1">
 				<tbody>
 					<tr>
-						<td colspan="6" class="text-center"><b><p>{{billDetails.investor.name | uppercase}}</p></b>
-							<p>{{billDetails.investor.officeAddress}}</p></td>
-					<tr>
-						<td colspan="6" class="text-center"><strong>INVOICE</strong></td>
+						<td colspan="7" class="text-center"><b>{{billDetails.investor.name
+									| uppercase}}</b><br>
+							{{billDetails.investor.officeAddress}}</td>
 					</tr>
 					<tr>
-						<td colspan="3"><b> To,<br> The Superintending
+						<td colspan="7" class="text-center"><strong>INVOICE</strong></td>
+					</tr>
+					<tr>
+						<td colspan="4"><b>To,<br> The Superintending
 								Engineer (O&M)<br> M.P.P.K.V.V.Co.Ltd<br>
 								{{userRole.circle}} (M.P)
-						</b></td>
+						</b> <br> <br></td>
 						<td colspan="3">Invoice No. :<b>{{billDetails.investor.invoiceNo}}</b><br>
-						    BILL NO: <b>{{billDetails.billNo}}</b><br>
-							Bill Date :<b>{{billDetails.billGenerationDate}}</b><br>
+							BILL NO: <b>{{billDetails.billNo}}</b> &nbsp;&nbsp; Bill Date :<b>{{billDetails.billGenerationDate}}</b><br>
 							Ref. :<b>PPA Dated
 								{{billDetails.investorConsumptionView.machines[0].ppaDate}}
-								issued vide</b><br>
-							Letter No. :<b>{{billDetails.investorConsumptionView.machines[0].ppaLetterNo}} from the O/o CGM(Comml.) M.P. Tradeco. Jabalpur)</b><br>
+								issued vide</b><br> Letter No. :<b>{{billDetails.investorConsumptionView.machines[0].ppaLetterNo}}
+								from the O/o CGM(Comml.) M.P. Tradeco. Jabalpur)</b><br>
 							TIN/VAT No. :<b>{{billDetails.investor.tin}}</b>
 						</td>
 					</tr>
 					<tr>
-						<td colspan="3"></td>
-						<td colspan="3" class="text-center">Date of Commissioning</td>
+						<td colspan="4"></td>
+						<td colspan="3">Date of Commissioning
+						</td>
 					</tr>
 					<tr>
-						<td colspan="3"></td>
+						<td colspan="4"></td>
 						<td colspan="3">29.03.11(7 Nos. WEGs of 0.6MW each)<br>
 							30.03.11(3 Nos. WEGs of 0.6MW each)
 						</td>
 					</tr>
 					<tr class="text-center">
-						<td>
-							S.No.
-						</td>
-						<td colspan="2">
-							PARTICULARS
-						</td>
-						<td>
-							UNITS
-						</td>
-						<td>
-							Rate per Unit
-						</td>
-						<td>
-							AMOUNT
-						</td>
+						<td>S.No.</td>
+						<td colspan="3">PARTICULARS</td>
+						<td>UNITS</td>
+						<td>Rate per Unit</td>
+						<td>AMOUNT</td>
 					</tr>
 					<tr class="text-center">
 						<td>1</td>
-						<td colspan="2">{{billDetails.investorConsumptionView.machines[0].particulars}}</td>
+						<td colspan="3" style='width: 550px;'>
+							{{billDetails.investorConsumptionView.machines[0].particulars}}</td>
 						<td>{{billDetails.totalKWH}}</td>
 						<td>{{billDetails.kwhRate}}</td>
 						<td>{{billDetails.activeAmount}}</td>
 					</tr>
 					<tr class="text-center">
 						<td>2</td>
-						<td colspan="2">Less RKVH Charges</td>
+						<td colspan="3">Less RKVH Charges</td>
 						<td>{{billDetails.totalRKVH}}</td>
 						<td>{{billDetails.rkvhRate}}</td>
 						<td>-{{billDetails.reactiveAmount}}</td>
 					</tr>
 					<tr class="text-center">
 						<td></td>
-						<td colspan="2"><b>TOTAL AMOUNT</b></td>
+						<td colspan="3"><b>TOTAL AMOUNT</b></td>
 						<td></td>
 						<td></td>
 						<td>{{billDetails.totalAmount}}</td>
 					</tr>
 					<tr class="text-center">
 						<td></td>
-						<td colspan="2"><b>TOTAL AMOUNT(Rounded off)</b></td>
+						<td colspan="3"><b>TOTAL AMOUNT(Rounded off)</b></td>
 						<td></td>
 						<td></td>
 						<td>{{billDetails.totalAmountRoundoff}}</td>
 					</tr>
 					<tr class="text-center">
 						<td></td>
-						<td colspan="2"><b>Amount in Words</b></td>
-					   	<td colspan="3"><b>{{billDetails.totalAmountInWords}}</b></td>
+						<td colspan="3"><b>Amount in Words</b></td>
+						<td colspan="3"><b>{{billDetails.totalAmountInWords}}</b></td>
 					</tr>
 					<tr>
-					<td colspan="6">
-					<br>
-					<p style='float:right;'>for {{billDetails.investor.name | uppercase}}</p>
-					<br>
-					<br>
-					<br>
-					<br>
-					<p style='float:right;'>Authorized Signatory</p>
-					<br>
-					<br>
-					<br>
-					</td>
+						<td colspan="7"><br>
+							<p style='float: right;'>for {{billDetails.investor.name |
+								uppercase}}</p> <br> <br> <br> <br>
+							<p style='float: right;'>Authorized Signatory</p> <br></td>
 					</tr>
 				</tbody>
 			</table>
 		</div>
 	</div>
 </div>
-<br>
-<br>
 <div class="container">
 	<button class="NonPrintable btn btn-default" type="button"
 		ng-click="viewBillCtrl.back()">Back to Bifurcation Page</button>
 	<button class="NonPrintable btn btn-primary" onclick="window.print()"
 		style="float: right">Print Bill</button>
 </div>
+<br>
+<br>
 <br>
 <br>

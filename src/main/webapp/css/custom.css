@@ -76,7 +76,7 @@ footer h6 {
 
 @media screen and (min-width:768px) {
     .custom-class {
-        width: 90%;
+        width: 100%;
     }
 }
 
@@ -87,9 +87,7 @@ footer h6 {
 #billTable1 > tbody > tr > td{
 	border: 1px solid #020608;
 }
-#billTable2 > tbody > tr > td{
-	border: 1px solid #020608;
-}  
+ 
 /*  tr.ng-leave{
   animation : bounceOut 1s;
  } */

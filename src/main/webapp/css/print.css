@@ -1,9 +1,9 @@
 @media print {
     footer {
-        visibility: hidden;
+        display: none;
     }
     .navbar {
-        visibility: hidden;
+        display: none;
     }
     .NonPrintable
     {
@@ -12,4 +12,8 @@
     body {
         margin-top: 0 0 0 0;
     }
+    #billTable1 > tbody > tr > td{
+	border: 1px solid #020608;
+	font-size: 12px;
+}
 }

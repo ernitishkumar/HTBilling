@@ -151,6 +151,41 @@ angular.module("htBillingApp").controller('DeveloperViewMeterReadingsController'
 	};
 
 	/*
+	 * function discardReading to implement discard action event
+	 * this function runs when user clicks Discard reading button on page.
+	 */
+	this.discardReading = function (index) {
+		bootbox.confirm("Are you sure to Discard reading ?",function(answer){
+			if(answer === true){
+				$http(
+						{
+							method: 'PUT',
+							url: 'backend/readings/discard',
+							params: {
+								readingId: $scope.readingData[index].currentMeterReading.id
+							},
+							data: $scope.userRole
+						}
+				).then(
+						function (response) {
+							var status = response.status;
+							//checking status code for successful response from server
+							if (status === 200) {
+								if ($scope.userRole.role === 'admin' || $scope.userRole.role === 'htcell') {
+									$scope.readingData.splice(index,1);
+								}
+							}
+						},
+						function(error){
+							console.log("error in discarding readings. response is below");
+							console.log(error);
+						}
+				);
+			}
+		});
+	};
+	
+	/*
 	 * getInvestorData function to navigate to bifurcation page,
 	 * where investor wise bifurcation of readings is done.
 	 */

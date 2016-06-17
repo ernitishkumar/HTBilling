@@ -60,7 +60,10 @@
 						ng-click="viewMeterReadingsCtrl.discardReading((currentPage - 1)*pageSize + $index)"
 						ng-hide="reading.currentMeterReading.discardedFlag || reading.currentMeterReading.htCellValidation">Discard
 						Readings</button>
-					
+					<button type="button" class="btn btn-success" name="editButton"
+						ng-click="viewMeterReadingsCtrl.updateReading(reading.currentMeterReading.id)"
+						ng-show="reading.currentMeterReading.discardedFlag && reading.currentMeterReading.htCellValidation && !reading.currentMeterReading.developerValidation">Update
+						Readings</button>
 					<br> <br> <span
 						ng-show="reading.currentMeterReading.htCellValidation"
 						class="label label-primary">Validated by HTCell</span> <span
@@ -68,8 +71,11 @@
 						class="label label-danger">Not Validated by HTCell</span> <span
 						ng-show="reading.currentMeterReading.developerValidation"
 						class="label label-primary">Validated by Developer</span> <span
-						ng-hide="reading.currentMeterReading.developerValidation"
-						class="label label-danger">Not Validated by Developer</span> <span
+						ng-hide="reading.currentMeterReading.developerValidation || reading.currentMeterReading.discardedFlag"
+						class="label label-danger">Not Validated by Developer</span>
+						<span
+						ng-show="reading.currentMeterReading.htCellValidation && reading.currentMeterReading.discardedFlag && !reading.currentMeterReading.developerValidation"
+						class="label label-danger">Discarded by Developer</span> <span
 						ng-show="reading.currentMeterReading.circleCellValidation"
 						class="label label-primary">Validated by Circle</span> <span
 						ng-hide="reading.currentMeterReading.circleCellValidation"

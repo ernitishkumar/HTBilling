@@ -39,7 +39,12 @@
 			templateUrl: 'templates/pages/ht/reading/meterreading.html',
 			controller: 'MeterReadingController',
 			controllerAs: 'readingCtrl'
-		}).when('/srfrenterreading', {
+		}).when('/ht/updatereading/:readingId', {
+			templateUrl: 'templates/pages/ht/reading/updatereading.html',
+			controller: 'UpdateMeterReadingController',
+			controllerAs: 'updateReadingCtrl'
+		})
+		.when('/srfrenterreading', {
 			templateUrl: 'templates/pages/ht/reading/srfrmeterreading.html',
 			controller: 'SRFRMeterReadingController',
 			controllerAs: 'srfrreadingCtrl'

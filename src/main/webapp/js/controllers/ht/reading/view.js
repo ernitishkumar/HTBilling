@@ -57,7 +57,13 @@ angular.module("htBillingApp").controller('ViewMeterReadingsController', ['$http
 	this.loadOperatorHome = function () {
 		$location.path("/operator/home");
 	};
-
+	
+	/*
+	 * function to navigate to operator home page
+	 */
+	this.updateReading = function(readingId){
+		$location.path("/ht/updatereading/"+readingId);
+	};
 	/*
 	 * function to load all the readings for all the meters from backend
 	 * and assign it to the view to display on front end

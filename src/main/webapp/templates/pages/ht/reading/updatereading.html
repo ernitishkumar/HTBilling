@@ -1,0 +1,148 @@
+<div class="navbar navbar-fixed-top">
+	<div class="container">
+		<div class="navbar-header">
+			<button type="button" class="navbar-toggle" data-toggle="collapse"
+				data-target="#myNavbar">
+				<span class="icon-bar"></span> <span class="icon-bar"></span> <span
+					class="icon-bar"></span>
+			</button>
+			<a class="navbar-brand" href="javascript:void(0);">HTBilling</a>
+		</div>
+		<div class="collapse navbar-collapse" id="myNavbar">
+			<ul class="nav navbar-nav">
+				<li class="active"><a href="javascript:void(0);"
+					ng-click="updateReadingCtrl.loadHome()">Home</a></li>
+					<li class="active"><a href="javascript:void(0);" ng-click="updateReadingCtrl.loadSRFRReadingForm()">SRFR Case</a></li>
+			</ul>
+			<ul class="nav navbar-nav navbar-right">
+				<li class="dropdown"><a href="javascript:void(0);"
+					class="dropdown-toggle" data-toggle="dropdown"><span
+						class="glyphicon glyphicon-user"></span> {{user.name}}<strong
+						class="caret"></strong></a>
+					<ul class="dropdown-menu">
+						<li><a href="javascript:void(0);"><span
+								class="glyphicon glyphicon-wrench"></span> Settings</a></li>
+						<li><a href="javascript:void(0);"
+							ng-click="updateReadingCtrl.logout()"><span
+								class="glyphicon glyphicon-off"></span> Logout</a></li>
+					</ul></li>
+			</ul>
+		</div>
+	</div>
+</div>
+<br>
+<br>
+<div class="row">
+	<div class="col-md-6 col-md-offset-3">
+		<div class="page-header text-center">
+			<h1>
+				<span class="glyphicon glyphicon-certificate"></span> Update Meter
+				Readings
+			</h1>
+		</div>
+
+		<!--Show error messages-->
+		<div align='center'>
+			<h3>
+				<span class="label label-danger" ng-show="error">{{error}}</span>
+			</h3>
+			<br>
+		</div>
+
+		<!--Form-->
+		<form name="meternoForm" id="meternoForm"
+			ng-submit="updateReadingCtrl.processForm(ae,td1,td2,td3,q1,q2,q3,q4)"
+			class="well">
+			<hr>
+			<div name="meterReadingPanel">
+				<div class="form-group">
+					<label>Meter No: <span class="label label-default">{{reading.meterno}}</span>
+						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Meter MF: <span
+						class="label label-default">{{reading.mf}}</span></span>
+					</label>
+				</div>
+				<div class="form-group">
+					<span class="glyphicon glyphicon-calendar"></span> <label>Select
+						Date:</label>
+					<div class='input-group date' id='datetimepicker1'>
+						<input type='date' class="form-control"
+							ng-model="reading.readingDate" required /> <span
+							class="input-group-addon"> <span
+							class="glyphicon glyphicon-calendar"></span>
+						</span>
+					</div>
+				</div>
+				<div class="form-group has-feedback">
+					<span class="glyphicon glyphicon-pencil"></span> <label>Active
+						Energy(KWH):</label> <input class="form-control" type="number"
+						placeholder="Enter Current Month Active Energy"
+						ng-model="reading.activeEnergy"
+						required step="0.01" ng-change='error = null'>
+				</div>
+				<div class="form-group has-feedback">
+					<span class="glyphicon glyphicon-pencil"></span> <label>Enter
+						Active Tod 1:</label> <input class="form-control" type="number"
+						placeholder="Enter Current Month Tod 1"
+						ng-model="reading.activeTodOne"
+						ng-change='error = null' required step="0.01">
+				</div>
+				<div class="form-group has-feedback">
+					<span class="glyphicon glyphicon-pencil"></span> <label>Enter
+						Active Tod 2:</label> <input class="form-control" type="number"
+						placeholder="Enter Current Month Tod 2"
+						ng-model="reading.activeTodTwo"
+						ng-change='error = null' required step="0.01"> 
+				</div>
+				<div class="form-group has-feedback">
+					<span class="glyphicon glyphicon-pencil "></span> <label>Enter
+						Active Tod 3:</label> <input class="form-control " type="number"
+						placeholder="Enter Current Month Tod 3"
+						ng-model="reading.activeTodThree"
+						ng-change='error = null' required step="0.01"> 
+				</div>
+				<div class="form-group has-feedback">
+					<span class="glyphicon glyphicon-pencil"></span> <label>Enter
+						Reactive Quadrant 1:</label> <input class="form-control" type="number"
+						placeholder="Enter Current Month Reactive Quadrant 1"
+						ng-model="reading.reactiveQuadrantOne"
+						ng-change='error = null' required step="0.01">
+				</div>
+				<div class="form-group has-feedback">
+					<span class="glyphicon glyphicon-pencil"></span> <label>Enter
+						Reactive Quadrant 2:</label> <input class="form-control" type="number"
+						placeholder="Enter Current Month Reactive Quadrant 2"
+						ng-model="reading.reactiveQuadrantTwo"
+						ng-change='error = null' required step="0.01"> 
+				</div>
+				<div class="form-group has-feedback">
+					<span class="glyphicon glyphicon-pencil "></span> <label>Enter
+						Reactive Quadrant 3:</label> <input class="form-control " type="number"
+						placeholder="Enter Current Month Reactive Quadrant 3"
+						ng-model="reading.reactiveQuadrantThree"
+						ng-change='error = null' required step="0.01"> 
+				</div>
+				<div class="form-group has-feedback">
+					<span class="glyphicon glyphicon-pencil "></span> <label>Enter
+						Reactive Quadrant 4:</label> <input class="form-control " type="number"
+						placeholder="Enter Reactive Quadrant 4"
+						ng-model="reading.reactiveQuadrantFour"
+						ng-change='error = null' required step="0.01">
+				</div>
+				<div class="row">
+					<div class="col-md-6 ">
+						<button type="submit " class="btn btn-success btn-lg btn-block ">
+							<span class="glyphicon glyphicon-flash "></span> Update Reading!
+						</button>
+					</div>
+					<div class="col-md-6 ">
+						<button class="btn btn-danger btn-lg btn-block " type="reset"
+							ng-click="updateReadingCtrl.back();">
+							Cancel</button>
+					</div>
+				</div>
+			</div>
+		</form>
+	</div>
+</div>
+<br>
+<br>

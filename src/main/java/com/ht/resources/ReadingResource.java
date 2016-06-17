@@ -76,9 +76,10 @@ public class ReadingResource {
 		System.out.println("GetAllReadings started ");
 		ArrayList<ViewMeterReadings> viewReadings = new ArrayList<ViewMeterReadings>();
 		ArrayList<Plant> plants = plantsDAO.getAll();
-		SimpleDateFormat formater = new SimpleDateFormat("dd-MM-YYYY");
-		Date date = new Date();
-		String currentDate = formater.format(date);
+		/*
+		 * SimpleDateFormat formater = new SimpleDateFormat("dd-MM-YYYY"); Date
+		 * date = new Date(); String currentDate = formater.format(date);
+		 */
 		for (Plant p : plants) {
 			ViewMeterReadings viewMeterReadings = new ViewMeterReadings();
 			String meterNo = p.getMainMeterNo();
@@ -86,7 +87,7 @@ public class ReadingResource {
 			viewMeterReadings.setPlant(p);
 			viewMeterReadings.setDeveloper(developersDAO.getById(p.getDeveloperId()));
 			MeterReading currentMonthReading = meterReadingsDAO.getCurrentMonthMeterReadings(meterNo);
-			if (currentMonthReading.getDiscardedFlag() == 0) {
+			if (currentMonthReading.getDiscardedFlag() == 0 || currentMonthReading.getHtCellValidation()==1) {
 				if (currentMonthReading.getSrfrFlag() == 1) {
 					// System.out.println("inside if of SR FR" );
 					String checkMeterNo = p.getCheckMeterNo();
@@ -116,9 +117,11 @@ public class ReadingResource {
 		ArrayList<ViewMeterReadings> viewReadings = new ArrayList<ViewMeterReadings>();
 		if (circle != null) {
 			ArrayList<Plant> plants = plantsDAO.getByCircle(circle);
-			SimpleDateFormat formater = new SimpleDateFormat("dd-MM-YYYY");
-			Date date = new Date();
-			String currentDate = formater.format(date);
+			/*
+			 * SimpleDateFormat formater = new SimpleDateFormat("dd-MM-YYYY");
+			 * Date date = new Date(); String currentDate =
+			 * formater.format(date);
+			 */
 			for (Plant p : plants) {
 				ViewMeterReadings viewMeterReadings = new ViewMeterReadings();
 				String meterNo = p.getMainMeterNo();
@@ -160,17 +163,18 @@ public class ReadingResource {
 		if (username != null) {
 			Developer developer = developersDAO.getByUsername(username);
 			ArrayList<Plant> plants = plantsDAO.getByDeveloperId(developer.getId());
-			SimpleDateFormat formater = new SimpleDateFormat("dd-MM-YYYY");
-			Date date = new Date();
-			String currentDate = formater.format(date);
-			for (Plant p : plants) {
+			/*
+			 * SimpleDateFormat formater = new SimpleDateFormat("dd-MM-YYYY");
+			 * Date date = new Date(); //String currentDate =
+			 * formater.format(date);
+			 */ for (Plant p : plants) {
 				ViewMeterReadings viewMeterReadings = new ViewMeterReadings();
 				String meterNo = p.getMainMeterNo();
 				viewMeterReadings.setMeterNo(meterNo);
 				viewMeterReadings.setPlant(p);
 				viewMeterReadings.setDeveloper(developersDAO.getById(p.getDeveloperId()));
 				MeterReading currentMonthReading = meterReadingsDAO.getCurrentMonthMeterReadings(meterNo);
-				if (currentMonthReading.getDiscardedFlag() == 0) {
+				if (currentMonthReading.getDiscardedFlag() == 0 || currentMonthReading.getHtCellValidation()==1) {
 					if (currentMonthReading.getSrfrFlag() == 1) {
 						// System.out.println("inside if of SR FR" );
 						String checkMeterNo = p.getCheckMeterNo();
@@ -256,24 +260,45 @@ public class ReadingResource {
 		}
 
 	}
+	
+	@GET
+	@Path("/{readingId}")
+	@Produces(MediaType.APPLICATION_JSON)
+	public MeterReading getByReadingId(@PathParam("readingId") int readingId) {
+		System.out.println("GetReadings by Id started : " + readingId);
+		return meterReadingsDAO.getById(readingId);
+	}
 
+	@PUT
+	@Path("/{readingId}")
+	@Produces(MediaType.APPLICATION_JSON)
+	public MeterReading updateReading(MeterReading meterReading) {
+		System.out.println("Update Readings started : " + meterReading);
+		meterReading.setDiscardedFlag(0);
+		meterReading.setDiscardedBy("");
+		meterReading.setDiscardedOn("");
+		meterReading.setHtCellValidation(0);
+		return meterReadingsDAO.update(meterReading);
+	}
+	
 	@PUT
 	@Path("/discard")
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response discardReadings(UserRoles role, @QueryParam("readingId") int readingId) {
-		System.out.println("discardReadings called for role " + role);
 		boolean discarded = false;
 		if (role != null) {
 			if (role.getRole().equalsIgnoreCase("htcell") || role.getRole().equalsIgnoreCase("admin")) {
-				String username = role.getUsername();
-				discarded = meterReadingsDAO.updateDiscardedFlag(readingId, 1, username);
-			} /*
-				 * else if(role.equalsIgnoreCase("circle")){
-				 * validated=meterReadingsDAO.updateCircleCellValidation(
-				 * readingId,1); } else if(role.equalsIgnoreCase("developer")){
-				 * validated=meterReadingsDAO.updateDeveloperValidation(
-				 * readingId,1); }
-				 */
+				discarded = meterReadingsDAO.updateDiscardedFlagByAdmin(readingId, 1, role);
+			} else if (role.getRole().equalsIgnoreCase("developer")) {
+				System.out.println("inside for discard from developer");
+				discarded = meterReadingsDAO.updateDiscardedFlagByDeveloper(readingId, 1, role);
+			}
+			/*
+			 * else if(role.getRole().equalsIgnoreCase("developer")){
+			 * discarded=meterReadingsDAO.updateDiscardedFlagByCircle(readingId,
+			 * 1, role); }
+			 */
+
 		}
 		if (discarded) {
 			return Response.status(Status.OK).entity(new MessageBean("discarded")).build();

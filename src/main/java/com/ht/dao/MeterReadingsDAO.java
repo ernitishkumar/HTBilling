@@ -58,14 +58,15 @@ public class MeterReadingsDAO {
 	}
 
 	public MeterReading insert(MeterReading reading) {
-		Connection connection = GlobalResources.getConnection();
 		int lastInsertedId = -1;
 		MeterReading insertedReading = null;
 		if (reading != null) {
-			try {
-				PreparedStatement ps = connection.prepareStatement(
-						"insert into meter_readings(meter_no, mf, reading_date, active_reading, active_tod1, active_tod2, active_tod3, reactive_q1, reactive_q2, reactive_q3, reactive_q4, ht_cell_validation, circle_cell_validation, developer_validation, discarded_flag, discarded_by, discarded_on, sr_fr_flag) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)",
-						Statement.RETURN_GENERATED_KEYS);
+			try(
+					Connection connection = GlobalResources.getDatasource().getConnection();
+					PreparedStatement ps = connection.prepareStatement(
+							"insert into meter_readings(meter_no, mf, reading_date, active_reading, active_tod1, active_tod2, active_tod3, reactive_q1, reactive_q2, reactive_q3, reactive_q4, ht_cell_validation, circle_cell_validation, developer_validation, discarded_flag, discarded_by, discarded_on, sr_fr_flag) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)",
+							Statement.RETURN_GENERATED_KEYS);
+					) {
 				ps.setString(1, reading.getMeterno());
 				ps.setInt(2, reading.getMf());
 				ps.setString(3, reading.getReadingDate());
@@ -88,8 +89,6 @@ public class MeterReadingsDAO {
 				ResultSet keys = ps.getGeneratedKeys();
 				keys.next();
 				lastInsertedId = keys.getInt(1);
-				keys.close();
-				ps.close();
 				insertedReading = getById(lastInsertedId);
 			} catch (SQLException e) {
 				System.out.println(
@@ -103,11 +102,12 @@ public class MeterReadingsDAO {
 	}
 
 	public MeterReading update(MeterReading reading) {
-		Connection connection = GlobalResources.getConnection();
 		if (reading != null) {
-			try {
-				PreparedStatement ps = connection.prepareStatement(
-						"update meter_readings set meter_no=?, mf=?, reading_date=?, active_reading=?, active_tod1=?, active_tod2=?, active_tod3=?, reactive_q1=?, reactive_q2=?, reactive_q3=?, reactive_q4=?, ht_cell_validation=?, circle_cell_validation=?, developer_validation=?, discarded_flag=?, discarded_by=?, discarded_on=?, sr_fr_flag=? where id=?");
+			try(
+					Connection connection = GlobalResources.getDatasource().getConnection();
+					PreparedStatement ps = connection.prepareStatement(
+							"update meter_readings set meter_no=?, mf=?, reading_date=?, active_reading=?, active_tod1=?, active_tod2=?, active_tod3=?, reactive_q1=?, reactive_q2=?, reactive_q3=?, reactive_q4=?, ht_cell_validation=?, circle_cell_validation=?, developer_validation=?, discarded_flag=?, discarded_by=?, discarded_on=?, sr_fr_flag=? where id=?");
+					) {
 				ps.setString(1, reading.getMeterno());
 				ps.setInt(2, reading.getMf());
 				ps.setString(3, reading.getReadingDate());
@@ -128,7 +128,6 @@ public class MeterReadingsDAO {
 				ps.setInt(18, reading.getSrfrFlag());
 				ps.setInt(19, reading.getId());
 				ps.executeUpdate();
-				ps.close();
 			} catch (SQLException e) {
 				System.out.println(
 						"Exception in class : MeterReadingsDAO : method : [insert(Readings)] " + e.getMessage());
@@ -138,13 +137,13 @@ public class MeterReadingsDAO {
 	}
 
 	public boolean delete(int id) {
-		Connection connection = GlobalResources.getConnection();
 		boolean deleted = false;
-		try {
-			PreparedStatement ps = connection.prepareStatement("delete from meter_readings where id=?");
+		try(
+				Connection connection = GlobalResources.getDatasource().getConnection();
+				PreparedStatement ps = connection.prepareStatement("delete from meter_readings where id=?");
+				) {
 			ps.setInt(1, id);
 			ps.executeUpdate();
-			ps.close();
 			deleted = true;
 		} catch (SQLException e) {
 			deleted = false;
@@ -154,10 +153,11 @@ public class MeterReadingsDAO {
 	}
 
 	public ArrayList<MeterReading> getAll() {
-		Connection connection = GlobalResources.getConnection();
 		ArrayList<MeterReading> readings = new ArrayList<MeterReading>();
-		try {
-			PreparedStatement ps = connection.prepareStatement("select * from meter_readings");
+		try(
+				Connection connection = GlobalResources.getDatasource().getConnection();
+				PreparedStatement ps = connection.prepareStatement("select * from meter_readings");
+				) {
 			ResultSet resultSet = ps.executeQuery();
 			resultSetParser(resultSet, readings);
 		} catch (SQLException e) {
@@ -167,10 +167,11 @@ public class MeterReadingsDAO {
 	}
 
 	public int getCount() {
-		Connection connection = GlobalResources.getConnection();
 		int count = 0;
-		try {
-			PreparedStatement ps = connection.prepareStatement("select count(*) as count from meter_readings");
+		try(
+				Connection connection = GlobalResources.getDatasource().getConnection();
+				PreparedStatement ps = connection.prepareStatement("select count(*) as count from meter_readings");
+				) {
 			ResultSet resultSet = ps.executeQuery();
 			resultSet.next();
 			count = Integer.parseInt(resultSet.getString("count").trim());
@@ -181,10 +182,11 @@ public class MeterReadingsDAO {
 	}
 
 	public MeterReading getById(int id) {
-		Connection connection = GlobalResources.getConnection();
 		ArrayList<MeterReading> readings = new ArrayList<MeterReading>();
-		try {
-			PreparedStatement ps = connection.prepareStatement("select * from meter_readings where id=?");
+		try(
+				Connection connection = GlobalResources.getDatasource().getConnection();
+				PreparedStatement ps = connection.prepareStatement("select * from meter_readings where id=?");
+				) {
 			ps.setInt(1, id);
 			ResultSet resultSet = ps.executeQuery();
 			resultSetParser(resultSet, readings);
@@ -195,10 +197,11 @@ public class MeterReadingsDAO {
 	}
 
 	public ArrayList<MeterReading> getByMeterNo(String meterNo) {
-		Connection connection = GlobalResources.getConnection();
 		ArrayList<MeterReading> readings = new ArrayList<MeterReading>();
-		try {
-			PreparedStatement ps = connection.prepareStatement("select * from meter_readings where meter_no=?");
+		try(
+				Connection connection = GlobalResources.getDatasource().getConnection();
+				PreparedStatement ps = connection.prepareStatement("select * from meter_readings where meter_no=?");
+				) {
 			ps.setString(1, meterNo);
 			ResultSet resultSet = ps.executeQuery();
 			resultSetParser(resultSet, readings);
@@ -210,13 +213,13 @@ public class MeterReadingsDAO {
 	}
 
 	public boolean deleteByMeterNo(String meterNo) {
-		Connection connection = GlobalResources.getConnection();
 		boolean deleted = false;
-		try {
-			PreparedStatement ps = connection.prepareStatement("delete from meter_readings where meter_no=?");
+		try(
+				Connection connection = GlobalResources.getDatasource().getConnection();
+				PreparedStatement ps = connection.prepareStatement("delete from meter_readings where meter_no=?");
+				) {
 			ps.setString(1, meterNo);
 			ps.executeUpdate();
-			ps.close();
 			deleted = true;
 		} catch (SQLException e) {
 			deleted = true;
@@ -227,17 +230,16 @@ public class MeterReadingsDAO {
 	}
 
 	public boolean updateHTCellValidation(int id, int valid) {
-		Connection connection = GlobalResources.getConnection();
 		boolean validated = false;
-		try {
-			System.out.println("updating id and value " + id + " " + valid);
-			PreparedStatement ps = connection
-					.prepareStatement("update meter_readings set ht_cell_validation=? where id=?");
+		try(
+				Connection connection = GlobalResources.getDatasource().getConnection();
+				PreparedStatement ps = connection
+						.prepareStatement("update meter_readings set ht_cell_validation=? where id=?");
+				) {
 			ps.setInt(1, valid);
 			ps.setInt(2, id);
 			ps.executeUpdate();
 			validated = true;
-			ps.close();
 		} catch (SQLException e) {
 			System.out.println("Exception in class : MeterDetailsDAO : method : [updateHTCellValidation(int,int)] "
 					+ e.getMessage());
@@ -246,16 +248,16 @@ public class MeterReadingsDAO {
 	}
 
 	public boolean updateCircleCellValidation(int id, int valid) {
-		Connection connection = GlobalResources.getConnection();
 		boolean validation = false;
-		try {
-			PreparedStatement ps = connection
-					.prepareStatement("update meter_readings set circle_cell_validation=? where id=?");
+		try(
+				Connection connection = GlobalResources.getDatasource().getConnection();
+				PreparedStatement ps = connection
+						.prepareStatement("update meter_readings set circle_cell_validation=? where id=?");
+				) {
 			ps.setInt(1, valid);
 			ps.setInt(2, id);
 			ps.executeUpdate();
 			validation = true;
-			ps.close();
 		} catch (SQLException e) {
 			System.out.println("Exception in class : MeterDetailsDAO : method : [updateCircleCellValidation(int,int)] "
 					+ e.getMessage());
@@ -264,16 +266,16 @@ public class MeterReadingsDAO {
 	}
 
 	public boolean updateDeveloperValidation(int id, int valid) {
-		Connection connection = GlobalResources.getConnection();
 		boolean validation = false;
-		try {
-			PreparedStatement ps = connection
-					.prepareStatement("update meter_readings set developer_validation=? where id=?");
+		try(
+				Connection connection = GlobalResources.getDatasource().getConnection();
+				PreparedStatement ps = connection
+						.prepareStatement("update meter_readings set developer_validation=? where id=?");
+				) {
 			ps.setInt(1, valid);
 			ps.setInt(2, id);
 			ps.executeUpdate();
 			validation = true;
-			ps.close();
 		} catch (SQLException e) {
 			System.out.println("Exception in class : MeterDetailsDAO : method : [updateDeveloperValidation(int,int)] "
 					+ e.getMessage());
@@ -282,41 +284,38 @@ public class MeterReadingsDAO {
 	}
 
 	public MeterReading getLatestInsertedByMeterNo(String meterNo) {
-		System.out.println("Getting lates reading for meter no : " + meterNo);
-		Connection connection = GlobalResources.getConnection();
 		MeterReading readings = new MeterReading();
 		int id = -1;
-		try {
-			PreparedStatement ps = connection.prepareStatement("select max(id) from meter_readings where meter_no=?");
+		try(
+				Connection connection = GlobalResources.getDatasource().getConnection();
+				PreparedStatement ps = connection.prepareStatement("select max(id) from meter_readings where meter_no=?");
+				) {
 			ps.setString(1, meterNo);
 			ResultSet resultSet = ps.executeQuery();
 			while (resultSet.next()) {
 				id = resultSet.getInt(1);
 			}
-			System.out.println("Current id : " + id);
 			readings = getById(id);
 		} catch (SQLException e) {
-			System.out.println(
-					"Exception in class : MeterDetailsDAO : method : [getByMeterNo(String)] " + e.getMessage());
+			System.out.println("Exception in class : MeterDetailsDAO : method : [getByMeterNo(String)] " + e.getMessage());
 		}
 		return readings;
 	}
 
 	public MeterReading getPreviousInsertedByMeterNo(String meterNo) {
-		System.out.println("Getting prev reading for meter no : " + meterNo);
-		Connection connection = GlobalResources.getConnection();
 		MeterReading readings = new MeterReading();
 		int id = -1;
-		try {
-			PreparedStatement ps = connection.prepareStatement(
-					"select max(id) as mid from meter_readings where meter_no=? and id not in (select max(id) as mid from meter_readings where meter_no=?)");
+		try(
+				Connection connection = GlobalResources.getDatasource().getConnection();
+				PreparedStatement ps = connection.prepareStatement(
+						"select max(id) as mid from meter_readings where meter_no=? and id not in (select max(id) as mid from meter_readings where meter_no=?)");
+				) {
 			ps.setString(1, meterNo);
 			ps.setString(2, meterNo);
 			ResultSet resultSet = ps.executeQuery();
 			while (resultSet.next()) {
 				id = resultSet.getInt(1);
 			}
-			System.out.println("Previous id : " + id);
 			readings = getById(id);
 		} catch (SQLException e) {
 			System.out.println("Exception in class : MeterDetailsDAO : method : [getPreviousInsertedByMeterNo(String)] "
@@ -326,11 +325,12 @@ public class MeterReadingsDAO {
 	}
 
 	public MeterReading getCurrentMonthMeterReadings(String meterNo, String date) {
-		Connection connection = GlobalResources.getConnection();
 		ArrayList<MeterReading> readings = new ArrayList<MeterReading>();
 		MeterReading meterReadings = new MeterReading();
 		SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
-		try {
+		try(
+				Connection connection = GlobalResources.getDatasource().getConnection();
+				) {
 			Calendar c = Calendar.getInstance();
 			c.setTime(formatter.parse(date));
 			int year = c.get(Calendar.YEAR);
@@ -373,6 +373,7 @@ public class MeterReadingsDAO {
 			} else {
 				meterReadings = readings.get(0);
 			}
+			ps.close();
 		} catch (ParseException e) {
 			System.out.println(
 					"Exception in class : MeterReadingsDAO : method : [getCurrentMonthMeterReadings(String,String)] "
@@ -387,11 +388,12 @@ public class MeterReadingsDAO {
 	}
 
 	public MeterReading getCurrentMonthMeterReadings(String meterNo) {
-		Connection connection = GlobalResources.getConnection();
 		MeterReading meterReading = new MeterReading();
 		int id = -1;
-		try {
-			PreparedStatement ps = connection.prepareStatement("select max(id) from meter_readings where meter_no=?");
+		try(
+				Connection connection = GlobalResources.getDatasource().getConnection();
+				PreparedStatement ps = connection.prepareStatement("select max(id) from meter_readings where meter_no=?");
+				) {
 			ps.setString(1, meterNo);
 			ResultSet rs = ps.executeQuery();
 			while (rs.next()) {
@@ -424,16 +426,16 @@ public class MeterReadingsDAO {
 					"Exception in class : MeterReadingsDAO : method : [getCurrentMonthMeterReadings(String,String)] "
 							+ e.getMessage());
 		}
-
 		return meterReading;
 	}
 
 	public MeterReading getPreviousMonthMeterReadings(String meterNo, String date) {
-		Connection connection = GlobalResources.getConnection();
 		ArrayList<MeterReading> readings = new ArrayList<MeterReading>();
 		MeterReading meterReadings = new MeterReading();
 		SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
-		try {
+		try(
+				Connection connection = GlobalResources.getDatasource().getConnection();
+				) {
 			Calendar c = Calendar.getInstance();
 			c.setTime(formatter.parse(date));
 			c.add(Calendar.MONTH, -1);
@@ -481,6 +483,7 @@ public class MeterReadingsDAO {
 			} else {
 				meterReadings = readings.get(0);
 			}
+			ps.close();
 		} catch (ParseException e) {
 			System.out.println(
 					"Exception in class : MeterReadingsDAO : method : [getPreviousMonthMeterReadings(String,String)] "
@@ -495,12 +498,13 @@ public class MeterReadingsDAO {
 	}
 
 	public MeterReading getPreviousMonthMeterReadings(String meterNo) {
-		Connection connection = GlobalResources.getConnection();
 		MeterReading meterReading = new MeterReading();
 		int id = -1;
-		try {
-			PreparedStatement ps = connection.prepareStatement(
-					"select max(id) as mid from meter_readings where meter_no=? and id not in (select max(id) as mid from meter_readings where meter_no=?)");
+		try(
+				Connection connection = GlobalResources.getDatasource().getConnection();
+				PreparedStatement ps = connection.prepareStatement(
+						"select max(id) as mid from meter_readings where meter_no=? and id not in (select max(id) as mid from meter_readings where meter_no=?)");
+					) {
 			ps.setString(1, meterNo);
 			ps.setString(2, meterNo);
 			ResultSet rs = ps.executeQuery();
@@ -531,10 +535,9 @@ public class MeterReadingsDAO {
 			}
 		} catch (SQLException e) {
 			System.out
-					.println("Exception in class : MeterReadingsDAO : method : [getPreviousMonthMeterReadings(String)] "
-							+ e.getMessage());
+			.println("Exception in class : MeterReadingsDAO : method : [getPreviousMonthMeterReadings(String)] "
+					+ e.getMessage());
 		}
-
 		return meterReading;
 	}
 
@@ -571,19 +574,19 @@ public class MeterReadingsDAO {
 	}
 
 	public boolean updateDiscardedFlagByAdmin(int readingId, int discardedFlag, UserRoles userRoles) {
-		Connection connection = GlobalResources.getConnection();
 		boolean discarded = false;
 		String currentDate = getCurrentDate();
-		try {
-			PreparedStatement ps = connection.prepareStatement(
-					"update meter_readings set discarded_flag=?, discarded_by=?, discarded_on=? where id=?");
+		try(
+				Connection connection = GlobalResources.getDatasource().getConnection();
+				PreparedStatement ps = connection.prepareStatement(
+						"update meter_readings set discarded_flag=?, discarded_by=?, discarded_on=? where id=?");
+			) {
 			ps.setInt(1, discardedFlag);
 			ps.setString(2, userRoles.getUsername());
 			ps.setString(3, currentDate);
 			ps.setInt(4, readingId);
 			ps.executeUpdate();
 			discarded = true;
-			ps.close();
 		} catch (SQLException e) {
 			discarded = false;
 			System.out.println("Exception in class : MeterDetailsDAO : method : [updateDiscardedFlagByAdmin(int,int,UserRoles)] "
@@ -593,21 +596,19 @@ public class MeterReadingsDAO {
 	}
 
 	public boolean updateDiscardedFlagByDeveloper(int readingId, int discardedFlag, UserRoles userRoles) {
-		Connection connection = GlobalResources.getConnection();
 		boolean discarded = false;
 		String currentDate = getCurrentDate();
-		System.out.println("inside updateDiscardedFlagByDeveloper" + readingId +" "+userRoles.getUsername() );
-		try {
-			PreparedStatement ps = connection.prepareStatement(
-					"update meter_readings set discarded_flag=?, discarded_by=?, discarded_on=? where id=?");
+		try(
+				Connection connection = GlobalResources.getDatasource().getConnection();
+				PreparedStatement ps = connection.prepareStatement(
+						"update meter_readings set discarded_flag=?, discarded_by=?, discarded_on=? where id=?");
+			) {
 			ps.setInt(1, discardedFlag);
 			ps.setString(2, userRoles.getUsername());
 			ps.setString(3, currentDate);
 			ps.setInt(4, readingId);
 			ps.executeUpdate();
 			discarded = true;
-			System.out.println("discarded successfully");
-			ps.close();
 		} catch (SQLException e) {
 			discarded = false;
 			System.out.println("Exception in class : MeterDetailsDAO : method : [updateDiscardedFlagByDeveloper(int,int,UaerRoles)] "
@@ -615,7 +616,7 @@ public class MeterReadingsDAO {
 		}
 		return discarded;
 	}
-	
+
 	private String getCurrentDate() {
 		Calendar c = Calendar.getInstance();
 		int day = c.get(Calendar.DATE);

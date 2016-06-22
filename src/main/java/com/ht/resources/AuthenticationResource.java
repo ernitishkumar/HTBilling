@@ -17,7 +17,7 @@ import com.ht.dao.UserRolesDAO;
  * @author NITISH
  *
  */
-@Path("authentication")
+@Path("/authentication")
 public class AuthenticationResource {
     
 	private UserDAO userDAO = new UserDAO();

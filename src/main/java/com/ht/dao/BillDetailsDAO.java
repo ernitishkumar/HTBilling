@@ -19,9 +19,11 @@ public class BillDetailsDAO {
 
 	public BillDetails insert(BillDetails billDetails){
 		BillDetails insertedBillDetails = null;
-		Connection connection = GlobalResources.getConnection();
 		int lastInsertedId = -1;
+		Connection connection = null;
 		try {
+			//obtaining connection from connection pool
+			connection = GlobalResources.getDatasource().getConnection();
 			PreparedStatement ps = connection.prepareStatement("insert into bill_details (bill_no, invoice_no, meter_readings_id, investor_id, consumption_id, consumption_bifurcation_id,meter_no, reading_date, bill_generation_date, total_kwh, total_rkvh, kwh_rate, rkvh_rate, active_amount, reactive_amount, total_amount, total_amount_roundoff,total_amount_in_words,plant_id) values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)",Statement.RETURN_GENERATED_KEYS);
 			ps.setString(1,"");
 			ps.setString(2, billDetails.getInvoiceNo());
@@ -52,14 +54,23 @@ public class BillDetailsDAO {
 		} catch (SQLException e) {
 			System.out.println("Exception in class : BillDetailsDAO : method : [insert(BillDetails)] "+e.getMessage());
 			e.printStackTrace();
+		}finally {
+			if(connection != null){
+				try{
+					connection.close();
+				}catch(Exception ignoreException){
+					System.out.println("Exception while closing connection : "+ignoreException);
+				}
+			}
 		}
 		return insertedBillDetails;
 	}
 	
 	public BillDetails update(BillDetails billDetails){
 		BillDetails updatedBillDetails = null;
-		Connection connection = GlobalResources.getConnection();
+		Connection connection = null;
 		try {
+			connection = GlobalResources.getDatasource().getConnection();
 			PreparedStatement ps = connection.prepareStatement("update bill_details set bill_no=?, invoice_no=?, meter_readings_id=?, investor_id=?, consumption_id=?, consumption_bifurcation_id=?,meter_no=?, reading_date=?, bill_generation_date=?, total_kwh=?, total_rkvh=?, kwh_rate=?, rkvh_rate=?, active_amount=?, reactive_amount=?, total_amount=?, total_amount_roundoff=?,total_amount_in_words=?,plant_id=? where id = ?");
 			ps.setString(1,billDetails.getBillNo());
 			ps.setString(2, billDetails.getInvoiceNo());
@@ -86,14 +97,23 @@ public class BillDetailsDAO {
 			updatedBillDetails = getById(billDetails.getId());
 		} catch (SQLException e) {
 			System.out.println("Exception in class : BillDetailsDAO : method : [update(BillDetails)] "+e.getMessage());
+		}finally {
+			if(connection != null){
+				try{
+					connection.close();
+				}catch(Exception ignoreException){
+					System.out.println("Exception while closing connection : "+ignoreException);
+				}
+			}
 		}
 		return updatedBillDetails;
 	}
 	
 	public BillDetails getById(int id){
 		ArrayList<BillDetails> billDetails = new ArrayList<BillDetails>();
-		Connection connection = GlobalResources.getConnection();
+		Connection connection = null;
 		try {
+			connection = GlobalResources.getDatasource().getConnection();
 			PreparedStatement ps = connection.prepareStatement("select * from bill_details where id = ?");
 			ps .setInt(1, id);
 			ResultSet rs = ps.executeQuery();
@@ -101,28 +121,46 @@ public class BillDetailsDAO {
 			ps.close();
 		} catch (SQLException e) {
 			System.out.println("Exception in class : BillDetailsDAO : method : [getById(int)] "+e.getMessage());
+		}finally {
+			if(connection != null){
+				try{
+					connection.close();
+				}catch(Exception ignoreException){
+					System.out.println("Exception while closing connection : "+ignoreException);
+				}
+			}
 		}
 		return billDetails.get(0);
 	}
 
 	public ArrayList<BillDetails> getAll(){
 		ArrayList<BillDetails> billDetails = new ArrayList<BillDetails>();
-		Connection connection = GlobalResources.getConnection();
+		Connection connection = null;
 		try {
+			connection = GlobalResources.getDatasource().getConnection();
 			PreparedStatement ps = connection.prepareStatement("select * from bill_details");
 			ResultSet rs = ps.executeQuery();
 			billDetails = billDetailsMapper(rs);
 			ps.close();
 		} catch (SQLException e) {
 			System.out.println("Exception in class : BillDetailsDAO : method : [getAll()] "+e.getMessage());
+		}finally {
+			if(connection != null){
+				try{
+					connection.close();
+				}catch(Exception ignoreException){
+					System.out.println("Exception while closing connection : "+ignoreException);
+				}
+			}
 		}
 		return billDetails;
 	}
 	
 	public BillDetails getByBillNo(String billNo){
 		ArrayList<BillDetails> billDetails = new ArrayList<BillDetails>();
-		Connection connection = GlobalResources.getConnection();
+		Connection connection = null;
 		try {
+			connection = GlobalResources.getDatasource().getConnection();
 			PreparedStatement ps = connection.prepareStatement("select * from bill_details where bill_no=?");
 			ps.setString(1, billNo);
 			ResultSet rs = ps.executeQuery();
@@ -130,14 +168,23 @@ public class BillDetailsDAO {
 			ps.close();
 		} catch (SQLException e) {
 			System.out.println("Exception in class : BillDetailsDAO : method : [getByBillNo(String)] "+e.getMessage());
+		}finally {
+			if(connection != null){
+				try{
+					connection.close();
+				}catch(Exception ignoreException){
+					System.out.println("Exception while closing connection : "+ignoreException);
+				}
+			}
 		}
 		return billDetails.get(0);
 	}
 	
 	public BillDetails getByConsumptionBifurcationId(int consumptionBifurcationId){
 		ArrayList<BillDetails> billDetails = new ArrayList<BillDetails>();
-		Connection connection = GlobalResources.getConnection();
+		Connection connection = null;
 		try {
+			connection = GlobalResources.getDatasource().getConnection();
 			PreparedStatement ps = connection.prepareStatement("select * from bill_details where consumption_bifurcation_id=?");
 			ps.setInt(1, consumptionBifurcationId);
 			ResultSet rs = ps.executeQuery();
@@ -145,36 +192,64 @@ public class BillDetailsDAO {
 			ps.close();
 		} catch (SQLException e) {
 			System.out.println("Exception in class : BillDetailsDAO : method : [getByConsumptionBifurcationId(int)] "+e.getMessage());
+		}finally {
+			if(connection != null){
+				try{
+					connection.close();
+				}catch(Exception ignoreException){
+					System.out.println("Exception while closing connection : "+ignoreException);
+				}
+			}
 		}
 		return billDetails.get(0);
 	}
 	
 	public ArrayList<BillDetails> getByInvestorId(int investorId){
 		ArrayList<BillDetails> billDetails = new ArrayList<BillDetails>();
-		Connection connection = GlobalResources.getConnection();
+		Connection connection = null;
 		try {
+			connection = GlobalResources.getDatasource().getConnection();
 			PreparedStatement ps = connection.prepareStatement("select * from bill_details where investor_id=?");
 			ps.setInt(1, investorId);
 			ResultSet rs = ps.executeQuery();
 			billDetails = billDetailsMapper(rs);
+			rs.close();
 			ps.close();
 		} catch (SQLException e) {
 			System.out.println("Exception in class : BillDetailsDAO : method : [getByInvestorId(int)] "+e.getMessage());
+		}finally {
+			if(connection != null){
+				try{
+					connection.close();
+				}catch(Exception ignoreException){
+					System.out.println("Exception while closing connection : "+ignoreException);
+				}
+			}
 		}
 		return billDetails;
 	}
 	
 	public ArrayList<BillDetails> getByConsumptionId(int ConsumptionId){
 		ArrayList<BillDetails> billDetails = new ArrayList<BillDetails>();
-		Connection connection = GlobalResources.getConnection();
+		Connection connection = null;
 		try {
+			connection = GlobalResources.getDatasource().getConnection();
 			PreparedStatement ps = connection.prepareStatement("select * from bill_details where consumption_id=?");
 			ps.setInt(1, ConsumptionId);
 			ResultSet rs = ps.executeQuery();
 			billDetails = billDetailsMapper(rs);
+			rs.close();
 			ps.close();
 		} catch (SQLException e) {
 			System.out.println("Exception in class : BillDetailsDAO : method : [getByConsumptionId(int)] "+e.getMessage());
+		}finally {
+			if(connection != null){
+				try{
+					connection.close();
+				}catch(Exception ignoreException){
+					System.out.println("Exception while closing connection : "+ignoreException);
+				}
+			}
 		}
 		return billDetails;
 	}

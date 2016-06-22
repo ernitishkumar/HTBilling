@@ -17,9 +17,10 @@ public class InvestorConsumptionDAO {
 	public InvestorConsumption insert(InvestorConsumption investorConsumption){
 		InvestorConsumption insertedInvestorConsumption = null;
 		int lastInsertedId;
-		Connection connection = GlobalResources.getConnection();
-		try {
-			PreparedStatement ps = connection.prepareStatement("insert into investor_consumption (consumption_id, investor_id, active_consumption, reactive_consumption,circle_validation,bill_generated) values(?,?,?,?,?,?)");
+		try(
+				Connection connection = GlobalResources.getDatasource().getConnection();
+				PreparedStatement ps = connection.prepareStatement("insert into investor_consumption (consumption_id, investor_id, active_consumption, reactive_consumption,circle_validation,bill_generated) values(?,?,?,?,?,?)");
+				) {
 			ps.setInt(1,investorConsumption.getConsumptionId());
 			ps.setInt(2, investorConsumption.getInvestorId());
 			ps.setFloat(3, investorConsumption.getActiveConsumption());
@@ -30,8 +31,6 @@ public class InvestorConsumptionDAO {
 			ResultSet keys = ps.getGeneratedKeys();    
 			keys.next();  
 			lastInsertedId = keys.getInt(1);
-			keys.close();
-			ps.close();
 			insertedInvestorConsumption = getById(lastInsertedId);
 		} catch (SQLException e) {
 			System.out.println("Exception in class : InvestorConsumptionDAO : method : [insert(Investors)] "+e.getMessage());
@@ -54,16 +53,16 @@ public class InvestorConsumptionDAO {
 	
 	public InvestorConsumption update(InvestorConsumption investorConsumption){
 		InvestorConsumption updatedConsumption = null;
-		Connection connection = GlobalResources.getConnection();
-		try {
-			PreparedStatement ps = connection.prepareStatement("update investor_consumption set active_consumption = ?, reactive_consumption=?,bill_generated=?,circle_validation=? where id = ?");
+		try(
+				Connection connection = GlobalResources.getDatasource().getConnection();
+				PreparedStatement ps = connection.prepareStatement("update investor_consumption set active_consumption = ?, reactive_consumption=?,bill_generated=?,circle_validation=? where id = ?");
+				) {
 			ps.setFloat(1, investorConsumption.getActiveConsumption());
 			ps.setFloat(2, investorConsumption.getReactiveConsumption());
 			ps.setInt(3, investorConsumption.getBillGenerated());
 			ps.setInt(4, investorConsumption.getCircleValidation());
 			ps.setInt(5, investorConsumption.getId());
 			ps.executeUpdate();
-			ps.close();
 			updatedConsumption = getById(investorConsumption.getId());
 		} catch (SQLException e) {
 			System.out.println("Exception in class : InvestorConsumptionDAO : method : [update(InvestorConsumption)] "+e.getMessage());
@@ -82,9 +81,10 @@ public class InvestorConsumptionDAO {
 	
 	public ArrayList<InvestorConsumption> getAllInvestorConsumption(){
 		ArrayList<InvestorConsumption> investorConsumtionsList = new ArrayList<InvestorConsumption>();
-		Connection connection = GlobalResources.getConnection();
-		try {
-			PreparedStatement ps = connection.prepareStatement("select * from investor_consumption");
+		try(
+				Connection connection = GlobalResources.getDatasource().getConnection();
+				PreparedStatement ps = connection.prepareStatement("select * from investor_consumption");
+				) {
 			ResultSet rs = ps.executeQuery();
 			investorConsumtionsList = investorConsumptionMapper(rs);
 		} catch (SQLException e) {
@@ -95,9 +95,10 @@ public class InvestorConsumptionDAO {
 
 	public InvestorConsumption getById(int id){
 		ArrayList<InvestorConsumption> investorConsumtionsList = new ArrayList<InvestorConsumption>();
-		Connection connection = GlobalResources.getConnection();
-		try {
-			PreparedStatement ps = connection.prepareStatement("select * from investor_consumption where id =?");
+		try(
+				Connection connection = GlobalResources.getDatasource().getConnection();
+				PreparedStatement ps = connection.prepareStatement("select * from investor_consumption where id =?");
+				) {
 			ps.setInt(1, id);
 			ResultSet rs = ps.executeQuery();
 			investorConsumtionsList = investorConsumptionMapper(rs);
@@ -109,9 +110,10 @@ public class InvestorConsumptionDAO {
 	
 	public ArrayList<InvestorConsumption> getByConsumptionId(int consumptionId){
 		ArrayList<InvestorConsumption> investorConsumtionsList = new ArrayList<InvestorConsumption>();
-		Connection connection = GlobalResources.getConnection();
-		try {
-			PreparedStatement ps = connection.prepareStatement("select * from investor_consumption where consumption_id =?");
+		try(
+				Connection connection = GlobalResources.getDatasource().getConnection();
+				PreparedStatement ps = connection.prepareStatement("select * from investor_consumption where consumption_id =?");
+				) {
 			ps.setInt(1, consumptionId);
 			ResultSet rs = ps.executeQuery();
 			investorConsumtionsList = investorConsumptionMapper(rs);
@@ -123,9 +125,10 @@ public class InvestorConsumptionDAO {
 	
 	public ArrayList<InvestorConsumption> getByInvestorId(int investorId){
 		ArrayList<InvestorConsumption> investorConsumtionsList = new ArrayList<InvestorConsumption>();
-		Connection connection = GlobalResources.getConnection();
-		try {
-			PreparedStatement ps = connection.prepareStatement("select * from investor_consumption where investor_id =?");
+		try(
+				Connection connection = GlobalResources.getDatasource().getConnection();
+				PreparedStatement ps = connection.prepareStatement("select * from investor_consumption where investor_id =?");
+				) {
 			ps.setInt(1, investorId);
 			ResultSet rs = ps.executeQuery();
 			investorConsumtionsList = investorConsumptionMapper(rs);
@@ -137,9 +140,10 @@ public class InvestorConsumptionDAO {
 	
 	public ArrayList<InvestorConsumption> getByInvestorIdAndConsumptionId(int investorId, int consumtionId){
 		ArrayList<InvestorConsumption> investorConsumtionsList = new ArrayList<InvestorConsumption>();
-		Connection connection = GlobalResources.getConnection();
-		try {
-			PreparedStatement ps = connection.prepareStatement("select * from investor_consumption where investor_id =? and consumption_id =?");
+		try(
+				Connection connection = GlobalResources.getDatasource().getConnection();
+				PreparedStatement ps = connection.prepareStatement("select * from investor_consumption where investor_id =? and consumption_id =?");
+				) {
 			ps.setInt(1, investorId);
 			ps.setInt(1, consumtionId);
 			ResultSet rs = ps.executeQuery();

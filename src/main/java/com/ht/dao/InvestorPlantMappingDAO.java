@@ -15,9 +15,10 @@ public class InvestorPlantMappingDAO {
 	public InvestorPlantMapping insert(InvestorPlantMapping investorPlantMapping){
 		InvestorPlantMapping insertedMapping = null;
 		int lastInsertedId = -1;
-		Connection connection = GlobalResources.getConnection();
-		try {
-			PreparedStatement ps = connection.prepareStatement("insert into investor_plant_mapping (plant_id,plant_code,investor_id,investor_code) values(?,?,?,?)",Statement.RETURN_GENERATED_KEYS);
+		try(
+				Connection connection = GlobalResources.getDatasource().getConnection();
+				PreparedStatement ps = connection.prepareStatement("insert into investor_plant_mapping (plant_id,plant_code,investor_id,investor_code) values(?,?,?,?)",Statement.RETURN_GENERATED_KEYS);
+				) {
 			ps.setInt(1, investorPlantMapping.getPlantId());
 			ps.setString(2, investorPlantMapping.getPlantCode());
 			ps.setInt(3, investorPlantMapping.getInvestorId());
@@ -27,8 +28,6 @@ public class InvestorPlantMappingDAO {
 			keys.next();  
 			lastInsertedId = keys.getInt(1);
 			insertedMapping = getById(lastInsertedId);
-			keys.close();
-			ps.close();
 		} catch (SQLException e) {
 			System.out.println("Exception in class : InvestorPlantMappingDAO : method : [insert(InvestorPlantMapping)] "+e.getMessage());
 		}
@@ -37,16 +36,16 @@ public class InvestorPlantMappingDAO {
 	
 	public InvestorPlantMapping update(InvestorPlantMapping investorPlantMapping){
 		InvestorPlantMapping updatedMapping = null;
-		Connection connection = GlobalResources.getConnection();
-		try {
-			PreparedStatement ps = connection.prepareStatement("update investor_plant_mapping set plant_id=?,plant_code=?,investor_id=?,investor_code=? where id=?");
+		try(
+				Connection connection = GlobalResources.getDatasource().getConnection();
+				PreparedStatement ps = connection.prepareStatement("update investor_plant_mapping set plant_id=?,plant_code=?,investor_id=?,investor_code=? where id=?");
+				) {
 			ps.setInt(1, investorPlantMapping.getPlantId());
 			ps.setString(2, investorPlantMapping.getPlantCode());
 			ps.setInt(3, investorPlantMapping.getInvestorId());
 			ps.setString(4, investorPlantMapping.getInvestorCode());
 			ps.setInt(5, investorPlantMapping.getId());
 			ps.executeUpdate();
-			ps.close();
 			updatedMapping = getById(investorPlantMapping.getId());
 		} catch (SQLException e) {
 			System.out.println("Exception in class : InvestorPlantMappingDAO : method : [insert(InvestorPlantMapping)] "+e.getMessage());
@@ -56,13 +55,13 @@ public class InvestorPlantMappingDAO {
 	
 	public InvestorPlantMapping delete(int id){
 		InvestorPlantMapping deletedMapping = null;
-		Connection connection = GlobalResources.getConnection();
-		try {
+		try(
+				Connection connection = GlobalResources.getDatasource().getConnection();
+				PreparedStatement ps = connection.prepareStatement("delete from investor_plant_mapping where id=?");
+				) {
 			deletedMapping = getById(id);
-			PreparedStatement ps = connection.prepareStatement("delete from investor_plant_mapping where id=?");
 			ps.setInt(1, id);
 			ps.executeUpdate();
-			ps.close();
 		} catch (SQLException e) {
 			deletedMapping = null;
 			System.out.println("Exception in class : InvestorPlantMappingDAO : method : [delete(id)] "+e.getMessage());
@@ -72,9 +71,10 @@ public class InvestorPlantMappingDAO {
 	
 	public ArrayList<InvestorPlantMapping> getAllMappings(){
 		ArrayList<InvestorPlantMapping> mappingList = new ArrayList<InvestorPlantMapping>();
-		Connection connection = GlobalResources.getConnection();
-		try {
-			PreparedStatement ps = connection.prepareStatement("select * from investor_plant_mapping");
+		try(
+				Connection connection = GlobalResources.getDatasource().getConnection();
+				PreparedStatement ps = connection.prepareStatement("select * from investor_plant_mapping");
+				) {
 			ResultSet rs = ps.executeQuery();
 			mappingList = investorPlantMappingParser(rs);
 		} catch (SQLException e) {
@@ -85,9 +85,10 @@ public class InvestorPlantMappingDAO {
 
 	public InvestorPlantMapping getById(int id){
 		ArrayList<InvestorPlantMapping> mappingList = new ArrayList<InvestorPlantMapping>();
-		Connection connection = GlobalResources.getConnection();
-		try {
-			PreparedStatement ps = connection.prepareStatement("select * from investor_plant_mapping where id=?");
+		try(
+				Connection connection = GlobalResources.getDatasource().getConnection();
+				PreparedStatement ps = connection.prepareStatement("select * from investor_plant_mapping where id=?");
+				) {
 			ps.setInt(1,id);
 			ResultSet rs = ps.executeQuery();
 			mappingList = investorPlantMappingParser(rs);
@@ -99,9 +100,10 @@ public class InvestorPlantMappingDAO {
 	
 	public ArrayList<InvestorPlantMapping> getByPlantId(int plantId){
 		ArrayList<InvestorPlantMapping> mappingList = new ArrayList<InvestorPlantMapping>();
-		Connection connection = GlobalResources.getConnection();
-		try {
-			PreparedStatement ps = connection.prepareStatement("select * from investor_plant_mapping where plant_id=?");
+		try(
+				Connection connection = GlobalResources.getDatasource().getConnection();
+				PreparedStatement ps = connection.prepareStatement("select * from investor_plant_mapping where plant_id=?");
+				) {
 			ps.setInt(1,plantId);
 			ResultSet rs = ps.executeQuery();
 			mappingList = investorPlantMappingParser(rs);
@@ -113,9 +115,10 @@ public class InvestorPlantMappingDAO {
 	
 	public ArrayList<InvestorPlantMapping> getByInvestorId(int investorId){
 		ArrayList<InvestorPlantMapping> mappingList = new ArrayList<InvestorPlantMapping>();
-		Connection connection = GlobalResources.getConnection();
-		try {
-			PreparedStatement ps = connection.prepareStatement("select * from investor_plant_mapping where investor_id=?");
+		try(
+				Connection connection = GlobalResources.getDatasource().getConnection();
+				PreparedStatement ps = connection.prepareStatement("select * from investor_plant_mapping where investor_id=?");
+				) {
 			ps.setInt(1,investorId);
 			ResultSet rs = ps.executeQuery();
 			mappingList = investorPlantMappingParser(rs);
@@ -127,9 +130,10 @@ public class InvestorPlantMappingDAO {
 	
 	public ArrayList<InvestorPlantMapping> getByInvestorCode(String investorCode){
 		ArrayList<InvestorPlantMapping> mappingList = new ArrayList<InvestorPlantMapping>();
-		Connection connection = GlobalResources.getConnection();
-		try {
-			PreparedStatement ps = connection.prepareStatement("select * from investor_plant_mapping where investor_code=?");
+		try(
+				Connection connection = GlobalResources.getDatasource().getConnection();
+				PreparedStatement ps = connection.prepareStatement("select * from investor_plant_mapping where investor_code=?");
+				) {
 			ps.setString(1,investorCode);
 			ResultSet rs = ps.executeQuery();
 			mappingList = investorPlantMappingParser(rs);
@@ -141,9 +145,10 @@ public class InvestorPlantMappingDAO {
 	
 	public ArrayList<InvestorPlantMapping> getByPlantCode(String plantCode){
 		ArrayList<InvestorPlantMapping> mappingList = new ArrayList<InvestorPlantMapping>();
-		Connection connection = GlobalResources.getConnection();
-		try {
-			PreparedStatement ps = connection.prepareStatement("select * from investor_plant_mapping where plant_code=?");
+		try(
+				Connection connection = GlobalResources.getDatasource().getConnection();
+				PreparedStatement ps = connection.prepareStatement("select * from investor_plant_mapping where plant_code=?");
+				) {
 			ps.setString(1,plantCode);
 			ResultSet rs = ps.executeQuery();
 			mappingList = investorPlantMappingParser(rs);
@@ -155,9 +160,10 @@ public class InvestorPlantMappingDAO {
 	
 	public ArrayList<InvestorPlantMapping> getByPlantCodeAndInvestorCode(String plantCode, String investorCode){
 		ArrayList<InvestorPlantMapping> mappingList = new ArrayList<InvestorPlantMapping>();
-		Connection connection = GlobalResources.getConnection();
-		try {
-			PreparedStatement ps = connection.prepareStatement("select * from investor_plant_mapping where plant_code=? and investor_code=?");
+		try(
+				Connection connection = GlobalResources.getDatasource().getConnection();
+				PreparedStatement ps = connection.prepareStatement("select * from investor_plant_mapping where plant_code=? and investor_code=?");
+				) {
 			ps.setString(1,plantCode);
 			ps.setString(2,investorCode);
 			ResultSet rs = ps.executeQuery();
@@ -170,9 +176,10 @@ public class InvestorPlantMappingDAO {
 	
 	public InvestorPlantMapping getByPlantIdAndInvestorId(int plantId, int investorId){
 		ArrayList<InvestorPlantMapping> mappingList = new ArrayList<InvestorPlantMapping>();
-		Connection connection = GlobalResources.getConnection();
-		try {
-			PreparedStatement ps = connection.prepareStatement("select * from investor_plant_mapping where plant_id=? and investor_id=?");
+		try(
+				Connection connection = GlobalResources.getDatasource().getConnection();
+				PreparedStatement ps = connection.prepareStatement("select * from investor_plant_mapping where plant_id=? and investor_id=?");
+				) {
 			ps.setInt(1,plantId);
 			ps.setInt(2,investorId);
 			ResultSet rs = ps.executeQuery();
@@ -185,7 +192,6 @@ public class InvestorPlantMappingDAO {
 	
 	private ArrayList<InvestorPlantMapping> investorPlantMappingParser(ResultSet rs) {
 		ArrayList<InvestorPlantMapping> mappingList = new ArrayList<InvestorPlantMapping>();
-		
 		try {
 			while(rs.next()){
                 InvestorPlantMapping investorPlantMapping = new InvestorPlantMapping();

@@ -12,18 +12,18 @@ import com.ht.utility.GlobalResources;
 public class UserRolesDAO {
 
 	public boolean insert(UserRoles userRoles){
-		Connection connection = GlobalResources.getConnection();
 		boolean added = false;
-		try {
-			PreparedStatement ps = connection
-					.prepareStatement("insert into user_roles (username, user_role, region, circle, division) values(?,?,?,?,?)");
+		try(
+				Connection connection = GlobalResources.getDatasource().getConnection();
+				PreparedStatement ps = connection
+						.prepareStatement("insert into user_roles (username, user_role, region, circle, division) values(?,?,?,?,?)");
+				) {
 			ps.setString(1, userRoles.getUsername());
 			ps.setString(2, userRoles.getRole());
 			ps.setString(3, userRoles.getRegion());
 			ps.setString(4, userRoles.getCircle());
 			ps.setString(5, userRoles.getDivision());
 			ps.executeUpdate();
-			ps.close();
 			added=true;
 		} catch (SQLException e) {
 			added = false;
@@ -33,10 +33,11 @@ public class UserRolesDAO {
 	}
 	
 	public void update(UserRoles userRoles){
-		Connection connection = GlobalResources.getConnection();
-		try {
-			PreparedStatement ps = connection
-					.prepareStatement("update user_roles set username=?, user_role=?, region=?, circle=?, division=? where id=?");
+		try(
+				Connection connection = GlobalResources.getDatasource().getConnection();
+				PreparedStatement ps = connection
+						.prepareStatement("update user_roles set username=?, user_role=?, region=?, circle=?, division=? where id=?");
+			) {
 			ps.setString(1, userRoles.getUsername());
 			ps.setString(2, userRoles.getRole());
 			ps.setString(3, userRoles.getRegion());
@@ -44,7 +45,6 @@ public class UserRolesDAO {
 			ps.setString(5, userRoles.getDivision());
 			ps.setInt(6, userRoles.getId());
 			ps.executeUpdate();
-			ps.close();
 		} catch (SQLException e) {
 			System.out.println("Exception in class : UserRolesDAO : method : [update(USerRoles)] "+e);
 		}
@@ -52,61 +52,61 @@ public class UserRolesDAO {
 	
 	public UserRoles getByUsername(String username){
 		ArrayList<UserRoles> userRoles = new ArrayList<UserRoles>();
-		Connection connection = GlobalResources.getConnection();
-		try {
-			PreparedStatement ps = connection.prepareStatement("select * from user_roles where username=?");
+		try(
+				Connection connection = GlobalResources.getDatasource().getConnection();
+				PreparedStatement ps = connection.prepareStatement("select * from user_roles where username=?");
+			) {
 			ps.setString(1, username);
 			ResultSet rs = ps.executeQuery();
 			userRoles = userMapper(rs);
 		} catch (SQLException e) {
 			System.out.println("Exception in class : UserRolesDAO : method : [getByUsername(String username)] "+e);
 		}
-		
 		return userRoles.get(0);
 	}
 	
 	public UserRoles getById(int id){
 		ArrayList<UserRoles> userRoles = new ArrayList<UserRoles>();
-		Connection connection = GlobalResources.getConnection();
-		try {
-			PreparedStatement ps = connection.prepareStatement("select * from user_roles where id=?");
+		try(
+				Connection connection = GlobalResources.getDatasource().getConnection();
+				PreparedStatement ps = connection.prepareStatement("select * from user_roles where id=?");
+			) {
 			ps.setInt(1, id);
 			ResultSet rs = ps.executeQuery();
 			userRoles = userMapper(rs);
 		} catch (SQLException e) {
 			System.out.println("Exception in class : UserRolesDAO : method : [getById(int id)] "+e);
 		}
-		
 		return userRoles.get(0);
 	}
 	
 	public ArrayList<UserRoles> getByDeveloperRole(){
 		ArrayList<UserRoles> userRoles = new ArrayList<UserRoles>();
-		Connection connection = GlobalResources.getConnection();
-		try {
-			PreparedStatement ps = connection.prepareStatement("select * from user_roles where user_role=? && username not in (select username from developers)");
+		try(
+				Connection connection = GlobalResources.getDatasource().getConnection();
+				PreparedStatement ps = connection.prepareStatement("select * from user_roles where user_role=? && username not in (select username from developers)");
+			) {
 			ps.setString(1, "developer");
 			ResultSet rs = ps.executeQuery();
 			userRoles = userMapper(rs);
 		} catch (SQLException e) {
 			System.out.println("Exception in class : UserRolesDAO : method : [getByDeveloperRole()] "+e);
 		}
-		
 		return userRoles;
 	}
 	
 	public ArrayList<UserRoles> getByCircle(String circle){
 		ArrayList<UserRoles> userRoles = new ArrayList<UserRoles>();
-		Connection connection = GlobalResources.getConnection();
-		try {
-			PreparedStatement ps = connection.prepareStatement("select * from user_roles where circle=?");
+		try(
+				Connection connection = GlobalResources.getDatasource().getConnection();
+				PreparedStatement ps = connection.prepareStatement("select * from user_roles where circle=?");
+			) {
 			ps.setString(1, circle);
 			ResultSet rs = ps.executeQuery();
 			userRoles = userMapper(rs);
 		} catch (SQLException e) {
 			System.out.println("Exception in class : UserRolesDAO : method : [getByCircle(String circle)] "+e);
 		}
-		
 		return userRoles;
 	}
 	

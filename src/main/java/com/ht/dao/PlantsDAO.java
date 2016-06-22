@@ -14,12 +14,13 @@ import com.ht.utility.GlobalResources;
 public class PlantsDAO {
 
 	public Plant insert(Plant plant){
-		Connection connection = GlobalResources.getConnection();
 		int lastInsertedId = -1;
 		Plant insertedPlant = null;
-		try {
-			PreparedStatement ps = connection
-					.prepareStatement("insert into plants(code, name , address, Contact_no, Contact_person, email, commissioned_date, type, circuit_voltage, injecting_substation, feeder_name, region, circle, division, main_meter_no, check_meter_no, standby_meter_no, developer_id) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)",Statement.RETURN_GENERATED_KEYS);
+		try(
+				Connection connection = GlobalResources.getDatasource().getConnection();
+				PreparedStatement ps = connection
+						.prepareStatement("insert into plants(code, name , address, Contact_no, Contact_person, email, commissioned_date, type, circuit_voltage, injecting_substation, feeder_name, region, circle, division, main_meter_no, check_meter_no, standby_meter_no, developer_id) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)",Statement.RETURN_GENERATED_KEYS);
+			) {
 			ps.setString(1, plant.getCode());
 			ps.setString(2, plant.getName());
 			ps.setString(3, plant.getAddress());
@@ -42,8 +43,6 @@ public class PlantsDAO {
 			ResultSet keys = ps.getGeneratedKeys();    
 			keys.next();  
 			lastInsertedId = keys.getInt(1);
-			keys.close();
-			ps.close();
 			insertedPlant = getById(lastInsertedId);
 		} catch (SQLException e) {
 			System.out.println("Exception in class : PlantDetailsDAO : method : [insert(PlantDetails)] "+e);
@@ -53,10 +52,11 @@ public class PlantsDAO {
 	
 	public Plant update(Plant plant){
 		Plant updatedPlant = null;
-		Connection connection = GlobalResources.getConnection();
-		try {
-			PreparedStatement ps = connection
-					.prepareStatement("update plants set code=?, name=?, address=?, Contact_no=?, Contact_person=?, email=?, commissioned_date=?, type=?, circuit_voltage=?, injecting_substation=?, feeder_name=?, region=?, circle=?, division=?, main_meter_no=?, check_meter_no=?, standby_meter_no=?, developer_id=? where id=?");
+		try(
+				Connection connection = GlobalResources.getDatasource().getConnection();
+				PreparedStatement ps = connection
+						.prepareStatement("update plants set code=?, name=?, address=?, Contact_no=?, Contact_person=?, email=?, commissioned_date=?, type=?, circuit_voltage=?, injecting_substation=?, feeder_name=?, region=?, circle=?, division=?, main_meter_no=?, check_meter_no=?, standby_meter_no=?, developer_id=? where id=?");
+					) {
 			ps.setString(1, plant.getCode());
 			ps.setString(2, plant.getName());
 			ps.setString(3, plant.getAddress());
@@ -77,7 +77,6 @@ public class PlantsDAO {
 			ps.setInt(18, plant.getDeveloperId());
 			ps.setInt(19, plant.getId());
 			ps.executeUpdate();
-			ps.close();
 			updatedPlant = getById(plant.getId());
 		} catch (SQLException e) {
 			System.out.println("Exception in class : PlantDetailsDAO : method : [update(PlantDetails)] "+e);
@@ -87,14 +86,14 @@ public class PlantsDAO {
 	
 	public Plant delete(int id) {
 		Plant deletedPlant = null;
-		Connection connection = GlobalResources.getConnection();
-		try {
+		try(
+				Connection connection = GlobalResources.getDatasource().getConnection();
+				PreparedStatement ps = connection
+						.prepareStatement("delete from plants where id=?");
+			) {
 			deletedPlant = getById(id);
-			PreparedStatement ps = connection
-					.prepareStatement("delete from plants where id=?");
 			ps.setInt(1, id);
 			ps.executeUpdate();
-			ps.close();
 		} catch (SQLException e) {
 			deletedPlant = null;
 			System.out.println("Exception in class : MeterDetailsDAO : method : [delete(String)] "+ e);
@@ -104,14 +103,13 @@ public class PlantsDAO {
 	
 	public Plant getById(int id){
 		ArrayList<Plant> plantList = new ArrayList<Plant>();
-		Connection connection = GlobalResources.getConnection();
-		try {
-			PreparedStatement ps = connection.prepareStatement("select * from plants where id = ?");
+		try(
+				Connection connection = GlobalResources.getDatasource().getConnection();
+				PreparedStatement ps = connection.prepareStatement("select * from plants where id = ?");
+	    	) {
 			ps.setInt(1,id);
 			ResultSet rs = ps .executeQuery();
 			plantList = plantMapper(rs);
-			rs.close();
-			ps.close();
 		} catch (SQLException e) {
 			System.out.println("Exception in class : PlantsDAO : method : [getById(int)] "+e);
 		}
@@ -121,14 +119,13 @@ public class PlantsDAO {
 
 	public Plant getByCode(String code){
 		ArrayList<Plant> plantList = new ArrayList<Plant>();
-		Connection connection = GlobalResources.getConnection();
-		try {
-			PreparedStatement ps = connection.prepareStatement("select * from plants where code = ?");
+		try(
+				Connection connection = GlobalResources.getDatasource().getConnection();
+				PreparedStatement ps = connection.prepareStatement("select * from plants where code = ?");
+			) {
 			ps.setString(1,code);
 			ResultSet rs = ps .executeQuery();
 			plantList = plantMapper(rs);
-			rs.close();
-			ps.close();
 		} catch (SQLException e) {
 			System.out.println("Exception in class : PlantsDAO : method : [getByCode(String)] "+e);
 		}
@@ -138,13 +135,12 @@ public class PlantsDAO {
     
     public ArrayList<Plant> getAll(){
 		ArrayList<Plant> plantList = new ArrayList<Plant>();
-		Connection connection = GlobalResources.getConnection();
-		try {
-			PreparedStatement ps = connection.prepareStatement("select * from plants");
+		try(
+				Connection connection = GlobalResources.getDatasource().getConnection();
+				PreparedStatement ps = connection.prepareStatement("select * from plants");
+			) {
 			ResultSet rs = ps .executeQuery();
 			plantList = plantMapper(rs);
-			rs.close();
-			ps.close();
 		} catch (SQLException e) {
 			System.out.println("Exception in class : PlantsDAO : method : [getAll()] "+e);
 		}
@@ -154,66 +150,59 @@ public class PlantsDAO {
 	
 	public ArrayList<Plant> getByDeveloperId(int developerId){
 		ArrayList<Plant> plantList = new ArrayList<Plant>();
-		Connection connection = GlobalResources.getConnection();
-		try {
-			PreparedStatement ps = connection.prepareStatement("select * from plants where developer_id = ?");
+		try(
+				Connection connection = GlobalResources.getDatasource().getConnection();
+				PreparedStatement ps = connection.prepareStatement("select * from plants where developer_id = ?");
+			) {
 			ps.setInt(1,developerId);
 			ResultSet rs = ps .executeQuery();
 			plantList = plantMapper(rs);
-			rs.close();
-			ps.close();
 		} catch (SQLException e) {
 			System.out.println("Exception in class : PlantsDAO : method : [getByDeveloperId(int)] "+e);
 			e.printStackTrace();
 		}
-		
 		return plantList;
 	}
 	
 	public ArrayList<Plant> getByRegion(String region){
 		ArrayList<Plant> plantList = new ArrayList<Plant>();
-		Connection connection = GlobalResources.getConnection();
-		try {
-			PreparedStatement ps = connection.prepareStatement("select * from plants where region = ?");
+		try(
+				Connection connection = GlobalResources.getDatasource().getConnection();
+				PreparedStatement ps = connection.prepareStatement("select * from plants where region = ?");
+			) {
 			ps.setString(1,region);
 			ResultSet rs = ps .executeQuery();
 			plantList = plantMapper(rs);
-			rs.close();
-			ps.close();
 		} catch (SQLException e) {
 			System.out.println("Exception in class : PlantsDAO : method : [getByRegion(String)] "+e);
 		}
-		
 		return plantList;
 	}
 	
 	public ArrayList<Plant> getByCircle(String circle){
 		ArrayList<Plant> plantList = new ArrayList<Plant>();
-		Connection connection = GlobalResources.getConnection();
-		try {
-			PreparedStatement ps = connection.prepareStatement("select * from plants where circle = ?");
+		try(
+				Connection connection = GlobalResources.getDatasource().getConnection();
+				PreparedStatement ps = connection.prepareStatement("select * from plants where circle = ?");
+			) {
 			ps.setString(1,circle);
 			ResultSet rs = ps .executeQuery();
 			plantList = plantMapper(rs);
-			rs.close();
-			ps.close();
 		} catch (SQLException e) {
 			System.out.println("Exception in class : PlantsDAO : method : [getByCircle(String)] "+e);
 		}
-		
 		return plantList;
 	}
 	
 	public ArrayList<Plant> getByDivision(String division){
 		ArrayList<Plant> plantList = new ArrayList<Plant>();
-		Connection connection = GlobalResources.getConnection();
-		try {
-			PreparedStatement ps = connection.prepareStatement("select * from plants where division = ?");
+		try(
+				Connection connection = GlobalResources.getDatasource().getConnection();
+				PreparedStatement ps = connection.prepareStatement("select * from plants where division = ?");
+			) {
 			ps.setString(1,division);
 			ResultSet rs = ps .executeQuery();
 			plantList = plantMapper(rs);
-			rs.close();
-			ps.close();
 		} catch (SQLException e) {
 			System.out.println("Exception in class : PlantsDAO : method : [getByDivision(String)] "+e);
 		}
@@ -223,14 +212,13 @@ public class PlantsDAO {
 	
 	public Plant getByMainMeterNo(String mainMeterNo){
 		ArrayList<Plant> plantList = new ArrayList<Plant>();
-		Connection connection = GlobalResources.getConnection();
-		try {
-			PreparedStatement ps = connection.prepareStatement("select * from plants where main_meter_no = ?");
+		try(
+				Connection connection = GlobalResources.getDatasource().getConnection();
+				PreparedStatement ps = connection.prepareStatement("select * from plants where main_meter_no = ?");
+			) {
 			ps.setString(1,mainMeterNo);
 			ResultSet rs = ps .executeQuery();
 			plantList = plantMapper(rs);
-			rs.close();
-			ps.close();
 		} catch (SQLException e) {
 			System.out.println("Exception in class : PlantsDAO : method : [getByMainMeterNo(String)] "+e);
 		}
@@ -239,14 +227,13 @@ public class PlantsDAO {
 	
 	public Plant getByCheckMeterNo(String checkMeterNo){
 		ArrayList<Plant> plantList = new ArrayList<Plant>();
-		Connection connection = GlobalResources.getConnection();
-		try {
-			PreparedStatement ps = connection.prepareStatement("select * from plants where check_meter_no = ?");
+		try(
+				Connection connection = GlobalResources.getDatasource().getConnection();
+				PreparedStatement ps = connection.prepareStatement("select * from plants where check_meter_no = ?");
+			) {
 			ps.setString(1,checkMeterNo);
 			ResultSet rs = ps .executeQuery();
 			plantList = plantMapper(rs);
-			rs.close();
-			ps.close();
 		} catch (SQLException e) {
 			System.out.println("Exception in class : PlantsDAO : method : [getByCheckMeterNo(String)] "+e);
 		}
@@ -256,14 +243,13 @@ public class PlantsDAO {
 	
 	public Plant getByStandbyMeterNo(String standbyMeterNo){
 		ArrayList<Plant> plantList = new ArrayList<Plant>();
-		Connection connection = GlobalResources.getConnection();
-		try {
-			PreparedStatement ps = connection.prepareStatement("select * from plants where standby_meter_no = ?");
+		try(
+				Connection connection = GlobalResources.getDatasource().getConnection();
+				PreparedStatement ps = connection.prepareStatement("select * from plants where standby_meter_no = ?");
+			) {
 			ps.setString(1,standbyMeterNo);
 			ResultSet rs = ps .executeQuery();
 			plantList = plantMapper(rs);
-			rs.close();
-			ps.close();
 		} catch (SQLException e) {
 			System.out.println("Exception in class : PlantsDAO : method : [getByCheckMeterNo(String)] "+e);
 		}
@@ -273,14 +259,13 @@ public class PlantsDAO {
 	
 	public ArrayList<Plant> getByInjectingSubstation(String injectingSubstation){
 		ArrayList<Plant> plantList = new ArrayList<Plant>();
-		Connection connection = GlobalResources.getConnection();
-		try {
-			PreparedStatement ps = connection.prepareStatement("select * from plants where injecting_substation = ?");
+		try(
+				Connection connection = GlobalResources.getDatasource().getConnection();
+				PreparedStatement ps = connection.prepareStatement("select * from plants where injecting_substation = ?");
+			) {
 			ps.setString(1,injectingSubstation);
 			ResultSet rs = ps .executeQuery();
 			plantList = plantMapper(rs);
-			rs.close();
-			ps.close();
 		} catch (SQLException e) {
 			System.out.println("Exception in class : PlantsDAO : method : [getByInjectingSubstation(String)] "+e);
 		}
@@ -290,18 +275,16 @@ public class PlantsDAO {
 	
 	public ArrayList<Plant> getByFeederName(String feederName){
 		ArrayList<Plant> plantList = new ArrayList<Plant>();
-		Connection connection = GlobalResources.getConnection();
-		try {
-			PreparedStatement ps = connection.prepareStatement("select * from plants where feeder_name = ?");
+		try(
+				Connection connection = GlobalResources.getDatasource().getConnection();
+				PreparedStatement ps = connection.prepareStatement("select * from plants where feeder_name = ?");
+			) {
 			ps.setString(1,feederName);
 			ResultSet rs = ps .executeQuery();
 			plantList = plantMapper(rs);
-			rs.close();
-			ps.close();
 		} catch (SQLException e) {
 			System.out.println("Exception in class : PlantsDAO : method : [getByFeederName(String)] "+e);
 		}
-		
 		return plantList;
 	}
 	

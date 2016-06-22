@@ -13,11 +13,14 @@ import java.text.SimpleDateFormat;
 public class ConsumptionsDAO {
 
 	public Consumption insert(Consumption consumption){
-		Connection connection = GlobalResources.getConnection();
 		Consumption insertedConsumption = null;
 		int lastInsertedId = -1;
-		try {
-			PreparedStatement ps = connection.prepareStatement("insert into consumptions (meter_no, date, active_consumption, reactive_consumption, plant_id, plant_code, meter_reading_id, consumption_bifercated) values(?,?,?,?,?,?,?,?)");
+		//Using try-with resources to get connection and other resources and 
+		//automatically closing them. Works with Java 1.7 and higher
+		try(
+				Connection connection = GlobalResources.getDatasource().getConnection();
+				PreparedStatement ps = connection.prepareStatement("insert into consumptions (meter_no, date, active_consumption, reactive_consumption, plant_id, plant_code, meter_reading_id, consumption_bifercated) values(?,?,?,?,?,?,?,?)");
+				) {
 			ps.setString(1,consumption.getMeterNo());
 			ps.setString(2, consumption.getDate());
 			ps.setFloat(3, consumption.getActiveConsumption());
@@ -31,19 +34,19 @@ public class ConsumptionsDAO {
 			keys.next();  
 			lastInsertedId = keys.getInt(1);
 			keys.close();
-			ps.close();
 			insertedConsumption = getById(lastInsertedId);
 		} catch (SQLException e) {
 			System.out.println("Exception in class : ConsumptionsDAO : method : [insert(Consumption)] "+e.getMessage());
 		}
 		return insertedConsumption;
 	}
-	
+
 	public Consumption update(Consumption consumption){
 		Consumption updatedConsumption = null;
-		Connection connection = GlobalResources.getConnection();
-		try {
-			PreparedStatement ps = connection.prepareStatement("update consumptions set meter_no=?, date=?, active_consumption=?, reactive_consumption=?, plant_id=?, plant_code=?, meter_reading_id=?, consumption_bifercated=? where id=?");
+		try(
+				Connection connection = GlobalResources.getDatasource().getConnection();
+				PreparedStatement ps = connection.prepareStatement("update consumptions set meter_no=?, date=?, active_consumption=?, reactive_consumption=?, plant_id=?, plant_code=?, meter_reading_id=?, consumption_bifercated=? where id=?");
+				) {
 			ps.setString(1,consumption.getMeterNo());
 			ps.setString(2, consumption.getDate());
 			ps.setFloat(3, consumption.getActiveConsumption());
@@ -54,19 +57,19 @@ public class ConsumptionsDAO {
 			ps.setInt(8, consumption.getConsumptionBifurcated());
 			ps.setInt(9, consumption.getId());
 			ps.executeUpdate();
-			ps.close();
 			updatedConsumption = getById(consumption.getId()); 
 		} catch (SQLException e) {
 			System.out.println("Exception in class : ConsumptionsDAO : method : [update(Consumption)] "+e.getMessage());
 		}
 		return updatedConsumption;
 	}
-	
+
 	public ArrayList<Consumption> getAllConsumption(){
 		ArrayList<Consumption> consumptionsList = new ArrayList<Consumption>();
-		Connection connection = GlobalResources.getConnection();
-		try {
-			PreparedStatement ps = connection.prepareStatement("select * from consumptions");
+		try(
+				Connection connection = GlobalResources.getDatasource().getConnection();
+				PreparedStatement ps = connection.prepareStatement("select * from consumptions");
+				){
 			ResultSet rs = ps.executeQuery();
 			consumptionsList = ConsumptionsMapper(rs);
 		} catch (SQLException e) {
@@ -74,12 +77,13 @@ public class ConsumptionsDAO {
 		}
 		return consumptionsList;
 	}
-	
+
 	public Consumption getByMeterNo(String meterNo){
 		ArrayList<Consumption> consumptionsList = new ArrayList<Consumption>();
-		Connection connection = GlobalResources.getConnection();
-		try {
-			PreparedStatement ps = connection.prepareStatement("select * from consumptions where meter_no=?");
+		try(
+				Connection connection = GlobalResources.getDatasource().getConnection();
+				PreparedStatement ps = connection.prepareStatement("select * from consumptions where meter_no=?");
+				) {
 			ps.setString(1, meterNo);
 			ResultSet rs = ps.executeQuery();
 			consumptionsList = ConsumptionsMapper(rs);
@@ -88,12 +92,13 @@ public class ConsumptionsDAO {
 		}
 		return consumptionsList.get(0);
 	}
-	
+
 	public Consumption getByMeterReadingId(int id){
 		ArrayList<Consumption> consumptionsList = new ArrayList<Consumption>();
-		Connection connection = GlobalResources.getConnection();
-		try {
-			PreparedStatement ps = connection.prepareStatement("select * from consumptions where meter_reading_id=?");
+		try(
+				Connection connection = GlobalResources.getDatasource().getConnection();
+				PreparedStatement ps = connection.prepareStatement("select * from consumptions where meter_reading_id=?");
+				) {
 			ps.setInt(1, id);
 			ResultSet rs = ps.executeQuery();
 			consumptionsList = ConsumptionsMapper(rs);
@@ -102,12 +107,13 @@ public class ConsumptionsDAO {
 		}
 		return consumptionsList.size()>0?consumptionsList.get(0):null;
 	}
-	
+
 	public Consumption getById(int id){
 		ArrayList<Consumption> consumptionsList = new ArrayList<Consumption>();
-		Connection connection = GlobalResources.getConnection();
-		try {
-			PreparedStatement ps = connection.prepareStatement("select * from consumptions where id=?");
+		try(
+				Connection connection = GlobalResources.getDatasource().getConnection();
+				PreparedStatement ps = connection.prepareStatement("select * from consumptions where id=?");
+				) {
 			ps.setInt(1, id);
 			ResultSet rs = ps.executeQuery();
 			consumptionsList = ConsumptionsMapper(rs);
@@ -116,12 +122,13 @@ public class ConsumptionsDAO {
 		}
 		return consumptionsList.size()>0?consumptionsList.get(0):null;
 	}
-	
+
 	public ArrayList<Consumption> getByPlantId(int plantId){
 		ArrayList<Consumption> consumptionsList = new ArrayList<Consumption>();
-		Connection connection = GlobalResources.getConnection();
-		try {
-			PreparedStatement ps = connection.prepareStatement("select * from consumptions where plant_id=?");
+		try(
+				Connection connection = GlobalResources.getDatasource().getConnection();
+				PreparedStatement ps = connection.prepareStatement("select * from consumptions where plant_id=?");
+				) {
 			ps.setInt(1, plantId);
 			ResultSet rs = ps.executeQuery();
 			consumptionsList = ConsumptionsMapper(rs);
@@ -130,12 +137,13 @@ public class ConsumptionsDAO {
 		}
 		return consumptionsList;
 	}
-	
+
 	public ArrayList<Consumption> getByPlantCode(String plantCode){
 		ArrayList<Consumption> consumptionsList = new ArrayList<Consumption>();
-		Connection connection = GlobalResources.getConnection();
-		try {
-			PreparedStatement ps = connection.prepareStatement("select * from consumptions where plant_code=?");
+		try(
+				Connection connection = GlobalResources.getDatasource().getConnection();
+				PreparedStatement ps = connection.prepareStatement("select * from consumptions where plant_code=?");
+			) {
 			ps.setString(1, plantCode);
 			ResultSet rs = ps.executeQuery();
 			consumptionsList = ConsumptionsMapper(rs);
@@ -144,13 +152,14 @@ public class ConsumptionsDAO {
 		}
 		return consumptionsList;
 	}
-	
-	
+
+
 	public ArrayList<Consumption> getByDeveloperId(int developerId){
 		ArrayList<Consumption> consumptionsList = new ArrayList<Consumption>();
-		Connection connection = GlobalResources.getConnection();
-		try {
-			PreparedStatement ps = connection.prepareStatement("select * from consumptions where developer_id=?");
+		try(
+				Connection connection = GlobalResources.getDatasource().getConnection();
+				PreparedStatement ps = connection.prepareStatement("select * from consumptions where developer_id=?");
+				) {
 			ps.setInt(1, developerId);
 			ResultSet rs = ps.executeQuery();
 			consumptionsList = ConsumptionsMapper(rs);
@@ -159,13 +168,14 @@ public class ConsumptionsDAO {
 		}
 		return consumptionsList;
 	}
-	
-	
+
+
 	public ArrayList<Consumption> getByDeveloperIdAndPlantId(int developerId, int plantId){
 		ArrayList<Consumption> consumptionsList = new ArrayList<Consumption>();
-		Connection connection = GlobalResources.getConnection();
-		try {
-			PreparedStatement ps = connection.prepareStatement("select * from consumptions where developer_id=? and plant_id=?");
+		try(
+				Connection connection = GlobalResources.getDatasource().getConnection();
+				PreparedStatement ps = connection.prepareStatement("select * from consumptions where developer_id=? and plant_id=?");
+				) {
 			ps.setInt(1, developerId);
 			ps.setInt(2, plantId);
 			ResultSet rs = ps.executeQuery();
@@ -175,12 +185,13 @@ public class ConsumptionsDAO {
 		}
 		return consumptionsList;
 	}
-	
+
 	public ArrayList<Consumption> getByDeveloperIdPlantIdAndDate(int developerId, int plantId,String date){
 		ArrayList<Consumption> consumptionsList = new ArrayList<Consumption>();
-		Connection connection = GlobalResources.getConnection();
-		try {
-			PreparedStatement ps = connection.prepareStatement("select * from consumptions where developer_id=? and plant_id=? and date like '%"+date+"%'");
+		try(
+				Connection connection = GlobalResources.getDatasource().getConnection();
+				PreparedStatement ps = connection.prepareStatement("select * from consumptions where developer_id=? and plant_id=? and date like '%"+date+"%'");
+				) {
 			ps.setInt(1, developerId);
 			ps.setInt(2, plantId);
 			ResultSet rs = ps.executeQuery();
@@ -190,73 +201,79 @@ public class ConsumptionsDAO {
 		}
 		return consumptionsList;
 	}
-    
-    public Consumption getByMeterNoAndDate(String meterNo,String date){
+
+	public Consumption getByMeterNoAndDate(String meterNo,String date){
 		ArrayList<Consumption> consumptionsList = new ArrayList<Consumption>();
-		Connection connection = GlobalResources.getConnection();
-		try {
-            SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
-            Calendar c = Calendar.getInstance();
-				c.setTime(formatter.parse(date));
-				int year = c.get(Calendar.YEAR);
-				//System.out.println("Year is :"+year);
-				int month = c.get(Calendar.MONTH)+1;
-				//System.out.println("Month is :"+month );
-				String mon = null;
-				if (month < 10) {
-		           mon  = "0"+month;
-		        }
-				String dateTrim = mon+"-"+year;
+		
+		try(
+				Connection connection = GlobalResources.getDatasource().getConnection();
+				) {
+			SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
+			Calendar c = Calendar.getInstance();
+			c.setTime(formatter.parse(date));
+			int year = c.get(Calendar.YEAR);
+			//System.out.println("Year is :"+year);
+			int month = c.get(Calendar.MONTH)+1;
+			//System.out.println("Month is :"+month );
+			String mon = null;
+			if (month < 10) {
+				mon  = "0"+month;
+			}
+			String dateTrim = mon+"-"+year;
 			PreparedStatement ps = connection.prepareStatement("select * from consumptions where meter_no=? and date like '%"+dateTrim+"%'");
 			ps.setString(1, meterNo);
 			ResultSet rs = ps.executeQuery();
 			consumptionsList = ConsumptionsMapper(rs);
+			ps.close();
 		}catch(ParseException e){
-            System.out.println("Exception in class : ConsumptionsDAO : method : [getByMeterNoAndDate(String,String)] "+e.getMessage());
-        }catch (SQLException e) {
+			System.out.println("Exception in class : ConsumptionsDAO : method : [getByMeterNoAndDate(String,String)] "+e.getMessage());
+		}catch (SQLException e) {
 			System.out.println("Exception in class : ConsumptionsDAO : method : [getByMeterNoAndDate(String,String)] "+e.getMessage());
 		}
 		return consumptionsList.get(0);
 	}
-    
-     public Consumption getByPlantIdAndDate(int plantId,String date){
+
+	public Consumption getByPlantIdAndDate(int plantId,String date){
 		ArrayList<Consumption> consumptionsList = new ArrayList<Consumption>();
-		Connection connection = GlobalResources.getConnection();
-		try {
-            SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
-            Calendar c = Calendar.getInstance();
-				c.setTime(formatter.parse(date));
-				int year = c.get(Calendar.YEAR);
-				//System.out.println("Year is :"+year);
-				int month = c.get(Calendar.MONTH)+1;
-				//System.out.println("Month is :"+month );
-				String mon = null;
-				if (month < 10) {
-		           mon  = "0"+month;
-		        }
-				String dateTrim = mon+"-"+year;
+		try(
+				Connection connection = GlobalResources.getDatasource().getConnection();
+				) {
+			
+			SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
+			Calendar c = Calendar.getInstance();
+			c.setTime(formatter.parse(date));
+			int year = c.get(Calendar.YEAR);
+			//System.out.println("Year is :"+year);
+			int month = c.get(Calendar.MONTH)+1;
+			//System.out.println("Month is :"+month );
+			String mon = null;
+			if (month < 10) {
+				mon  = "0"+month;
+			}
+			String dateTrim = mon+"-"+year;
 			PreparedStatement ps = connection.prepareStatement("select * from consumptions where plant_id=? and date like '%"+dateTrim+"%'");
 			ps.setInt(1, plantId);
 			ResultSet rs = ps.executeQuery();
 			consumptionsList = ConsumptionsMapper(rs);
+			ps.close();
 		}catch(ParseException e){
-            System.out.println("Exception in class : ConsumptionsDAO : method : [getByPlantIdAndDate(String,String)] "+e.getMessage());
-        }catch(SQLException e) {
+			System.out.println("Exception in class : ConsumptionsDAO : method : [getByPlantIdAndDate(String,String)] "+e.getMessage());
+		}catch(SQLException e) {
 			System.out.println("Exception in class : ConsumptionsDAO : method : [getByPlantIdAndDate(String,String)] "+e.getMessage());
 		}
-		
+
 		return consumptionsList.size()>0?consumptionsList.get(0):null;
 	}
-	
-		public boolean updateConsumptionBifercated(int bifercated, int id){
+
+	public boolean updateConsumptionBifercated(int bifercated, int id){
 		boolean updated= false;
-		Connection connection = GlobalResources.getConnection();
-		try {
-			PreparedStatement ps = connection.prepareStatement("update consumptions set consumption_bifercated=? where id=?");
+		try(
+				Connection connection = GlobalResources.getDatasource().getConnection();
+				PreparedStatement ps = connection.prepareStatement("update consumptions set consumption_bifercated=? where id=?");
+				) {
 			ps.setInt(1, bifercated);
 			ps.setInt(2, id);
 			ps.executeUpdate();
-			ps.close();
 			updated = true;
 		} catch (SQLException e) {
 			updated = false;
@@ -264,26 +281,28 @@ public class ConsumptionsDAO {
 		}
 		return updated;
 	}
-	
-		public Consumption getBifercationFlagByPlantIdAndDate(int plantId, String date){
+
+	public Consumption getBifercationFlagByPlantIdAndDate(int plantId, String date){
 		ArrayList<Consumption> consumptionsList = new ArrayList<Consumption>();
-		Connection connection = GlobalResources.getConnection();
 		SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
 		ResultSet rs=null;
-		 try {
+		try( 
+				Connection connection = GlobalResources.getDatasource().getConnection();
+				) {
 			Calendar c = Calendar.getInstance();
 			c.setTime(formatter.parse(date));
 			int year = c.get(Calendar.YEAR);
 			int month = c.get(Calendar.MONTH)+1;
 			String mon = null;
 			if (month < 10) {
-	           mon  = "0"+month;
-	        }
+				mon  = "0"+month;
+			}
 			String dateTrim = mon+"-"+year;
 			PreparedStatement ps = connection.prepareStatement("select * from consumptions where plant_id=? and date like '%"+dateTrim+"%'");
 			ps.setInt(1, plantId);
 			rs = ps.executeQuery();
 			consumptionsList=ConsumptionsMapper(rs);
+			ps.close();
 		} catch (SQLException e) {
 			System.out.println("Exception in class : ConsumptionsDAO : method : [getBifercationFlagByPlantIdAndDate(int,String)] "+e.getMessage());
 		} catch (ParseException e) {
@@ -291,13 +310,13 @@ public class ConsumptionsDAO {
 		}
 		return consumptionsList.size()>0?consumptionsList.get(0):null;
 	}
-    
+
 	private ArrayList<Consumption> ConsumptionsMapper(ResultSet rs){
 		ArrayList<Consumption> consumptionsList = new ArrayList<Consumption>();
-		
+
 		try {
 			while(rs.next()){
-                Consumption consumption =new Consumption();
+				Consumption consumption =new Consumption();
 				consumption.setId(rs.getInt(1));
 				consumption.setMeterNo(rs.getString(2));
 				consumption.setDate(rs.getString(3));

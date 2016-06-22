@@ -22,8 +22,8 @@
 					<target>1.7</target>
 				</configuration>
 			</plugin>
-			
-			<!--  Adding jetty built-in server -->
+
+			<!-- Adding jetty built-in server -->
 			<plugin>
 				<groupId>org.eclipse.jetty</groupId>
 				<artifactId>jetty-maven-plugin</artifactId>
@@ -75,6 +75,12 @@
 			<version>2.6.2</version>
 		</dependency>
 
+		<!-- Adding tomcat-jdbc jar for connection pooling feature -->
+		<dependency>
+			<groupId>org.apache.tomcat</groupId>
+			<artifactId>tomcat-jdbc</artifactId>
+			<version>8.5.3</version>
+		</dependency>
 	</dependencies>
 	<properties>
 		<jersey.version>2.22.2</jersey.version>

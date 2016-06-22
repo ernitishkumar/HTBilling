@@ -23,7 +23,6 @@
 			<attribute name="org.eclipse.jst.component.dependency" value="/WEB-INF/lib"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="src/main/webapp/WEB-INF/lib/mysql.jar"/>
-	<classpathentry kind="lib" path="src/main/webapp/WEB-INF/lib/tomcat-jdbc.jar"/>
+	<classpathentry kind="lib" path="src/main/webapp/WEB-INF/lib/mysql-connector-java-5.1.27.jar"/>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>

@@ -24,7 +24,7 @@ public class AuthenticationResource {
 	private UserRolesDAO userRolesDAO = new UserRolesDAO();
 	
 	@GET
-	@Path("login")
+	@Path("/login")
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response login(@QueryParam("username")String username,@QueryParam("password")String password){
 		Result result = new Result();

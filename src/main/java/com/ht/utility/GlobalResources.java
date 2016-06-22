@@ -1,14 +1,7 @@
 package com.ht.utility;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
 import java.text.DecimalFormat;
-
 import com.google.gson.Gson;
-import com.ht.dao.MeterDetailsDAO;
-import com.ht.dao.MeterReadingsDAO;
-import com.ht.dao.UserDAO;
 
 import org.apache.tomcat.jdbc.pool.DataSource;
 import org.apache.tomcat.jdbc.pool.PoolProperties;
@@ -44,9 +37,9 @@ public class GlobalResources {
 	{
 		if(datasource==null){
 			PoolProperties poolProperties = new PoolProperties();
-			poolProperties.setUrl("jdbc:mysql://localhost:3306/ht");
+			poolProperties.setUrl("jdbc:mysql://localhost:3306/ht_test");
 			poolProperties.setDriverClassName("com.mysql.jdbc.Driver");
-			poolProperties.setUsername("ht");
+			poolProperties.setUsername("ht_test");
 			poolProperties.setPassword("ht");
 			poolProperties.setJmxEnabled(true);
 			poolProperties.setTestWhileIdle(false);

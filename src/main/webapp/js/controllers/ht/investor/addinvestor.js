@@ -59,6 +59,7 @@ angular.module("htBillingApp").controller('AddInvestorController', ['$http', '$s
 	 * processForm function to submit the formdata to the backend.
 	 */
 	this.processForm = function () {
+		$scope.error = null;
 		$http(
 				{
 					method: 'POST',
@@ -74,8 +75,8 @@ angular.module("htBillingApp").controller('AddInvestorController', ['$http', '$s
 					}
 				},
 				function(error){
-					console.log("Error while adding investor");
-					console.log(error);
+					//console.log("Error while adding investor");
+					//console.log(error);
 					$scope.error = error.data.errorMessage;
 				}
 		);

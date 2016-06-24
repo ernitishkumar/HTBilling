@@ -137,6 +137,7 @@ angular.module("htBillingApp").controller('AddMachineController', ['$http', '$sc
 	 * processForm function to submit the formdata to the backend.
 	 */
 	this.processForm = function () {
+		$scope.error = null;
 		var d1 = new Date($scope.formData.commissionedDate);
 		var y1 = d1.getFullYear();
 		var m1 = d1.getMonth() + 1;
@@ -177,8 +178,9 @@ angular.module("htBillingApp").controller('AddMachineController', ['$http', '$sc
 					}
 				},
 				function(error){
-					console.log("Unable to add machine");
-					console.log(error);
+					$scope.error = error.data.errorMessage;
+					/*console.log("Unable to add machine");
+					console.log(error);*/
 				}
 		);
 	};

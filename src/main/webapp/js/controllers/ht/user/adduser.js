@@ -60,6 +60,7 @@ angular.module("htBillingApp").controller('AddUserController', ['$http', '$scope
 	 * processForm function to submit the formdata to the backend.
 	 */
 	this.processForm = function () {
+		$scope.error = null;
 		$http(
 				{
 					method: 'POST',
@@ -76,8 +77,8 @@ angular.module("htBillingApp").controller('AddUserController', ['$http', '$scope
 					}
 				},
 				function(error){
-					console.log("Error while creating User.");
-					console.log(error);
+					/*console.log("Error while creating User.");
+					console.log(error);*/
 					$scope.error = error.data.errorMessage;
 				}
 		);

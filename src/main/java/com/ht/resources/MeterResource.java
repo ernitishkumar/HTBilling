@@ -31,7 +31,7 @@ public class MeterResource {
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response addMeterDetails(MeterDetails meterToInsert){
-		System.out.println("Add MeterDetails called : "+meterToInsert);
+		System.out.println("Add MeterDetails called");
 		MeterDetails insertedMeter = null;
 		if(meterToInsert != null){
 			insertedMeter = meterDetailsDAO.insert(meterToInsert);
@@ -42,7 +42,7 @@ public class MeterResource {
 					.build();
 		}else{
 			return Response.status(Status.EXPECTATION_FAILED)
-					.entity(new ErrorBean("Unable to add meter."))
+					.entity(new ErrorBean("Unable to add meter.Try Again !"))
 					.build();
 		}
 	}

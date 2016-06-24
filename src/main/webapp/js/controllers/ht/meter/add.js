@@ -67,6 +67,7 @@ angular.module("htBillingApp").controller('AddMeterController', ['$http', '$scop
 	 * It passes the add meter form data to backend servers for inserting in databse;
 	 */
 	this.processForm = function () {
+		$scope.error = null;
 		$http(
 				{
 					method: 'POST',
@@ -84,8 +85,9 @@ angular.module("htBillingApp").controller('AddMeterController', ['$http', '$scop
 					}
 				},
 				function(error){
-					console.log("Error while inserting meter details.");
-					console.log(error);
+					$scope.error = error.data.errorMessage;
+					//console.log("Error while inserting meter details.");
+					//console.log(error);
 				}
 		);
 	};
@@ -94,6 +96,7 @@ angular.module("htBillingApp").controller('AddMeterController', ['$http', '$scop
 	 * function clearForm
 	 */
 	$scope.clearForm = function () {
+		$scope.error = null;
 		$scope.formData = {};
 	};
 

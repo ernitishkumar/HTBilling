@@ -113,6 +113,7 @@ angular.module("htBillingApp").controller('AddPlantController', ['$http', '$scop
 	 * processForm function to submit the formdata to the backend.
 	 */
 	this.processForm = function () {
+		$scope.error = null;
 		var d = new Date($scope.formData.commissionedDate);
 		var year = d.getFullYear();
 		var month = d.getMonth() + 1;
@@ -145,8 +146,8 @@ angular.module("htBillingApp").controller('AddPlantController', ['$http', '$scop
 					}
 				},
 				function(error){
-					console.log("Error while creating plant.");
-					console.log(error);
+					/*console.log("Error while creating plant.");
+					console.log(error);*/
 					$scope.error = error.data.errorMessage;
 				}
 		);

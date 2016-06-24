@@ -60,6 +60,7 @@ angular.module("htBillingApp").controller('AddDeveloperController', ['$http', '$
 	 * processForm function to submit the formdata to the backend.
 	 */
 	this.processForm = function () {
+		$scope.error = null;
 		$http(
 				{
 					method: 'POST',
@@ -75,8 +76,8 @@ angular.module("htBillingApp").controller('AddDeveloperController', ['$http', '$
 					}
 				},
 				function(error){
-					console.log("error while adding developer.");
-					console.log(error);
+					//console.log("error while adding developer.");
+					//console.log(error);
 					$scope.error = error.data.errorMessage;
 				}
 		);

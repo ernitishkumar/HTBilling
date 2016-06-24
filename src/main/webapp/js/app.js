@@ -217,11 +217,7 @@
 			$http(
 					{
 						method: 'GET',
-						url: 'backend/authentication/login',
-						params: {
-							username: formData.username,
-							password: formData.password
-						}
+						url: 'backend/authentication/login'
 					}
 			).then(
 					function(response){

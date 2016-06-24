@@ -130,6 +130,6 @@ angular.module("htBillingApp").controller('ViewDeveloperDetailsController', ['$h
 	 * changes page from the pagination row
 	 */
 	$scope.pageChangeHandler = function(num) {
-	      console.log('page changed to ' + num);
+	      
 	  };
 }]);

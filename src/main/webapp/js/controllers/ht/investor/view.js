@@ -127,6 +127,6 @@ angular.module("htBillingApp").controller('ViewInvestorDetailsController', ['$ht
 	 * changes page from the pagination row
 	 */
 	$scope.pageChangeHandler = function(num) {
-	      console.log('page changed to ' + num);
+	     
 	  };
 }]);

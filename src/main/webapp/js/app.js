@@ -203,17 +203,17 @@
 		authService.USER_ROLE_KEY = USER_ROLE_KEY;
 
 		/*
-		 * declaring user_role key to be used while storing and fetching data from local storage
+		 * declaring CREDENTIALS_KEY key to be used while storing and fetching data from local storage
 		 */
-		const LOGIN_FORM_DATA_KEY = 'login_form';
-		authService.LOGIN_FORM_DATA_KEY = LOGIN_FORM_DATA_KEY;
-
+		const CREDENTIALS_KEY = 'credentials';
+		authService.CREDENTIALS_KEY = CREDENTIALS_KEY;
+		
 		/* 
 		 * login function for login at the backend. returns promises using $q deferred services.
 		 */
 		var login = function(formData){
 			var deferred = $q.defer();
-			storeData(LOGIN_FORM_DATA_KEY,formData);
+			storeData(CREDENTIALS_KEY,formData);
 			$http(
 					{
 						method: 'GET',
@@ -228,6 +228,7 @@
 						deferred.resolve(response);
 					},
 					function(error){
+						removeData();
 						deferred.reject(error);
 					});
 			return deferred.promise;
@@ -250,8 +251,9 @@
 				localStorageService.set(USER_KEY,data);
 			}else if(key === USER_ROLE_KEY){
 				localStorageService.set(USER_ROLE_KEY,data);
-			}else if(key === LOGIN_FORM_DATA_KEY){
-				localStorageService.set(LOGIN_FORM_DATA_KEY,data);
+			}else if(key === CREDENTIALS_KEY){
+				var encodedData = window.btoa(data.username+":"+data.password)
+				localStorageService.set(CREDENTIALS_KEY,encodedData);
 			}
 		}
 
@@ -263,8 +265,8 @@
 				return localStorageService.get(USER_KEY);
 			}else if(key === USER_ROLE_KEY){
 				return localStorageService.get(USER_ROLE_KEY);
-			}else if(key === LOGIN_FORM_DATA_KEY){
-				return localStorageService.set(LOGIN_FORM_DATA_KEY);
+			}else if(key === CREDENTIALS_KEY){
+				return localStorageService.get(CREDENTIALS_KEY);
 			}
 		}
 
@@ -276,8 +278,8 @@
 				return localStorageService.remove(USER_KEY);
 			}else if(key === USER_ROLE_KEY){
 				return localStorageService.remove(USER_ROLE_KEY);
-			}else if(key === LOGIN_FORM_DATA_KEY){
-				return localStorageService.remove(LOGIN_FORM_DATA_KEY);
+			}else if(key === CREDENTIALS_KEY){
+				return localStorageService.remove(CREDENTIALS_KEY);
 			}else{
 				return localStorageService.clearAll();
 			}
@@ -407,9 +409,13 @@
 	app.factory('credentialsInjector',['localStorageService',function(localStorageService){
 		var credentialsInjector = {
 				request: function(config){
-					var formData = localStorageService.get('login_form');
+					/*var formData = localStorageService.get('login_form');
 					if(formData!=null){
 						config.headers['Authorization'] = "Basic "+window.btoa(formData.username+":"+formData.password);	
+					}*/
+					var encodedCredentials = localStorageService.get('credentials');
+					if(encodedCredentials!=null){
+						config.headers['Authorization'] = "Basic "+encodedCredentials;	
 					}
 					return config;
 				}

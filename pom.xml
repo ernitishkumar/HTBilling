@@ -10,7 +10,7 @@
 	<name>htbilling</name>
 
 	<build>
-		<finalName>htbilling-${project.version}</finalName>
+		<finalName>htbilling</finalName>
 		<plugins>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>

@@ -36,7 +36,7 @@ public class SecurityFilter implements ContainerRequestFilter{
 				String password = tokenizer.nextToken();
 				if(username != null && password !=null){
 					User user=userDAO.getByUsername(username);
-					if(user.getPassword().equals(password)){
+					if(user!=null && user.getPassword().equals(password)){
 						System.out.println("REST Request Authenticated for : "+user.getName());
 						return;
 					}

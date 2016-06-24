@@ -37,10 +37,10 @@ public class GlobalResources {
 	{
 		if(datasource==null){
 			PoolProperties poolProperties = new PoolProperties();
-			poolProperties.setUrl("jdbc:mysql://localhost:3306/ht_test");
+			poolProperties.setUrl("jdbc:mysql://localhost:3306/ht");
 			poolProperties.setDriverClassName("com.mysql.jdbc.Driver");
-			poolProperties.setUsername("ht_test");
-			poolProperties.setPassword("ht");
+			poolProperties.setUsername("ht");
+			poolProperties.setPassword("htbilling@452015");
 			poolProperties.setJmxEnabled(true);
 			poolProperties.setTestWhileIdle(false);
 			poolProperties.setTestOnBorrow(true);

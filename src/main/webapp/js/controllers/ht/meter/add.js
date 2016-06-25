@@ -63,33 +63,66 @@ angular.module("htBillingApp").controller('AddMeterController', ['$http', '$scop
 	};
 
 	/*
+	 * controller level variable to hold the status of currently adding meter
+	 */
+	$scope.meterAlreadyAdded = false;
+
+	/*
+	 * function meterExists to check whether meter being added exists in
+	 * the database or not.
+	 */
+	this.meterExists = function(){
+		$http(
+				{
+					method:'GET',
+					url:'backend/meter/'+$scope.formData.meterNo
+				}		
+		).then(
+				function(response){
+					var status = response.status;
+					if(status === 200){
+						var meter = response.data;
+						if(meter.meterNo === $scope.formData.meterNo){
+							$scope.meterAlreadyAdded = true;
+							$scope.error = "Meter already added.Please provide a different meter no."
+						}
+					}
+				},
+				function(error){
+					$scope.meterAlreadyAdded = false;
+				}
+		);
+	};
+
+	/*
 	 * function processForm which gets executed when user clicks add meter on the page.
 	 * It passes the add meter form data to backend servers for inserting in databse;
 	 */
 	this.processForm = function () {
-		$scope.error = null;
-		$http(
-				{
-					method: 'POST',
-					url: 'backend/meter',
-					data: $scope.formData
-				}
-		).then(
-				function (response) {
-					var status = response.status;
-					if(status === 201){
-						var insertedMeter = response.data;
-						//$location.path("/saved/Meter Saved Successfully!");
-						bootbox.alert("Meter Saved Successfully!");
-						$scope.clearForm();
+		if(!$scope.meterAlreadyAdded){
+			$scope.error = null;
+			$http(
+					{
+						method: 'POST',
+						url: 'backend/meter',
+						data: $scope.formData
 					}
-				},
-				function(error){
-					$scope.error = error.data.errorMessage;
-					//console.log("Error while inserting meter details.");
-					//console.log(error);
-				}
-		);
+			).then(
+					function (response) {
+						var status = response.status;
+						if(status === 201){
+							var insertedMeter = response.data;
+							bootbox.alert("Meter Saved Successfully!");
+							$scope.clearForm();
+						}
+					},
+					function(error){
+						$scope.error = error.data.errorMessage;
+						//console.log("Error while inserting meter details.");
+						//console.log(error);
+					}
+			);	
+		}
 	};
 
 	/*
@@ -98,6 +131,7 @@ angular.module("htBillingApp").controller('AddMeterController', ['$http', '$scop
 	$scope.clearForm = function () {
 		$scope.error = null;
 		$scope.formData = {};
+		$scope.meterAlreadyAdded = false;
 	};
 
 }]);

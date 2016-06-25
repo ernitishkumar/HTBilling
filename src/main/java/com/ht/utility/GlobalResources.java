@@ -41,6 +41,7 @@ public class GlobalResources {
 			poolProperties.setDriverClassName("com.mysql.jdbc.Driver");
 			poolProperties.setUsername("ht");
 			poolProperties.setPassword("htbilling@452015");
+			//poolProperties.setPassword("ht");
 			poolProperties.setJmxEnabled(true);
 			poolProperties.setTestWhileIdle(false);
 			poolProperties.setTestOnBorrow(true);

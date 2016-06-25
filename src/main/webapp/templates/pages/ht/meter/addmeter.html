@@ -49,7 +49,7 @@
                 <span class="glyphicon glyphicon-asterisk">
                 </span>
                 <label for="meterno">Enter Meter No.</label>
-                <input class="form-control" type="text" placeholder="Meter No" ng-model="formData.meterNo" required>
+                <input class="form-control" type="text" placeholder="Meter No" ng-model="formData.meterNo" ng-blur="addMeterCtrl.meterExists()" ng-change="error=null"required>
             </div>
             <div class="form-group">
                 <span class="glyphicon glyphicon-star"></span>
@@ -117,7 +117,7 @@
             </div>
             <div class="row">
                 <div class="col-md-6 ">
-                    <button type="submit " class="btn btn-success btn-lg btn-block">
+                    <button type="submit" class="btn btn-success btn-lg btn-block" ng-hide="meterAlreadyAdded">
                         <span class="glyphicon glyphicon-flash "></span> Add Meter!
                     </button>
                 </div>

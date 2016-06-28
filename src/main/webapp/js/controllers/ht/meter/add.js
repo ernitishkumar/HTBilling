@@ -1,4 +1,4 @@
-angular.module("htBillingApp").controller('AddMeterController', ['$http', '$scope', '$location','authService', function ($http, $scope, $location,authService) {
+angular.module("htBillingApp").controller('AddMeterController', ['$http', '$scope','$location','authService', function ($http, $scope, $location,authService) {
 
 	/*
 	 * var user a controller level variable to store user object.
@@ -72,6 +72,8 @@ angular.module("htBillingApp").controller('AddMeterController', ['$http', '$scop
 	 * the database or not.
 	 */
 	this.meterExists = function(){
+		var documentResult = document.getElementById("meterno");
+		var wrappedDocument = angular.element(documentResult);
 		$http(
 				{
 					method:'GET',
@@ -84,12 +86,18 @@ angular.module("htBillingApp").controller('AddMeterController', ['$http', '$scop
 						var meter = response.data;
 						if(meter.meterNo === $scope.formData.meterNo){
 							$scope.meterAlreadyAdded = true;
-							$scope.error = "Meter already added.Please provide a different meter no."
+							$scope.error = "Meter already added.Please provide a different meter no.";
+							wrappedDocument.removeClass("validmeter");
+							wrappedDocument.addClass("invalidMeter");
 						}
 					}
 				},
 				function(error){
 					$scope.meterAlreadyAdded = false;
+					if($scope.formData.meterNo !== undefined){
+						wrappedDocument.removeClass("invalidMeter");
+						wrappedDocument.addClass("validmeter");	
+					}
 				}
 		);
 	};

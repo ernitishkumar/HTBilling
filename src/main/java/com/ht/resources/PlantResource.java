@@ -93,7 +93,7 @@ public class PlantResource {
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
 	public Response insert(Plant plant){
-		System.out.println("Adding Plant : "+plant);
+		System.out.println("Adding Plant");
 		Plant insertedPlant = null;
 		if(plant != null){
 			insertedPlant = plantsDAO.insert(plant);

@@ -45,7 +45,9 @@ ul.unstyled {
 
 html,
 body {
-    height: 100%
+	margin:0;
+	padding:0;
+	height:100%;
 }
 
 #holder {
@@ -53,23 +55,22 @@ body {
     position: relative;
 }
 
-#body {
+#content {
     padding-bottom: 100px;
     /* height of footer */
 }
 
-footer {
+#footer {
     width: 100%;
-    position: absolute;
+    position:absolute;
     left: 0;
     bottom: 0;
     background: #000000;
     color: white;
     font-size: 11px;
-    padding: inherit;
 }
 
-footer h6 {
+#footer h6 {
     color: darkorange;
     font-size: 12px;
 }

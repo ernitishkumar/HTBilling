@@ -41,7 +41,7 @@ public class ConsumptionResource {
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response addConsumption(Consumption consumption){
-		System.out.println("AddConsumption started for consumption : "+consumption);
+		System.out.println("AddConsumption started for consumption");
 		Consumption insertedConsumption = null;
 		if(consumption != null){
 			SimpleDateFormat formater = new SimpleDateFormat("dd-MM-YYYY");

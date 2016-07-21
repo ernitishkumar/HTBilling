@@ -142,15 +142,15 @@
 				<label>Main Meter No:</label> &nbsp;&nbsp;<select name="mainMeterNo"
 					id="mainMeterNo" ng-model="plant.mainMeterNo">
 					<option value="{{plant.mainMeterNo}}" selected>{{plant.mainMeterNo}}</option>
-					<option ng-repeat="main in metersNotInUse" value="main.meterNo">{{main.meterNo}}</option>
+					<option ng-repeat="main in metersNotInUse" value="{{main.meterNo}}">{{main.meterNo}}</option>
 				</select>
 			</div>
 			<div class="form-group">
 				<label>Check Meter No:</label> &nbsp;&nbsp;<select
 					name="checkMeterNo" id="checkMeterNo"
 					ng-model="plant.checkMeterNo">
-					<option value="{{plant.checkMeterNo}}" selected>{{plant.checkMeterNo}}</option>
-					<option ng-repeat="check in metersNotInUse" value="check.meterNo">{{check.meterNo}}</option>
+					<option value="{{plant.checkMeterNo}}">{{plant.checkMeterNo}}</option>
+					<option ng-repeat="check in metersNotInUse" value="{{check.meterNo}}">{{check.meterNo}}</option>
 					<option value="NA">NA</option>
 				</select>
 			</div>

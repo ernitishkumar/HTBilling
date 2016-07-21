@@ -28,7 +28,7 @@ public class MeterDetailsDAO {
 			ps.setString(5, meterDetails.getMeterClass());
 			ps.setString(6, meterDetails.getCtr());
 			ps.setString(7, meterDetails.getPtr());
-			ps.setInt(8, meterDetails.getMf());
+			ps.setFloat(8, meterDetails.getMf());
 			ps.setString(9, meterDetails.getEquipmentClass());
 			ps.setString(10, meterDetails.getPhase());
 			ps.setString(11, meterDetails.getMeterGroup());
@@ -54,7 +54,7 @@ public class MeterDetailsDAO {
 			ps.setString(4, meterDetails.getMeterClass());
 			ps.setString(5, meterDetails.getCtr());
 			ps.setString(6, meterDetails.getPtr());
-			ps.setInt(7, meterDetails.getMf());
+			ps.setFloat(7, meterDetails.getMf());
 			ps.setString(8, meterDetails.getEquipmentClass());
 			ps.setString(9, meterDetails.getPhase());
 			ps.setString(10, meterDetails.getMeterGroup());
@@ -131,7 +131,7 @@ public class MeterDetailsDAO {
 				meterDetails.setMeterClass(resultSet.getString(5));
 				meterDetails.setCtr(resultSet.getString(6));
 				meterDetails.setPtr(resultSet.getString(7));
-				meterDetails.setMf(resultSet.getInt(8));
+				meterDetails.setMf(resultSet.getFloat(8));
 				meterDetails.setEquipmentClass(resultSet.getString(9));
 				meterDetails.setPhase(resultSet.getString(10));
 				meterDetails.setMeterGroup(resultSet.getString(11));
@@ -155,7 +155,7 @@ public class MeterDetailsDAO {
 				meterDetails.setMeterClass(rs.getString(5));
 				meterDetails.setCtr(rs.getString(6));
 				meterDetails.setPtr(rs.getString(7));
-				meterDetails.setMf(rs.getInt(8));
+				meterDetails.setMf(rs.getFloat(8));
 				meterDetails.setEquipmentClass(rs.getString(9));
 				meterDetails.setPhase(rs.getString(10));
 				meterDetails.setMeterGroup(rs.getString(11));

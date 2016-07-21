@@ -6,22 +6,18 @@ import java.util.StringTokenizer;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
-import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.HttpHeaders;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-import javax.ws.rs.core.UriInfo;
 
 import org.glassfish.jersey.internal.util.Base64;
-import org.glassfish.jersey.servlet.internal.spi.RequestContextProvider;
 
 import com.ht.beans.Result;
 import com.ht.beans.User;
 import com.ht.beans.UserRoles;
 import com.ht.dao.UserDAO;
 import com.ht.dao.UserRolesDAO;
-import com.sun.research.ws.wadl.Request;
 
 /**
  * @author NITISH

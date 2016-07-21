@@ -68,7 +68,7 @@ public class MeterReadingsDAO {
 							Statement.RETURN_GENERATED_KEYS);
 					) {
 				ps.setString(1, reading.getMeterno());
-				ps.setInt(2, reading.getMf());
+				ps.setFloat(2, reading.getMf());
 				ps.setString(3, reading.getReadingDate());
 				ps.setFloat(4, reading.getActiveEnergy());
 				ps.setFloat(5, reading.getActiveTodOne());
@@ -109,7 +109,7 @@ public class MeterReadingsDAO {
 							"update meter_readings set meter_no=?, mf=?, reading_date=?, active_reading=?, active_tod1=?, active_tod2=?, active_tod3=?, reactive_q1=?, reactive_q2=?, reactive_q3=?, reactive_q4=?, ht_cell_validation=?, circle_cell_validation=?, developer_validation=?, discarded_flag=?, discarded_by=?, discarded_on=?, sr_fr_flag=? where id=?");
 					) {
 				ps.setString(1, reading.getMeterno());
-				ps.setInt(2, reading.getMf());
+				ps.setFloat(2, reading.getMf());
 				ps.setString(3, reading.getReadingDate());
 				ps.setFloat(4, reading.getActiveEnergy());
 				ps.setFloat(5, reading.getActiveTodOne());
@@ -547,7 +547,7 @@ public class MeterReadingsDAO {
 				MeterReading meterReading = new MeterReading();
 				meterReading.setId(resultSet.getInt(1));
 				meterReading.setMeterno(resultSet.getString(2));
-				meterReading.setMf(resultSet.getInt(3));
+				meterReading.setMf(resultSet.getFloat(3));
 				meterReading.setReadingDate(resultSet.getString(4));
 				meterReading.setActiveEnergy(resultSet.getFloat(5));
 				meterReading.setActiveTodOne(resultSet.getFloat(6));

@@ -6,7 +6,7 @@ public class MeterReading {
 
 	private String meterno;
 	
-	private int mf;
+	private float mf;
 	
 	private String readingDate;
 	
@@ -56,11 +56,11 @@ public class MeterReading {
 		this.meterno = meterno;
 	}
 
-	public int getMf() {
+	public float getMf() {
 		return mf;
 	}
 
-	public void setMf(int mf) {
+	public void setMf(float mf) {
 		this.mf = mf;
 	}
 

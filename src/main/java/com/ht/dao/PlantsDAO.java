@@ -7,7 +7,6 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 
-import com.ht.beans.MeterDetails;
 import com.ht.beans.Plant;
 import com.ht.utility.GlobalResources;
 

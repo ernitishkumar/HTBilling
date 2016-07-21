@@ -151,8 +151,8 @@ angular.module("htBillingApp").controller('AddMachineController', ['$http', '$sc
 		var commissionedDate = day1 + "-" + m1 + "-" + y1;
 		$scope.formData.commissionedDate = commissionedDate;
 		var d2 = new Date($scope.formData.ppaDate);
-		var y2 = d1.getFullYear();
-		var m2 = d1.getMonth() + 1;
+		var y2 = d2.getFullYear();
+		var m2 = d2.getMonth() + 1;
 		if (m2 < 10) {
 			m2 = "0" + m2;
 		}

@@ -179,7 +179,7 @@ angular.module("htBillingApp").controller('UpdatePlantController', ['$http', '$s
 		var readingDate = day + "-" + month + "-" + year;
 		var formData = $scope.plant;
 		formData.commissionedDate = readingDate;
-		
+		console.log(formData);
 		$http(
 				{
 					method: 'PUT',

@@ -12,7 +12,7 @@ public class MeterDetails {
 	private String meterClass;
 	private String ctr;
 	private String ptr;
-	private int mf;
+	private float mf;
 	private String equipmentClass;
 	private String phase;
 	private String meterGroup;
@@ -58,10 +58,10 @@ public class MeterDetails {
 	public void setPtr(String ptr) {
 		this.ptr = ptr;
 	}
-	public int getMf() {
+	public float getMf() {
 		return mf;
 	}
-	public void setMf(int mf) {
+	public void setMf(float mf) {
 		this.mf = mf;
 	}
 	public String getEquipmentClass() {
@@ -83,7 +83,7 @@ public class MeterDetails {
 		this.meterGroup = meterGroup;
 	}
 	public MeterDetails(String meterNo, String category,
-			String type, String meterClass, String ctr, String ptr, int mf,
+			String type, String meterClass, String ctr, String ptr, float mf,
 			String equipmemntClass, String phase, String meterGroup, String make) {
 		this.meterNo = meterNo;
 		this.make = make;

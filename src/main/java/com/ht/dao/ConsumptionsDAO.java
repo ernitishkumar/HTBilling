@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.text.ParseException;
 import java.util.ArrayList;
 import com.ht.beans.Consumption;
@@ -19,7 +20,7 @@ public class ConsumptionsDAO {
 		//automatically closing them. Works with Java 1.7 and higher
 		try(
 				Connection connection = GlobalResources.getDatasource().getConnection();
-				PreparedStatement ps = connection.prepareStatement("insert into consumptions (meter_no, date, active_consumption, reactive_consumption, plant_id, plant_code, meter_reading_id, consumption_bifercated) values(?,?,?,?,?,?,?,?)");
+				PreparedStatement ps = connection.prepareStatement("insert into consumptions (meter_no, date, active_consumption, reactive_consumption, plant_id, plant_code, meter_reading_id, consumption_bifercated) values(?,?,?,?,?,?,?,?)",Statement.RETURN_GENERATED_KEYS);
 				) {
 			ps.setString(1,consumption.getMeterNo());
 			ps.setString(2, consumption.getDate());

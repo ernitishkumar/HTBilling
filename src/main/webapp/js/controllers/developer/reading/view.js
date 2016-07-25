@@ -84,7 +84,7 @@ angular.module("htBillingApp").controller('DeveloperViewMeterReadingsController'
 	 * function validateReading to implement validate action event
 	 * this function runs when user clicks validate reading button on page.
 	 */
-	this.validateReading = function (reading) {
+	this.validateReading = function (reading,index) {
 		$http(
 				{
 					method: 'PUT',
@@ -101,11 +101,11 @@ angular.module("htBillingApp").controller('DeveloperViewMeterReadingsController'
 					if (status === 200) {
 						var found = false;
 						var consumptionData = {};
-						$scope.readingData.forEach(
+						/*$scope.readingData.forEach(
 								function (item) {
 									if (item.meterNo === reading.meterNo) {
 										if ($scope.userRole.role === 'developer') {
-											
+
 											item.currentMeterReading.developerValidation = 1;
 											//creating consumption data to be inserted into backend
 											consumptionData.meterNo = item.meterNo;
@@ -119,27 +119,47 @@ angular.module("htBillingApp").controller('DeveloperViewMeterReadingsController'
 										}
 									}
 								}
-						);
-						if(found){
-							$http(
-									{
-										method: 'POST',
-										url: 'backend/consumptions',
-										data : consumptionData
-									}
-							).then(
-									function (response) {
-										var status = response.status;
-										console.log(response);
-										if(status === 201){
-                                           var insertedConsumption = response.data;
+						);*/
+						//Implementing the above logic with index passed from the page, No need to loop over complete collection for
+						//every validation.
+						var item = $scope.readingData[index];
+						if(item.meterNo === reading.meterNo){
+							if ($scope.userRole.role === 'developer') {
+								item.currentMeterReading.developerValidation = 1;
+								//creating consumption data to be inserted into backend
+								consumptionData.meterNo = item.meterNo;
+								consumptionData.activeConsumption = parseFloat(item.activeEnergyConsumption);
+								consumptionData.meterReadingId = item.currentMeterReading.id;
+								consumptionData.plantId = item.plant.id;
+								consumptionData.plantCode = item.plant.code;
+								/*consumptionData.reactiveConsumption = parseFloat(item.quadrantOneConsumption)+parseFloat(item.quadrantTwoConsumption)
+								+ parseFloat(item.quadrantThreeConsumption) + parseFloat(item.quadrantFourConsumption);*/
+								
+								//As per new guidelines adding only Q2 and Q4 for bill generation. Will change after new orders
+								consumptionData.reactiveConsumption = parseFloat(item.quadrantTwoConsumption) + parseFloat(item.quadrantFourConsumption);
+
+
+								//making http request to save the consumption data at the backend
+								$http(
+										{
+											method: 'POST',
+											url: 'backend/consumptions',
+											data : consumptionData
 										}
-									},
-									function(error){
-                                        console.log("error inserting consumption. below is error ");
-                                        console.log(error);
-									}
-							);
+								).then(
+										function (response) {
+											var status = response.status;
+											//console.log(response);
+											if(status === 201){
+												var insertedConsumption = response.data;
+											}
+										},
+										function(error){
+											console.log("error inserting consumption. below is error ");
+											console.log(error);
+										}
+								);
+							}
 						}
 					}
 				},
@@ -184,7 +204,7 @@ angular.module("htBillingApp").controller('DeveloperViewMeterReadingsController'
 			}
 		});
 	};
-	
+
 	/*
 	 * getInvestorData function to navigate to bifurcation page,
 	 * where investor wise bifurcation of readings is done.
@@ -200,24 +220,24 @@ angular.module("htBillingApp").controller('DeveloperViewMeterReadingsController'
 	this.viewInvestorsData = function (reading) {
 		$location.path("/developer/readings/viewsplited/" + reading.consumption.id);
 	};
-	
+
 	/*
 	 * variable currentPage to hold value for currentpage
 	 * required for pagination
 	 */
 	$scope.currentPage = 1;
-	
+
 	/*
 	 * variable pageSize to hold value for currentpage
 	 * required for pagination
 	 */
 	$scope.pageSize = 5;
-	
+
 	/*
 	 * function pageChangeHandler gets executed when user
 	 * changes page from the pagination row
 	 */
 	$scope.pageChangeHandler = function(num) {
-	      console.log('page changed to ' + num);
-	  };
+		console.log('page changed to ' + num);
+	};
 }]);

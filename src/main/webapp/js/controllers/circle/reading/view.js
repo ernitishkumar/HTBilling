@@ -84,7 +84,8 @@ angular.module("htBillingApp").controller('CircleViewMeterReadingsController', [
 	 * function validateReading to implement validate action event
 	 * this function runs when user clicks validate reading button on page.
 	 */
-	this.validateReading = function (reading) {
+	//To be implemented for circle when required
+	/*this.validateReading = function (reading) {
 		$http(
 				{
 					method: 'PUT',
@@ -147,7 +148,7 @@ angular.module("htBillingApp").controller('CircleViewMeterReadingsController', [
 					console.log(error);
 				}
 		);
-	};
+	};*/
 
 	/*
 	 * viewInvestorData function to navigate to view bifurcated readings page

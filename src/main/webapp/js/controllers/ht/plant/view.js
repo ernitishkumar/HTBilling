@@ -115,8 +115,8 @@ angular.module("htBillingApp").controller('ViewPlantDetailsController', ['$http'
 	/*
 	 * function to route to update plant page
 	 */
-	this.updatePage = function(i){
-		var plantId = $scope.plants[i].id;
+	this.updatePage = function(id){
+		var plantId = id;
 		//console.log(plantId);
 		$location.path("/plant/updateplant/"+plantId);
 	};

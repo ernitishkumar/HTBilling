@@ -68,7 +68,7 @@
 				<td>{{meter.phase}}</td>
 				<td>{{meter.meterGroup}}</td>
 				<td><a href="javascript:void(0);"><span
-						class="glyphicon glyphicon-pencil" ng-click="viewMeterDetailsCtrl.update((currentPage - 1)*pageSize + $index)"></span></a></td>
+						class="glyphicon glyphicon-pencil" ng-click="viewMeterDetailsCtrl.update(meter.meterNo)"></span></a></td>
 				<td><a href="javascript:void(0);"
 					ng-click="viewMeterDetailsCtrl.remove((currentPage - 1)*pageSize + $index)"><span
 						class="glyphicon glyphicon-trash"></span></a></td>

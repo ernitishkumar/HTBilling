@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 
 import com.ht.beans.Consumption;
@@ -19,7 +20,7 @@ public class InvestorConsumptionDAO {
 		int lastInsertedId;
 		try(
 				Connection connection = GlobalResources.getDatasource().getConnection();
-				PreparedStatement ps = connection.prepareStatement("insert into investor_consumption (consumption_id, investor_id, active_consumption, reactive_consumption,circle_validation,bill_generated) values(?,?,?,?,?,?)");
+				PreparedStatement ps = connection.prepareStatement("insert into investor_consumption (consumption_id, investor_id, active_consumption, reactive_consumption,circle_validation,bill_generated) values(?,?,?,?,?,?)",Statement.RETURN_GENERATED_KEYS);
 				) {
 			ps.setInt(1,investorConsumption.getConsumptionId());
 			ps.setInt(2, investorConsumption.getInvestorId());

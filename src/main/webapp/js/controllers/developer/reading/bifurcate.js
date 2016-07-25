@@ -136,7 +136,7 @@ angular.module("htBillingApp").controller('BifircateReadingsController', ['$http
 					}
 			);
 		} else {
-			alert("Readings sum is not equal to total Consumption. Please check !");
+			bootbox.alert("Investors Readings sum is not equal to total Consumption. Please check !");
 		}
 	};
 

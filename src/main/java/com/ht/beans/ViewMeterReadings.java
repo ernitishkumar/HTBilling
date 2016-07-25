@@ -4,17 +4,19 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 @XmlRootElement
 public class ViewMeterReadings {
-	
+
 	private String meterNo;
-    
-    private Plant plant;
-    
+
+	private String meterMake;
+
+	private Plant plant;
+
 	private MeterReading currentMeterReading;
-	
+
 	private MeterReading previousMeterReading;
-	
+
 	private Consumption consumption;
-	
+
 	private Developer developer;
 
 	public String getMeterNo() {
@@ -40,15 +42,15 @@ public class ViewMeterReadings {
 	public void setPreviousMeterReading(MeterReading previousMeterReading) {
 		this.previousMeterReading = previousMeterReading;
 	}
-	
-     public void setPlant(Plant plant){
-        this.plant=plant;
-    }
-    
-    public Plant getPlant(){
-        return this.plant;
-    }
-	
+
+	public void setPlant(Plant plant){
+		this.plant=plant;
+	}
+
+	public Plant getPlant(){
+		return this.plant;
+	}
+
 	public Consumption getConsumption() {
 		return consumption;
 	}
@@ -60,16 +62,29 @@ public class ViewMeterReadings {
 	/**
 	 * @return the developer
 	 */
-	public Developer getDeveloper() {
-		return developer;
-	}
+	 public Developer getDeveloper() {
+		 return developer;
+	 }
 
-	/**
-	 * @param developer the developer to set
-	 */
-	public void setDeveloper(Developer developer) {
-		this.developer = developer;
-	}
-	
-	
-	}
+	 /**
+	  * @param developer the developer to set
+	  */
+	 public void setDeveloper(Developer developer) {
+		 this.developer = developer;
+	 }
+
+	 /**
+	  * @return the meterMake
+	  */
+	 public String getMeterMake() {
+		 return meterMake;
+	 }
+
+	 /**
+	  * @param meterMake the meterMake to set
+	  */
+	 public void setMeterMake(String meterMake) {
+		 this.meterMake = meterMake;
+	 }
+
+}

@@ -24,6 +24,7 @@ import javax.ws.rs.core.Response.Status;
 import com.ht.beans.Developer;
 import com.ht.beans.ErrorBean;
 import com.ht.beans.MessageBean;
+import com.ht.beans.MeterDetails;
 import com.ht.beans.MeterReading;
 import com.ht.beans.Plant;
 import com.ht.beans.SRFRReadings;
@@ -31,6 +32,7 @@ import com.ht.beans.UserRoles;
 import com.ht.beans.ViewMeterReadings;
 import com.ht.dao.ConsumptionsDAO;
 import com.ht.dao.DevelopersDAO;
+import com.ht.dao.MeterDetailsDAO;
 import com.ht.dao.MeterReadingsDAO;
 import com.ht.dao.PlantsDAO;
 
@@ -45,7 +47,8 @@ public class ReadingResource {
 	private PlantsDAO plantsDAO = new PlantsDAO();
 	private DevelopersDAO developersDAO = new DevelopersDAO();
 	private ConsumptionsDAO consumptionDAO = new ConsumptionsDAO();
-
+	private MeterDetailsDAO meterDetailsDAO = new MeterDetailsDAO();
+	
 	@POST
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
@@ -83,7 +86,11 @@ public class ReadingResource {
 		for (Plant p : plants) {
 			ViewMeterReadings viewMeterReadings = new ViewMeterReadings();
 			String meterNo = p.getMainMeterNo();
+			MeterDetails meter = meterDetailsDAO.getByMeterNo(meterNo);
 			viewMeterReadings.setMeterNo(meterNo);
+			if(meter!=null){
+				viewMeterReadings.setMeterMake(meter.getMake().toUpperCase());
+			}
 			viewMeterReadings.setPlant(p);
 			viewMeterReadings.setDeveloper(developersDAO.getById(p.getDeveloperId()));
 			MeterReading currentMonthReading = meterReadingsDAO.getCurrentMonthMeterReadings(meterNo);
@@ -92,6 +99,10 @@ public class ReadingResource {
 					// System.out.println("inside if of SR FR" );
 					String checkMeterNo = p.getCheckMeterNo();
 					viewMeterReadings.setMeterNo(checkMeterNo);
+					MeterDetails checkMeter = meterDetailsDAO.getByMeterNo(checkMeterNo);
+					if(checkMeter != null){
+						viewMeterReadings.setMeterMake(checkMeter.getMake().toUpperCase());
+					}
 					currentMonthReading = meterReadingsDAO.getCurrentMonthMeterReadings(checkMeterNo);
 					viewMeterReadings
 							.setPreviousMeterReading(meterReadingsDAO.getPreviousMonthMeterReadings(checkMeterNo));
@@ -125,7 +136,11 @@ public class ReadingResource {
 			for (Plant p : plants) {
 				ViewMeterReadings viewMeterReadings = new ViewMeterReadings();
 				String meterNo = p.getMainMeterNo();
+				MeterDetails meter = meterDetailsDAO.getByMeterNo(meterNo);
 				viewMeterReadings.setMeterNo(meterNo);
+				if(meter!=null){
+					viewMeterReadings.setMeterMake(meter.getMake().toUpperCase());
+				}
 				viewMeterReadings.setPlant(p);
 				viewMeterReadings.setDeveloper(developersDAO.getById(p.getDeveloperId()));
 				MeterReading currentMonthReading = meterReadingsDAO.getCurrentMonthMeterReadings(meterNo);
@@ -134,6 +149,10 @@ public class ReadingResource {
 						// System.out.println("inside if of SR FR" );
 						String checkMeterNo = p.getCheckMeterNo();
 						viewMeterReadings.setMeterNo(checkMeterNo);
+						MeterDetails checkMeter = meterDetailsDAO.getByMeterNo(checkMeterNo);
+						if(checkMeter != null){
+							viewMeterReadings.setMeterMake(checkMeter.getMake().toUpperCase());
+						}
 						currentMonthReading = meterReadingsDAO.getCurrentMonthMeterReadings(checkMeterNo);
 						viewMeterReadings
 								.setPreviousMeterReading(meterReadingsDAO.getPreviousMonthMeterReadings(checkMeterNo));
@@ -170,7 +189,11 @@ public class ReadingResource {
 			 */ for (Plant p : plants) {
 				ViewMeterReadings viewMeterReadings = new ViewMeterReadings();
 				String meterNo = p.getMainMeterNo();
+				MeterDetails meter = meterDetailsDAO.getByMeterNo(meterNo);
 				viewMeterReadings.setMeterNo(meterNo);
+				if(meter!=null){
+					viewMeterReadings.setMeterMake(meter.getMake().toUpperCase());
+				}
 				viewMeterReadings.setPlant(p);
 				viewMeterReadings.setDeveloper(developersDAO.getById(p.getDeveloperId()));
 				MeterReading currentMonthReading = meterReadingsDAO.getCurrentMonthMeterReadings(meterNo);
@@ -179,6 +202,10 @@ public class ReadingResource {
 						// System.out.println("inside if of SR FR" );
 						String checkMeterNo = p.getCheckMeterNo();
 						viewMeterReadings.setMeterNo(checkMeterNo);
+						MeterDetails checkMeter = meterDetailsDAO.getByMeterNo(checkMeterNo);
+						if(checkMeter != null){
+							viewMeterReadings.setMeterMake(checkMeter.getMake().toUpperCase());
+						}
 						currentMonthReading = meterReadingsDAO.getCurrentMonthMeterReadings(checkMeterNo);
 						viewMeterReadings
 								.setPreviousMeterReading(meterReadingsDAO.getPreviousMonthMeterReadings(checkMeterNo));
@@ -212,7 +239,11 @@ public class ReadingResource {
 			String currentDate = formater.format(date);
 			ViewMeterReadings viewMeterReadings = new ViewMeterReadings();
 			String meterNo = plant.getMainMeterNo();
+			MeterDetails meter = meterDetailsDAO.getByMeterNo(meterNo);
 			viewMeterReadings.setMeterNo(meterNo);
+			if(meter!=null){
+				viewMeterReadings.setMeterMake(meter.getMake().toUpperCase());
+			}
 			viewMeterReadings.setPlant(plant);
 			viewMeterReadings.setDeveloper(developersDAO.getById(plant.getDeveloperId()));
 			MeterReading currentMonthReading = meterReadingsDAO.getCurrentMonthMeterReadings(meterNo);
@@ -221,6 +252,10 @@ public class ReadingResource {
 					System.out.println("inside if of SR FR");
 					String checkMeterNo = plant.getCheckMeterNo();
 					viewMeterReadings.setMeterNo(checkMeterNo);
+					MeterDetails checkMeter = meterDetailsDAO.getByMeterNo(checkMeterNo);
+					if(checkMeter != null){
+						viewMeterReadings.setMeterMake(checkMeter.getMake().toUpperCase());
+					}
 					currentMonthReading = meterReadingsDAO.getCurrentMonthMeterReadings(checkMeterNo);
 					viewMeterReadings
 							.setPreviousMeterReading(meterReadingsDAO.getPreviousMonthMeterReadings(checkMeterNo));

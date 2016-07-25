@@ -105,8 +105,7 @@ angular.module("htBillingApp").controller('ViewMeterDetailsController', ['$http'
 		});
 	};
 	
-	this.update = function (index) {
-		var meterNo = $scope.meters[index].meterNo;
+	this.update = function (meterNo) {
 		$location.path("/meter/update/"+meterNo);
 	};
 	

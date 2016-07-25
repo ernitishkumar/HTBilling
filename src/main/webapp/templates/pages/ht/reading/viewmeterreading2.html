@@ -52,7 +52,7 @@
 					&nbsp;&nbsp;&nbsp; Site Location: <b>{{reading.plant.name|uppercase}}</b>
 					&nbsp;&nbsp;&nbsp;
 					<button type="button" class="btn btn-success" name="validateButton"
-						ng-click="viewMeterReadingsCtrl.validateReading(reading)"
+						ng-click="viewMeterReadingsCtrl.validateReading(reading,((currentPage- 1)*pageSize + $index))"
 						ng-hide="reading.currentMeterReading.discardedFlag || reading.currentMeterReading.htCellValidation">Validate
 						Readings</button>
 					&nbsp;&nbsp;&nbsp;

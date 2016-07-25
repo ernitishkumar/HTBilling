@@ -97,7 +97,7 @@ angular.module("htBillingApp").controller('ViewMeterReadingsController', ['$http
 	 * function validateReading to implement validate action event
 	 * this function runs when user clicks validate reading button on page.
 	 */
-	this.validateReading = function (reading) {
+	this.validateReading = function (reading,index) {
 		$http(
 				{
 					method: 'PUT',
@@ -112,7 +112,7 @@ angular.module("htBillingApp").controller('ViewMeterReadingsController', ['$http
 					var status = response.status;
 					//checking status code for successful response from server
 					if (status === 200) {
-						$scope.readingData.forEach(
+						/*$scope.readingData.forEach(
 								function (item) {
 									if (item.meterNo === reading.meterNo) {
 										if ($scope.userRole.role === 'admin' || $scope.userRole.role === 'htcell') {
@@ -120,7 +120,15 @@ angular.module("htBillingApp").controller('ViewMeterReadingsController', ['$http
 										}
 									}
 								}
-						);
+						);*/
+						//Implementing the above logic with index passed from the page, No need to loop over complete collection for
+						//every validation.
+						var item = $scope.readingData[index];
+						if(item.meterNo === reading.meterNo){
+							if ($scope.userRole.role === 'admin' || $scope.userRole.role === 'htcell') {
+								item.currentMeterReading.htCellValidation = 1;
+							}
+						}
 					}
 				},
 				function(error){

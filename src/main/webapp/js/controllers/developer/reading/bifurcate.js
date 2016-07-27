@@ -71,7 +71,6 @@ angular.module("htBillingApp").controller('BifircateReadingsController', ['$http
 					var status = response.status;
 					if (status === 200) {
 						$scope.investorsData = response.data;
-						console.log($scope.investorsData);
 					}
 				},
 				function(error){
@@ -160,7 +159,7 @@ angular.module("htBillingApp").controller('BifircateReadingsController', ['$http
 					var status = response.status;
 					if (status === 200) {
 						bootbox.alert("Bifurcated Successfully.");
-						$location.path("/developer/readings/view");
+						window.history.back();
 					}
 				},
 				function(error){

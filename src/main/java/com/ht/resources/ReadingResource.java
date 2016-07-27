@@ -53,7 +53,7 @@ public class ReadingResource {
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
 	public Response saveReading(MeterReading meterReading) {
-		System.out.println("saveReading called ");
+		System.out.println("Inserting Reading for : "+meterReading.getMeterno()+" with mf : "+meterReading.getMf());
 		MeterReading insertedReading = null;
 		boolean isReadingAlreadyAdded = false;
 		if (meterReading != null) {

@@ -24,6 +24,7 @@ import com.ht.beans.Investor;
 import com.ht.beans.InvestorConsumption;
 import com.ht.beans.InvestorConsumptionView;
 import com.ht.beans.InvestorPlantMapping;
+import com.ht.beans.MessageBean;
 import com.ht.beans.MeterReading;
 import com.ht.dao.ConsumptionsDAO;
 import com.ht.dao.InvestorConsumptionDAO;
@@ -157,6 +158,31 @@ public class InvestorResource {
 		}else{
 			return Response.status(Status.NO_CONTENT)
 					.entity(new ErrorBean("No data found for given consumption id.Unable to validate consumptions."))
+					.build();
+		}
+	}
+	
+	@DELETE
+	@Path("/consumption/{consumptionId}")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response deleteInvestorsConsumption(@PathParam("consumptionId")int consumptionId){
+		System.out.println("DiscardInvestorsConsumption for Investors Consumption called");
+		Consumption consumption = consumptionsDAO.getById(consumptionId);
+		if(consumption != null){
+			ArrayList<InvestorConsumption> investorConsumptionList = investorConsumptionDAO.getByConsumptionId(consumptionId);
+			for(InvestorConsumption ic : investorConsumptionList){
+				investorConsumptionDAO.delete(ic.getId());
+			}
+			consumption.setConsumptionBifurcated(0);
+			consumption=consumptionsDAO.update(consumption);
+		}
+		if(consumption != null){
+			return Response.status(Status.OK)
+					.entity(new MessageBean("Discarded bifurcation"))
+					.build();
+		}else{
+			return Response.status(Status.EXPECTATION_FAILED)
+					.entity(new ErrorBean("Unable to discard bifurcation try again"))
 					.build();
 		}
 	}

@@ -8,6 +8,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 
 import com.ht.beans.Consumption;
+import com.ht.beans.Developer;
 import com.ht.beans.Investor;
 import com.ht.beans.InvestorConsumption;
 import com.ht.beans.InvestorConsumptionView;
@@ -226,4 +227,18 @@ public class InvestorConsumptionDAO {
 		return investorConsumptionView;
 	}
 	
+	public InvestorConsumption delete(int id){
+		InvestorConsumption investorConsumption = null;
+		try(
+				Connection connection = GlobalResources.getDatasource().getConnection();
+				PreparedStatement ps = connection.prepareStatement("delete from investor_consumption where id =?");	
+				) {
+			investorConsumption = getById(id);
+			ps.setInt(1, id);
+			ps.executeUpdate();
+		} catch (SQLException e) {
+			System.out.println("Exception in class : InvestorConsumptionDAO : method : [delete(int)] "+e.getMessage());
+		}
+		return investorConsumption;
+	}
 }

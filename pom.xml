@@ -6,7 +6,7 @@
 	<groupId>com.ht</groupId>
 	<artifactId>htbilling</artifactId>
 	<packaging>war</packaging>
-	<version>2.1 - Beta</version>
+	<version>2.2 - Beta</version>
 	<name>htbilling</name>
 
 	<build>

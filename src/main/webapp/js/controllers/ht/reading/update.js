@@ -136,9 +136,7 @@ angular.module("htBillingApp").controller('UpdateMeterReadingController', ['$htt
 						if (day < 10) {
 							day = "0" + day;
 						}
-					
 						$scope.reading.readingDate = new Date(year,month,day);
-						console.log($scope.reading);
 					}
 				},
 				function(error){
@@ -221,7 +219,6 @@ angular.module("htBillingApp").controller('UpdateMeterReadingController', ['$htt
 				day = "0" + day;
 			}
 			var readingDate = day + "-" + month + "-" + year;
-			console.log(readingDate);
 			$scope.reading.readingDate = readingDate;
 			$http({
 				method: 'PUT',
@@ -236,7 +233,9 @@ angular.module("htBillingApp").controller('UpdateMeterReadingController', ['$htt
 						//checking the status of the response with created status code(201)
 						if(status === 200){
 							var insertedReading = response.data;
-							$location.path("/saved/"+"Reading updated successfully!");
+							//$location.path("/saved/"+"Reading updated successfully!");
+							bootbox.prompt("Reading updated successfully.");
+							window.history.back();
 						}else{
 							$scope.error = "Unable to update readings.Please try Again!";
 						}

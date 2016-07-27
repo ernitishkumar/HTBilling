@@ -92,7 +92,7 @@ angular.module("htBillingApp").controller('ViewBifircateReadingsForCircleControl
 	 * back function to go back to the last page.
 	 */
 	this.back = function () {
-		$location.path("/circle/readings");
+		window.history.back();
 	};
 
 	/*
@@ -125,5 +125,37 @@ angular.module("htBillingApp").controller('ViewBifircateReadingsForCircleControl
 					console.log(error);
 				}
 		);
-	}
+	};
+
+	/*
+	 * discardConsumptions function to discard the current bifurcation provided by the developer
+	 * to the circle user.
+	 */
+	this.discardConsumptions = function(consumptionToDiscard){
+		bootbox.confirm("Are you sure to Discard bifurcation ?",function(answer){
+			if(answer === true){
+				$http(
+						{
+							method: 'DELETE',
+							url: 'backend/investors/consumption/'+consumptionToDiscard.id
+						}
+				).then(
+						function (response) {
+							var status = response.status;
+							if(status === 200){
+								$scope.investorConsumptions = response.data;
+								bootbox.alert("Consumption Discarded !");
+								window.history.back();
+							}
+						},
+						function(error){
+							bootbox.alert("Some error occured.Please try again!");
+							console.log("error while discarding bifurcation for consumption at backend");
+							console.log(error);
+						}
+				);
+			};
+		});
+	};
+
 }]);

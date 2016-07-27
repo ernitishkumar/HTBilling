@@ -1,5 +1,7 @@
 package com.ht.beans;
 
+import java.util.ArrayList;
+
 public class BillDetailsView {
 
 	private int id;
@@ -44,6 +46,9 @@ public class BillDetailsView {
 	
 	private Plant plant;
 	
+	private ArrayList<Machine> machines;
+	
+
 	/**
 	 * @return the id
 	 */
@@ -339,6 +344,20 @@ public class BillDetailsView {
 		this.plant = plant;
 	}
 
+	/**
+	 * @return the machines
+	 */
+	public ArrayList<Machine> getMachines() {
+		return machines;
+	}
+
+	/**
+	 * @param machines the machines to set
+	 */
+	public void setMachines(ArrayList<Machine> machines) {
+		this.machines = machines;
+	}
+	
 	/* (non-Javadoc)
 	 * @see java.lang.Object#toString()
 	 */

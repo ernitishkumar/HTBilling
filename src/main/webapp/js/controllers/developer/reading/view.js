@@ -191,12 +191,13 @@ angular.module("htBillingApp").controller('DeveloperViewMeterReadingsController'
 							var status = response.status;
 							//checking status code for successful response from server
 							if (status === 200) {
-								if ($scope.userRole.role === 'admin' || $scope.userRole.role === 'htcell') {
+								if ($scope.userRole.role === 'developer') {
 									$scope.readingData.splice(index,1);
 								}
 							}
 						},
 						function(error){
+							bootbox.prompt("Unable to discard.Please try after some time!");
 							console.log("error in discarding readings. response is below");
 							console.log(error);
 						}

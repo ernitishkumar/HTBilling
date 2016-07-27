@@ -96,13 +96,13 @@ angular.module("htBillingApp").controller('MeterReadingController', ['$http', '$
 	this.loadOperatorHome = function () {
 		$location.path("/operator/home");
 	};
-	
+
 	/*
-     * loadSRFRReadingForm() function to route to enter srfrreading page
-     */
-    this.loadSRFRReadingForm = function () {
-        $location.path("/srfrenterreading");
-    };
+	 * loadSRFRReadingForm() function to route to enter srfrreading page
+	 */
+	this.loadSRFRReadingForm = function () {
+		$location.path("/srfrenterreading");
+	};
 
 	/*
 	 * isValidMeterno function to check validity of meterno provided by the user
@@ -113,10 +113,12 @@ angular.module("htBillingApp").controller('MeterReadingController', ['$http', '$
 			$scope.plainmeter = true;
 			$scope.metervalid = false;
 			$scope.meternotvalid = false;
-			$http({
-				method: 'GET',
-				url: 'backend/plants/meterno/'+this.formData.meterno
-			}).then(
+			$http(
+					{
+						method: 'GET',
+						url: 'backend/plants/meterno/'+this.formData.meterno
+					}
+			).then(
 					function(response) {
 						var status = response.status;
 						if (status === 200) {
@@ -171,14 +173,16 @@ angular.module("htBillingApp").controller('MeterReadingController', ['$http', '$
 			var readingDate = day + "-" + month + "-" + year;
 			this.formData.readingDate = readingDate;
 			this.formData.mf = $scope.formData.mf;
-			$http({
-				method: 'POST',
-				url: 'backend/readings',
-				headers:{
-					contentType:"application/json"
-				},
-				data: this.formData
-			}).then(
+			$http(
+					{
+						method: 'POST',
+						url: 'backend/readings',
+						headers:{
+							contentType:"application/json"
+						},
+						data: this.formData
+					}
+			).then(
 					function (response) {
 						$scope.plainmeter = false;
 						$scope.metervalid = false;
@@ -187,7 +191,9 @@ angular.module("htBillingApp").controller('MeterReadingController', ['$http', '$
 						//checking the status of the response with created status code(201)
 						if(status === 201){
 							var insertedReading = response.data;
+							//bootbox.prompt("Reading Saved Successfully!");
 							$location.path("/saved/"+"Reading saved successfully!");
+							
 						}else{
 							$scope.error = "Unable to save readings.Please try Again!";
 						}
@@ -195,7 +201,7 @@ angular.module("htBillingApp").controller('MeterReadingController', ['$http', '$
 					},
 					function (error){
 						var status = error.status;
-						
+
 						//checking the status with expectation failed status code(417)
 						// if status code is 417 assigning the provided error message from backend
 						// to display on the page. Else assigning the generic error Message.
@@ -212,7 +218,7 @@ angular.module("htBillingApp").controller('MeterReadingController', ['$http', '$
 		}
 
 	};
-	
+
 	this.isReadingValid = function(input1,input2){
 		if(input1 === null || input1 === undefined){
 			return false;

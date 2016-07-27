@@ -112,8 +112,8 @@ angular.module("htBillingApp").controller('ViewBillController', ['$http', '$scop
 						var billDetails = response.data;
 						if(billDetails.id == billId){
 							$scope.billDetails = billDetails;
-							console.log("printing bill details");
-							console.log($scope.billDetails);
+							/*console.log("printing bill details");
+							console.log($scope.billDetails);*/
 						}else{
 							alert("Got incorrect bill please check");
 						}

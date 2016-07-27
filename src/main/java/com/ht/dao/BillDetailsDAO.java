@@ -307,6 +307,9 @@ public class BillDetailsDAO {
 		Investor investor = investorsDAO.getById(billDetails.getInvestorId());
 		billDetailsView.setInvestor(investor);
 		
+		MachinesDAO machinesDAO = new MachinesDAO();
+		billDetailsView.setMachines(machinesDAO.getByPlantIdAndInvestorId(billDetails.getPlantId(), billDetails.getInvestorId()));
+		
 		ConsumptionsDAO consumptionsDAO = new ConsumptionsDAO();
 		Consumption consumption = consumptionsDAO.getById(billDetails.getConsumptionId());
 		billDetailsView.setConsumption(consumption);

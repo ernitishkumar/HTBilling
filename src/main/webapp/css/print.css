@@ -1,5 +1,5 @@
 @media print {
-    footer {
+    #footer {
         display: none;
     } 
     .navbar {

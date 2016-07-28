@@ -4,6 +4,7 @@
 package com.ht.resources;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 
 import javax.ws.rs.GET;
@@ -79,6 +80,47 @@ public class BillResource {
 			billDetailsView = billDetailsDAO.getViewFromBean(billDetails);
 		}
 		return billDetailsView;
+	}
+	
+	@GET
+	@Path("/billNo/{billNo}")
+	@Produces(MediaType.APPLICATION_JSON)
+	public ArrayList<BillDetails> getBillDetailsByBillNo(@PathParam("billNo") String billNo){
+		System.out.print("Getting Bill Details for billNo :  "+billNo);
+		ArrayList<BillDetails> billDetails = new ArrayList<BillDetails>();
+		billDetails.add(billDetailsDAO.getByBillNo(billNo));
+		return billDetails;
+	}
+	
+	@GET
+	@Path("/meterNo/{meterNo}")
+	@Produces(MediaType.APPLICATION_JSON)
+	public ArrayList<BillDetails> getBillDetailsByMeterNo(@PathParam("meterNo") String meterNo){
+		System.out.print("Getting Bill Details for meterNo :  "+meterNo);
+		return billDetailsDAO.getByMeterNo(meterNo);
+	}
+	@GET
+	@Path("/invoiceNo/{invoiceNo}")
+	@Produces(MediaType.APPLICATION_JSON)
+	public ArrayList<BillDetails> getBillDetailsByInvoiceNo(@PathParam("invoiceNo") String invoiceNo){
+		System.out.print("Getting Bill Details for invoiceNo :  "+invoiceNo);
+		ArrayList<BillDetails> billDetails = new ArrayList<BillDetails>();
+		billDetails.add(billDetailsDAO.getByInvoiceNo(invoiceNo));
+		return billDetails;
+	}
+	@GET
+	@Path("/byDate/{date}")
+	@Produces(MediaType.APPLICATION_JSON)
+	public ArrayList<BillDetails> getBillDetailsByDate(@PathParam("date") String date){
+		System.out.print("Getting Bill Details for date :  "+date);
+		return billDetailsDAO.getByDate(date);
+	}
+	
+	@GET
+	@Produces(MediaType.APPLICATION_JSON)
+	public ArrayList<BillDetails> getAllBillDetails(){
+		System.out.println("getting all bills");
+		return billDetailsDAO.getAll();
 	}
 	
 	/**

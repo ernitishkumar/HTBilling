@@ -130,7 +130,7 @@ public class BillDetailsDAO {
 				}
 			}
 		}
-		return billDetails.get(0);
+		return billDetails.size() > 0 ? billDetails.get(0) : null;
 	}
 
 	public ArrayList<BillDetails> getAll(){
@@ -177,7 +177,7 @@ public class BillDetailsDAO {
 				}
 			}
 		}
-		return billDetails.get(0);
+		return billDetails.size() > 0 ? billDetails.get(0) : null;
 	}
 	
 	public BillDetails getByConsumptionBifurcationId(int consumptionBifurcationId){
@@ -201,9 +201,54 @@ public class BillDetailsDAO {
 				}
 			}
 		}
-		return billDetails.get(0);
+		return billDetails.size() > 0 ? billDetails.get(0) : null;
+	}
+	public ArrayList<BillDetails> getByDate(String date) {
+		ArrayList<BillDetails> billDetails = new ArrayList<BillDetails>();
+		Connection connection = null;
+		try {
+			connection = GlobalResources.getDatasource().getConnection();
+			PreparedStatement ps = connection.prepareStatement("select * from bill_details where reading_date like '%"+date+"%'");
+			ResultSet rs = ps.executeQuery();
+			billDetails = billDetailsMapper(rs);
+			ps.close();
+		} catch (SQLException e) {
+			System.out.println("Exception in class : BillDetailsDAO : method : [getByDate(String)] "+e.getMessage());
+		}finally {
+			if(connection != null){
+				try{
+					connection.close();
+				}catch(Exception ignoreException){
+					System.out.println("Exception while closing connection : "+ignoreException);
+				}
+			}
+		}
+		return billDetails;
 	}
 	
+	public ArrayList<BillDetails> getByMeterNo(String meterNo) {
+		ArrayList<BillDetails> billDetails = new ArrayList<BillDetails>();
+		Connection connection = null;
+		try {
+			connection = GlobalResources.getDatasource().getConnection();
+			PreparedStatement ps = connection.prepareStatement("select * from bill_details where meter_no= ?");
+			ps.setString(1, meterNo);
+			ResultSet rs = ps.executeQuery();
+			billDetails = billDetailsMapper(rs);
+			ps.close();
+		} catch (SQLException e) {
+			System.out.println("Exception in class : BillDetailsDAO : method : [getByMeterNo(String)] "+e.getMessage());
+		}finally {
+			if(connection != null){
+				try{
+					connection.close();
+				}catch(Exception ignoreException){
+					System.out.println("Exception while closing connection : "+ignoreException);
+				}
+			}
+		}
+		return billDetails;
+	}
 	public ArrayList<BillDetails> getByInvestorId(int investorId){
 		ArrayList<BillDetails> billDetails = new ArrayList<BillDetails>();
 		Connection connection = null;
@@ -227,6 +272,30 @@ public class BillDetailsDAO {
 			}
 		}
 		return billDetails;
+	}
+	
+	public BillDetails getByInvoiceNo(String invoiceNo) {
+		ArrayList<BillDetails> billDetails = new ArrayList<BillDetails>();
+		Connection connection = null;
+		try {
+			connection = GlobalResources.getDatasource().getConnection();
+			PreparedStatement ps = connection.prepareStatement("select * from bill_details where invoice_no= ?");
+			ps.setString(1, invoiceNo);
+			ResultSet rs = ps.executeQuery();
+			billDetails = billDetailsMapper(rs);
+			ps.close();
+		} catch (SQLException e) {
+			System.out.println("Exception in class : BillDetailsDAO : method : [getByInvoicerNo(String)] "+e.getMessage());
+		}finally {
+			if(connection != null){
+				try{
+					connection.close();
+				}catch(Exception ignoreException){
+					System.out.println("Exception while closing connection : "+ignoreException);
+				}
+			}
+		}
+		return billDetails.size() > 0 ? billDetails.get(0) : null;
 	}
 	
 	public ArrayList<BillDetails> getByConsumptionId(int ConsumptionId){

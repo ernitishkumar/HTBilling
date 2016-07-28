@@ -1,0 +1,124 @@
+<div class="navbar navbar-fixed-top">
+	<div class="container">
+		<div class="navbar-header">
+			<button type="button" class="navbar-toggle" data-toggle="collapse"
+				data-target="#myNavbar">
+				<span class="icon-bar"></span> <span class="icon-bar"></span> <span
+					class="icon-bar"></span>
+			</button>
+			<a class="navbar-brand" href="javascript:void(0);">HTBilling</a>
+		</div>
+		<div class="collapse navbar-collapse" id="myNavbar">
+			<ul class="nav navbar-nav">
+				<li class="active"><a href="javascript:void(0);"
+					ng-click="listBillDetailsCtrl.loadHome()">Home</a></li>
+			</ul>
+			<ul class="nav navbar-nav pull-right">
+				<li class="dropdown"><a class="dropdown-toggle"
+					data-toggle="dropdown" href="javascript:void(0);"><span
+						class="glyphicon glyphicon-user"></span> {{user.name}}<strong
+						class="caret"></strong></a>
+					<ul class="dropdown-menu">
+						<li><a href="javascript:void(0);"><span
+								class="glyphicon glyphicon-wrench"></span> Settings</a></li>
+						<li><a href="javascript:void(0);"
+							ng-click="listBillDetailsCtrl.logout()"><span
+								class="glyphicon glyphicon-off"></span> Logout</a></li>
+					</ul></li>
+			</ul>
+		</div>
+	</div>
+</div>
+<div>
+	<div class="page-header text-center container">
+		<h2>
+			<span class="glyphicon glyphicon-certificate"></span>View Bill
+			Details
+		</h2>
+	</div>
+	<!-- <div>
+		<select name="month" ng-model="formData.month">
+  			<option value="01">Jan</option>
+  			<option value="02">Feb</option>
+  			<option value="03">Mar</option>
+  			<option value="04">Apr</option>
+  			<option value="05">May</option>
+  			<option value="06">Jun</option>
+  			<option value="07">Jul</option>
+  			<option value="08">Aug</option>
+  			<option value="09">Sep</option>
+  			<option value="10">Oct</option>
+  			<option value="11">Nov</option>
+  			<option value="12">Dec</option>
+		</select>
+		<select name="year" ng-model="formData.year">
+  			<option value="2015">2015</option>
+  			<option value="2016">2016</option>
+  			<option value="2017">2017</option>
+  			<option value="2018">2018</option>
+  			<option value="2019">2019</option>
+  			<option value="2020">2020</option>
+  			<option value="2021">2021</option>
+  			<option value="2022">2022</option>
+  			<option value="2023">2023</option>
+  			<option value="2024">2024</option>
+  			<option value="2025">2025</option>
+  			<option value="2026">2026</option>
+		</select>
+		<button type="button" name="dateBill" ng-click="listBillDetailsCtrl.getByDate()">Get Bill</button> 
+	</div>-->
+	<!-- <div>
+		<input name="meterNo" ng-model="formData.meterNo">
+		<input name="billNo" ng-model="formData.billNo">
+		<input name="invoiceNo" ng-model="formData.invoiceNo">
+		<button type="button" name="MeterBill">Get Bill</button>
+	</div> -->
+	<table class="table table-bordered table-hover">
+		<thead>
+			<th class="text-center success">Serial No</th>
+			<th class="text-center success">Bill No <input class="form-control" type="text" name="billNo" ng-model="formData.billNo"></th>
+			<th class="text-center success">Invoice No <input class="form-control" type="text" name="invoiceNo" ng-model="formData.invoiceNo"></th>
+			<th class="text-center success">Meter No <input class="form-control" type="text" name="meterNo" ng-model="formData.meterNo"></th>
+			<th class="text-center success">Reading Date <select name="month" ng-model="formData.month">
+  			<option value="01">Jan</option><option value="02">Feb</option><option value="03">Mar</option><option value="04">Apr</option>
+  			<option value="05">May</option><option value="06">Jun</option><option value="07">Jul</option><option value="08">Aug</option>
+  			<option value="09">Sep</option><option value="10">Oct</option><option value="11">Nov</option><option value="12">Dec</option>
+		</select>
+		<select name="year" ng-model="formData.year">
+  			<option value="2015">2015</option><option value="2016">2016</option><option value="2017">2017</option><option value="2018">2018</option>
+  			<option value="2019">2019</option><option value="2020">2020</option><option value="2021">2021</option><option value="2022">2022</option>
+  			<option value="2023">2023</option><option value="2024">2024</option><option value="2025">2025</option><option value="2026">2026</option>
+		</select></th>
+			<th class="text-center success">Bill Generation Date</th>
+			<th class="text-center success">Active Amount</th>
+			<th class="text-center success">Reactive Amount</th>
+			<th class="text-center success">Total Amount</th>
+
+			<th class="text-center success">View Bill <button type="button" name="MeterBill" class="btn btn-info"  ng-click="listBillDetailsCtrl.applyFilter()">Apply Filter</button></th>
+		</thead>
+		<tbody class="text-center">
+			<tr dir-paginate="bill in billDetails | itemsPerPage: pageSize" current-page="currentPage">
+				<td>{{(currentPage-1)*pageSize + $index+1}}</td>
+				<td>{{bill.billNo}}</td>
+				<td>{{bill.invoiceNo}}</td>
+				<td>{{bill.meterNo}}</td>
+				<td>{{bill.readingDate}}</td>
+				<td>{{bill.billGenerationDate}}</td>
+				<td>{{bill.activeAmount}}</td>
+				<td>{{bill.reactiveAmount}}</td>
+				<td>{{bill.totalAmount}}</td>
+				
+				<td><a href="javascript:void(0);"
+					ng-click="listBillDetailsCtrl.viewBill(bill.id)"><span
+					class="btn btn-info"> View Bill</span></a></td>
+			</tr>
+		</tbody>
+	</table>
+</div>
+<div class="text-center">
+	<dir-pagination-controls boundary-links="true"
+		on-page-change="pageChangeHandler(newPageNumber)"
+		template-url="js/angular/dirPagination.tpl.html"></dir-pagination-controls>
+</div>
+<br>
+<br>

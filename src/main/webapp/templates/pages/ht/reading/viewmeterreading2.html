@@ -49,7 +49,7 @@
 					Developer Name: <b>{{reading.developer.name}}</b>
 					&nbsp;&nbsp;&nbsp; <br>
 					<br>Mf of Meter: <b>{{reading.currentMeterReading.mf}}</b>
-					&nbsp;&nbsp;&nbsp; Site Location: <b>{{reading.plant.name|uppercase}}</b>
+					&nbsp;&nbsp;&nbsp; Site Location: <b>{{reading.plant.address|uppercase}}</b>
 					&nbsp;&nbsp;&nbsp;
 					<button type="button" class="btn btn-success" name="validateButton"
 						ng-click="viewMeterReadingsCtrl.validateReading(reading,((currentPage- 1)*pageSize + $index))"

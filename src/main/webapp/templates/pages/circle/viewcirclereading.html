@@ -39,7 +39,7 @@
             <div class="panel-heading text-center">Meter Readings For {{reading.meterNo}}</div>
             <div class="panel-body">
              <p class="text-center">
-                Developer Name: {{reading.developer.name|uppercase}} &nbsp;&nbsp;&nbsp; <br><br>Mf of Meter: {{reading.currentMeterReading.mf}} &nbsp;&nbsp;&nbsp; Location: {{reading.plant.circle|uppercase}} &nbsp;&nbsp;&nbsp;
+                Developer Name: <b>{{reading.developer.name|uppercase}}</b> &nbsp;&nbsp;&nbsp; <br><br>Mf of Meter: <b>{{reading.currentMeterReading.mf}}</b> &nbsp;&nbsp;&nbsp; Location: <b>{{reading.plant.address|uppercase}}</b> &nbsp;&nbsp;&nbsp;
                 &nbsp;&nbsp;&nbsp;
                 <button type="button" class="btn btn-success" ng-show="reading.consumption.consumptionBifurcated" ng-click="viewMeterReadingsCtrl.viewInvestorsData(reading)">View Bifurcation & Validate</button>
                 <br>

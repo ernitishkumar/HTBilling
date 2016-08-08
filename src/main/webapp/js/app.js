@@ -160,6 +160,16 @@
 			controller: 'ViewBillController',
 			controllerAs: 'viewBillCtrl'
 		})
+		.when('/bill/viewAll', {
+			templateUrl: 'templates/pages/ht/bill/viewbilldetails.html',
+			controller: 'ListBillDetailsCtrl',
+			controllerAs: 'listBillDetailsCtrl'
+		})
+		.when('/ht/bill/viewBill/:billDetailsId', {
+			templateUrl: 'templates/pages/ht/bill/viewbill.html',
+			controller: 'ViewBillDetailsController',
+			controllerAs: 'viewBillDetailsCtrl'
+		})
 		.when('/circle/readings', {
 			templateUrl: 'templates/pages/circle/viewcirclereading.html',
 			controller: 'CircleViewMeterReadingsController',

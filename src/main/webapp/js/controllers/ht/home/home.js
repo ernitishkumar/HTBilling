@@ -149,6 +149,13 @@ angular.module("htBillingApp").controller('HomeController', ['$http', '$scope', 
     }
     
     /*
+     * function to route to view Bill Details Page
+     */
+    this.loadViewBillDetailsPage = function(){
+    	$location.path("/bill/viewAll");
+    }
+    
+    /*
      * function to route to homepage
      */
     this.loadHome = function () {

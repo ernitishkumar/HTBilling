@@ -1,0 +1,141 @@
+<br>
+<br>
+<br>
+<div class="navbar navbar-fixed-top">
+	<div class="container">
+		<div class="navbar-header">
+			<button type="button" class="navbar-toggle" data-toggle="collapse"
+				data-target="#myNavbar">
+				<span class="icon-bar"></span> <span class="icon-bar"></span> <span
+					class="icon-bar"></span>
+			</button>
+			<a class="navbar-brand" href="javascript:void(0);">MPPKVVCL
+				HTBilling</a>
+		</div>
+		<div class="collapse navbar-collapse" id="myNavbar">
+			<ul class="nav navbar-nav">
+				<li class="active"><a href="javascript:void(0);"
+					ng-click="viewBillDetailsCtrl.loadHome()">Home</a></li>
+			</ul>
+			<ul class="nav navbar-nav pull-right">
+				<li class="dropdown"><a class="dropdown-toggle"
+					data-toggle="dropdown" href="javascript:void(0);"><span
+						class="glyphicon glyphicon-user"></span> {{user.name}}<strong
+						class="caret"></strong></a>
+					<ul class="dropdown-menu">
+						<li><a href="javascript:void(0);"><span
+								class="glyphicon glyphicon-wrench"></span> Settings</a></li>
+						<li><a href="javascript:void(0);"
+							ng-click="viewBillDetailsCtrl.logout()"><span
+								class="glyphicon glyphicon-off"></span> Logout</a></li>
+					</ul></li>
+			</ul>
+		</div>
+	</div>
+</div>
+<div class="container">
+	<!-- <div class="page-header text-center">
+		<h2>
+			<span class="glyphicon glyphicon-certificate"></span>Power Purchase Bill
+		</h2>
+	</div> -->
+	<br>
+	<div class="row">
+		<div class="col-md-12">
+			<table class="table" id="billTable1">
+				<tbody>
+					<tr>
+						<td colspan="7" class="text-center"><b>{{billDetails.investor.name
+									| uppercase}}</b><br>
+							{{billDetails.investor.officeAddress}}</td>
+					</tr>
+					<tr>
+						<td colspan="7" class="text-center"><strong>INVOICE</strong></td>
+					</tr>
+					<tr>
+						<td colspan="4"><b>To,<br> The Superintending
+								Engineer (O&M)<br> M.P.P.K.V.V.Co.Ltd<br>
+								{{userRole.circle}} (M.P)
+						</b> <br> <br></td>
+						<td colspan="3">Invoice No.: <b>{{billDetails.investor.invoiceNo}}</b><br>
+							BILL NO: <b>{{billDetails.billNo}}</b> &nbsp;&nbsp; Bill Date: <b>{{billDetails.billGenerationDate}}</b><br>
+							Ref.: <b>PPA Dated
+								{{billDetails.investorConsumptionView.machines[0].ppaDate}}
+								issued vide</b><br> Letter No.: <b>{{billDetails.investorConsumptionView.machines[0].ppaLetterNo}}
+								from the O/o CGM(Comml.) M.P. Tradeco. Jabalpur)</b><br>
+							TIN/VAT No.: <b>{{billDetails.investor.tin}}</b>
+						</td>
+					</tr>
+					<tr>
+						<td colspan="4"></td>
+						<td colspan="3">Date of Commissioning
+						</td>
+					</tr>
+					<tr>
+						<td colspan="4"></td>
+						<td colspan="3">29.03.11(7 Nos. WEGs of 0.6MW each)<br>
+							30.03.11(3 Nos. WEGs of 0.6MW each)
+						</td>
+					</tr>
+					<tr class="text-center">
+						<td>S.No.</td>
+						<td colspan="3">PARTICULARS</td>
+						<td>UNITS</td>
+						<td>Rate per Unit</td>
+						<td>AMOUNT</td>
+					</tr>
+					<tr class="text-center">
+						<td>1</td>
+						<td colspan="3" style='width: 550px;'>
+							{{billDetails.investorConsumptionView.machines[0].particulars}}</td>
+						<td>{{billDetails.totalKWH}}</td>
+						<td>{{billDetails.kwhRate}}</td>
+						<td>{{billDetails.activeAmount}}</td>
+					</tr>
+					<tr class="text-center">
+						<td>2</td>
+						<td colspan="3">Less RKVH Charges</td>
+						<td>{{billDetails.totalRKVH}}</td>
+						<td>{{billDetails.rkvhRate}}</td>
+						<td>-{{billDetails.reactiveAmount}}</td>
+					</tr>
+					<tr class="text-center">
+						<td></td>
+						<td colspan="3"><b>TOTAL AMOUNT</b></td>
+						<td></td>
+						<td></td>
+						<td>{{billDetails.totalAmount}}</td>
+					</tr>
+					<tr class="text-center">
+						<td></td>
+						<td colspan="3"><b>TOTAL AMOUNT(Rounded off)</b></td>
+						<td></td>
+						<td></td>
+						<td>{{billDetails.totalAmountRoundoff}}</td>
+					</tr>
+					<tr class="text-center">
+						<td></td>
+						<td colspan="3"><b>Amount in Words</b></td>
+						<td colspan="3"><b>Rs. {{billDetails.totalAmountInWords}}</b></td>
+					</tr>
+					<tr>
+						<td colspan="7"><br>
+							<p style='float: right;'>for {{billDetails.investor.name |
+								uppercase}}</p> <br> <br> <br> <br>
+							<p style='float: right;'>Authorized Signatory</p> <br></td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+	</div>
+</div>
+<div class="container">
+	<button class="NonPrintable btn btn-default" type="button"
+		ng-click="viewBillDetailsCtrl.back()">Back to List Bill Page</button>
+	<button class="NonPrintable btn btn-primary" onclick="window.print()"
+		style="float: right">Print Bill</button>
+</div>
+<br>
+<br>
+<br>
+<br>

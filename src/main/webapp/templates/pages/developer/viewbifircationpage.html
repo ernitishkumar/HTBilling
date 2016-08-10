@@ -46,7 +46,7 @@
 			<table class="table table-bordered">
 				<tbody class="text-center">
 					<tr>
-						<td>SITE NAME: <b>{{investorConsumptions[0].consumption.plantCode|uppercase}}</b></td>
+						<td>SITE NAME:</td><td> <b>{{investorConsumptions[0].consumption.plantCode|uppercase}}</b></td>
 						<td>METER NO</td>
 						<td><b>{{investorConsumptions[0].consumption.meterNo}}</b></td>
 					</tr>
@@ -54,11 +54,13 @@
 						<td>MONTH</td>
 						<td>KWH EXPORT</td>
 						<td>RKVAH CONSUMED</td>
+						<td>TOTAL ADJUSTMENT</td>
 					</tr>
 					<tr>
 						<td><b>{{investorConsumptions[0].consumption.date}}</b></td>
 						<td><b>{{investorConsumptions[0].consumption.activeConsumption}}</b></td>
 						<td><b>{{investorConsumptions[0].consumption.reactiveConsumption}}</b></td>
+						<td><b>{{investorConsumptions[0].consumption.adjustment}}</b></td>
 					</tr>
 				</tbody>
 			</table>
@@ -76,6 +78,7 @@
 						<td><strong>Investor Name</strong></td>
 						<td class="text-right"><strong>KWH Export</strong></td>
 						<td class="text-right"><strong>RKVAH Consumed</strong></td>
+						<td class="text-right"><strong>Adjustment</strong></td>
 						<td ng-show="investorConsumptions[0].circleValidation"><strong>Bill</strong></td>
 					</tr>
 					<tr ng-repeat="investorData in investorConsumptions"
@@ -86,6 +89,7 @@
 						<td>{{investorData.investor.name}}</td>
 						<td class="text-right">{{investorData.activeConsumption}}</td>
 						<td class="text-right">{{investorData.reactiveConsumption}}</td>
+						<td class="text-right">{{investorData.adjustment}}</td>
 						<td ng-show="investorData.circleValidation">
 							<button type="button" class="btn btn-warning"
 								ng-hide="investorData.billGenerated || investorData.generating"
@@ -106,6 +110,7 @@
 						<td colspan="4"><strong>Grand Total</strong></td>
 						<td class="text-right"><b>{{investorConsumptions[0].consumption.activeConsumption}}</b></td>
 						<td class="text-right"><b>{{investorConsumptions[0].consumption.reactiveConsumption}}</b></td>
+						<td class="text-right"><b>{{investorConsumptions[0].consumption.adjustment}}</b></td>
 						<td ng-show="investorConsumptions[0].circleValidation"></td>
 					</tr>
 				</tbody>

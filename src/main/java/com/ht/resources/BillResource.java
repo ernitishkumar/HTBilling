@@ -159,6 +159,8 @@ public class BillResource {
 				float reactiveConsumption = investorConsumption.getReactiveConsumption();
 				//System.out.println("reactiveConsumption "+reactiveConsumption);
 				
+				float adjustment = investorConsumption.getAdjustment();
+				
 				float activeRate = machine.getActiveRate();
 				//System.out.println("activeRate "+activeRate);
 				
@@ -171,7 +173,7 @@ public class BillResource {
 				float reactiveAmount = reactiveConsumption * reactiveRate;
 				//System.out.println("reactiveAmount "+reactiveAmount);
 				
-				float totalAmount = (float)activeAmount - reactiveAmount;
+				float totalAmount = (float)activeAmount - (reactiveAmount + adjustment);
 				//System.out.println("total amount "+totalAmount);
 				
 				float totalAmountRoundOff = Math.round(totalAmount);
@@ -181,10 +183,10 @@ public class BillResource {
 				billDetails.setTotalRKVH(reactiveConsumption);
 				billDetails.setKwhRate(activeRate);
 				billDetails.setRkvhRate(reactiveRate);
-
+				
 				billDetails.setActiveAmount(activeAmount);
 				billDetails.setReactiveAmount(reactiveAmount);
-
+				billDetails.setAdjustment(adjustment);
 				billDetails.setTotalAmount(totalAmount);
 				billDetails.setTotalAmountRoundOff(totalAmountRoundOff);
 				

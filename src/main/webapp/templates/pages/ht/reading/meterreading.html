@@ -95,10 +95,22 @@
 							class="glyphicon glyphicon-calendar"></span>
 						</span>
 					</div>
+					
 					<span class="help-block" ng-show="lastReading">Last month
 						reading date <span class="badge">{{lastReading.readingDate}}</span>
 					</span>
 				</div>
+				
+				
+				<div class="form-group has-feedback">
+					<span class="glyphicon glyphicon-pencil"></span> <label>Total Adjustment Amount:
+					</label> <input class="form-control" type="number"
+						placeholder="Enter Current Month Amount for adjustment"
+						ng-model="readingCtrl.formData.adjustment"
+						required step="0.01" ng-change='error = null'>
+				</div>
+				
+				
 				<div class="form-group has-feedback">
 					<span class="glyphicon glyphicon-pencil"></span> <label>Active
 						Energy(KWH):</label> <input class="form-control" type="number"

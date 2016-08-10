@@ -78,44 +78,59 @@
                     </div>
                 </div>
                 <div class="form-group has-feedback">
+					<span class="glyphicon glyphicon-pencil"></span> <label>Total Adjustment Amount:
+					</label> <input class="form-control" type="number"
+						placeholder="Enter Current Month Amount for adjustment"
+						ng-model="srfrreadingCtrl.formData.adjustment"
+						required step="0.01" ng-change='error = null'>
+				</div>
+                <div class="form-group has-feedback">
                     <span class="glyphicon glyphicon-pencil"></span>
                     <label>Active Energy(KWH):</label>
-                    <input class="form-control" type="number" placeholder="Enter Current Month Active Energy" ng-model="srfrreadingCtrl.formData.activeEnergy" >
+                    <input class="form-control" type="number" placeholder="Enter Current Month Active Energy" 
+                    ng-model="srfrreadingCtrl.formData.activeEnergy" required step="0.01" ng-change='error = null'>
                 </div>
                 <div class="form-group has-feedback">
                     <span class="glyphicon glyphicon-pencil"></span>
                     <label>Enter Active Tod 1:</label>
-                    <input class="form-control" type="number" placeholder="Enter Current Month Tod 1" ng-model="srfrreadingCtrl.formData.activeTodOne" >
+                    <input class="form-control" type="number" placeholder="Enter Current Month Tod 1" 
+                    ng-model="srfrreadingCtrl.formData.activeTodOne" required step="0.01" ng-change='error = null'>
                 </div>
                 <div class="form-group has-feedback">
                     <span class="glyphicon glyphicon-pencil"></span>
                     <label>Enter Active Tod 2:</label>
-                    <input class="form-control" type="number" placeholder="Enter Current Month Tod 2" ng-model="srfrreadingCtrl.formData.activeTodTwo" >
+                    <input class="form-control" type="number" placeholder="Enter Current Month Tod 2" 
+                    ng-model="srfrreadingCtrl.formData.activeTodTwo" required step="0.01" ng-change='error = null'>
                 </div>
                 <div class="form-group has-feedback">
                     <span class="glyphicon glyphicon-pencil "></span>
                     <label>Enter Active Tod 3:</label>
-                    <input class="form-control " type="number" placeholder="Enter Current Month Tod 3" ng-model="srfrreadingCtrl.formData.activeTodThree" >
+                    <input class="form-control " type="number" placeholder="Enter Current Month Tod 3" 
+                    ng-model="srfrreadingCtrl.formData.activeTodThree" required step="0.01" ng-change='error = null'>
                 </div>
                 <div class="form-group has-feedback">
                     <span class="glyphicon glyphicon-pencil"></span>
                     <label>Enter Reactive Quadrant 1:</label>
-                    <input class="form-control" type="number" placeholder="Enter Current Month Reactive Quadrant 1" ng-model="srfrreadingCtrl.formData.reactiveQuadrantOne" >
+                    <input class="form-control" type="number" placeholder="Enter Current Month Reactive Quadrant 1" 
+                    ng-model="srfrreadingCtrl.formData.reactiveQuadrantOne" required step="0.01" ng-change='error = null'>
                 </div>
                 <div class="form-group has-feedback">
                     <span class="glyphicon glyphicon-pencil"></span>
                     <label>Enter Reactive Quadrant 2:</label>
-                    <input class="form-control" type="number" placeholder="Enter Current Month Reactive Quadrant 2" ng-model="srfrreadingCtrl.formData.reactiveQuadrantTwo" >
+                    <input class="form-control" type="number" placeholder="Enter Current Month Reactive Quadrant 2" 
+                    ng-model="srfrreadingCtrl.formData.reactiveQuadrantTwo" required step="0.01" ng-change='error = null'>
                 </div>
                 <div class="form-group has-feedback">
                     <span class="glyphicon glyphicon-pencil "></span>
                     <label>Enter Reactive Quadrant 3:</label>
-                    <input class="form-control " type="number" placeholder="Enter Current Month Reactive Quadrant 3" ng-model="srfrreadingCtrl.formData.reactiveQuadrantThree" >
+                    <input class="form-control " type="number" placeholder="Enter Current Month Reactive Quadrant 3" 
+                    ng-model="srfrreadingCtrl.formData.reactiveQuadrantThree" required step="0.01" ng-change='error = null'>
                 </div>
                 <div class="form-group has-feedback">
                     <span class="glyphicon glyphicon-pencil "></span>
                     <label>Enter Reactive Quadrant 4:</label>
-                    <input class="form-control " type="number" placeholder="Enter Reactive Quadrant 4" ng-model="srfrreadingCtrl.formData.reactiveQuadrantFour" >
+                    <input class="form-control " type="number" placeholder="Enter Reactive Quadrant 4" 
+                    ng-model="srfrreadingCtrl.formData.reactiveQuadrantFour" required step="0.01" ng-change='error = null'>
                 </div>
                 
                 Check Meter: <span class="label label-default">{{formData.checkMeterNo}}</span></span>
@@ -123,82 +138,98 @@
                 <div class="form-group has-feedback">
                     <span class="glyphicon glyphicon-pencil"></span>
                     <label>Previous Check Meter Active Energy(KWH):</label>
-                    <input class="form-control" type="number" placeholder="Enter Previous Month Check Meter Active Energy" ng-model="srfrreadingCtrl.formData.preCheckActiveEnergy">
+                    <input class="form-control" type="number" placeholder="Enter Previous Month Check Meter Active Energy" 
+                    ng-model="srfrreadingCtrl.formData.preCheckActiveEnergy" required step="0.01" ng-change='error = null'>
                 </div>
                 <div class="form-group has-feedback">
                     <span class="glyphicon glyphicon-pencil"></span>
                     <label>Previous Check Meter Active Tod 1:</label>
-                    <input class="form-control" type="number" placeholder="Enter Previous Month Check Meter Tod 1" ng-model="srfrreadingCtrl.formData.preCheckActiveTodOne">
+                    <input class="form-control" type="number" placeholder="Enter Previous Month Check Meter Tod 1" 
+                    ng-model="srfrreadingCtrl.formData.preCheckActiveTodOne" required step="0.01" ng-change='error = null'>
                 </div>
                 <div class="form-group has-feedback">
                     <span class="glyphicon glyphicon-pencil"></span>
                     <label>Previous Check Meter Active Tod 2:</label>
-                    <input class="form-control" type="number" placeholder="Enter Previous Month Check Meter Tod 2" ng-model="srfrreadingCtrl.formData.preCheckActiveTodTwo">
+                    <input class="form-control" type="number" placeholder="Enter Previous Month Check Meter Tod 2" 
+                    ng-model="srfrreadingCtrl.formData.preCheckActiveTodTwo" required step="0.01" ng-change='error = null'>
                 </div>
                 <div class="form-group has-feedback">
                     <span class="glyphicon glyphicon-pencil "></span>
                     <label>Previous Check Meter Active Tod 3:</label>
-                    <input class="form-control " type="number" placeholder="Enter Previous Month Check Meter Tod 3" ng-model="srfrreadingCtrl.formData.preCheckActiveTodThree">
+                    <input class="form-control " type="number" placeholder="Enter Previous Month Check Meter Tod 3" 
+                    ng-model="srfrreadingCtrl.formData.preCheckActiveTodThree" required step="0.01" ng-change='error = null'>
                 </div>
                 <div class="form-group has-feedback">
                     <span class="glyphicon glyphicon-pencil"></span>
                     <label>Previous Check Meter Reactive Quadrant 1:</label>
-                    <input class="form-control" type="number" placeholder="Enter Previous Month Check Meter Reactive Quadrant 1" ng-model="srfrreadingCtrl.formData.preCheckReactiveQuadrantOne">
+                    <input class="form-control" type="number" placeholder="Enter Previous Month Check Meter Reactive Quadrant 1" 
+                    ng-model="srfrreadingCtrl.formData.preCheckReactiveQuadrantOne" required step="0.01" ng-change='error = null'>
                 </div>
                 <div class="form-group has-feedback">
                     <span class="glyphicon glyphicon-pencil"></span>
                     <label>Previous Check Meter Reactive Quadrant 2:</label>
-                    <input class="form-control" type="number" placeholder="Enter Previous Month Check Meter Reactive Quadrant 2" ng-model="srfrreadingCtrl.formData.preCheckReactiveQuadrantTwo" >
+                    <input class="form-control" type="number" placeholder="Enter Previous Month Check Meter Reactive Quadrant 2" 
+                    ng-model="srfrreadingCtrl.formData.preCheckReactiveQuadrantTwo" required step="0.01" ng-change='error = null'>
                 </div>
                 <div class="form-group has-feedback">
                     <span class="glyphicon glyphicon-pencil "></span>
                     <label>Previous Check Meter Reactive Quadrant 3:</label>
-                    <input class="form-control " type="number" placeholder="Enter Previous Month Check Meter Reactive Quadrant 3" ng-model="srfrreadingCtrl.formData.preCheckReactiveQuadrantThree" >
+                    <input class="form-control " type="number" placeholder="Enter Previous Month Check Meter Reactive Quadrant 3" 
+                    ng-model="srfrreadingCtrl.formData.preCheckReactiveQuadrantThree" required step="0.01" ng-change='error = null'>
                 </div>
                 <div class="form-group has-feedback">
                     <span class="glyphicon glyphicon-pencil "></span>
                     <label>Previous Check Meter Reactive Quadrant 4:</label>
-                    <input class="form-control " type="number" placeholder="Enter Previous Month Check Meter Reactive Quadrant 4" ng-model="srfrreadingCtrl.formData.preCheckReactiveQuadrantFour" >
+                    <input class="form-control " type="number" placeholder="Enter Previous Month Check Meter Reactive Quadrant 4" 
+                    ng-model="srfrreadingCtrl.formData.preCheckReactiveQuadrantFour" required step="0.01" ng-change='error = null'>
                 </div>
                 <div class="form-group has-feedback">
                     <span class="glyphicon glyphicon-pencil"></span>
                     <label>Current Check Meter Active Energy(KWH):</label>
-                    <input class="form-control" type="number" placeholder="Enter Current Month Check Meter Active Energy" ng-model="srfrreadingCtrl.formData.curCheckActiveEnergy">
+                    <input class="form-control" type="number" placeholder="Enter Current Month Check Meter Active Energy" 
+                    ng-model="srfrreadingCtrl.formData.curCheckActiveEnergy" required step="0.01" ng-change='error = null'>
                 </div>
                 <div class="form-group has-feedback">
                     <span class="glyphicon glyphicon-pencil"></span>
                     <label>Current Check Meter Active Tod 1:</label>
-                    <input class="form-control" type="number" placeholder="Enter Current Month Check Meter Tod 1" ng-model="srfrreadingCtrl.formData.curCheckActiveTodOne" >
+                    <input class="form-control" type="number" placeholder="Enter Current Month Check Meter Tod 1" 
+                    ng-model="srfrreadingCtrl.formData.curCheckActiveTodOne" required step="0.01" ng-change='error = null'>
                 </div>
                 <div class="form-group has-feedback">
                     <span class="glyphicon glyphicon-pencil"></span>
                     <label>Current Check Meter Active Tod 2:</label>
-                    <input class="form-control" type="number" placeholder="Enter Current Month Check Meter Tod 2" ng-model="srfrreadingCtrl.formData.curCheckActiveTodTwo" >
+                    <input class="form-control" type="number" placeholder="Enter Current Month Check Meter Tod 2" 
+                    ng-model="srfrreadingCtrl.formData.curCheckActiveTodTwo" required step="0.01" ng-change='error = null'>
                 </div>
                 <div class="form-group has-feedback">
                     <span class="glyphicon glyphicon-pencil "></span>
                     <label>Current Check Meter Active Tod 3:</label>
-                    <input class="form-control " type="number" placeholder="Enter Current Month Check Meter Tod 3" ng-model="srfrreadingCtrl.formData.curCheckActiveTodThree" >
+                    <input class="form-control " type="number" placeholder="Enter Current Month Check Meter Tod 3" 
+                    ng-model="srfrreadingCtrl.formData.curCheckActiveTodThree" required step="0.01" ng-change='error = null'>
                 </div>
                 <div class="form-group has-feedback">
                     <span class="glyphicon glyphicon-pencil"></span>
                     <label>Current Check Meter Reactive Quadrant 1:</label>
-                    <input class="form-control" type="number" placeholder="Enter Current Month Check Meter Reactive Quadrant 1" ng-model="srfrreadingCtrl.formData.curCheckReactiveQuadrantOne" >
+                    <input class="form-control" type="number" placeholder="Enter Current Month Check Meter Reactive Quadrant 1" 
+                    ng-model="srfrreadingCtrl.formData.curCheckReactiveQuadrantOne" required step="0.01" ng-change='error = null'>
                 </div>
                 <div class="form-group has-feedback">
                     <span class="glyphicon glyphicon-pencil"></span>
                     <label>Current Check Meter Reactive Quadrant 2:</label>
-                    <input class="form-control" type="number" placeholder="Enter Current Month Check Meter Reactive Quadrant 2" ng-model="srfrreadingCtrl.formData.curCheckReactiveQuadrantTwo" >
+                    <input class="form-control" type="number" placeholder="Enter Current Month Check Meter Reactive Quadrant 2" 
+                    ng-model="srfrreadingCtrl.formData.curCheckReactiveQuadrantTwo" required step="0.01" ng-change='error = null'>
                 </div>
                 <div class="form-group has-feedback">
                     <span class="glyphicon glyphicon-pencil "></span>
                     <label>Current Check Meter Reactive Quadrant 3:</label>
-                    <input class="form-control " type="number" placeholder="Enter Current Month Check Meter Reactive Quadrant 3" ng-model="srfrreadingCtrl.formData.curCheckReactiveQuadrantThree" >
+                    <input class="form-control " type="number" placeholder="Enter Current Month Check Meter Reactive Quadrant 3" 
+                    ng-model="srfrreadingCtrl.formData.curCheckReactiveQuadrantThree" required step="0.01" ng-change='error = null'>
                 </div>
                 <div class="form-group has-feedback">
                     <span class="glyphicon glyphicon-pencil "></span>
                     <label>Current Check Meter Reactive Quadrant 4:</label>
-                    <input class="form-control " type="number" placeholder="Enter Current Month Check Meter Reactive Quadrant 4" ng-model="srfrreadingCtrl.formData.curCheckReactiveQuadrantFour" >
+                    <input class="form-control " type="number" placeholder="Enter Current Month Check Meter Reactive Quadrant 4" 
+                    ng-model="srfrreadingCtrl.formData.curCheckReactiveQuadrantFour" required step="0.01" ng-change='error = null'>
                 </div>
                 
                 <div class="form-group ">

@@ -20,7 +20,7 @@ public class ConsumptionsDAO {
 		//automatically closing them. Works with Java 1.7 and higher
 		try(
 				Connection connection = GlobalResources.getDatasource().getConnection();
-				PreparedStatement ps = connection.prepareStatement("insert into consumptions (meter_no, date, active_consumption, reactive_consumption, plant_id, plant_code, meter_reading_id, consumption_bifercated) values(?,?,?,?,?,?,?,?)",Statement.RETURN_GENERATED_KEYS);
+				PreparedStatement ps = connection.prepareStatement("insert into consumptions (meter_no, date, active_consumption, reactive_consumption, plant_id, plant_code, meter_reading_id, consumption_bifercated, total_adjustment) values(?,?,?,?,?,?,?,?,?)",Statement.RETURN_GENERATED_KEYS);
 				) {
 			ps.setString(1,consumption.getMeterNo());
 			ps.setString(2, consumption.getDate());
@@ -30,6 +30,7 @@ public class ConsumptionsDAO {
 			ps.setString(6, consumption.getPlantCode());
 			ps.setInt(7, consumption.getMeterReadingId());
 			ps.setInt(8, consumption.getConsumptionBifurcated());
+			ps.setFloat(9, consumption.getAdjustment());
 			ps.executeUpdate();
 			ResultSet keys = ps.getGeneratedKeys();    
 			keys.next();  
@@ -46,7 +47,7 @@ public class ConsumptionsDAO {
 		Consumption updatedConsumption = null;
 		try(
 				Connection connection = GlobalResources.getDatasource().getConnection();
-				PreparedStatement ps = connection.prepareStatement("update consumptions set meter_no=?, date=?, active_consumption=?, reactive_consumption=?, plant_id=?, plant_code=?, meter_reading_id=?, consumption_bifercated=? where id=?");
+				PreparedStatement ps = connection.prepareStatement("update consumptions set meter_no=?, date=?, active_consumption=?, reactive_consumption=?, plant_id=?, plant_code=?, meter_reading_id=?, consumption_bifercated=?, total_adjustment=? where id=?");
 				) {
 			ps.setString(1,consumption.getMeterNo());
 			ps.setString(2, consumption.getDate());
@@ -56,7 +57,8 @@ public class ConsumptionsDAO {
 			ps.setString(6, consumption.getPlantCode());
 			ps.setInt(7, consumption.getMeterReadingId());
 			ps.setInt(8, consumption.getConsumptionBifurcated());
-			ps.setInt(9, consumption.getId());
+			ps.setFloat(9, consumption.getAdjustment());
+			ps.setInt(10, consumption.getId());
 			ps.executeUpdate();
 			updatedConsumption = getById(consumption.getId()); 
 		} catch (SQLException e) {
@@ -327,6 +329,7 @@ public class ConsumptionsDAO {
 				consumption.setPlantCode(rs.getString(7));
 				consumption.setMeterReadingId(rs.getInt(8));
 				consumption.setConsumptionBifurcated(rs.getInt(9));
+				consumption.setAdjustment(rs.getFloat(10));
 				consumptionsList.add(consumption);
 			}
 		} catch (SQLException e) {

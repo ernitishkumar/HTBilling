@@ -155,51 +155,7 @@ angular.module("htBillingApp").controller('UpdateMeterReadingController', ['$htt
 	};
 	
 	
-	/*
-	 * isValidMeterno function to check validity of meterno provided by the user
-	 
-	this.isValidMeterno = function () {
-
-		if ($scope.meternoForm.meterno.$dirty && $scope.meternoForm.meterno.$valid) {
-			$scope.plainmeter = true;
-			$scope.metervalid = false;
-			$scope.meternotvalid = false;
-			$http({
-				method: 'GET',
-				url: 'backend/plants/meterno/'+this.formData.meterno
-			}).then(
-					function(response) {
-						var status = response.status;
-						if (status === 200) {
-							var meterData = response.data;
-							$scope.formData.mf = meterData.meter.mf;
-							$scope.formData.location = meterData.plant.name;
-							$scope.plainmeter = false;
-							$scope.metervalid = true;
-							$scope.meternotvalid = false;
-							$scope.lastReading = meterData.currentReading;
-						} else {
-							$scope.plainmeter = false;
-							$scope.metervalid = false;
-							$scope.meternotvalid = true;
-							$scope.error="Given Meter is not installed on any plant. Provide a different number";
-						}
-					},
-					function(error){
-						$scope.plainmeter = false;
-						$scope.metervalid = false;
-						$scope.meternotvalid = true;
-						$scope.error="Given Meter is not installed on any plant. Provide a different number";
-					}
-			);
-		} else {
-			$scope.plainmeter = false;
-			$scope.metervalid = false;
-			$scope.meternotvalid = true;
-		}
-
-	};*/
-
+	
 	this.processForm = function () {
 		console.log($scope.reading.readingDate);
 			var res = $scope.reading.activeTodOne + $scope.reading.activeTodTwo + $scope.reading.activeTodThree;

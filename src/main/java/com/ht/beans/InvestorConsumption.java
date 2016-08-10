@@ -12,6 +12,7 @@ public class InvestorConsumption {
 	private float reactiveConsumption;
     private int circleValidation;
     private int billGenerated;
+    private float adjustment;
     
 	public int getId() {
 		return id;
@@ -45,6 +46,12 @@ public class InvestorConsumption {
 		this.reactiveConsumption = reactiveConsumption;
 	}
 	
+	public float getAdjustment() {
+		return adjustment;
+	}
+	public void setAdjustment(float adjustment) {
+		this.adjustment = adjustment;
+	}
 	/**
 	 * @return the circleValidation
 	 */
@@ -69,15 +76,15 @@ public class InvestorConsumption {
 	public void setBillGenerated(int billGenerated) {
 		this.billGenerated = billGenerated;
 	}
-	/* (non-Javadoc)
-	 * @see java.lang.Object#toString()
-	 */
 	@Override
 	public String toString() {
 		return "InvestorConsumption [id=" + id + ", consumptionId=" + consumptionId + ", investorId=" + investorId
 				+ ", activeConsumption=" + activeConsumption + ", reactiveConsumption=" + reactiveConsumption
-				+ ", circleValidation=" + circleValidation + ", billGenerated=" + billGenerated + "]";
+				+ ", circleValidation=" + circleValidation + ", billGenerated=" + billGenerated + ", adjustment="
+				+ adjustment + "]";
 	}
+	
+	
 	
 	
 }

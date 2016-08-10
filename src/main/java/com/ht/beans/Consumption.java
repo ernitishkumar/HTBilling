@@ -14,6 +14,7 @@ public class Consumption {
 	private String plantCode;
 	private int meterReadingId;
 	private int consumptionBifurcated;
+	private float adjustment;
     
 	public int getId() {
 		return id;
@@ -71,15 +72,19 @@ public class Consumption {
 		this.consumptionBifurcated = consumptionBifercated;
 	}
 	
-	/* (non-Javadoc)
-	 * @see java.lang.Object#toString()
-	 */
+	
+	public float getAdjustment() {
+		return adjustment;
+	}
+	public void setAdjustment(float adjustment) {
+		this.adjustment = adjustment;
+	}
 	@Override
 	public String toString() {
 		return "Consumption [id=" + id + ", meterNo=" + meterNo + ", date=" + date + ", activeConsumption="
 				+ activeConsumption + ", reactiveConsumption=" + reactiveConsumption + ", plantId=" + plantId
-				+ ", plantCode=" + plantCode + ", meterReadingId=" + meterReadingId + ", consumptionBifercated="
-				+ consumptionBifurcated + "]";
+				+ ", plantCode=" + plantCode + ", meterReadingId=" + meterReadingId + ", consumptionBifurcated="
+				+ consumptionBifurcated + ", adjustment=" + adjustment + "]";
 	}
 	
 }

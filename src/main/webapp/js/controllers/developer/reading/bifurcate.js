@@ -98,6 +98,13 @@ angular.module("htBillingApp").controller('BifircateReadingsController', ['$http
 				}
 		);
 	};
+	
+	/*
+	 * back function to go back to the last page.
+	 */
+	this.back = function () {
+		window.history.back();
+	};
 
 	/*
 	 * function to save bifurcated investors wise readings
@@ -108,13 +115,15 @@ angular.module("htBillingApp").controller('BifircateReadingsController', ['$http
 		var consumption = $scope.consumption;
 		var totalActive = 0;
 		var totalReactive = 0;
+		var totalAdjustment = 0;
 		investors.forEach(function (item) {
 			totalActive += item.activeConsumption;
 			totalReactive += item.reactiveConsumption;
+			totalAdjustment += item.adjustment;
 			item.consumptionId = consumption.id;
 			item.investorId = item.investor.id;
 		});
-		if (totalActive === consumption.activeConsumption && totalReactive === consumption.reactiveConsumption) {
+		if (totalActive === consumption.activeConsumption && totalReactive === consumption.reactiveConsumption && totalAdjustment === consumption.adjustment) {
 			$http(
 					{
 						method: 'POST',

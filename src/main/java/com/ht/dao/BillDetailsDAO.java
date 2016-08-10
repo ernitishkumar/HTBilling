@@ -24,7 +24,7 @@ public class BillDetailsDAO {
 		try {
 			//obtaining connection from connection pool
 			connection = GlobalResources.getDatasource().getConnection();
-			PreparedStatement ps = connection.prepareStatement("insert into bill_details (bill_no, invoice_no, meter_readings_id, investor_id, consumption_id, consumption_bifurcation_id,meter_no, reading_date, bill_generation_date, total_kwh, total_rkvh, kwh_rate, rkvh_rate, active_amount, reactive_amount, total_amount, total_amount_roundoff,total_amount_in_words,plant_id) values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)",Statement.RETURN_GENERATED_KEYS);
+			PreparedStatement ps = connection.prepareStatement("insert into bill_details (bill_no, invoice_no, meter_readings_id, investor_id, consumption_id, consumption_bifurcation_id,meter_no, reading_date, bill_generation_date, total_kwh, total_rkvh, kwh_rate, rkvh_rate, active_amount, reactive_amount, total_amount, total_amount_roundoff,total_amount_in_words,plant_id,adjustment) values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)",Statement.RETURN_GENERATED_KEYS);
 			ps.setString(1,"");
 			ps.setString(2, billDetails.getInvoiceNo());
 			ps.setInt(3, billDetails.getMeterReadingId());
@@ -44,6 +44,7 @@ public class BillDetailsDAO {
 			ps.setFloat(17, billDetails.getTotalAmountRoundOff());
 			ps.setString(18,billDetails.getTotalAmountInWords());
 			ps.setInt(19,billDetails.getPlantId());
+			ps.setFloat(20, billDetails.getAdjustment());
 			ps.executeUpdate();
 			ResultSet keys = ps.getGeneratedKeys();    
 			keys.next();  
@@ -71,7 +72,7 @@ public class BillDetailsDAO {
 		Connection connection = null;
 		try {
 			connection = GlobalResources.getDatasource().getConnection();
-			PreparedStatement ps = connection.prepareStatement("update bill_details set bill_no=?, invoice_no=?, meter_readings_id=?, investor_id=?, consumption_id=?, consumption_bifurcation_id=?,meter_no=?, reading_date=?, bill_generation_date=?, total_kwh=?, total_rkvh=?, kwh_rate=?, rkvh_rate=?, active_amount=?, reactive_amount=?, total_amount=?, total_amount_roundoff=?,total_amount_in_words=?,plant_id=? where id = ?");
+			PreparedStatement ps = connection.prepareStatement("update bill_details set bill_no=?, invoice_no=?, meter_readings_id=?, investor_id=?, consumption_id=?, consumption_bifurcation_id=?,meter_no=?, reading_date=?, bill_generation_date=?, total_kwh=?, total_rkvh=?, kwh_rate=?, rkvh_rate=?, active_amount=?, reactive_amount=?, total_amount=?, total_amount_roundoff=?,total_amount_in_words=?,plant_id=?,adjustment=? where id = ?");
 			ps.setString(1,billDetails.getBillNo());
 			ps.setString(2, billDetails.getInvoiceNo());
 			ps.setInt(3, billDetails.getMeterReadingId());
@@ -91,7 +92,8 @@ public class BillDetailsDAO {
 			ps.setFloat(17, billDetails.getTotalAmountRoundOff());
 			ps.setString(18,billDetails.getTotalAmountInWords());
 			ps.setInt(19,billDetails.getPlantId());
-			ps.setInt(20, billDetails.getId());
+			ps.setFloat(20, billDetails.getAdjustment());
+			ps.setInt(21, billDetails.getId());
 			ps.executeUpdate();
 			ps.close();
 			updatedBillDetails = getById(billDetails.getId());
@@ -349,6 +351,7 @@ public class BillDetailsDAO {
 				billDetails.setTotalAmountRoundOff(rs.getFloat(18));
 				billDetails.setTotalAmountInWords(rs.getString(19));
 				billDetails.setPlantId(rs.getInt(20));
+				billDetails.setAdjustment(rs.getFloat(21));
 				billDetailsList.add(billDetails);
 			}
 		} catch (SQLException e) {

@@ -22,6 +22,7 @@ public class BillDetails {
 	private float totalAmountRoundOff;
 	private String totalAmountInWords;
 	private int plantId;
+	private float adjustment;
 	
 	public int getId() {
 		return id;
@@ -166,6 +167,12 @@ public class BillDetails {
 		this.plantId = plantId;
 	}
 	
+	public float getAdjustment() {
+		return adjustment;
+	}
+	public void setAdjustment(float adjustment) {
+		this.adjustment = adjustment;
+	}
 	/**
 	 * @param id
 	 * @param billNo
@@ -234,11 +241,13 @@ public class BillDetails {
 	 * @param totalAmountRoundOff
 	 * @param totalAmountInWords
 	 * @param particulars
-	 */
+	 * @param adjustment
+	 */	
 	public BillDetails(String billNo, String invoiceNo, int meterReadingId, int investorId, int consumptionId,
 			int consumptionBifurcationId, String meterNo, String readingDate, String billGenerationDate, float totalKWH,
 			float totalRKVH, float kwhRate, float rkvhRate, float activeAmount, float reactiveAmount, float totalAmount,
-			float totalAmountRoundOff, String totalAmountInWords,int plantId) {
+			float totalAmountRoundOff, String totalAmountInWords, int plantId, float adjustment) {
+		super();
 		this.billNo = billNo;
 		this.invoiceNo = invoiceNo;
 		this.meterReadingId = meterReadingId;
@@ -258,11 +267,8 @@ public class BillDetails {
 		this.totalAmountRoundOff = totalAmountRoundOff;
 		this.totalAmountInWords = totalAmountInWords;
 		this.plantId = plantId;
+		this.adjustment = adjustment;
 	}
-	
-	/* (non-Javadoc)
-	 * @see java.lang.Object#toString()
-	 */
 	@Override
 	public String toString() {
 		return "BillDetails [id=" + id + ", billNo=" + billNo + ", invoiceNo=" + invoiceNo + ", meterReadingId="
@@ -271,9 +277,8 @@ public class BillDetails {
 				+ readingDate + ", billGenerationDate=" + billGenerationDate + ", totalKWH=" + totalKWH + ", totalRKVH="
 				+ totalRKVH + ", kwhRate=" + kwhRate + ", rkvhRate=" + rkvhRate + ", activeAmount=" + activeAmount
 				+ ", reactiveAmount=" + reactiveAmount + ", totalAmount=" + totalAmount + ", totalAmountRoundOff="
-				+ totalAmountRoundOff + ", totalAmountInWords=" + totalAmountInWords
-				+ ", plantId="+plantId
-				+ "]";
+				+ totalAmountRoundOff + ", totalAmountInWords=" + totalAmountInWords + ", plantId=" + plantId
+				+ ", adjustment=" + adjustment + "]";
 	}
 	
 	public BillDetails(){

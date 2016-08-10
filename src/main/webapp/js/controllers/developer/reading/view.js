@@ -124,6 +124,7 @@ angular.module("htBillingApp").controller('DeveloperViewMeterReadingsController'
 						//every validation.
 						var item = $scope.readingData[index];
 						if(item.meterNo === reading.meterNo){
+							console.log(item);
 							if ($scope.userRole.role === 'developer') {
 								item.currentMeterReading.developerValidation = 1;
 								//creating consumption data to be inserted into backend
@@ -137,7 +138,7 @@ angular.module("htBillingApp").controller('DeveloperViewMeterReadingsController'
 								
 								//As per new guidelines adding only Q2 and Q4 for bill generation. Will change after new orders
 								consumptionData.reactiveConsumption = parseFloat(item.quadrantTwoConsumption) + parseFloat(item.quadrantFourConsumption);
-
+								consumptionData.adjustment = parseFloat(item.currentMeterReading.adjustment);
 
 								//making http request to save the consumption data at the backend
 								$http(

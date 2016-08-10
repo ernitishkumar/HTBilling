@@ -50,7 +50,7 @@
 					&nbsp;&nbsp;&nbsp; <br>
 					<br>Mf of Meter: <b>{{reading.currentMeterReading.mf}}</b>
 					&nbsp;&nbsp;&nbsp; Site Location: <b>{{reading.plant.address|uppercase}}</b>
-					&nbsp;&nbsp;&nbsp;
+					&nbsp;&nbsp;&nbsp; Adjustment Amount: <b>{{reading.currentMeterReading.adjustment}}</b>
 					<button type="button" class="btn btn-success" name="validateButton"
 						ng-click="viewMeterReadingsCtrl.validateReading(reading,((currentPage- 1)*pageSize + $index))"
 						ng-hide="reading.currentMeterReading.discardedFlag || reading.currentMeterReading.htCellValidation">Validate

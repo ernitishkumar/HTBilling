@@ -16,6 +16,7 @@ public class InvestorConsumptionView {
 	private int billGenerated;
 	private List<Machine> machines;
 	private int billDetailsId;
+	private float adjustment;
 	
 	public int getId() {
 		return id;
@@ -89,15 +90,19 @@ public class InvestorConsumptionView {
 	public void setBillDetailsId(int billDetailsId) {
 		this.billDetailsId = billDetailsId;
 	}
-	/* (non-Javadoc)
-	 * @see java.lang.Object#toString()
-	 */
+	
+	public float getAdjustment() {
+		return adjustment;
+	}
+	public void setAdjustment(float adjustment) {
+		this.adjustment = adjustment;
+	}
 	@Override
 	public String toString() {
 		return "InvestorConsumptionView [id=" + id + ", consumption=" + consumption + ", investor=" + investor
 				+ ", activeConsumption=" + activeConsumption + ", reactiveConsumption=" + reactiveConsumption
 				+ ", circleValidation=" + circleValidation + ", billGenerated=" + billGenerated + ", machines="
-				+ machines + ", billDetailsId=" + billDetailsId + "]";
+				+ machines + ", billDetailsId=" + billDetailsId + ", adjustment=" + adjustment + "]";
 	}
 	
 }

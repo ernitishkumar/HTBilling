@@ -39,6 +39,8 @@ public class MeterReading {
 	private String discardedOn;
 	
 	private int srfrFlag;
+	
+	private float adjustment;
 
 	public int getId() {
 		return id;
@@ -192,11 +194,19 @@ public class MeterReading {
 	public void setSrfrFlag(int srfrFlag) {
 		this.srfrFlag = srfrFlag;
 	}
+	
+	public float getAdjustment() {
+		return adjustment;
+	}
+
+	public void setAdjustment(float adjustment) {
+		this.adjustment = adjustment;
+	}
 
 	/* (non-Javadoc)
 	 * @see java.lang.Object#toString()
 	 */
-	
+
 	@Override
 	public String toString() {
 		return "MeterReading [id=" + id + ", meterno=" + meterno + ", mf=" + mf + ", readingDate=" + readingDate
@@ -206,7 +216,7 @@ public class MeterReading {
 				+ ", reactiveQuadrantFour=" + reactiveQuadrantFour + ", htCellValidation=" + htCellValidation
 				+ ", circleCellValidation=" + circleCellValidation + ", developerValidation=" + developerValidation
 				+ ", discardedFlag=" + discardedFlag + ", discardedBy=" + discardedBy + ", discardedOn=" + discardedOn
-				+ ", srfrFlag=" + srfrFlag + "]";
+				+ ", srfrFlag=" + srfrFlag + ", adjustment=" + adjustment + "]";
 	}
 
 	

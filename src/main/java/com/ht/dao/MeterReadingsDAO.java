@@ -310,12 +310,10 @@ public class MeterReadingsDAO {
 		try(
 				Connection connection = GlobalResources.getDatasource().getConnection();
 				PreparedStatement ps = connection.prepareStatement(
-						"select max(id) as mid from meter_readings where meter_no=? and id not in (select max(id) as mid from meter_readings where meter_no=?) "
-						+ "and id not in (select max(id) from meter_readings where meter_no=? and discarded_flag=1)");
+						"select max(id) as mid from meter_readings where meter_no=? and discarded_flag=0 and id < (select max(id) as mid from meter_readings where meter_no=? and discarded_flag=0)");
 				) {
 			ps.setString(1, meterNo);
 			ps.setString(2, meterNo);
-			ps.setString(3, meterNo);
 			ResultSet resultSet = ps.executeQuery();
 			while (resultSet.next()) {
 				id = resultSet.getInt(1);
@@ -510,12 +508,10 @@ public class MeterReadingsDAO {
 		try(
 				Connection connection = GlobalResources.getDatasource().getConnection();
 				PreparedStatement ps = connection.prepareStatement(
-						"select max(id) as mid from meter_readings where meter_no=? and id not in (select max(id) as mid from meter_readings where meter_no=?) "
-						+ "and id not in (select max(id) as mid from meter_readings where meter_no=? and discarded_flag=1)");
+						"select max(id) as mid from meter_readings where meter_no=? and discarded_flag=0 and id < (select max(id) as mid from meter_readings where meter_no=? and discarded_flag=0)");
 					) {
 			ps.setString(1, meterNo);
 			ps.setString(2, meterNo);
-			ps.setString(3, meterNo);
 			ResultSet rs = ps.executeQuery();
 			while (rs.next()) {
 				id = rs.getInt(1);

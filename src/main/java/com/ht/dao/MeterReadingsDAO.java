@@ -290,6 +290,7 @@ public class MeterReadingsDAO {
 		int id = -1;
 		try(
 				Connection connection = GlobalResources.getDatasource().getConnection();
+				//Added discarded flag check to prevent discarded reading to be used
 				PreparedStatement ps = connection.prepareStatement("select max(id) from meter_readings where meter_no=? and discarded_flag=0");
 				) {
 			ps.setString(1, meterNo);
@@ -309,6 +310,8 @@ public class MeterReadingsDAO {
 		int id = -1;
 		try(
 				Connection connection = GlobalResources.getDatasource().getConnection();
+				//Added discarded flag check to prevent discarded reading to be used
+				// TODO check where condition of query to get the previous month readings which is not discarded.
 				PreparedStatement ps = connection.prepareStatement(
 						"select max(id) as mid from meter_readings where meter_no=? and discarded_flag=0 and id < (select max(id) as mid from meter_readings where meter_no=? and discarded_flag=0)");
 				) {
@@ -394,6 +397,7 @@ public class MeterReadingsDAO {
 		MeterReading meterReading = new MeterReading();
 		int id = -1;
 		try(
+				//Added discarded flag check to prevent discarded reading to be used
 				Connection connection = GlobalResources.getDatasource().getConnection();
 				PreparedStatement ps = connection.prepareStatement("select max(id) from meter_readings where meter_no=? and discarded_flag=0");
 				) {
@@ -506,6 +510,8 @@ public class MeterReadingsDAO {
 		MeterReading meterReading = new MeterReading();
 		int id = -1;
 		try(
+				//Added discarded flag check to prevent discarded reading to be used
+				// TODO check where condition of query to get the previous month readings which is not discarded.
 				Connection connection = GlobalResources.getDatasource().getConnection();
 				PreparedStatement ps = connection.prepareStatement(
 						"select max(id) as mid from meter_readings where meter_no=? and discarded_flag=0 and id < (select max(id) as mid from meter_readings where meter_no=? and discarded_flag=0)");

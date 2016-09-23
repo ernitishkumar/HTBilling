@@ -121,5 +121,17 @@ public class Developer {
     public void setUsername(String username){
         this.username=username;
     }
+
+	/* (non-Javadoc)
+	 * @see java.lang.Object#toString()
+	 */
+	@Override
+	public String toString() {
+		return "Developer [id=" + id + ", name=" + name + ", cin=" + cin + ", officeAddress=" + officeAddress
+				+ ", officeContactNo=" + officeContactNo + ", officeContactPerson=" + officeContactPerson
+				+ ", officeEmail=" + officeEmail + ", siteAddress=" + siteAddress + ", siteContactNo=" + siteContactNo
+				+ ", siteContactPerson=" + siteContactPerson + ", siteEmail=" + siteEmail + ", username=" + username
+				+ "]";
+	}
 	
 }

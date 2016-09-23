@@ -75,7 +75,7 @@
 			<version>2.6.2</version>
 		</dependency>
 
-		<!-- Adding tomcat-jdbc jar for connection pooling feature -->
+		<!-- Adding tomcat-jdbc dbcp jar for connection pooling feature -->
 		<dependency>
 			<groupId>org.apache.tomcat</groupId>
 			<artifactId>tomcat-jdbc</artifactId>

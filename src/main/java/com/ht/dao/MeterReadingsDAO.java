@@ -36,6 +36,7 @@ public class MeterReadingsDAO {
 			Calendar c = Calendar.getInstance();
 			try {
 				c.setTime(formatter.parse(latestInsertedReading.getReadingDate()));
+			
 				int lastReadingMonth = c.get(Calendar.MONTH) + 1;
 				c.setTime(formatter.parse(reading.getReadingDate()));
 				int currentReadingMonth = c.get(Calendar.MONTH) + 1;

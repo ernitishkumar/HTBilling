@@ -19,7 +19,7 @@ public class UserDAO {
 			ps.setString(1,username);
 			ResultSet rs = ps.executeQuery();
 			while(rs.next()){
-				user=new User(rs.getString("username").trim(),rs.getString("password").trim(),rs.getString("name").trim());
+				user=new User(rs.getInt("id"),rs.getString("username").trim(),rs.getString("password").trim(),rs.getString("name").trim());
 			}
 		}catch(SQLException sqlException){
 			System.out.println("Exception in class UserDAO : method : getByUsername(String) : "+sqlException);

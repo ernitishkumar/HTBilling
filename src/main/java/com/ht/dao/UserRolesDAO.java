@@ -62,7 +62,7 @@ public class UserRolesDAO {
 		} catch (SQLException e) {
 			System.out.println("Exception in class : UserRolesDAO : method : [getByUsername(String username)] "+e);
 		}
-		return userRoles.get(0);
+		return userRoles.size() > 0? userRoles.get(0):null;
 	}
 	
 	public UserRoles getById(int id){

@@ -16,6 +16,7 @@ import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 import com.ht.beans.Developer;
+import com.ht.beans.Investor;
 import com.ht.beans.Plant;
 import com.ht.beans.User;
 import com.ht.beans.UserRoles;
@@ -57,7 +58,7 @@ public class ExportUtility {
 	    }
 	    
 	    try {
-			FileOutputStream fileOut = new FileOutputStream("C:\\Users\\Hp\\Desktop\\ht import data\\AGAR\\IMPORTED\\IMPORTED_USERS.xlsx");
+			FileOutputStream fileOut = new FileOutputStream("C:\\Users\\NITISH\\Desktop\\ht import data\\AGAR\\IMPORTED\\IMPORTED_USERS.xlsx");
 			workbook.write(fileOut);
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
@@ -71,7 +72,7 @@ public class ExportUtility {
 				exception.printStackTrace();
 			}
 		}
-	    return "C:\\Users\\Hp\\Desktop\\ht import data\\AGAR\\IMPORTED\\IMPORTED_USERS.xlsx";
+	    return "C:\\Users\\NITISH\\Desktop\\ht import data\\AGAR\\IMPORTED\\IMPORTED_USERS.xlsx";
 	}
 	
 	public String exportUserRoles(ArrayList<UserRoles> userRoles){
@@ -109,7 +110,7 @@ public class ExportUtility {
 	    }
 	    
 	    try {
-			FileOutputStream fileOut = new FileOutputStream("C:\\Users\\Hp\\Desktop\\ht import data\\AGAR\\IMPORTED\\IMPORTED_USERROLES.xlsx");
+			FileOutputStream fileOut = new FileOutputStream("C:\\Users\\NITISH\\Desktop\\ht import data\\AGAR\\IMPORTED\\IMPORTED_USERROLES.xlsx");
 			workbook.write(fileOut);
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
@@ -123,7 +124,7 @@ public class ExportUtility {
 				exception.printStackTrace();
 			}
 		}
-	    return "C:\\Users\\Hp\\Desktop\\ht import data\\AGAR\\IMPORTED\\IMPORTED_USERROLES.xlsx";
+	    return "C:\\Users\\NITISH\\Desktop\\ht import data\\AGAR\\IMPORTED\\IMPORTED_USERROLES.xlsx";
 	}
 	
 	public String exportDevelopers(List<Developer> developers){
@@ -174,7 +175,7 @@ public class ExportUtility {
 	    }
 	    
 	    try {
-			FileOutputStream fileOut = new FileOutputStream("C:\\Users\\Hp\\Desktop\\ht import data\\AGAR\\IMPORTED\\IMPORTED_DEVELOPERS.xlsx");
+			FileOutputStream fileOut = new FileOutputStream("C:\\Users\\NITISH\\Desktop\\ht import data\\AGAR\\IMPORTED\\IMPORTED_DEVELOPERS.xlsx");
 			workbook.write(fileOut);
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
@@ -188,10 +189,10 @@ public class ExportUtility {
 				exception.printStackTrace();
 			}
 		}
-	    return "C:\\Users\\Hp\\Desktop\\ht import data\\AGAR\\IMPORTED\\IMPORTED_DEVELOPERS.xlsx";
+	    return "C:\\Users\\NITISH\\Desktop\\ht import data\\AGAR\\IMPORTED\\IMPORTED_DEVELOPERS.xlsx";
 	}
 	
-public String exportPlants(List<Plant> plants){
+ public String exportPlants(List<Plant> plants){
 		
 		XSSFWorkbook workbook = new XSSFWorkbook();
 		
@@ -212,7 +213,7 @@ public String exportPlants(List<Plant> plants){
 	    rowhead.createCell(9).setCellValue("TYPE");
 	    rowhead.createCell(10).setCellValue("CIRCUIT VOLTAGE");
 	    rowhead.createCell(11).setCellValue("INJECTING SUBSTATION");
-	    rowhead.createCell(12).setCellValue("FEEDER NAME");
+	    rowhead.createCell(12).setCellValue("FEEDER ID");
 	    rowhead.createCell(13).setCellValue("REGION");
 	    rowhead.createCell(14).setCellValue("CIRCLE");
 	    rowhead.createCell(15).setCellValue("DIVISION");
@@ -242,18 +243,18 @@ public String exportPlants(List<Plant> plants){
 		    row.createCell(10).setCellValue(plant.getCircuitVoltage());
 		    row.createCell(11).setCellValue(plant.getInjectingSubstation());
 		    row.createCell(12).setCellValue(plant.getFeederName());
-		    row.createCell(12).setCellValue(plant.getRegion());
-		    row.createCell(12).setCellValue(plant.getCircle());
-		    row.createCell(12).setCellValue(plant.getDivision());
-		    row.createCell(12).setCellValue(plant.getMainMeterNo());
-		    row.createCell(12).setCellValue(plant.getCheckMeterNo());
-		    row.createCell(12).setCellValue(plant.getStandByMeterNo());
-		    row.createCell(12).setCellValue(plant.getDeveloperId());
+		    row.createCell(13).setCellValue(plant.getRegion());
+		    row.createCell(14).setCellValue(plant.getCircle());
+		    row.createCell(15).setCellValue(plant.getDivision());
+		    row.createCell(16).setCellValue(plant.getMainMeterNo());
+		    row.createCell(17).setCellValue(plant.getCheckMeterNo());
+		    row.createCell(18).setCellValue(plant.getStandByMeterNo());
+		    row.createCell(19).setCellValue(plant.getDeveloperId());
 		    i++;
 	    }
 	    
 	    try {
-			FileOutputStream fileOut = new FileOutputStream("C:\\Users\\Hp\\Desktop\\ht import data\\AGAR\\IMPORTED\\IMPORTED_PLANTS.xlsx");
+			FileOutputStream fileOut = new FileOutputStream("C:\\Users\\NITISH\\Desktop\\ht import data\\AGAR\\IMPORTED\\IMPORTED_PLANTS.xlsx");
 			workbook.write(fileOut);
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
@@ -267,9 +268,80 @@ public String exportPlants(List<Plant> plants){
 				exception.printStackTrace();
 			}
 		}
-	    return "C:\\Users\\Hp\\Desktop\\ht import data\\AGAR\\IMPORTED\\IMPORTED_PLANTS.xlsx";
+	    return "C:\\Users\\NITISH\\Desktop\\ht import data\\AGAR\\IMPORTED\\IMPORTED_PLANTS.xlsx";
 	}
 	
+ 	public String exportInvestors(List<Investor> investors) {
+		
+		XSSFWorkbook workbook = new XSSFWorkbook();
+		
+	    XSSFSheet sheet = workbook.createSheet("IMPORTED_INVESTORS");
+	    
+	    XSSFCellStyle style = getHeaderCellStyle(workbook);
+	    
+	    XSSFRow rowhead = sheet.createRow(0);
+	    rowhead.createCell(0).setCellValue("S.NO");
+	    rowhead.createCell(1).setCellValue("ID");
+	    rowhead.createCell(2).setCellValue("CODE");
+	    rowhead.createCell(3).setCellValue("NAME");
+	    rowhead.createCell(4).setCellValue("CIN");
+	    rowhead.createCell(5).setCellValue("TIN");
+	    rowhead.createCell(6).setCellValue("VAT");
+	    rowhead.createCell(7).setCellValue("INVOICE NO");
+	    rowhead.createCell(8).setCellValue("OFFICE ADDRESS");
+	    rowhead.createCell(9).setCellValue("OFFICE CONTACT NO");
+	    rowhead.createCell(10).setCellValue("OFFICE EMAIL");
+	    rowhead.createCell(11).setCellValue("OFFICE CONTACT PERSON");
+	    rowhead.createCell(12).setCellValue("SITE ADDRESS");
+	    rowhead.createCell(13).setCellValue("SITE CONTACT NO");
+	    rowhead.createCell(14).setCellValue("SITE CONTACT PERSON");
+	    rowhead.createCell(15).setCellValue("SITE EMAIL");
+	    
+	    //Setting HEADER Row Styles
+	    for(int c=0;c<16;c++){
+	    	rowhead.getCell(c).setCellStyle(style);
+	    }
+	    
+	    int i=1;
+	    for(Investor investor : investors){
+	        XSSFRow row = sheet.createRow(i);
+	        row.createCell(0).setCellValue(i);
+	        row.createCell(1).setCellValue(investor.getId());
+		    row.createCell(2).setCellValue(investor.getCode());
+		    row.createCell(3).setCellValue(investor.getName());
+		    row.createCell(4).setCellValue(investor.getCin());
+		    row.createCell(5).setCellValue(investor.getTin());
+		    row.createCell(6).setCellValue(investor.getVat());
+		    row.createCell(7).setCellValue(investor.getInvoiceNo());
+		    row.createCell(8).setCellValue(investor.getOfficeAddress());
+		    row.createCell(9).setCellValue(investor.getOfficeContactNo());
+		    row.createCell(10).setCellValue(investor.getOfficeEmail());
+		    row.createCell(11).setCellValue(investor.getOfficeContactPerson());
+		    row.createCell(12).setCellValue(investor.getSiteAddress());
+		    row.createCell(13).setCellValue(investor.getSiteContactNo());
+		    row.createCell(14).setCellValue(investor.getSiteContactPerson());
+		    row.createCell(15).setCellValue(investor.getSiteEmail());
+		    i++;
+	    }
+	    
+	    try {
+			FileOutputStream fileOut = new FileOutputStream("C:\\Users\\NITISH\\Desktop\\ht import data\\AGAR\\IMPORTED\\IMPORTED_INVESTORS.xlsx");
+			workbook.write(fileOut);
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}finally{
+			try{
+				workbook.close();
+			}catch(Exception exception){
+				System.out.println("Exception while closing workbook");
+				exception.printStackTrace();
+			}
+		}
+	    return "C:\\Users\\NITISH\\Desktop\\ht import data\\AGAR\\IMPORTED\\IMPORTED_INVESTORS.xlsx";
+	}
+ 
 	public XSSFCellStyle getHeaderCellStyle(XSSFWorkbook workbook){
 		XSSFCellStyle style = workbook.createCellStyle();
 	    XSSFFont font = workbook.createFont();
@@ -279,4 +351,5 @@ public String exportPlants(List<Plant> plants){
 	    style.setFont(font);
 	    return style;
 	}
+
 }

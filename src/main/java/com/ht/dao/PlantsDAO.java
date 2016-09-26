@@ -129,7 +129,7 @@ public class PlantsDAO {
 			System.out.println("Exception in class : PlantsDAO : method : [getByCode(String)] "+e);
 		}
 		
-		return plantList.get(0);
+		return plantList.size() > 0 ? plantList.get(0):null;
 	}
     
     public ArrayList<Plant> getAll(){

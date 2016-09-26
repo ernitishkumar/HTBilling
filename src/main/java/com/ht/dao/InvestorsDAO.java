@@ -117,11 +117,11 @@ public class InvestorsDAO {
 		} catch (SQLException e) {
 			System.out.println("Exception in class : InvestorDAO : method : [getById(int)] "+e);
 		}
-		return investorList.get(0);
+		return investorList.size()>0?investorList.get(0):null;
 	}
 
 	public Investor getByCode(String code){
-		ArrayList<Investor> investorList = new ArrayList<Investor>();
+		ArrayList<Investor> investorList = null;
 		try(
 				Connection connection = GlobalResources.getDatasource().getConnection();
 				PreparedStatement ps = connection.prepareStatement("select * from investors where code = ?");
@@ -132,7 +132,7 @@ public class InvestorsDAO {
 		} catch (SQLException e) {
 			System.out.println("Exception in class : InvestorDAO : method : [getByCode(String)] "+e);
 		}
-		return investorList.get(0);
+		return investorList.size() > 0 ? investorList.get(0):null;
 	}
 	
 	public Investor getByCIN(String cin){

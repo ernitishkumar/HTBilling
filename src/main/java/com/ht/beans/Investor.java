@@ -147,12 +147,24 @@ public class Investor {
 		this.siteContactPerson = siteContactPerson;
 	}
 
-	public String getSiteEmail() {
+	public String getSiteEmail(){
 		return siteEmail;
 	}
 
 	public void setSiteEmail(String siteEmail) {
 		this.siteEmail = siteEmail;
 	}
-	
+
+	/* (non-Javadoc)
+	 * @see java.lang.Object#toString()
+	 */
+	@Override
+	public String toString() {
+		return "Investor [id=" + id + ", code=" + code + ", name=" + name + ", cin=" + cin + ", tin=" + tin + ", vat="
+				+ vat + ", invoiceNo=" + invoiceNo + ", officeAddress=" + officeAddress + ", officeContactNo="
+				+ officeContactNo + ", officeContactPerson=" + officeContactPerson + ", officeEmail=" + officeEmail
+				+ ", siteAddress=" + siteAddress + ", siteContactNo=" + siteContactNo + ", siteContactPerson="
+				+ siteContactPerson + ", siteEmail=" + siteEmail + "]";
+	}
+
 }

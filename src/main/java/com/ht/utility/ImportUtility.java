@@ -22,12 +22,14 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 import com.ht.beans.Developer;
 import com.ht.beans.Investor;
+import com.ht.beans.Machine;
 import com.ht.beans.MeterDetails;
 import com.ht.beans.Plant;
 import com.ht.beans.User;
 import com.ht.beans.UserRoles;
 import com.ht.dao.DevelopersDAO;
 import com.ht.dao.InvestorsDAO;
+import com.ht.dao.MachinesDAO;
 import com.ht.dao.MeterDetailsDAO;
 import com.ht.dao.PlantsDAO;
 import com.ht.dao.UserDAO;
@@ -44,7 +46,7 @@ public class ImportUtility {
 	private PlantsDAO plantDAO = new PlantsDAO();
 	private DevelopersDAO developerDAO = new DevelopersDAO();
 	private InvestorsDAO investorDAO = new InvestorsDAO();
-
+	private MachinesDAO machineDAO = new MachinesDAO();
 	private UserDAO userDAO = new UserDAO();
 	private UserRolesDAO userRolesDAO = new UserRolesDAO();
 
@@ -101,7 +103,7 @@ public class ImportUtility {
 			workbook.write(fos);
 			fos.close();
 			workbook.close();
-			System.out.println("Users Importing complete..");
+			System.out.println("Users Importing complete..Imported: "+insertedUsers.size()+" users.");
 			System.out.println("Generating Users Import Excel..");
 			exportUtility.exportUsers(insertedUsers);
 			exportUtility.exportUserRoles(insertedUserRoles);
@@ -160,7 +162,7 @@ public class ImportUtility {
 			workbook.write(fos);
 			fos.close();
 			workbook.close();
-			System.out.println("Importing Developers complete..");
+			System.out.println("Importing Developers complete..Imported: "+developers.size()+" developers.");
 			System.out.println("Generating Developers Excel..");
 			exportUtility.exportDevelopers(developers);
 			System.out.println("Created Imported Excel for Developers");
@@ -299,7 +301,7 @@ public class ImportUtility {
 			workbook.write(fos);
 			fos.close();
 			workbook.close();
-			System.out.println("Importing Plants complete..");
+			System.out.println("Importing Plants complete..Imported: "+plants.size()+" plants.");
 			System.out.println("Generating Plants Excel..");
 			exportUtility.exportPlants(plants);
 			System.out.println("Created Imported Excel for Plants");
@@ -413,7 +415,7 @@ public class ImportUtility {
 			workbook.write(fos);
 			fos.close();
 			workbook.close();
-			System.out.println("Importing Investors complete..");
+			System.out.println("Importing Investors complete..Imported: "+investors.size()+" investors.");
 			System.out.println("Generating Investors Excel..");
 			exportUtility.exportInvestors(investors);
 			System.out.println("Created Imported Excel for Investors");
@@ -423,27 +425,164 @@ public class ImportUtility {
 		}
 	}
 
+	public void importMachines(){
+		try{
+			File file = new File("C:\\Users\\NITISH\\Desktop\\ht import data\\AGAR\\Agar.xlsx");
+			FileInputStream fis = new FileInputStream(file);
+			XSSFWorkbook workbook = new XSSFWorkbook(fis);
+			XSSFSheet sheet = workbook.getSheet("machine");
+			int totalRows = sheet.getPhysicalNumberOfRows();
+
+			System.out.println("There are: "+totalRows+" machines to import into database");
+			XSSFRow headerRow = sheet.getRow(0);
+			headerRow.createCell(11).setCellValue("GENERATED ID");
+			List<Machine> machines = new ArrayList<Machine>();
+			DataFormatter df =  new DataFormatter();
+			for(int i=1;i < totalRows ; i++){
+				XSSFRow row = sheet.getRow(i);
+				if(row != null){
+					Machine machineToInsert = new Machine();
+					XSSFCell cell = null;
+					if((cell = row.getCell(0)) != null){
+						String code = df.formatCellValue(cell);
+						if(code != null && code.length()>0){
+							machineToInsert.setCode(code.trim());
+						}
+					}
+
+					if((cell = row.getCell(1)) != null){
+						String capacity = df.formatCellValue(cell);
+						if(capacity != null && capacity.length()>0){
+							machineToInsert.setCapacity(capacity.trim());
+						}
+					}
+
+					if((cell = row.getCell(2)) != null){
+						machineToInsert.setCommissionedDate(df.formatCellValue(cell).trim());
+					}
+
+					if((cell = row.getCell(3)) != null){
+						machineToInsert.setActiveRate(Float.parseFloat(df.formatCellValue(cell).trim()));
+					}
+
+					if((cell = row.getCell(4)) != null){
+						machineToInsert.setReactiveRate(Float.parseFloat(df.formatCellValue(cell).trim()));
+					}
+
+					if((cell = row.getCell(5)) != null){
+						machineToInsert.setPpaLetterNo(df.formatCellValue(cell).trim());
+					}
+
+					if((cell = row.getCell(6)) != null){
+						machineToInsert.setPpaDate(df.formatCellValue(cell).trim());
+					}
+
+					if((cell = row.getCell(7)) != null){
+						String deverloperUsername = df.formatCellValue(cell).trim();
+						if(deverloperUsername != null && deverloperUsername.length() > 0){
+							Developer developer = developerDAO.getByUsername(deverloperUsername);
+							if(developer != null){
+								machineToInsert.setDeveloperId(developer.getId());
+							}else{
+								row.createCell(11).setCellValue("NO DEVELOPER FOUND");
+								System.out.println("Continuing since no developer found for : "+deverloperUsername);
+								continue;
+							}
+						}else{
+							row.createCell(11).setCellValue("NO DEVELOPER CODE");
+							System.out.println("Continuing since machine has no developer");
+							continue;
+						}
+					}
+
+					if((cell = row.getCell(8)) != null){
+						String plantCode = df.formatCellValue(cell).trim();
+						if(plantCode != null && plantCode.length() > 0){
+							Plant plant = plantDAO.getByCode(plantCode);
+							if(plant != null){
+								machineToInsert.setPlantId(plant.getId());
+							}else{
+								row.createCell(11).setCellValue("NO PLANT FOUND");
+								System.out.println("Continuing since no plant found for plant code: "+plantCode);
+								continue;
+							}
+						}else{
+							row.createCell(11).setCellValue("NO PLANT CODE");
+							System.out.println("Continuing since machine has no plant code");
+							continue;
+						}
+					}
+
+					if((cell = row.getCell(9)) != null){
+						String investorCode = df.formatCellValue(cell);
+						if(investorCode != null && investorCode.length() > 0){
+							Investor investor = investorDAO.getByCode(investorCode);
+							if(investor != null){
+								machineToInsert.setInvestorId(investor.getId());
+							}else{
+								row.createCell(11).setCellValue("NO INVESTOR FOUND");
+								System.out.println("Continuing since no investor found for investor code: "+investorCode);
+								continue;
+							}
+						}else{
+							System.out.println("Continuing since machine as no machine code");
+							row.createCell(11).setCellValue("NO INVESTOR CODE");
+							continue;
+						}
+					}
+
+					if((cell = row.getCell(10)) != null){
+						machineToInsert.setParticulars(df.formatCellValue(cell).trim());
+					}
+
+					Machine insertedMachine = machineDAO.insert(machineToInsert);
+					if(insertedMachine != null){
+							machines.add(insertedMachine);
+							row.createCell(11).setCellValue(insertedMachine.getId());
+					}
+				}
+			}
+			fis.close();
+			//CHANGE PATH WHILE PUSHING IN SERVER
+			FileOutputStream fos =new FileOutputStream(new File("C:\\Users\\NITISH\\Desktop\\ht import data\\AGAR\\Agar.xlsx"));
+			workbook.write(fos);
+			fos.close();
+			workbook.close();
+			System.out.println("Importing Machines complete.. Imported: "+machines.size()+" machines.");
+			System.out.println("Generating Machines Excel..");
+			exportUtility.exportMachines(machines);
+			System.out.println("Created Imported Excel for Machines");
+		}catch(Exception e){
+			System.out.println(e.getMessage());
+			e.printStackTrace();
+		}
+	}
+	
 	public static void main(String gg[]){
 		System.out.println("Running import..");
 		ImportUtility iu = new ImportUtility();
-		iu.importUsers();
+		/*iu.importUsers();
 		iu.importDevelopers();
 		iu.importPlants();
-		iu.importInvestors();
+		iu.importInvestors();*/
+		//iu.importMachines();
 	}
 
+	
 	public boolean runImport(){
 		boolean done = false;
 		try{
 			ImportUtility iu = new ImportUtility();
-			System.out.println("Importing Users..");
+			/*System.out.println("Importing Users..");
 			iu.importUsers();
 			System.out.println("Importing Developers..");
 			iu.importDevelopers();
 			System.out.println("Importing Plants..");
 			iu.importPlants();
 			System.out.println("Importing Investors..");
-			iu.importInvestors();
+			iu.importInvestors();*/
+			System.out.println("Importing Machines..");
+			iu.importMachines();
 			done = true;
 		}catch(Exception e){
 			e.printStackTrace();

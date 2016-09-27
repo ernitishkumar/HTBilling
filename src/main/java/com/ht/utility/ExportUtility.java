@@ -17,6 +17,7 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 import com.ht.beans.Developer;
 import com.ht.beans.Investor;
+import com.ht.beans.Machine;
 import com.ht.beans.Plant;
 import com.ht.beans.User;
 import com.ht.beans.UserRoles;
@@ -340,6 +341,71 @@ public class ExportUtility {
 			}
 		}
 	    return "C:\\Users\\NITISH\\Desktop\\ht import data\\AGAR\\IMPORTED\\IMPORTED_INVESTORS.xlsx";
+	}
+ 	
+public String exportMachines(List<Machine> machines) {
+		
+		XSSFWorkbook workbook = new XSSFWorkbook();
+		
+	    XSSFSheet sheet = workbook.createSheet("IMPORTED_MACHINES");
+	    
+	    XSSFCellStyle style = getHeaderCellStyle(workbook);
+	    
+	    XSSFRow rowhead = sheet.createRow(0);
+	    rowhead.createCell(0).setCellValue("S.NO");
+	    rowhead.createCell(1).setCellValue("ID");
+	    rowhead.createCell(2).setCellValue("CODE");
+	    rowhead.createCell(3).setCellValue("CAPACITY");
+	    rowhead.createCell(4).setCellValue("COMMISSIONED DATE");
+	    rowhead.createCell(5).setCellValue("ACTIVE RATE");
+	    rowhead.createCell(6).setCellValue("REACTIVE RATE");
+	    rowhead.createCell(7).setCellValue("PPA LETTER NO");
+	    rowhead.createCell(8).setCellValue("PPA DATE");
+	    rowhead.createCell(9).setCellValue("DEVELOPER");
+	    rowhead.createCell(10).setCellValue("PLANT");
+	    rowhead.createCell(11).setCellValue("INVESTOR");
+	    rowhead.createCell(12).setCellValue("PARTICULAR");
+	    
+	    //Setting HEADER Row Styles
+	    for(int c=0;c<13;c++){
+	    	rowhead.getCell(c).setCellStyle(style);
+	    }
+	    
+	    int i=1;
+	    for(Machine machine : machines){
+	        XSSFRow row = sheet.createRow(i);
+	        row.createCell(0).setCellValue(i);
+	        row.createCell(1).setCellValue(machine.getId());
+		    row.createCell(2).setCellValue(machine.getCode());
+		    row.createCell(3).setCellValue(machine.getCapacity());
+		    row.createCell(4).setCellValue(machine.getCommissionedDate());
+		    row.createCell(5).setCellValue(machine.getActiveRate());
+		    row.createCell(6).setCellValue(machine.getReactiveRate());
+		    row.createCell(7).setCellValue(machine.getPpaLetterNo());
+		    row.createCell(8).setCellValue(machine.getPpaDate());
+		    row.createCell(9).setCellValue(machine.getDeveloperId());
+		    row.createCell(10).setCellValue(machine.getPlantId());
+		    row.createCell(11).setCellValue(machine.getInvestorId());
+		    row.createCell(12).setCellValue(machine.getParticulars().trim());
+		    i++;
+	    }
+	    
+	    try {
+			FileOutputStream fileOut = new FileOutputStream("C:\\Users\\NITISH\\Desktop\\ht import data\\AGAR\\IMPORTED\\IMPORTED_MACHINES.xlsx");
+			workbook.write(fileOut);
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}finally{
+			try{
+				workbook.close();
+			}catch(Exception exception){
+				System.out.println("Exception while closing workbook");
+				exception.printStackTrace();
+			}
+		}
+	    return "C:\\Users\\NITISH\\Desktop\\ht import data\\AGAR\\IMPORTED\\IMPORTED_MACHINES.xlsx";
 	}
  
 	public XSSFCellStyle getHeaderCellStyle(XSSFWorkbook workbook){

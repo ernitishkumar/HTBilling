@@ -9,7 +9,11 @@ import java.io.FileOutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.poi.ss.usermodel.Cell;
+import javax.ws.rs.GET;
+import javax.ws.rs.Path;
+import javax.ws.rs.core.Response;
+import javax.ws.rs.core.Response.Status;
+
 import org.apache.poi.ss.usermodel.DataFormatter;
 import org.apache.poi.xssf.usermodel.XSSFCell;
 import org.apache.poi.xssf.usermodel.XSSFRow;
@@ -33,18 +37,19 @@ import com.ht.dao.UserRolesDAO;
  * @author NITISH
  *
  */
+@Path("/import")
 public class ImportUtility {
 
 	private MeterDetailsDAO meterDetailsDAO = new MeterDetailsDAO();
 	private PlantsDAO plantDAO = new PlantsDAO();
 	private DevelopersDAO developerDAO = new DevelopersDAO();
 	private InvestorsDAO investorDAO = new InvestorsDAO();
-	
+
 	private UserDAO userDAO = new UserDAO();
 	private UserRolesDAO userRolesDAO = new UserRolesDAO();
-	
+
 	private ExportUtility exportUtility = new ExportUtility();
-	
+
 	public void importUsers(){
 		try{
 			System.out.println("Importing Users...");
@@ -106,7 +111,7 @@ public class ImportUtility {
 			e.printStackTrace();
 		}
 	}
-	
+
 	public void importDevelopers(){
 		try{
 			File file = new File("C:\\Users\\NITISH\\Desktop\\ht import data\\AGAR\\@DEVELOPER AGAR.xlsx");
@@ -115,7 +120,7 @@ public class ImportUtility {
 			XSSFSheet sheet = workbook.getSheetAt(0);
 			int totalRows = sheet.getPhysicalNumberOfRows();
 			System.out.println("There are: "+totalRows+" developers to import into database");
-			
+
 			XSSFRow headerRow = sheet.getRow(0);
 			headerRow.createCell(11).setCellValue("GENERATED ID");
 			int i = 1;
@@ -135,7 +140,7 @@ public class ImportUtility {
 				developer.setSiteContactPerson(df.formatCellValue(row.getCell(8)).trim());
 				developer.setSiteEmail(df.formatCellValue(row.getCell(9)).trim());
 				developer.setUsername(df.formatCellValue(row.getCell(10)).trim());
-				
+
 				Developer existingDeveloper = developerDAO.getByUsername(developer.getUsername());
 				if(existingDeveloper == null){
 					Developer insertedDeveloper = developerDAO.insert(developer);
@@ -164,7 +169,7 @@ public class ImportUtility {
 			e.printStackTrace();
 		}
 	}
-	
+
 	public void importPlants(){
 		try{
 			File file = new File("C:\\Users\\NITISH\\Desktop\\ht import data\\AGAR\\@PLANT AGAR.xlsx");
@@ -172,7 +177,7 @@ public class ImportUtility {
 			XSSFWorkbook workbook = new XSSFWorkbook(fis);
 			XSSFSheet sheet = workbook.getSheet("Sheet1");
 			int totalRows = sheet.getPhysicalNumberOfRows();
-			
+
 			System.out.println("There are: "+totalRows+" plants to import into database");
 			XSSFRow headerRow = sheet.getRow(0);
 			headerRow.createCell(18).setCellValue("GENERATED ID");
@@ -192,59 +197,59 @@ public class ImportUtility {
 							continue;
 						}
 					}
-					
+
 					if((cell = row.getCell(1)) != null){
 						plantToInsert.setName(df.formatCellValue(cell).trim());
 					}
-					
+
 					if((cell = row.getCell(2)) != null){
 						plantToInsert.setAddress(df.formatCellValue(cell).trim());
 					}
-					
+
 					if((cell = row.getCell(3)) != null){
 						plantToInsert.setContactNo(df.formatCellValue(cell).trim());
 					}
-					
+
 					if((cell = row.getCell(4)) != null){
 						plantToInsert.setContactPerson(df.formatCellValue(cell).trim());
 					}
-					
+
 					if((cell = row.getCell(5)) != null){
 						plantToInsert.setEmail(df.formatCellValue(cell).trim());
 					}
-					
+
 					if((cell = row.getCell(6)) != null){
 						plantToInsert.setCommissionedDate(df.formatCellValue(cell).trim());
 					}
-					
+
 					if((cell = row.getCell(7)) != null){
 						plantToInsert.setType(df.formatCellValue(cell).trim());
 					}
-					
+
 					if((cell = row.getCell(8)) != null){
 						plantToInsert.setCircuitVoltage(df.formatCellValue(cell).trim());
 					}
-					
+
 					if((cell = row.getCell(9)) != null){
 						plantToInsert.setInjectingSubstation(df.formatCellValue(cell).trim());
 					}
-					
+
 					if((cell = row.getCell(10)) != null){
 						plantToInsert.setFeederName(df.formatCellValue(cell).trim());
 					}
-					
+
 					if((cell = row.getCell(11)) != null){
 						plantToInsert.setRegion(df.formatCellValue(cell).trim());
 					}
-					
+
 					if((cell = row.getCell(12)) != null){
 						plantToInsert.setCircle(df.formatCellValue(cell).trim());
 					}
-					
+
 					if((cell = row.getCell(13)) != null){
 						plantToInsert.setDivision(df.formatCellValue(cell).trim());
 					}
-					
+
 					if((cell = row.getCell(14)) != null){
 						String mainMeterNo = df.formatCellValue(cell);
 						MeterDetails meterDetails = meterDetailsDAO.getByMeterNo(mainMeterNo.trim());
@@ -255,15 +260,15 @@ public class ImportUtility {
 							continue;
 						}
 					}
-					
+
 					if((cell = row.getCell(15)) != null){
 						plantToInsert.setCheckMeterNo(df.formatCellValue(cell).trim());
 					}
-					
+
 					if((cell = row.getCell(16)) != null){
 						plantToInsert.setStandByMeterNo(df.formatCellValue(cell).trim());
 					}
-					
+
 					if((cell = row.getCell(17)) != null){
 						String username = df.formatCellValue(cell).trim();
 						Developer developer = developerDAO.getByUsername(username);
@@ -273,7 +278,7 @@ public class ImportUtility {
 							System.out.println("Continuing since no developer found with username: "+username);
 							continue;
 						}
-						
+
 					}
 					Plant existingPlant = plantDAO.getByCode(plantToInsert.getCode());
 					if(existingPlant == null){
@@ -303,7 +308,7 @@ public class ImportUtility {
 			e.printStackTrace();
 		}
 	}
-	
+
 	public void importInvestors(){
 		try{
 			File file = new File("C:\\Users\\NITISH\\Desktop\\ht import data\\AGAR\\@INVESTER AGAR.xlsx");
@@ -311,7 +316,7 @@ public class ImportUtility {
 			XSSFWorkbook workbook = new XSSFWorkbook(fis);
 			XSSFSheet sheet = workbook.getSheet("Sheet1");
 			int totalRows = sheet.getPhysicalNumberOfRows();
-			
+
 			System.out.println("There are: "+totalRows+" investors to import into database");
 			XSSFRow headerRow = sheet.getRow(0);
 			headerRow.createCell(14).setCellValue("GENERATED ID");
@@ -331,7 +336,7 @@ public class ImportUtility {
 							continue;
 						}
 					}
-					
+
 					if((cell = row.getCell(1)) != null){
 						String name = df.formatCellValue(cell);
 						if(name != null && name.length()>0){
@@ -341,55 +346,55 @@ public class ImportUtility {
 							continue;
 						}
 					}
-					
+
 					if((cell = row.getCell(2)) != null){
 						investorToInsert.setCin(df.formatCellValue(cell).trim());
 					}
-					
+
 					if((cell = row.getCell(3)) != null){
 						investorToInsert.setTin(df.formatCellValue(cell).trim());
 					}
-					
+
 					if((cell = row.getCell(4)) != null){
 						investorToInsert.setVat(df.formatCellValue(cell).trim());
 					}
-					
+
 					if((cell = row.getCell(5)) != null){
 						investorToInsert.setInvoiceNo(df.formatCellValue(cell).trim());
 					}
-					
+
 					if((cell = row.getCell(6)) != null){
 						investorToInsert.setOfficeAddress(df.formatCellValue(cell).trim());
 					}
-					
+
 					if((cell = row.getCell(7)) != null){
 						investorToInsert.setOfficeContactNo(df.formatCellValue(cell).trim());
 					}
-					
+
 					if((cell = row.getCell(8)) != null){
 						investorToInsert.setOfficeContactPerson(df.formatCellValue(cell).trim());
 					}
-					
+
 					if((cell = row.getCell(9)) != null){
 						investorToInsert.setOfficeEmail(df.formatCellValue(cell).trim());
 					}
-					
+
 					if((cell = row.getCell(10)) != null){
 						investorToInsert.setSiteAddress(df.formatCellValue(cell).trim());
 					}
-					
+
 					if((cell = row.getCell(11)) != null){
 						investorToInsert.setSiteContactNo(df.formatCellValue(cell).trim());
 					}
-					
+
 					if((cell = row.getCell(12)) != null){
 						investorToInsert.setSiteContactPerson(df.formatCellValue(cell).trim());
 					}
-					
+
 					if((cell = row.getCell(13)) != null){
 						investorToInsert.setSiteEmail(df.formatCellValue(cell).trim());
 					}
-					
+
 					Investor existingInvestor = investorDAO.getByCode(investorToInsert.getCode());
 					if(existingInvestor == null){
 						Investor insertedInvestor = investorDAO.insert(investorToInsert);
@@ -417,13 +422,42 @@ public class ImportUtility {
 			e.printStackTrace();
 		}
 	}
-	
+
 	public static void main(String gg[]){
 		System.out.println("Running import..");
-	    ImportUtility iu = new ImportUtility();
-	    iu.importUsers();
-	    iu.importDevelopers();
-	    iu.importPlants();
-	    iu.importInvestors();
+		ImportUtility iu = new ImportUtility();
+		iu.importUsers();
+		iu.importDevelopers();
+		iu.importPlants();
+		iu.importInvestors();
+	}
+
+	public boolean runImport(){
+		boolean done = false;
+		try{
+			ImportUtility iu = new ImportUtility();
+			System.out.println("Importing Users..");
+			iu.importUsers();
+			System.out.println("Importing Developers..");
+			iu.importDevelopers();
+			System.out.println("Importing Plants..");
+			iu.importPlants();
+			System.out.println("Importing Investors..");
+			iu.importInvestors();
+			done = true;
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+		return done;
+	}
+
+	@GET
+	public Response importData(){
+		System.out.println("Import started");
+		if(runImport()){
+			return Response.status(Status.OK).build();
+		}else{
+			return Response.status(Status.EXPECTATION_FAILED).build();
+		}
 	}
 }

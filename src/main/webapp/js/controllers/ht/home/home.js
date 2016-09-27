@@ -175,4 +175,26 @@ angular.module("htBillingApp").controller('HomeController', ['$http', '$scope', 
     this.loadCircleHome = function () {
         $location.path("/circle/home");
     };
+    
+    /*
+     * function to import data
+     */
+    this.loadImportData = function(){
+    	$http({
+			method: 'GET',
+			url: 'backend/import'
+		}).then(
+				function (response) {
+					var status = response.status;
+					if (status === 200) {
+						alert("Import Successful");
+					}
+				},
+				function (error) {
+					console.log(error);
+					$scope.error = error.data.errorMessage;
+				}
+		);
+    }
+    
 }]);

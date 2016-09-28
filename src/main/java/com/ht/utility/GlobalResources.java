@@ -40,14 +40,14 @@ public class GlobalResources {
 			poolProperties.setDriverClassName("com.mysql.jdbc.Driver");
 			
 			//Production environment database connection details.Uncomment below code before deploying to production
-			poolProperties.setUrl("jdbc:mysql://localhost:3306/ht");
+			/*poolProperties.setUrl("jdbc:mysql://localhost:3306/ht");
 			poolProperties.setUsername("ht");
-			poolProperties.setPassword("htbilling@452015");
+			poolProperties.setPassword("htbilling@452015");*/
 			
 			//Testing environment database connection details
-			/*poolProperties.setUrl("jdbc:mysql://localhost:3306/ht_test");
+			poolProperties.setUrl("jdbc:mysql://localhost:3306/ht_test");
 			poolProperties.setUsername("ht_test");
-		    poolProperties.setPassword("ht");*/
+		    poolProperties.setPassword("ht");
 			
 		    poolProperties.setJmxEnabled(true);
 			poolProperties.setTestWhileIdle(false);

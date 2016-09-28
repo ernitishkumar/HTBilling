@@ -1,5 +1,5 @@
 <div class="navbar navbar-fixed-top">
-	<div class="container">
+	<div>
 		<div class="navbar-header">
 			<button type="button" class="navbar-toggle" data-toggle="collapse"
 				data-target="#myNavbar">
@@ -104,8 +104,7 @@
 			
 			<div class="form-group">
 				<label>Select Developer Username: </label>
-				<br> 
-				<select name="username" id="username" ng-model="formData.username" >
+				<select class="form-control" name="username" id="username" ng-model="formData.username" >
 						<option ng-repeat="developer in developers" value="{{developer.username}}">{{developer.username}}</option>
 				</select>
 			</div>

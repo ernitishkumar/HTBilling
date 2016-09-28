@@ -7,11 +7,14 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 
+import com.ht.beans.Developer;
 import com.ht.beans.Plant;
 import com.ht.utility.GlobalResources;
 
 public class PlantsDAO {
 
+	private DevelopersDAO developerDAO = new DevelopersDAO();
+	
 	public Plant insert(Plant plant){
 		int lastInsertedId = -1;
 		Plant insertedPlant = null;
@@ -311,6 +314,8 @@ public class PlantsDAO {
 				plant.setCheckMeterNo(rs.getString(17));
 				plant.setStandByMeterNo(rs.getString(18));
 				plant.setDeveloperId(rs.getInt(19));
+				Developer developer = developerDAO.getById(plant.getDeveloperId());
+				plant.setDeveloper(developer);
 				plantList.add(plant);
 			}
 		} catch (SQLException e) {

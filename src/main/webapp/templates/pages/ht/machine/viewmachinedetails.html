@@ -1,5 +1,5 @@
 <div class="navbar navbar-fixed-top">
-	<div class="container">
+	<div>
 		<div class="navbar-header">
 			<button type="button" class="navbar-toggle" data-toggle="collapse"
 				data-target="#myNavbar">
@@ -28,8 +28,18 @@
 			</ul>
 		</div>
 	</div>
-</div>
-<div class="container">
+</div><!-- 
+To be implemented -->
+<!-- <div class="row text-xs-center">
+	<div class='form-group'>
+		<label for='example-text-input' class="font-weight-bold">Loading
+			Machines...</label>
+		<div>
+			<span class="glyphicon glyphicon-refresh glyphicon-spin" style='font-size: 100px'></span>
+		</div>
+	</div>
+</div> -->
+<div>
 	<br> <br>
 	<div class="page-header text-center">
 		<h2>
@@ -39,7 +49,7 @@
 	</div>
 	<div class="table-responsive">
 		<table class="table table-bordered table-hover">
-			<thead>
+			<!-- <thead>
 				<th class="text-center success">S.No</th>
 				<th class="text-center success">Code</th>
 				<th class="text-center success">Capacity</th>
@@ -54,9 +64,34 @@
 				<th class="text-center success">Particulars</th>
 				<th class="text-center success">Edit</th>
 				<th class="text-center success">Delete</th>
-			</thead>
+			</thead> -->
 			<tbody class="text-center">
-				<tr dir-paginate="machine in machines | itemsPerPage: pageSize"
+				<tr>
+					<td colspan="11"><input type="text"
+						placeholder="Enter Anything to Search from Plants"
+						class="form-control" ng-model="machinesSearchText"></input></td>
+					<td colspan="3"><a href="javascript:void(0);"
+						class="form-control btn btn-primary"
+						ng-click="machinesSearchText=''">Clear</a></td>
+				</tr>
+				<tr class="success">
+					<td><strong>S.No</strong></td>
+					<td><strong>Code</strong></td>
+					<td><strong>Capacity</strong></td>
+					<td><strong>Commissioned Date</strong></td>
+					<td><strong>Active Rate</strong></td>
+					<td><strong>Reactive Rate</strong></td>
+					<td><strong>PPA Letter No</strong></td>
+					<td><strong>PPA Date</strong></td>
+					<td><strong>Developer</strong></td>
+					<td><strong>Plant</strong></td>
+					<td><strong>Investor</strong></td>
+					<td><strong>Particulars</strong></td>
+					<td><strong>Edit</strong></td>
+					<td><strong>Delete</strong></td>
+				</tr>
+				<tr
+					dir-paginate="machine in machines| filter:machinesSearchText | itemsPerPage: pageSize"
 					current-page="currentPage">
 					<td>{{(currentPage-1)*pageSize + $index+1}}</td>
 					<td>{{machine.code}}</td>
@@ -66,9 +101,9 @@
 					<td>{{machine.reactiveRate}}</td>
 					<td>{{machine.ppaLetterNo}}</td>
 					<td>{{machine.ppaDate}}</td>
-					<td>{{machine.developerId}}</td>
-					<td>{{machine.plantId}}</td>
-					<td>{{machine.investorId}}</td>
+					<td>{{machine.developer.name}}</td>
+					<td>{{machine.plant.code}}</td>
+					<td>{{machine.investor.name}}</td>
 					<td>{{machine.particulars | limitTo:50}}</td>
 					<td><a href="javascript:void(0);"><span
 							class="glyphicon glyphicon-pencil"

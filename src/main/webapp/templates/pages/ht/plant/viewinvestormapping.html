@@ -1,5 +1,5 @@
 <div class="navbar navbar-fixed-top">
-	<div class="container">
+	<div>
 		<div class="navbar-header">
 			<button type="button" class="navbar-toggle" data-toggle="collapse"
 				data-target="#myNavbar">
@@ -39,7 +39,7 @@
 	</div>
 	<div class="table-responsive">
 		<table class="table table-bordered table-hover">
-			<thead>
+			<!-- <thead>
 				<th class="text-center success">S.No</th>
 				<th class="text-center success">Plant Id</th>
 				<th class="text-center success">Plant Code</th>
@@ -47,9 +47,26 @@
 				<th class="text-center success">Investor Code</th>
 				<th class="text-center success">Edit</th>
 				<th class="text-center success">Delete</th>
-			</thead>
+			</thead> -->
 			<tbody class="text-center">
-				<tr dir-paginate="mapping in mappings | itemsPerPage: pageSize" current-page="currentPage">
+				<tr>
+					<td colspan="5"><input type="text"
+						placeholder="Enter Anything to Search from Plants"
+						class="form-control" ng-model="mappingSearchText"></input></td>
+					<td colspan="2"><a href="javascript:void(0);"
+						class="form-control btn btn-primary"
+						ng-click="mappingSearchText=''">Clear</a></td>
+				</tr>
+				<tr class="success">
+					<td><strong>S.No</strong></td>
+					<td><strong>Plant Id</strong></td>
+					<td><strong>Plant Code</strong></td>
+					<td><strong>Investor Id</strong></td>
+					<td><strong>Investor Code</strong></td>
+					<td><strong>Edit</strong></td>
+					<td><strong>Delete</strong></td>
+				</tr>
+				<tr dir-paginate="mapping in mappings| filter : mappingSearchText | itemsPerPage: pageSize" current-page="currentPage">
 					<td>{{(currentPage-1)*pageSize + $index+1}}</td>
 					<td>{{mapping.plantId}}</td>
 					<td>{{mapping.plantCode}}</td>

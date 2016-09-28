@@ -75,12 +75,6 @@ body {
     font-size: 12px;
 }
 
-/* @media screen and (min-width:768px) {
-    .custom-class {
-        width: 100%;
-    }
-} */
-
 .table > tbody > tr > td {
 	vertical-align: middle;
 }
@@ -88,7 +82,3 @@ body {
 #billTable1 > tbody > tr > td{
 	border: 1px solid #020608;
 }
- 
-/*  tr.ng-leave{
-  animation : bounceOut 1s;
- } */

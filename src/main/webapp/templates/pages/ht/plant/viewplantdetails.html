@@ -1,5 +1,5 @@
 <div class="navbar navbar-fixed-top">
-	<div class="container">
+	<div>
 		<div class="navbar-header">
 			<button type="button" class="navbar-toggle" data-toggle="collapse"
 				data-target="#myNavbar">
@@ -29,8 +29,8 @@
 		</div>
 	</div>
 </div>
-<div class="container">
-	<br> <br>
+<div>
+	<br>
 	<div class="page-header text-center">
 		<h2>
 			<span class="glyphicon glyphicon-certificate"></span>View Plant
@@ -38,8 +38,8 @@
 		</h2>
 	</div>
 	<div class="table-responsive">
-		<table class="table table-bordered table-hover">
-			<thead>
+		<table class="table table-condensed table-bordered table-hover">
+			<!-- <thead>
 				<th class="text-center success">S.No</th>
 				<th class="text-center success">Code</th>
 				<th class="text-center success">Name</th>
@@ -59,10 +59,41 @@
 				<th class="text-center success">Developer Id</th>
 				<th class="text-center success">Edit</th>
 				<th class="text-center success">Delete</th>
-			</thead>
+			</thead> -->
 			<tbody class="text-center">
-				<tr dir-paginate="plant in plants | itemsPerPage: pageSize" current-page="currentPage">
-				    <td>{{(currentPage-1)*pageSize + $index+1}}</td>
+				<tr>
+					<td colspan="15">
+						<input type="text" placeholder="Enter Anything to Search from Plants"
+						class="form-control" ng-model="plantsSearchText"></input>
+					</td>
+					<td colspan="4">
+						<a href="javascript:void(0);" class="form-control btn btn-primary" ng-click="plantsSearchText=''">Clear</a>
+					</td>
+				</tr>
+				<tr class="success">
+					<td><strong>S.No</strong></td>
+					<td><strong>Code</strong></td>
+					<td><strong>Name</strong></td>
+					<td><strong>Address</strong></td>
+					<td><strong>Contact No</strong></td>
+					<td><strong>Contact Person</strong></td>
+					<td><strong>Email</strong></td>
+					<td><strong>Commissioned Date</strong></td>
+					<td><strong>Type</strong></td>
+					<td><strong>Circuit Voltage</strong></td>
+					<td><strong>Injecting Substation</strong></td>
+					<td><strong>Feeder Name</strong></td>
+					<td><strong>Location</strong></td>
+					<td><strong>Main Meter No</strong></td>
+					<td><strong>Check Meter No</strong></td>
+					<td><strong>Standby Meter No</strong></td>
+					<td><strong>Developer</strong></td>
+					<td><strong>Edit</strong></td>
+					<td><strong>Delete</strong></td>
+				</tr>
+				<tr dir-paginate="plant in plants | filter: plantsSearchText | itemsPerPage: pageSize"
+					current-page="currentPage">
+					<td>{{(currentPage-1)*pageSize + $index+1}}</td>
 					<td>{{plant.code}}</td>
 					<td>{{plant.name}}</td>
 					<td>{{plant.address}}</td>
@@ -78,18 +109,22 @@
 					<td>{{plant.mainMeterNo}}</td>
 					<td>{{plant.checkMeterNo}}</td>
 					<td>{{plant.standByMeterNo}}</td>
-					<td>{{plant.developerId}}</td>
-					<td><a href="javascript:void(0);"><span class="glyphicon glyphicon-pencil" ng-click="viewPlantDetailsCtrl.updatePage(plant.id)"></span></a></td>
-					<td><a href="javascript:void(0);"><span class="glyphicon glyphicon-trash" ng-click="viewPlantDetailsCtrl.remove((currentPage- 1)*pageSize + $index)"></span></a></td>
+					<td>{{plant.developer.name}}</td>
+					<td><a href="javascript:void(0);"><span
+							class="glyphicon glyphicon-pencil"
+							ng-click="viewPlantDetailsCtrl.updatePage(plant.id)"></span></a></td>
+					<td><a href="javascript:void(0);"><span
+							class="glyphicon glyphicon-trash"
+							ng-click="viewPlantDetailsCtrl.remove((currentPage- 1)*pageSize + $index)"></span></a></td>
 				</tr>
 			</tbody>
 		</table>
 	</div>
-<div class="text-center">
-	<dir-pagination-controls boundary-links="true"
-		on-page-change="pageChangeHandler(newPageNumber)"
-		template-url="js/angular/dirPagination.tpl.html"></dir-pagination-controls>
-</div>
+	<div class="text-center">
+		<dir-pagination-controls boundary-links="true"
+			on-page-change="pageChangeHandler(newPageNumber)"
+			template-url="js/angular/dirPagination.tpl.html"></dir-pagination-controls>
+	</div>
 </div>
 <br>
 <br>

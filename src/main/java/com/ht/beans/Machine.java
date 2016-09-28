@@ -23,6 +23,8 @@ public class Machine {
 	
 	private int developerId;
 	
+	private Developer developer;
+	
 	private String particulars;
 	
 	public int getDeveloperId() {
@@ -35,8 +37,12 @@ public class Machine {
 
 	private int plantId;
 	
+	private Plant plant;
+	
 	private int investorId;
 
+	private Investor investor;
+	
 	public int getId() {
 		return id;
 	}
@@ -129,6 +135,48 @@ public class Machine {
 	 */
 	public void setParticulars(String particulars) {
 		this.particulars = particulars;
+	}
+	
+	/**
+	 * @return the developer
+	 */
+	public Developer getDeveloper() {
+		return developer;
+	}
+
+	/**
+	 * @param developer the developer to set
+	 */
+	public void setDeveloper(Developer developer) {
+		this.developer = developer;
+	}
+
+	/**
+	 * @return the plant
+	 */
+	public Plant getPlant() {
+		return plant;
+	}
+
+	/**
+	 * @param plant the plant to set
+	 */
+	public void setPlant(Plant plant) {
+		this.plant = plant;
+	}
+
+	/**
+	 * @return the investor
+	 */
+	public Investor getInvestor() {
+		return investor;
+	}
+
+	/**
+	 * @param investor the investor to set
+	 */
+	public void setInvestor(Investor investor) {
+		this.investor = investor;
 	}
 
 	/* (non-Javadoc)

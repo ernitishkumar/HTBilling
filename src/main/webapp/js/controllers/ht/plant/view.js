@@ -141,4 +141,9 @@ angular.module("htBillingApp").controller('ViewPlantDetailsController', ['$http'
 	      
 	  };
 	
+	 /* 
+	   * variable $scope.plantsSearchText to hold the search
+	   * text for searching from plants list
+	   
+	  $scope.plantsSearchText = '';*/
 }]);

@@ -21,6 +21,9 @@ public class Plant {
 	private String checkMeterNo;
 	private String standByMeterNo;
 	private int developerId;
+	
+	private Developer developer;
+	
 	public int getId() {
 		return id;
 	}
@@ -143,6 +146,20 @@ public class Plant {
 	public void setDeveloperId(int developerId) {
 		this.developerId = developerId;
 	}
+	
+	/**
+	 * @return the developer
+	 */
+	public Developer getDeveloper() {
+		return developer;
+	}
+	/**
+	 * @param developer the developer to set
+	 */
+	public void setDeveloper(Developer developer) {
+		this.developer = developer;
+	}
+	
 	/* (non-Javadoc)
 	 * @see java.lang.Object#toString()
 	 */

@@ -1,5 +1,5 @@
 <div class="navbar navbar-fixed-top">
-	<div class="container">
+	<div>
 		<div class="navbar-header">
 			<button type="button" class="navbar-toggle" data-toggle="collapse"
 				data-target="#myNavbar">
@@ -88,27 +88,33 @@
 				</div>
 			</div>
 			<div class="form-group">
-				<label>Developer Id: </label>
-				<br> 
-				<select name="developerId" id="developerId" ng-model="machine.developerId" ng-change="updateMachineCtrl.getPlantsByDeveloper()" >
+				<label>Developer</label>
+				<!-- <select class="form-control" name="developerId" id="developerId" ng-model="machine.developerId" ng-change="updateMachineCtrl.getPlantsByDeveloper()" >
 						<option value="{{machine.developerId}}" selected>{{machine.developerId}}</option>
 						<option ng-repeat="developer in developers" value="{{developer.id}}">{{developer.name}}</option>
+				</select> -->
+				<select class="form-control" name="developerId" id="developerId" ng-model="machine.developer" ng-change="updateMachineCtrl.getPlantsByDeveloper()"
+				 ng-options="developer.name|uppercase for developer in developers track by developer.id">
 				</select>
 			</div>
 			<div class="form-group">
-				<label>Plant Id:</label>
-				<br> 
-				<select name="plantId" id="plantId" ng-model="machine.plantId" ng-change="updateMachineCtrl.getInvestorsByPlant()">
+				<label>Plant</label>
+				<!-- <select name="plantId" id="plantId" ng-model="machine.plantId" ng-change="updateMachineCtrl.getInvestorsByPlant()">
 						<option value="{{machine.plantId}}" selected>{{machine.plantId}}</option>
 						<option ng-repeat="plant in plants" value="{{plant.id}}" >{{plant.id}} : {{plant.name}}</option>
+				</select> -->
+				<select class="form-control" name="plantId" id="plantId" ng-model="machine.plant" ng-change="updateMachineCtrl.getInvestorsByPlant()"
+				 ng-options="plant.name|uppercase for plant in plants track by plant.id">
 				</select>
 			</div>
 			<div class="form-group">
-				<label>Investor Id:</label>
-				<br> 
-				<select name="investorId" id="investorId" ng-model="machine.investorId">
+				<label>Investor</label>
+				<!-- <select name="investorId" id="investorId" ng-model="machine.investorId">
 						<option value="{{machine.investorId}}" selected>{{machine.investorId}}</option>
 						<option ng-repeat="investor in investors" value="{{investor.id}}">{{investor.id}} : {{investor.name}}</option>
+				</select> -->
+				<select class="form-control" name="investorId" id="investorId" ng-model="machine.investor"
+				 ng-options="investor.name|uppercase for investor in investors track by investor.id">
 				</select>
 			</div>
 			<div class="form-group">

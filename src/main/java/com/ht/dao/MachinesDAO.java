@@ -4,15 +4,23 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 
+import com.ht.beans.Developer;
+import com.ht.beans.Investor;
 import com.ht.beans.Machine;
+import com.ht.beans.Plant;
 import com.ht.utility.GlobalResources;
-import java.sql.Statement;
 
 public class MachinesDAO {
 
-
+	private DevelopersDAO developerDAO = new DevelopersDAO();
+	
+	private PlantsDAO plantDAO = new PlantsDAO();
+	
+	private InvestorsDAO investorDAO = new InvestorsDAO();
+	
 	public Machine insert(Machine machine){
 		Machine insertedMachine = null;
 		int lastInsertedId = -1;
@@ -226,6 +234,16 @@ public class MachinesDAO {
 				machine.setPlantId(rs.getInt(10));
 				machine.setInvestorId(rs.getInt(11));
 				machine.setParticulars(rs.getString(12));
+				
+				Developer developer = developerDAO.getById(machine.getDeveloperId());
+				machine.setDeveloper(developer);
+				
+				Plant plant = plantDAO.getById(machine.getPlantId());
+				machine.setPlant(plant);
+				
+				Investor investor = investorDAO.getById(machine.getInvestorId());
+				machine.setInvestor(investor);
+				
 				machineList.add(machine);
 			}
 		} catch (SQLException e) {

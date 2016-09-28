@@ -1,5 +1,5 @@
 <div class="navbar navbar-fixed-top">
-	<div class="container">
+	<div>
 		<div class="navbar-header">
 			<button type="button" class="navbar-toggle" data-toggle="collapse"
 				data-target="#myNavbar">
@@ -50,16 +50,14 @@
 		<form ng-submit="addInvestorMappingCtrl.processForm()" class="well">
 			
 			<div class="form-group">
-				<label>Select Plant :</label> &nbsp;&nbsp;<select
-					name="plantId" id="plantId"
-					ng-model="formData.plantId">
+				<label>Select Plant :</label>
+				<select class="form-control" name="plantId" id="plantId" ng-model="formData.plantId">
 					<option ng-repeat="plant in plants" value="{{plant.id}}">{{plant.code}} : {{plant.name}}</option>
 				</select>
 			</div>
 			<div class="form-group">
-				<label>Select Investor : </label> &nbsp;&nbsp;<select
-					name="investorId" id="investorId"
-					ng-model="formData.investorId">
+				<label>Select Investor : </label>
+				<select class="form-control" name="investorId" id="investorId" ng-model="formData.investorId">
 					<option ng-repeat="investor in investors" value="{{investor.id}}">{{investor.code}} : {{investor.name}}</option>
 				</select>
 			</div>

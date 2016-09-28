@@ -1,5 +1,5 @@
 <div class="navbar navbar-fixed-top">
-	<div class="container">
+	<div>
 		<div class="navbar-header">
 			<button type="button" class="navbar-toggle" data-toggle="collapse"
 				data-target="#myNavbar">
@@ -29,8 +29,8 @@
 		</div>
 	</div>
 </div>
-<div class="container">
-	<br> <br>
+<div>
+	<br>
 	<div class="page-header text-center">
 		<h2>
 			<span class="glyphicon glyphicon-certificate"></span>View Developer
@@ -38,8 +38,8 @@
 		</h2>
 	</div>
 	<div class="table-responsive">
-		<table class="table table-bordered table-hover">
-			<thead>
+		<table class="table table-condensed table-bordered table-hover">
+			<!-- <thead>
 				<th class="text-center success">S.No</th>
 				<th class="text-center success">Name</th>
 				<th class="text-center success">CIN</th>
@@ -54,10 +54,36 @@
 				<th class="text-center success">Site Email</th>
 				<th class="text-center success">Edit</th>
 				<th class="text-center success">Delete</th>
-			</thead>
+			</thead> -->
 			<tbody class="text-center">
-				<tr dir-paginate="developer in developers | itemsPerPage:
-					pageSize" current-page="currentPage">
+				<tr>
+					<td colspan="9"><input type="text"
+						placeholder="Enter Anything to Search from Plants"
+						class="form-control" ng-model="developersSearchText"></input></td>
+					<td colspan="5"><a href="javascript:void(0);"
+						class="form-control btn btn-primary"
+						ng-click="developersSearchText=''">Clear</a></td>
+				</tr>
+				<tr class="success">
+					<td><strong>S.No</strong></td>
+					<td><strong>Name</strong></td>
+					<td><strong>CIN</strong></td>
+					<td><strong>Username</strong></td>
+					<td><strong>Office Address</strong></td>
+					<td><strong>Office Contact No</strong></td>
+					<td><strong>Office Contact Person</strong></td>
+					<td><strong>Office Email</strong></td>
+					<td><strong>Site Address</strong></td>
+					<td><strong>Site Contact No</strong></td>
+					<td><strong>Site Contact Person</strong></td>
+					<td><strong>Site Email</strong></td>
+					<td><strong>Edit</strong></td>
+					<td><strong>Delete</strong></td>
+				</tr>
+				<tr
+					dir-paginate="developer in developers | filter:developersSearchText | itemsPerPage:
+					pageSize"
+					current-page="currentPage">
 					<td>{{$index + 1}}</td>
 					<td>{{developer.name}}</td>
 					<td>{{developer.cin}}</td>
@@ -71,7 +97,9 @@
 					<td>{{developer.siteContactPerson}}</td>
 					<td>{{developer.siteEmail}}</td>
 					<td><a href="javascript:void(0);"> <span
-							class="glyphicon glyphicon-pencil" ng-click="viewDeveloperDetailsCtrl.update(developer.id)"> </span>
+							class="glyphicon glyphicon-pencil"
+							ng-click="viewDeveloperDetailsCtrl.update(developer.id)">
+						</span>
 					</a></td>
 					<td><a href="javascript:void(0);"> <span
 							class="glyphicon glyphicon-trash"

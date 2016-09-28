@@ -1,5 +1,5 @@
 <div class="navbar navbar-fixed-top">
-	<div class="container">
+	<div>
 		<div class="navbar-header">
 			<button type="button" class="navbar-toggle" data-toggle="collapse"
 				data-target="#myNavbar">
@@ -72,8 +72,8 @@
 					ng-model="plant.contactPerson" required>
 			</div>
 			<div class="form-group">
-				<label>email:</label> <input class="form-control" type="text"
-					placeholder="E-MAIL" ng-model="plant.email"  required>
+				<label>Email:</label>
+				<input class="form-control" type="text" placeholder="E-MAIL" ng-model="plant.email"  required>
 			</div>
 			<div class="form-group">
 				<span class="glyphicon glyphicon-calendar"></span> <label>Commissioned
@@ -88,7 +88,7 @@
 			</div>
 			<div class=" form-group ">
 				<label>Type:</label>
-				<select name="type" id="type" ng-model="plant.type" required>
+				<select class="form-control" name="type" id="type" ng-model="plant.type" required>
                         <option value="SOLAR">SOLAR</option>
 						<option value="WIND">WIND</option>
 				</select>
@@ -108,21 +108,22 @@
 					placeholder="Feeder Name" ng-model="plant.feederName" required>
 			</div> 
 			<div class="form-group">
-				<label>Region: &nbsp;</label> &nbsp;&nbsp;<select name="region" id="region"
-					ng-model="plant.region">
-					<option value="INDORE">INDORE</option>
-					<option value="UJJAIN">UJJAIN</option>
+				<label>Region: &nbsp;</label>
+				<select name="region" id="region" ng-model="plant.region" class="form-control">
+					<option value="indore">INDORE</option>
+					<option value="ujjain">UJJAIN</option>
 				</select>
 			</div>
 			<div class="form-group">
-				<label>Circle: &nbsp;&nbsp;&nbsp;</label> &nbsp;&nbsp;<select name="circle" id="circle"
-					ng-model="plant.circle">
+				<label>Circle: &nbsp;&nbsp;&nbsp;</label>
+				<select name="circle" id="circle" class="form-control" ng-model="plant.circle">
+					<option value="agar" >Agar</option>
 					<option value="indore" >Indore</option>
 					<option value="indore o&m" >Indore O&M</option>
 					<option value="indore city" >Indore City</option>
 					<option value="barwani" >Barwani</option>
 					<option value="shajapur" >Shajapur</option>
-					<option value="dwewas" >Dewas</option>
+					<option value="dewas" >Dewas</option>
 					<option value="burhanpur" >Burhanpur</option>
 					<option value="khandwa" >Khandwa</option>
 					<option value="mandsaur" >Mandsaur</option>
@@ -139,15 +140,15 @@
 					placeholder="Division" ng-model="plant.division" required>
 			</div>
 			<div class="form-group">
-				<label>Main Meter No:</label> &nbsp;&nbsp;<select name="mainMeterNo"
-					id="mainMeterNo" ng-model="plant.mainMeterNo">
+				<label>Main Meter No:</label>
+				<select name="mainMeterNo" class="form-control" id="mainMeterNo" ng-model="plant.mainMeterNo">
 					<option value="{{plant.mainMeterNo}}" selected>{{plant.mainMeterNo}}</option>
 					<option ng-repeat="main in metersNotInUse" value="{{main.meterNo}}">{{main.meterNo}}</option>
 				</select>
 			</div>
 			<div class="form-group">
-				<label>Check Meter No:</label> &nbsp;&nbsp;<select
-					name="checkMeterNo" id="checkMeterNo"
+				<label>Check Meter No:</label>
+				<select class="form-control" name="checkMeterNo" id="checkMeterNo"
 					ng-model="plant.checkMeterNo">
 					<option value="{{plant.checkMeterNo}}">{{plant.checkMeterNo}}</option>
 					<option ng-repeat="check in metersNotInUse" value="{{check.meterNo}}">{{check.meterNo}}</option>
@@ -155,8 +156,8 @@
 				</select>
 			</div>
 			<div class="form-group">
-				<label>Standby Meter No:</label> &nbsp;&nbsp;<select
-					name="standbyMeterNo" id="standbyMeterNo"
+				<label>Standby Meter No:</label>
+				<select class="form-control" name="standbyMeterNo" id="standbyMeterNo"
 					ng-model="plant.standByMeterNo">
 					<option value="{{plant.standByMeterNo}}" selected>{{plant.standByMeterNo}}</option>
 					<option ng-repeat="standby in metersNotInUse" value="{{standby.meterNo}}">{{standby.meterNo}}</option>
@@ -164,10 +165,13 @@
 				</select>
 			</div>
 			<div class="form-group">
-				<label>Developer Name:</label> &nbsp;&nbsp; <select name="developerId"
-					id="developerId" ng-model="plant.developerId">
+				<label>Developer Name:</label>
+				<!-- <select name="developerId" class="form-control" id="developerId" ng-model="plant.developerId">
 					<option value="{{plant.developerId}}" selected >{{plant.developerId}}</option>
 					<option ng-repeat="developer in developers" value="{{developer.id}}">{{developer.name}}</option>
+				</select> -->
+				<select class="form-control" name="developerId" id="developerId" ng-model="plant.developer" required
+				 ng-options="developer.name|uppercase for developer in developers track by developer.id">
 				</select>
 			</div>
 			<div class="row">

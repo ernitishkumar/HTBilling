@@ -87,7 +87,7 @@ angular.module("htBillingApp").controller('UpdateMachineController', ['$http', '
 		$http(
 				{
 					method: 'GET',
-					url: 'backend/plants/developer/'+$scope.machine.developerId
+					url: 'backend/plants/developer/'+$scope.machine.developer.id
 				}
 		).then(
 				function (response) {
@@ -119,7 +119,8 @@ angular.module("htBillingApp").controller('UpdateMachineController', ['$http', '
 					var status = response.status;
 					if(status === 200){
 						$scope.machine = response.data;
-						
+						getPlantsByDeveloper();
+						getInvestorsByPlant();
 						var datestr1 = $scope.machine.commissionedDate;
 						var splitDate1 = datestr1.split("-");
 						var finalDate1 = splitDate1[2]+'-'+splitDate1[1]+'-'+splitDate1[0];
@@ -168,7 +169,7 @@ angular.module("htBillingApp").controller('UpdateMachineController', ['$http', '
 		$http(
 				{
 					method: 'GET',
-					url: 'backend/investors/plant/'+$scope.machine.plantId
+					url: 'backend/investors/plant/'+$scope.machine.plant.id
 				}
 		).then(
 				function (response) {
@@ -215,6 +216,9 @@ angular.module("htBillingApp").controller('UpdateMachineController', ['$http', '
 		}
 		var ppaDate = day2 + "-" + m2 + "-" + y2;
 		$scope.machine.ppaDate = ppaDate;
+		$scope.machine.developerId = $scope.machine.developer.id;
+		$scope.machine.plantId = $scope.machine.plant.id;
+		$scope.machine.investorId = $scope.machine.investor.id;
 		$http(
 				{
 					method: 'PUT',

@@ -55,14 +55,14 @@ public class ImportUtility {
 	public void importUsers(){
 		try{
 			System.out.println("Importing Users...");
-			File file = new File("C:\\Users\\NITISH\\Desktop\\ht import data\\AGAR\\@user name.xlsx");
+			File file = new File("C:\\Users\\NITISH\\Desktop\\ht import data\\circle.xlsx");
 			FileInputStream fis = new FileInputStream(file);
 			XSSFWorkbook workbook = new XSSFWorkbook(fis);
-			XSSFSheet sheet = workbook.getSheetAt(0);
+			XSSFSheet sheet = workbook.getSheet("user");
 			int totalRows = sheet.getPhysicalNumberOfRows();
 			System.out.println("There are: "+totalRows+" users to import into database");
 			XSSFRow headerRow = sheet.getRow(0);
-			headerRow.createCell(7).setCellValue("GENERATED ID");
+			headerRow.createCell(6).setCellValue("GENERATED ID");
 			int i = 1;
 			ArrayList<User> insertedUsers = new ArrayList<User>();
 			ArrayList<UserRoles> insertedUserRoles = new ArrayList<UserRoles>();
@@ -79,7 +79,7 @@ public class ImportUtility {
 					boolean inserted = userDAO.insert(user);
 					if(inserted){
 						User insertedUser = userDAO.getByUsername(user.getUsername());
-						row.createCell(7).setCellValue(insertedUser.getId());
+						row.createCell(6).setCellValue(insertedUser.getId());
 						insertedUsers.add(insertedUser);
 						System.out.println("Inserted User");
 						UserRoles userRole = new UserRoles();
@@ -94,12 +94,12 @@ public class ImportUtility {
 						}
 					}
 				}else{
-					row.createCell(7).setCellValue("ALREADY EXISTS");
+					row.createCell(6).setCellValue("ALREADY EXISTS");
 				}
 				i++;
 			}
 			fis.close();
-			FileOutputStream fos =new FileOutputStream(new File("C:\\Users\\NITISH\\Desktop\\ht import data\\AGAR\\@user name.xlsx"));
+			FileOutputStream fos =new FileOutputStream(new File("C:\\Users\\NITISH\\Desktop\\ht import data\\circle.xlsx"));
 			workbook.write(fos);
 			fos.close();
 			workbook.close();
@@ -116,10 +116,10 @@ public class ImportUtility {
 
 	public void importDevelopers(){
 		try{
-			File file = new File("C:\\Users\\NITISH\\Desktop\\ht import data\\AGAR\\@DEVELOPER AGAR.xlsx");
+			File file = new File("C:\\Users\\NITISH\\Desktop\\ht import data\\circle.xlsx");
 			FileInputStream fis = new FileInputStream(file);
 			XSSFWorkbook workbook = new XSSFWorkbook(fis);
-			XSSFSheet sheet = workbook.getSheetAt(0);
+			XSSFSheet sheet = workbook.getSheet("developer");
 			int totalRows = sheet.getPhysicalNumberOfRows();
 			System.out.println("There are: "+totalRows+" developers to import into database");
 
@@ -141,7 +141,14 @@ public class ImportUtility {
 				developer.setSiteContactNo(df.formatCellValue(row.getCell(7)).trim());
 				developer.setSiteContactPerson(df.formatCellValue(row.getCell(8)).trim());
 				developer.setSiteEmail(df.formatCellValue(row.getCell(9)).trim());
-				developer.setUsername(df.formatCellValue(row.getCell(10)).trim());
+				String username = df.formatCellValue(row.getCell(10));
+				if(username != null && username.length() > 0){
+					developer.setUsername(username.trim());
+				}else{
+					row.createCell(11).setCellValue("NO USERNAME PRESENT");
+					System.out.println("USERNAME is not present");
+					continue;
+				}
 
 				Developer existingDeveloper = developerDAO.getByUsername(developer.getUsername());
 				if(existingDeveloper == null){
@@ -158,7 +165,7 @@ public class ImportUtility {
 				i++;
 			}
 			fis.close();
-			FileOutputStream fos =new FileOutputStream(new File("C:\\Users\\NITISH\\Desktop\\ht import data\\AGAR\\@DEVELOPER AGAR.xlsx"));
+			FileOutputStream fos =new FileOutputStream(new File("C:\\Users\\NITISH\\Desktop\\ht import data\\circle.xlsx"));
 			workbook.write(fos);
 			fos.close();
 			workbook.close();
@@ -174,13 +181,13 @@ public class ImportUtility {
 
 	public void importPlants(){
 		try{
-			File file = new File("C:\\Users\\NITISH\\Desktop\\ht import data\\AGAR\\@PLANT AGAR.xlsx");
+			File file = new File("C:\\Users\\NITISH\\Desktop\\ht import data\\circle.xlsx");
 			FileInputStream fis = new FileInputStream(file);
 			XSSFWorkbook workbook = new XSSFWorkbook(fis);
-			XSSFSheet sheet = workbook.getSheet("Sheet1");
+			XSSFSheet sheet = workbook.getSheet("plant");
 			int totalRows = sheet.getPhysicalNumberOfRows();
-
 			System.out.println("There are: "+totalRows+" plants to import into database");
+
 			XSSFRow headerRow = sheet.getRow(0);
 			headerRow.createCell(18).setCellValue("GENERATED ID");
 			List<Plant> plants = new ArrayList<Plant>();
@@ -195,6 +202,7 @@ public class ImportUtility {
 						if(code != null && code.length()>0){
 							plantToInsert.setCode(code.trim());
 						}else{
+							row.createCell(18).setCellValue("NO PLANT CODE");
 							System.out.print("Continuing since plant has no code");
 							continue;
 						}
@@ -258,6 +266,7 @@ public class ImportUtility {
 						if(meterDetails != null){
 							plantToInsert.setMainMeterNo(meterDetails.getMeterNo().trim());
 						}else{
+							row.createCell(18).setCellValue("MAIN METER DOES NOT EXISTS IN DATABASE");
 							System.out.println("Continuing Since Main Meter Does not exists");
 							continue;
 						}
@@ -277,6 +286,7 @@ public class ImportUtility {
 						if(developer != null){
 							plantToInsert.setDeveloperId(developer.getId());
 						}else{
+							row.createCell(18).setCellValue("NO DEVELOPER FOUND FOR GIVEN USERNAME");
 							System.out.println("Continuing since no developer found with username: "+username);
 							continue;
 						}
@@ -297,7 +307,7 @@ public class ImportUtility {
 				}
 			}
 			fis.close();
-			FileOutputStream fos =new FileOutputStream(new File("C:\\Users\\NITISH\\Desktop\\ht import data\\AGAR\\@PLANT AGAR.xlsx"));
+			FileOutputStream fos =new FileOutputStream(new File("C:\\Users\\NITISH\\Desktop\\ht import data\\circle.xlsx"));
 			workbook.write(fos);
 			fos.close();
 			workbook.close();
@@ -313,13 +323,13 @@ public class ImportUtility {
 
 	public void importInvestors(){
 		try{
-			File file = new File("C:\\Users\\NITISH\\Desktop\\ht import data\\AGAR\\@INVESTER AGAR.xlsx");
+			File file = new File("C:\\Users\\NITISH\\Desktop\\ht import data\\circle.xlsx");
 			FileInputStream fis = new FileInputStream(file);
 			XSSFWorkbook workbook = new XSSFWorkbook(fis);
-			XSSFSheet sheet = workbook.getSheet("Sheet1");
+			XSSFSheet sheet = workbook.getSheet("investor");
 			int totalRows = sheet.getPhysicalNumberOfRows();
-
 			System.out.println("There are: "+totalRows+" investors to import into database");
+
 			XSSFRow headerRow = sheet.getRow(0);
 			headerRow.createCell(14).setCellValue("GENERATED ID");
 			List<Investor> investors = new ArrayList<Investor>();
@@ -334,6 +344,7 @@ public class ImportUtility {
 						if(code != null && code.length()>0){
 							investorToInsert.setCode(code.trim());
 						}else{
+							row.createCell(14).setCellValue("NO INVESTOR CODE");
 							System.out.println("Continuing since investor has no code" + code);
 							continue;
 						}
@@ -344,6 +355,7 @@ public class ImportUtility {
 						if(name != null && name.length()>0){
 							investorToInsert.setName(name.trim());
 						}else{
+							row.createCell(14).setCellValue("NO INVESTOR NAME");
 							System.out.println("Continuing since investor has no Name");
 							continue;
 						}
@@ -411,7 +423,7 @@ public class ImportUtility {
 				}
 			}
 			fis.close();
-			FileOutputStream fos =new FileOutputStream(new File("C:\\Users\\NITISH\\Desktop\\ht import data\\AGAR\\@INVESTER AGAR.xlsx"));
+			FileOutputStream fos =new FileOutputStream(new File("C:\\Users\\NITISH\\Desktop\\ht import data\\circle.xlsx"));
 			workbook.write(fos);
 			fos.close();
 			workbook.close();
@@ -427,13 +439,13 @@ public class ImportUtility {
 
 	public void importMachines(){
 		try{
-			File file = new File("C:\\Users\\NITISH\\Desktop\\ht import data\\AGAR\\Agar.xlsx");
+			File file = new File("C:\\Users\\NITISH\\Desktop\\ht import data\\circle.xlsx");
 			FileInputStream fis = new FileInputStream(file);
 			XSSFWorkbook workbook = new XSSFWorkbook(fis);
 			XSSFSheet sheet = workbook.getSheet("machine");
 			int totalRows = sheet.getPhysicalNumberOfRows();
-
 			System.out.println("There are: "+totalRows+" machines to import into database");
+
 			XSSFRow headerRow = sheet.getRow(0);
 			headerRow.createCell(11).setCellValue("GENERATED ID");
 			List<Machine> machines = new ArrayList<Machine>();
@@ -544,7 +556,7 @@ public class ImportUtility {
 			}
 			fis.close();
 			//CHANGE PATH WHILE PUSHING IN SERVER
-			FileOutputStream fos =new FileOutputStream(new File("C:\\Users\\NITISH\\Desktop\\ht import data\\AGAR\\Agar.xlsx"));
+			FileOutputStream fos =new FileOutputStream(new File("C:\\Users\\NITISH\\Desktop\\ht import data\\circle.xlsx"));
 			workbook.write(fos);
 			fos.close();
 			workbook.close();
@@ -561,10 +573,10 @@ public class ImportUtility {
 	public static void main(String gg[]){
 		System.out.println("Running import..");
 		ImportUtility iu = new ImportUtility();
-		/*iu.importUsers();
-		iu.importDevelopers();
-		iu.importPlants();
-		iu.importInvestors();*/
+		//iu.importUsers();
+		//iu.importDevelopers();
+		//iu.importPlants();
+		//importInvestors();
 		//iu.importMachines();
 	}
 
@@ -573,14 +585,14 @@ public class ImportUtility {
 		boolean done = false;
 		try{
 			ImportUtility iu = new ImportUtility();
-			/*System.out.println("Importing Users..");
+			System.out.println("Importing Users..");
 			iu.importUsers();
 			System.out.println("Importing Developers..");
 			iu.importDevelopers();
 			System.out.println("Importing Plants..");
 			iu.importPlants();
 			System.out.println("Importing Investors..");
-			iu.importInvestors();*/
+			iu.importInvestors();
 			System.out.println("Importing Machines..");
 			iu.importMachines();
 			done = true;

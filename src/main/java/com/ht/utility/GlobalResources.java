@@ -16,23 +16,6 @@ public class GlobalResources {
 	private static final String[] tensNames = {""," Ten"," Twenty"," Thirty"," Forty"," Fifty"," Sixty"," Seventy"," Eighty"," Ninety" };
 	private static final String[] numNames = {""," One"," Two"," Three"," Four"," Five"," Six"," Seven"," Eight"," Nine"," Ten"," Eleven"," Twelve"," Thirteen"," Fourteen"," Fifteen"," Sixteen"," Seventeen"," Eighteen"," Nineteen"};
 
-	/*public static Connection getConnection()
-	{
-		try {
-			if(connection==null){
-				Class.forName("com.mysql.jdbc.Driver");
-				connection=DriverManager.getConnection("jdbc:mysql://localhost:3306/ht","ht","ht");	
-			}
-		} catch (SQLException exception) {
-			System.out.println("Not able to connect to the Database "+exception.getMessage());
-			exception.printStackTrace();
-		} catch (ClassNotFoundException e) {
-			System.out.println("Class not found "+e.getMessage());
-			e.printStackTrace();
-		}
-		return connection;
-	}*/
-
 	public static DataSource getDatasource()
 	{
 		if(datasource==null){
@@ -40,14 +23,14 @@ public class GlobalResources {
 			poolProperties.setDriverClassName("com.mysql.jdbc.Driver");
 			
 			//Production environment database connection details.Uncomment below code before deploying to production
-			/*poolProperties.setUrl("jdbc:mysql://localhost:3306/ht");
+			poolProperties.setUrl("jdbc:mysql://localhost:3306/ht");
 			poolProperties.setUsername("ht");
-			poolProperties.setPassword("htbilling@452015");*/
+			poolProperties.setPassword("htbilling@452015");
 			
 			//Testing environment database connection details
-			poolProperties.setUrl("jdbc:mysql://localhost:3306/ht_test");
+			/*poolProperties.setUrl("jdbc:mysql://localhost:3306/ht_test");
 			poolProperties.setUsername("ht_test");
-		    poolProperties.setPassword("ht");
+		    poolProperties.setPassword("ht");*/
 			
 		    poolProperties.setJmxEnabled(true);
 			poolProperties.setTestWhileIdle(false);

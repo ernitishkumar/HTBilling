@@ -48,25 +48,6 @@
 	</div>
 	<div class="table-responsive">
 		<table class="table table-condensed table-bordered table-hover">
-			<!-- <thead>
-				<th class="text-center success">S.No</th>
-				<th class="text-center success">Code</th>
-				<th class="text-center success">Name</th>
-				<th class="text-center success">CIN</th>
-				<th class="text-center success">TIN</th>
-				<th class="text-center success">VAT</th>
-				<th class="text-center success">Invoice No</th>
-				<th class="text-center success">Office Address</th>
-				<th class="text-center success">Office Contact No</th>
-				<th class="text-center success">Office Contact Person</th>
-				<th class="text-center success">Office Email</th>
-				<th class="text-center success">Site Address</th>
-				<th class="text-center success">Site Contact No</th>
-				<th class="text-center success">Site Contact Person</th>
-				<th class="text-center success">Site Email</th>
-				<th class="text-center success">Edit</th>
-				<th class="text-center success">Delete</th>
-			</thead> -->
 			<tbody class="text-center">
 				<tr>
 					<td colspan="8">
@@ -96,12 +77,9 @@
 					<td><strong>Edit</strong></td>
 					<td><strong>Delete</strong></td>
 			   </tr>
-			
-				<tr
-					dir-paginate="investor in investors| filter:investorsSearchText | itemsPerPage:
-					pageSize"
+				<tr dir-paginate="investor in investors| filter:investorsSearchText | itemsPerPage: pageSize"
 					current-page="currentPage">
-					<td>{{$index+1}}</td>
+					<td>{{(currentPage-1)*pageSize + $index+1}}</td>
 					<td>{{investor.code}}</td>
 					<td>{{investor.name}}</td>
 					<td>{{investor.cin}}</td>

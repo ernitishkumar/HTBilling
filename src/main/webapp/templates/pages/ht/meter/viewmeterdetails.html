@@ -46,24 +46,32 @@
 		</h2>
 	</div>
 	<table class="table table-bordered table-hover">
-		<thead>
-			<th class="text-center success">S.No</th>
-			<th class="text-center success">Meter No. {{reading.meterNo}}</th>
-			<th class="text-center success">Make</th>
-			<th class="text-center success">Category</th>
-			<th class="text-center success">Type</th>
-			<th class="text-center success">Meter Class</th>
-			<th class="text-center success">CTR</th>
-			<th class="text-center success">PTR</th>
-			<th class="text-center success">MF</th>
-			<th class="text-center success">Equipment Class</th>
-			<th class="text-center success">Phase</th>
-			<th class="text-center success">Meter Group</th>
-			<th class="text-center success">Edit</th>
-			<th class="text-center success">Delete</th>
-		</thead>
 		<tbody class="text-center">
-			<tr dir-paginate="meter in meters | itemsPerPage: pageSize" current-page="currentPage">
+			<tr>
+					<td colspan="11"><input type="text"
+						placeholder="Enter Anything to Search from Plants"
+						class="form-control" ng-model="metersSearchText"></input></td>
+					<td colspan="3"><a href="javascript:void(0);"
+						class="form-control btn btn-primary"
+						ng-click="metersSearchText=''">Clear</a></td>
+			</tr>
+			<tr class="success">
+				<td><strong>S.No</strong></td>
+				<td><strong>Meter No. {{reading.meterNo}}</strong></td>
+				<td><strong>Make</strong></td>
+				<td><strong>Category</strong></td>
+				<td><strong>Type</strong></td>
+				<td><strong>Meter Class</strong></td>
+				<td><strong>CTR</strong></td>
+				<td><strong>PTR</strong></td>
+				<td><strong>MF</strong></td>
+				<td><strong>Equipment Class</strong></td>
+				<td><strong>Phase</strong></td>
+				<td><strong>Meter Group</strong></td>
+				<td><strong>Edit</strong></td>
+				<td><strong>Delete</strong></td>
+		    </tr>
+			<tr dir-paginate="meter in meters| filter:metersSearchText | itemsPerPage: pageSize" current-page="currentPage">
 				<td>{{(currentPage-1)*pageSize + $index+1}}</td>
 				<td>{{meter.meterNo}}</td>
 				<td>{{meter.make}}</td>
@@ -76,16 +84,20 @@
 				<td>{{meter.equipmentClass}}</td>
 				<td>{{meter.phase}}</td>
 				<td>{{meter.meterGroup}}</td>
-				<td><a href="javascript:void(0);"><span
-						class="glyphicon glyphicon-pencil" ng-click="viewMeterDetailsCtrl.update(meter.meterNo)"></span></a></td>
-				<td><a href="javascript:void(0);"
+				<td>
+					<a href="javascript:void(0);">
+					<span class="glyphicon glyphicon-pencil" ng-click="viewMeterDetailsCtrl.update(meter.meterNo)"></span></a>
+				</td>
+				<td>
+					<a href="javascript:void(0);"
 					ng-click="viewMeterDetailsCtrl.remove((currentPage - 1)*pageSize + $index)"><span
-						class="glyphicon glyphicon-trash"></span></a></td>
+						class="glyphicon glyphicon-trash"></span></a>
+				</td>
 			</tr>
 		</tbody>
 	</table>
 </div>
-<div class="text-center">
+<div class="text-center" ng-if="!loading">
 	<dir-pagination-controls boundary-links="true"
 		on-page-change="pageChangeHandler(newPageNumber)"
 		template-url="js/angular/dirPagination.tpl.html"></dir-pagination-controls>

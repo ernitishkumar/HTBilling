@@ -23,7 +23,6 @@ angular.module("htBillingApp").controller('ViewPlantDetailsController', ['$http'
 		}else if(userRole.role === "admin"){
 			$scope.user = user;
 			$scope.userRole = userRole;
-			
 			//fetching all the plants
 			getPlants();
 		}else{
@@ -62,7 +61,7 @@ angular.module("htBillingApp").controller('ViewPlantDetailsController', ['$http'
 	 * function getPlants() to fetch all the plants from backend
 	 */
 	function getPlants() {
-
+		$scope.loading = true;
 		$http(
 				{
 					method: 'GET',
@@ -73,6 +72,7 @@ angular.module("htBillingApp").controller('ViewPlantDetailsController', ['$http'
 					var status = response.status;
 					if(status === 200){
 						$scope.plants = response.data;
+						$scope.loading = false;
 					}
 				},
 				function(error){

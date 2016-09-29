@@ -61,6 +61,7 @@ angular.module("htBillingApp").controller('ViewInvestorDetailsController', ['$ht
 	 * from backend to display on the page.
 	 */
 	function getAllInvestors() {
+		$scope.loading = true;
 		$http(
 				{
 					method: 'GET',
@@ -71,6 +72,7 @@ angular.module("htBillingApp").controller('ViewInvestorDetailsController', ['$ht
 					var status = response.status;
 					if(status === 200){
 						$scope.investors = response.data;
+						$scope.loading = false;
 					}
 				},
 				function(error){

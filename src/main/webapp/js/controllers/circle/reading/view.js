@@ -56,6 +56,7 @@ angular.module("htBillingApp").controller('CircleViewMeterReadingsController', [
 	 * of logged in developer.
 	 */
 	function loadCircleReadings() {
+		$scope.loading = true;
 		$http(
 				{
 					method: 'GET',
@@ -71,6 +72,7 @@ angular.module("htBillingApp").controller('CircleViewMeterReadingsController', [
 						$scope.readingData.forEach(function (reading) {
 							utilService.calculateReadingData(reading);
 						});
+						$scope.loading = false;
 					}
 				},
 				function(error){

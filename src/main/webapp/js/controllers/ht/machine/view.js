@@ -61,7 +61,7 @@ angular.module("htBillingApp").controller('ViewMachineDetailsController', ['$htt
 	 * on the page.
 	 */
 	function getAllMachines() {
-
+		$scope.loading = true;
 		$http(
 				{
 					method: 'GET',
@@ -72,6 +72,7 @@ angular.module("htBillingApp").controller('ViewMachineDetailsController', ['$htt
 					var status = response.status;
 					if(status === 200){
 						$scope.machines = response.data;
+						$scope.loading = false;
 					}
 				},
 				function(error){

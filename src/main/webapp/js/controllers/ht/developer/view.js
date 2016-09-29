@@ -63,7 +63,7 @@ angular.module("htBillingApp").controller('ViewDeveloperDetailsController', ['$h
 	 * from backend to list on the page
 	 */
 	function getAllDevelopers() {
-
+		$scope.loading = true;
 		$http(
 				{
 					method: 'GET',
@@ -74,6 +74,7 @@ angular.module("htBillingApp").controller('ViewDeveloperDetailsController', ['$h
 					var status  = response.status;
 					if(status === 200){
 						$scope.developers = response.data;
+						$scope.loading = false;
 					}
 				},
 				function(error){

@@ -56,6 +56,7 @@ angular.module("htBillingApp").controller('DeveloperViewMeterReadingsController'
 	 * of logged in developer.
 	 */
 	function loadDeveloperReadings() {
+		$scope.loading = true;
 		$http(
 				{
 					method: 'GET',
@@ -71,6 +72,7 @@ angular.module("htBillingApp").controller('DeveloperViewMeterReadingsController'
 						$scope.readingData.forEach(function (reading) {
 							utilService.calculateReadingData(reading);
 						});
+						$scope.loading = false;
 					}
 				},
 				function(error){

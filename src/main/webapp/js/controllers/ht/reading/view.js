@@ -69,6 +69,7 @@ angular.module("htBillingApp").controller('ViewMeterReadingsController', ['$http
 	 * and assign it to the view to display on front end
 	 */
 	function loadReadings() {
+		$scope.loading = true;
 		$http(
 				{
 					method: 'GET',
@@ -84,6 +85,7 @@ angular.module("htBillingApp").controller('ViewMeterReadingsController', ['$http
 						$scope.readingData.forEach(function (reading) {
 							utilService.calculateReadingData(reading);
 						});
+						$scope.loading = false;
 					}
 				},
 				function(error){

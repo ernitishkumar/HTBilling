@@ -61,7 +61,7 @@ angular.module("htBillingApp").controller('ViewInvestorMappingController', ['$ht
 	 * function getAllPlants() to fetch all the plants from backend
 	 */
 	function getAllMappings() {
-
+		$scope.loading = true;
 		$http(
 				{
 					method: 'GET',
@@ -72,6 +72,7 @@ angular.module("htBillingApp").controller('ViewInvestorMappingController', ['$ht
 					var status = response.status;
 					if(status === 200){
 						$scope.mappings = response.data;
+						$scope.loading = false;
 					}
 				},
 				function(error){

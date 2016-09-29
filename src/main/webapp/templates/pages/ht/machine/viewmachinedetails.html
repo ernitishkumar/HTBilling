@@ -28,18 +28,17 @@
 			</ul>
 		</div>
 	</div>
-</div><!-- 
-To be implemented -->
-<!-- <div class="row text-xs-center">
-	<div class='form-group'>
+</div>
+<div class="row loading" ng-if="loading">
+	<div class='form-group col-xs-12 col-md-4 col-md-offset-5 col-lg-4 col-lg-offset-5'>
 		<label for='example-text-input' class="font-weight-bold">Loading
 			Machines...</label>
 		<div>
-			<span class="glyphicon glyphicon-refresh glyphicon-spin" style='font-size: 100px'></span>
+			<span class='fa fa-cog fa-spin' style='font-size: 100px'></span>
 		</div>
 	</div>
-</div> -->
-<div>
+</div>
+<div ng-if="!loading">
 	<br> <br>
 	<div class="page-header text-center">
 		<h2>

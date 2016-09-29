@@ -55,7 +55,7 @@ angular.module("htBillingApp").controller('ViewMeterDetailsController', ['$http'
 	 * function to load all the meters from the backend and display them.
 	 */
 	function loadAllMeters() {
-
+		$scope.loading = true;
 		$http(
 				{
 					method: 'GET',
@@ -66,6 +66,7 @@ angular.module("htBillingApp").controller('ViewMeterDetailsController', ['$http'
 					var status = response.status;
 					if(status === 200){
 						$scope.meters = response.data;	
+						$scope.loading = false;
 					}
 				},
 				function(error){

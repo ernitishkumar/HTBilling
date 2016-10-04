@@ -62,7 +62,7 @@ public class ImportUtility {
 			int totalRows = sheet.getPhysicalNumberOfRows();
 			System.out.println("There are: "+totalRows+" users to import into database");
 			XSSFRow headerRow = sheet.getRow(0);
-			headerRow.createCell(6).setCellValue("GENERATED ID");
+			headerRow.createCell(7).setCellValue("GENERATED ID");
 			int i = 1;
 			ArrayList<User> insertedUsers = new ArrayList<User>();
 			ArrayList<UserRoles> insertedUserRoles = new ArrayList<UserRoles>();
@@ -79,7 +79,7 @@ public class ImportUtility {
 					boolean inserted = userDAO.insert(user);
 					if(inserted){
 						User insertedUser = userDAO.getByUsername(user.getUsername());
-						row.createCell(6).setCellValue(insertedUser.getId());
+						row.createCell(7).setCellValue(insertedUser.getId());
 						insertedUsers.add(insertedUser);
 						System.out.println("Inserted User");
 						UserRoles userRole = new UserRoles();
@@ -94,7 +94,7 @@ public class ImportUtility {
 						}
 					}
 				}else{
-					row.createCell(6).setCellValue("ALREADY EXISTS");
+					row.createCell(7).setCellValue("ALREADY EXISTS");
 				}
 				i++;
 			}

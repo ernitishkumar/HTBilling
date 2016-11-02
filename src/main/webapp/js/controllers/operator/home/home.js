@@ -1,37 +1,52 @@
-angular.module('htBillingApp').controller('OperatorHomeController', ['$http', '$scope', '$location', function ($http, $scope, $location) {
-    $scope.user = {};
+angular.module('htBillingApp').controller('OperatorHomeController', ['$http', '$scope', '$location','authService', function ($http, $scope, $location,authService) {
+	/*
+	 * var user a controller level variable to store user object.
+	 */
+	$scope.user = {};
+
+	/*
+	 * var userRole a controller level variable to store userRole object.
+	 */
+	$scope.userRole = {};
+    
+    /* 
+     * checkUser function. checks whether any user is logged into the system
+     * and if he is authorized to view this page according to his role
+     *  if not then he is redirected to login page 
+     */
     var checkUser = function () {
-        $http({
-            method: 'GET',
-            url: 'ValidateSession'
-        }).then(function (response) {
-            var user = response.data;
-            if (user.username === null || user.username == "undefined") {
-                $location.path("/");
-            } else if (user.user_role === "operator") {
-                $scope.user = user;
-            } else {
-                $location.path("/");
-            }
-        });
+    	var user = authService.fetchData(authService.USER_KEY);
+    	var userRole = authService.fetchData(authService.USER_ROLE_KEY);
+    	if(user === null || user === undefined || user.username === null || user.username == undefined || userRole === null || userRole === undefined){
+    		$location.path("/");
+    	}else if(userRole.role === "operator"){
+    		$scope.user = user;
+    		$scope.userRole = userRole;
+    	}else{
+    		$location.path("/");
+    	}
     };
+    
+    /* 
+     * calling checkUser() function on page load 
+     */
     checkUser();
-
+    
+    /* 
+     * logout function. Removes all local storage data
+     * and routes to login page
+     */
     this.logout = function () {
-        $http({
-            method: 'GET',
-            url: 'Logout'
-        }).then(function (response) {
-            $location.path("/");
-        });
+    	$scope.user = {};
+    	$scope.userRole = {};
+    	authService.logout();
     };
-
     this.loadReadingForm = function () {
         $location.path("/enterreading");
     };
 
     this.loadMeterReadingViewPage = function () {
-        $location.path("/viewmeterreadings");
+        //$location.path("/viewmeterreadings");
     };
 
     this.loadOperatorHome = function () {

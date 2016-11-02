@@ -395,6 +395,7 @@ public class MeterReadingsDAO {
 
 	public MeterReading getCurrentMonthMeterReadings(String meterNo) {
 		MeterReading meterReading = new MeterReading();
+		MeterDetailsDAO meterDetailsDAO = new MeterDetailsDAO();
 		int id = -1;
 		try(
 				//Added discarded flag check to prevent discarded reading to be used
@@ -407,10 +408,9 @@ public class MeterReadingsDAO {
 				id = rs.getInt(1);
 			}
 			meterReading = getById(id);
-			if (meterReading == null) {
+			MeterDetails meterDetails = meterDetailsDAO.getByMeterNo(meterNo);
+			if (meterReading == null && meterDetails!= null) {
 				meterReading = new MeterReading();
-				MeterDetailsDAO meterDetailsDAO = new MeterDetailsDAO();
-				MeterDetails meterDetails = meterDetailsDAO.getByMeterNo(meterNo);
 				meterReading.setId(-1);
 				meterReading.setMeterno(meterNo);
 				meterReading.setMf(meterDetails.getMf());

@@ -41,7 +41,20 @@
     <div class="page-header text-center container">
         <h2><span class="glyphicon glyphicon-certificate"></span>View Meter Readings</h2>
     </div>
-    <div name="panelsHolder" dir-paginate="reading in readingData | itemsPerPage: pageSize"
+    <div class="container">
+		<div class="row">
+			<div class="col-xs-8 col-xs-offset-1">
+				<input type="text" class="form-control" id="readingSearchBox" placeholder="Enter Anything to Search" ng-model="readingSearchText">
+			</div>
+			<div class="col-xs-2">
+				<a href="javascript:void(0);" class="form-control btn btn-primary" ng-click="readingSearchText=''">Clear</a>		
+			</div>
+		</div>
+		<div class="row">
+			<hr>
+		</div>
+	</div>
+    <div name="panelsHolder" dir-paginate="reading in readingData | filter:readingSearchText | itemsPerPage: pageSize"
 		current-page="currentPage" class="container col-md-offset-1 col-md-10">
         <div class="panel panel-success">
             <div class="panel-heading text-center">Meter Readings For {{reading.meterNo}}</div>

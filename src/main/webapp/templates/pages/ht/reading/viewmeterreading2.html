@@ -30,7 +30,8 @@
 	</div>
 </div>
 <div class="row loading" ng-if="loading">
-	<div class='form-group col-xs-12 col-md-4 col-md-offset-5 col-lg-4 col-lg-offset-5'>
+	<div
+		class='form-group col-xs-12 col-md-4 col-md-offset-5 col-lg-4 col-lg-offset-5'>
 		<label for='example-text-input' class="font-weight-bold">Loading
 			Readings...</label>
 		<div>
@@ -45,8 +46,21 @@
 			Readings
 		</h2>
 	</div>
+	<div class="container">
+		<div class="row">
+			<div class="col-xs-8 col-xs-offset-1">
+				<input type="text" class="form-control" id="readingSearchBox" placeholder="Enter Anything to Search" ng-model="readingSearchText">
+			</div>
+			<div class="col-xs-2">
+				<a href="javascript:void(0);" class="form-control btn btn-primary" ng-click="readingSearchText=''">Clear</a>		
+			</div>
+		</div>
+		<div class="row">
+			<hr>
+		</div>
+	</div>
 	<div name="panelsHolder"
-		dir-paginate="reading in readingData | itemsPerPage: pageSize"
+		dir-paginate="reading in readingData | filter:readingSearchText | itemsPerPage: pageSize"
 		current-page="currentPage" class="container col-md-offset-1 col-md-10">
 		<div class="panel panel-success">
 			<div class="panel-heading text-center">
@@ -55,8 +69,7 @@
 			<div class="panel-body">
 				<p class="text-center">
 					Developer Name: <b>{{reading.developer.name}}</b>
-					&nbsp;&nbsp;&nbsp; <br>
-					<br>Mf of Meter: <b>{{reading.currentMeterReading.mf}}</b>
+					&nbsp;&nbsp;&nbsp; <br> <br>Mf of Meter: <b>{{reading.currentMeterReading.mf}}</b>
 					&nbsp;&nbsp;&nbsp; Site Location: <b>{{reading.plant.address|uppercase}}</b>
 					&nbsp;&nbsp;&nbsp; Adjustment Amount: <b>{{reading.currentMeterReading.adjustment}}</b>
 					<button type="button" class="btn btn-success" name="validateButton"
@@ -80,8 +93,7 @@
 						ng-show="reading.currentMeterReading.developerValidation"
 						class="label label-primary">Validated by Developer</span> <span
 						ng-hide="reading.currentMeterReading.developerValidation || reading.currentMeterReading.discardedFlag"
-						class="label label-danger">Not Validated by Developer</span>
-						<span
+						class="label label-danger">Not Validated by Developer</span> <span
 						ng-show="reading.currentMeterReading.htCellValidation && reading.currentMeterReading.discardedFlag && !reading.currentMeterReading.developerValidation"
 						class="label label-danger">Discarded by Developer</span> <span
 						ng-show="reading.currentMeterReading.circleCellValidation"

@@ -94,7 +94,7 @@ public class ReadingResource {
 			viewMeterReadings.setPlant(p);
 			viewMeterReadings.setDeveloper(developersDAO.getById(p.getDeveloperId()));
 			MeterReading currentMonthReading = meterReadingsDAO.getCurrentMonthMeterReadings(meterNo);
-			if (currentMonthReading.getDiscardedFlag() == 0 || currentMonthReading.getHtCellValidation()==1) {
+			if (currentMonthReading != null && (currentMonthReading.getDiscardedFlag() == 0 || currentMonthReading.getHtCellValidation()==1)) {
 				if (currentMonthReading.getSrfrFlag() == 1) {
 					// System.out.println("inside if of SR FR" );
 					String checkMeterNo = p.getCheckMeterNo();

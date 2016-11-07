@@ -28,8 +28,8 @@ public class GlobalResources {
 			poolProperties.setPassword("htbilling@452015");*/
 			
 			//Testing environment database connection details
-			poolProperties.setUrl("jdbc:mysql://localhost:3306/ht_test");
-			poolProperties.setUsername("ht_test");
+			poolProperties.setUrl("jdbc:mysql://localhost:3306/ht");
+			poolProperties.setUsername("ht");
 		    poolProperties.setPassword("ht");
 			
 		    poolProperties.setJmxEnabled(true);

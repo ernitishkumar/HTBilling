@@ -644,6 +644,8 @@ public class MeterReadingsDAO {
 		String mon = null;
 		if (month < 10) {
 			mon = "0" + month;
+		}else{
+			mon = String.valueOf(month);
 		}
 		String dateTrim = readingDay + "-" + mon + "-" + year;
 		return dateTrim;

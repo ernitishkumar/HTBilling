@@ -21,6 +21,7 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
 
+import com.ht.beans.Consumption;
 import com.ht.beans.Developer;
 import com.ht.beans.ErrorBean;
 import com.ht.beans.MessageBean;
@@ -276,19 +277,27 @@ public class ReadingResource {
 	@PUT
 	@Path("/validate")
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response validateReadings(@QueryParam("role") String role, @QueryParam("readingId") int readingId) {
-		System.out.println("validateReadings called for role " + role);
+	public Response validateReadings(@QueryParam("role") String role, @QueryParam("currentReadingId") int currentReadingId,@QueryParam("previousReadingId") int previousReadingId) {
+		System.out.println("validateReadings called for role " + role+" with pre id: "+previousReadingId+" and curr id: "+currentReadingId);
 		boolean validated = false;
 		if (role != null) {
 			if (role.equalsIgnoreCase("htcell") || role.equalsIgnoreCase("admin")) {
-				validated = meterReadingsDAO.updateHTCellValidation(readingId, 1);
+				validated = meterReadingsDAO.updateHTCellValidation(currentReadingId, 1);
 			} else if (role.equalsIgnoreCase("circle")) {
-				validated = meterReadingsDAO.updateCircleCellValidation(readingId, 1);
+				validated = meterReadingsDAO.updateCircleCellValidation(currentReadingId, 1);
 			} else if (role.equalsIgnoreCase("developer")) {
-				validated = meterReadingsDAO.updateDeveloperValidation(readingId, 1);
+				MeterReading currentReading = meterReadingsDAO.getById(currentReadingId);
+				MeterReading previousReading = meterReadingsDAO.getById(previousReadingId);
+				if(previousReading != null && currentReading != null){
+					System.out.println("Validating Reading since both current and previous readings is present");
+					System.out.println(previousReadingId);
+					System.out.println(currentReadingId);
+					validated = meterReadingsDAO.updateDeveloperValidation(currentReadingId, 1);
+				}
 			}
 		}
 		if (role != null && validated) {
+			System.out.println("Readings validated sending response");
 			return Response.status(Status.OK).entity(new MessageBean("validated")).build();
 		} else {
 			return Response.status(Status.EXPECTATION_FAILED).entity(new ErrorBean("not validated")).build();
@@ -322,7 +331,9 @@ public class ReadingResource {
 	public Response discardReadings(UserRoles role, @QueryParam("readingId") int readingId) {
 		boolean discarded = false;
 		if (role != null) {
+			System.out.println("Discarding readings by role: "+role.getRole());
 			if (role.getRole().equalsIgnoreCase("htcell") || role.getRole().equalsIgnoreCase("admin")) {
+				System.out.println("Going to discard readings ");
 				discarded = meterReadingsDAO.updateDiscardedFlagByAdmin(readingId, 1, role);
 			} else if (role.getRole().equalsIgnoreCase("developer")) {
 				System.out.println("inside for discard from developer");

@@ -586,6 +586,7 @@ public class MeterReadingsDAO {
 	}
 
 	public boolean updateDiscardedFlagByAdmin(int readingId, int discardedFlag, UserRoles userRoles) {
+		System.out.println("Discarding Reading with role: "+userRoles.getRole());
 		boolean discarded = false;
 		String currentDate = getCurrentDate();
 		try(

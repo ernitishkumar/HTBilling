@@ -1,202 +1,461 @@
 package com.ht.beans;
 
+import java.math.BigDecimal;
+
 public class SRFRReadings {
 
 	private String meterno;
-	private int mf;
+	private BigDecimal mf;
 	private String readingDate;
-	private float activeEnergy;
-    private float activeTodOne;
-    private float activeTodTwo;
-    private float activeTodThree;
-    private float reactiveQuadrantOne;
-    private float reactiveQuadrantTwo;
-    private float reactiveQuadrantThree;
-	private float reactiveQuadrantFour;
-	private float preCheckActiveEnergy;
-    private float preCheckActiveTodOne;
-    private float preCheckActiveTodTwo;
-    private float preCheckActiveTodThree;
-    private float preCheckReactiveQuadrantOne;
-    private float preCheckReactiveQuadrantTwo;
-    private float preCheckReactiveQuadrantThree;
-	private float preCheckReactiveQuadrantFour;
-	private float curCheckActiveEnergy;
-    private float curCheckActiveTodOne;
-    private float curCheckActiveTodTwo;
-    private float curCheckActiveTodThree;
-    private float curCheckReactiveQuadrantOne;
-    private float curCheckReactiveQuadrantTwo;
-    private float curCheckReactiveQuadrantThree;
-	private float curCheckReactiveQuadrantFour;
+	private BigDecimal activeEnergy;
+    private BigDecimal activeTodOne;
+    private BigDecimal activeTodTwo;
+    private BigDecimal activeTodThree;
+    private BigDecimal reactiveQuadrantOne;
+    private BigDecimal reactiveQuadrantTwo;
+    private BigDecimal reactiveQuadrantThree;
+	private BigDecimal reactiveQuadrantFour;
+	private BigDecimal preCheckActiveEnergy;
+    private BigDecimal preCheckActiveTodOne;
+    private BigDecimal preCheckActiveTodTwo;
+    private BigDecimal preCheckActiveTodThree;
+    private BigDecimal preCheckReactiveQuadrantOne;
+    private BigDecimal preCheckReactiveQuadrantTwo;
+    private BigDecimal preCheckReactiveQuadrantThree;
+	private BigDecimal preCheckReactiveQuadrantFour;
+	private BigDecimal curCheckActiveEnergy;
+    private BigDecimal curCheckActiveTodOne;
+    private BigDecimal curCheckActiveTodTwo;
+    private BigDecimal curCheckActiveTodThree;
+    private BigDecimal curCheckReactiveQuadrantOne;
+    private BigDecimal curCheckReactiveQuadrantTwo;
+    private BigDecimal curCheckReactiveQuadrantThree;
+	private BigDecimal curCheckReactiveQuadrantFour;
 	private String checkMeterNo;
-	public String getCheckMeterNo() {
-		return checkMeterNo;
-	}
-	public void setCheckMeterNo(String checkMeterNo) {
-		this.checkMeterNo = checkMeterNo;
-	}
+	/**
+	 * @return the meterno
+	 */
 	public String getMeterno() {
 		return meterno;
 	}
+	/**
+	 * @param meterno the meterno to set
+	 */
 	public void setMeterno(String meterno) {
 		this.meterno = meterno;
 	}
-	public int getMf() {
+	/**
+	 * @return the mf
+	 */
+	public BigDecimal getMf() {
 		return mf;
 	}
-	public void setMf(int mf) {
+	/**
+	 * @param mf the mf to set
+	 */
+	public void setMf(BigDecimal mf) {
 		this.mf = mf;
 	}
+	/**
+	 * @return the readingDate
+	 */
 	public String getReadingDate() {
 		return readingDate;
 	}
+	/**
+	 * @param readingDate the readingDate to set
+	 */
 	public void setReadingDate(String readingDate) {
 		this.readingDate = readingDate;
 	}
-	public float getActiveEnergy() {
+	/**
+	 * @return the activeEnergy
+	 */
+	public BigDecimal getActiveEnergy() {
 		return activeEnergy;
 	}
-	public void setActiveEnergy(float activeEnergy) {
+	/**
+	 * @param activeEnergy the activeEnergy to set
+	 */
+	public void setActiveEnergy(BigDecimal activeEnergy) {
 		this.activeEnergy = activeEnergy;
 	}
-	public float getActiveTodOne() {
+	/**
+	 * @return the activeTodOne
+	 */
+	public BigDecimal getActiveTodOne() {
 		return activeTodOne;
 	}
-	public void setActiveTodOne(float activeTodOne) {
+	/**
+	 * @param activeTodOne the activeTodOne to set
+	 */
+	public void setActiveTodOne(BigDecimal activeTodOne) {
 		this.activeTodOne = activeTodOne;
 	}
-	public float getActiveTodTwo() {
+	/**
+	 * @return the activeTodTwo
+	 */
+	public BigDecimal getActiveTodTwo() {
 		return activeTodTwo;
 	}
-	public void setActiveTodTwo(float activeTodTwo) {
+	/**
+	 * @param activeTodTwo the activeTodTwo to set
+	 */
+	public void setActiveTodTwo(BigDecimal activeTodTwo) {
 		this.activeTodTwo = activeTodTwo;
 	}
-	public float getActiveTodThree() {
+	/**
+	 * @return the activeTodThree
+	 */
+	public BigDecimal getActiveTodThree() {
 		return activeTodThree;
 	}
-	public void setActiveTodThree(float activeTodThree) {
+	/**
+	 * @param activeTodThree the activeTodThree to set
+	 */
+	public void setActiveTodThree(BigDecimal activeTodThree) {
 		this.activeTodThree = activeTodThree;
 	}
-	public float getReactiveQuadrantOne() {
+	/**
+	 * @return the reactiveQuadrantOne
+	 */
+	public BigDecimal getReactiveQuadrantOne() {
 		return reactiveQuadrantOne;
 	}
-	public void setReactiveQuadrantOne(float reactiveQuadrantOne) {
+	/**
+	 * @param reactiveQuadrantOne the reactiveQuadrantOne to set
+	 */
+	public void setReactiveQuadrantOne(BigDecimal reactiveQuadrantOne) {
 		this.reactiveQuadrantOne = reactiveQuadrantOne;
 	}
-	public float getReactiveQuadrantTwo() {
+	/**
+	 * @return the reactiveQuadrantTwo
+	 */
+	public BigDecimal getReactiveQuadrantTwo() {
 		return reactiveQuadrantTwo;
 	}
-	public void setReactiveQuadrantTwo(float reactiveQuadrantTwo) {
+	/**
+	 * @param reactiveQuadrantTwo the reactiveQuadrantTwo to set
+	 */
+	public void setReactiveQuadrantTwo(BigDecimal reactiveQuadrantTwo) {
 		this.reactiveQuadrantTwo = reactiveQuadrantTwo;
 	}
-	public float getReactiveQuadrantThree() {
+	/**
+	 * @return the reactiveQuadrantThree
+	 */
+	public BigDecimal getReactiveQuadrantThree() {
 		return reactiveQuadrantThree;
 	}
-	public void setReactiveQuadrantThree(float reactiveQuadrantThree) {
+	/**
+	 * @param reactiveQuadrantThree the reactiveQuadrantThree to set
+	 */
+	public void setReactiveQuadrantThree(BigDecimal reactiveQuadrantThree) {
 		this.reactiveQuadrantThree = reactiveQuadrantThree;
 	}
-	public float getReactiveQuadrantFour() {
+	/**
+	 * @return the reactiveQuadrantFour
+	 */
+	public BigDecimal getReactiveQuadrantFour() {
 		return reactiveQuadrantFour;
 	}
-	public void setReactiveQuadrantFour(float reactiveQuadrantFour) {
+	/**
+	 * @param reactiveQuadrantFour the reactiveQuadrantFour to set
+	 */
+	public void setReactiveQuadrantFour(BigDecimal reactiveQuadrantFour) {
 		this.reactiveQuadrantFour = reactiveQuadrantFour;
 	}
-	public float getPreCheckActiveEnergy() {
+	/**
+	 * @return the preCheckActiveEnergy
+	 */
+	public BigDecimal getPreCheckActiveEnergy() {
 		return preCheckActiveEnergy;
 	}
-	public void setPreCheckActiveEnergy(float preCheckActiveEnergy) {
+	/**
+	 * @param preCheckActiveEnergy the preCheckActiveEnergy to set
+	 */
+	public void setPreCheckActiveEnergy(BigDecimal preCheckActiveEnergy) {
 		this.preCheckActiveEnergy = preCheckActiveEnergy;
 	}
-	public float getPreCheckActiveTodOne() {
+	/**
+	 * @return the preCheckActiveTodOne
+	 */
+	public BigDecimal getPreCheckActiveTodOne() {
 		return preCheckActiveTodOne;
 	}
-	public void setPreCheckActiveTodOne(float preCheckActiveTodOne) {
+	/**
+	 * @param preCheckActiveTodOne the preCheckActiveTodOne to set
+	 */
+	public void setPreCheckActiveTodOne(BigDecimal preCheckActiveTodOne) {
 		this.preCheckActiveTodOne = preCheckActiveTodOne;
 	}
-	public float getPreCheckActiveTodTwo() {
+	/**
+	 * @return the preCheckActiveTodTwo
+	 */
+	public BigDecimal getPreCheckActiveTodTwo() {
 		return preCheckActiveTodTwo;
 	}
-	public void setPreCheckActiveTodTwo(float preCheckActiveTodTwo) {
+	/**
+	 * @param preCheckActiveTodTwo the preCheckActiveTodTwo to set
+	 */
+	public void setPreCheckActiveTodTwo(BigDecimal preCheckActiveTodTwo) {
 		this.preCheckActiveTodTwo = preCheckActiveTodTwo;
 	}
-	public float getPreCheckActiveTodThree() {
+	/**
+	 * @return the preCheckActiveTodThree
+	 */
+	public BigDecimal getPreCheckActiveTodThree() {
 		return preCheckActiveTodThree;
 	}
-	public void setPreCheckActiveTodThree(float preCheckActiveTodThree) {
+	/**
+	 * @param preCheckActiveTodThree the preCheckActiveTodThree to set
+	 */
+	public void setPreCheckActiveTodThree(BigDecimal preCheckActiveTodThree) {
 		this.preCheckActiveTodThree = preCheckActiveTodThree;
 	}
-	public float getPreCheckReactiveQuadrantOne() {
+	/**
+	 * @return the preCheckReactiveQuadrantOne
+	 */
+	public BigDecimal getPreCheckReactiveQuadrantOne() {
 		return preCheckReactiveQuadrantOne;
 	}
-	public void setPreCheckReactiveQuadrantOne(float preCheckReactiveQuadrantOne) {
+	/**
+	 * @param preCheckReactiveQuadrantOne the preCheckReactiveQuadrantOne to set
+	 */
+	public void setPreCheckReactiveQuadrantOne(
+			BigDecimal preCheckReactiveQuadrantOne) {
 		this.preCheckReactiveQuadrantOne = preCheckReactiveQuadrantOne;
 	}
-	public float getPreCheckReactiveQuadrantTwo() {
+	/**
+	 * @return the preCheckReactiveQuadrantTwo
+	 */
+	public BigDecimal getPreCheckReactiveQuadrantTwo() {
 		return preCheckReactiveQuadrantTwo;
 	}
-	public void setPreCheckReactiveQuadrantTwo(float preCheckReactiveQuadrantTwo) {
+	/**
+	 * @param preCheckReactiveQuadrantTwo the preCheckReactiveQuadrantTwo to set
+	 */
+	public void setPreCheckReactiveQuadrantTwo(
+			BigDecimal preCheckReactiveQuadrantTwo) {
 		this.preCheckReactiveQuadrantTwo = preCheckReactiveQuadrantTwo;
 	}
-	public float getPreCheckReactiveQuadrantThree() {
+	/**
+	 * @return the preCheckReactiveQuadrantThree
+	 */
+	public BigDecimal getPreCheckReactiveQuadrantThree() {
 		return preCheckReactiveQuadrantThree;
 	}
-	public void setPreCheckReactiveQuadrantThree(float preCheckReactiveQuadrantThree) {
+	/**
+	 * @param preCheckReactiveQuadrantThree the preCheckReactiveQuadrantThree to set
+	 */
+	public void setPreCheckReactiveQuadrantThree(
+			BigDecimal preCheckReactiveQuadrantThree) {
 		this.preCheckReactiveQuadrantThree = preCheckReactiveQuadrantThree;
 	}
-	public float getPreCheckReactiveQuadrantFour() {
+	/**
+	 * @return the preCheckReactiveQuadrantFour
+	 */
+	public BigDecimal getPreCheckReactiveQuadrantFour() {
 		return preCheckReactiveQuadrantFour;
 	}
-	public void setPreCheckReactiveQuadrantFour(float preCheckReactiveQuadrantFour) {
+	/**
+	 * @param preCheckReactiveQuadrantFour the preCheckReactiveQuadrantFour to set
+	 */
+	public void setPreCheckReactiveQuadrantFour(
+			BigDecimal preCheckReactiveQuadrantFour) {
 		this.preCheckReactiveQuadrantFour = preCheckReactiveQuadrantFour;
 	}
-	public float getCurCheckActiveEnergy() {
+	/**
+	 * @return the curCheckActiveEnergy
+	 */
+	public BigDecimal getCurCheckActiveEnergy() {
 		return curCheckActiveEnergy;
 	}
-	public void setCurCheckActiveEnergy(float curCheckActiveEnergy) {
+	/**
+	 * @param curCheckActiveEnergy the curCheckActiveEnergy to set
+	 */
+	public void setCurCheckActiveEnergy(BigDecimal curCheckActiveEnergy) {
 		this.curCheckActiveEnergy = curCheckActiveEnergy;
 	}
-	public float getCurCheckActiveTodOne() {
+	/**
+	 * @return the curCheckActiveTodOne
+	 */
+	public BigDecimal getCurCheckActiveTodOne() {
 		return curCheckActiveTodOne;
 	}
-	public void setCurCheckActiveTodOne(float curCheckActiveTodOne) {
+	/**
+	 * @param curCheckActiveTodOne the curCheckActiveTodOne to set
+	 */
+	public void setCurCheckActiveTodOne(BigDecimal curCheckActiveTodOne) {
 		this.curCheckActiveTodOne = curCheckActiveTodOne;
 	}
-	public float getCurCheckActiveTodTwo() {
+	/**
+	 * @return the curCheckActiveTodTwo
+	 */
+	public BigDecimal getCurCheckActiveTodTwo() {
 		return curCheckActiveTodTwo;
 	}
-	public void setCurCheckActiveTodTwo(float curCheckActiveTodTwo) {
+	/**
+	 * @param curCheckActiveTodTwo the curCheckActiveTodTwo to set
+	 */
+	public void setCurCheckActiveTodTwo(BigDecimal curCheckActiveTodTwo) {
 		this.curCheckActiveTodTwo = curCheckActiveTodTwo;
 	}
-	public float getCurCheckActiveTodThree() {
+	/**
+	 * @return the curCheckActiveTodThree
+	 */
+	public BigDecimal getCurCheckActiveTodThree() {
 		return curCheckActiveTodThree;
 	}
-	public void setCurCheckActiveTodThree(float curCheckActiveTodThree) {
+	/**
+	 * @param curCheckActiveTodThree the curCheckActiveTodThree to set
+	 */
+	public void setCurCheckActiveTodThree(BigDecimal curCheckActiveTodThree) {
 		this.curCheckActiveTodThree = curCheckActiveTodThree;
 	}
-	public float getCurCheckReactiveQuadrantOne() {
+	/**
+	 * @return the curCheckReactiveQuadrantOne
+	 */
+	public BigDecimal getCurCheckReactiveQuadrantOne() {
 		return curCheckReactiveQuadrantOne;
 	}
-	public void setCurCheckReactiveQuadrantOne(float curCheckReactiveQuadrantOne) {
+	/**
+	 * @param curCheckReactiveQuadrantOne the curCheckReactiveQuadrantOne to set
+	 */
+	public void setCurCheckReactiveQuadrantOne(
+			BigDecimal curCheckReactiveQuadrantOne) {
 		this.curCheckReactiveQuadrantOne = curCheckReactiveQuadrantOne;
 	}
-	public float getCurCheckReactiveQuadrantTwo() {
+	/**
+	 * @return the curCheckReactiveQuadrantTwo
+	 */
+	public BigDecimal getCurCheckReactiveQuadrantTwo() {
 		return curCheckReactiveQuadrantTwo;
 	}
-	public void setCurCheckReactiveQuadrantTwo(float curCheckReactiveQuadrantTwo) {
+	/**
+	 * @param curCheckReactiveQuadrantTwo the curCheckReactiveQuadrantTwo to set
+	 */
+	public void setCurCheckReactiveQuadrantTwo(
+			BigDecimal curCheckReactiveQuadrantTwo) {
 		this.curCheckReactiveQuadrantTwo = curCheckReactiveQuadrantTwo;
 	}
-	public float getCurCheckReactiveQuadrantThree() {
+	/**
+	 * @return the curCheckReactiveQuadrantThree
+	 */
+	public BigDecimal getCurCheckReactiveQuadrantThree() {
 		return curCheckReactiveQuadrantThree;
 	}
-	public void setCurCheckReactiveQuadrantThree(float curCheckReactiveQuadrantThree) {
+	/**
+	 * @param curCheckReactiveQuadrantThree the curCheckReactiveQuadrantThree to set
+	 */
+	public void setCurCheckReactiveQuadrantThree(
+			BigDecimal curCheckReactiveQuadrantThree) {
 		this.curCheckReactiveQuadrantThree = curCheckReactiveQuadrantThree;
 	}
-	public float getCurCheckReactiveQuadrantFour() {
+	/**
+	 * @return the curCheckReactiveQuadrantFour
+	 */
+	public BigDecimal getCurCheckReactiveQuadrantFour() {
 		return curCheckReactiveQuadrantFour;
 	}
-	public void setCurCheckReactiveQuadrantFour(float curCheckReactiveQuadrantFour) {
+	/**
+	 * @param curCheckReactiveQuadrantFour the curCheckReactiveQuadrantFour to set
+	 */
+	public void setCurCheckReactiveQuadrantFour(
+			BigDecimal curCheckReactiveQuadrantFour) {
 		this.curCheckReactiveQuadrantFour = curCheckReactiveQuadrantFour;
+	}
+	/**
+	 * @return the checkMeterNo
+	 */
+	public String getCheckMeterNo() {
+		return checkMeterNo;
+	}
+	/**
+	 * @param checkMeterNo the checkMeterNo to set
+	 */
+	public void setCheckMeterNo(String checkMeterNo) {
+		this.checkMeterNo = checkMeterNo;
+	}
+	/**
+	 * @param meterno
+	 * @param mf
+	 * @param readingDate
+	 * @param activeEnergy
+	 * @param activeTodOne
+	 * @param activeTodTwo
+	 * @param activeTodThree
+	 * @param reactiveQuadrantOne
+	 * @param reactiveQuadrantTwo
+	 * @param reactiveQuadrantThree
+	 * @param reactiveQuadrantFour
+	 * @param preCheckActiveEnergy
+	 * @param preCheckActiveTodOne
+	 * @param preCheckActiveTodTwo
+	 * @param preCheckActiveTodThree
+	 * @param preCheckReactiveQuadrantOne
+	 * @param preCheckReactiveQuadrantTwo
+	 * @param preCheckReactiveQuadrantThree
+	 * @param preCheckReactiveQuadrantFour
+	 * @param curCheckActiveEnergy
+	 * @param curCheckActiveTodOne
+	 * @param curCheckActiveTodTwo
+	 * @param curCheckActiveTodThree
+	 * @param curCheckReactiveQuadrantOne
+	 * @param curCheckReactiveQuadrantTwo
+	 * @param curCheckReactiveQuadrantThree
+	 * @param curCheckReactiveQuadrantFour
+	 * @param checkMeterNo
+	 */
+	public SRFRReadings(String meterno, BigDecimal mf, String readingDate,
+			BigDecimal activeEnergy, BigDecimal activeTodOne,
+			BigDecimal activeTodTwo, BigDecimal activeTodThree,
+			BigDecimal reactiveQuadrantOne, BigDecimal reactiveQuadrantTwo,
+			BigDecimal reactiveQuadrantThree, BigDecimal reactiveQuadrantFour,
+			BigDecimal preCheckActiveEnergy, BigDecimal preCheckActiveTodOne,
+			BigDecimal preCheckActiveTodTwo, BigDecimal preCheckActiveTodThree,
+			BigDecimal preCheckReactiveQuadrantOne,
+			BigDecimal preCheckReactiveQuadrantTwo,
+			BigDecimal preCheckReactiveQuadrantThree,
+			BigDecimal preCheckReactiveQuadrantFour,
+			BigDecimal curCheckActiveEnergy, BigDecimal curCheckActiveTodOne,
+			BigDecimal curCheckActiveTodTwo, BigDecimal curCheckActiveTodThree,
+			BigDecimal curCheckReactiveQuadrantOne,
+			BigDecimal curCheckReactiveQuadrantTwo,
+			BigDecimal curCheckReactiveQuadrantThree,
+			BigDecimal curCheckReactiveQuadrantFour, String checkMeterNo) {
+		this.meterno = meterno;
+		this.mf = mf;
+		this.readingDate = readingDate;
+		this.activeEnergy = activeEnergy;
+		this.activeTodOne = activeTodOne;
+		this.activeTodTwo = activeTodTwo;
+		this.activeTodThree = activeTodThree;
+		this.reactiveQuadrantOne = reactiveQuadrantOne;
+		this.reactiveQuadrantTwo = reactiveQuadrantTwo;
+		this.reactiveQuadrantThree = reactiveQuadrantThree;
+		this.reactiveQuadrantFour = reactiveQuadrantFour;
+		this.preCheckActiveEnergy = preCheckActiveEnergy;
+		this.preCheckActiveTodOne = preCheckActiveTodOne;
+		this.preCheckActiveTodTwo = preCheckActiveTodTwo;
+		this.preCheckActiveTodThree = preCheckActiveTodThree;
+		this.preCheckReactiveQuadrantOne = preCheckReactiveQuadrantOne;
+		this.preCheckReactiveQuadrantTwo = preCheckReactiveQuadrantTwo;
+		this.preCheckReactiveQuadrantThree = preCheckReactiveQuadrantThree;
+		this.preCheckReactiveQuadrantFour = preCheckReactiveQuadrantFour;
+		this.curCheckActiveEnergy = curCheckActiveEnergy;
+		this.curCheckActiveTodOne = curCheckActiveTodOne;
+		this.curCheckActiveTodTwo = curCheckActiveTodTwo;
+		this.curCheckActiveTodThree = curCheckActiveTodThree;
+		this.curCheckReactiveQuadrantOne = curCheckReactiveQuadrantOne;
+		this.curCheckReactiveQuadrantTwo = curCheckReactiveQuadrantTwo;
+		this.curCheckReactiveQuadrantThree = curCheckReactiveQuadrantThree;
+		this.curCheckReactiveQuadrantFour = curCheckReactiveQuadrantFour;
+		this.checkMeterNo = checkMeterNo;
+	}
+	/**
+	 * Default Constructor
+	 */
+	public SRFRReadings() {
 	}
 	
 }

@@ -25,11 +25,11 @@ public class InvestorConsumptionDAO {
 				) {
 			ps.setInt(1,investorConsumption.getConsumptionId());
 			ps.setInt(2, investorConsumption.getInvestorId());
-			ps.setFloat(3, investorConsumption.getActiveConsumption());
-			ps.setFloat(4, investorConsumption.getReactiveConsumption());
+			ps.setBigDecimal(3, investorConsumption.getActiveConsumption());
+			ps.setBigDecimal(4, investorConsumption.getReactiveConsumption());
 			ps.setInt(5,0);
 			ps.setInt(6,0);
-			ps.setFloat(7, investorConsumption.getAdjustment());
+			ps.setBigDecimal(7, investorConsumption.getAdjustment());
 			ps.executeUpdate();
 			ResultSet keys = ps.getGeneratedKeys();    
 			keys.next();  
@@ -60,11 +60,11 @@ public class InvestorConsumptionDAO {
 				Connection connection = GlobalResources.getDatasource().getConnection();
 				PreparedStatement ps = connection.prepareStatement("update investor_consumption set active_consumption = ?, reactive_consumption=?,bill_generated=?,circle_validation=?, adjustment=? where id = ?");
 				) {
-			ps.setFloat(1, investorConsumption.getActiveConsumption());
-			ps.setFloat(2, investorConsumption.getReactiveConsumption());
+			ps.setBigDecimal(1, investorConsumption.getActiveConsumption());
+			ps.setBigDecimal(2, investorConsumption.getReactiveConsumption());
 			ps.setInt(3, investorConsumption.getBillGenerated());
 			ps.setInt(4, investorConsumption.getCircleValidation());
-			ps.setFloat(5, investorConsumption.getAdjustment());
+			ps.setBigDecimal(5, investorConsumption.getAdjustment());
 			ps.setInt(6, investorConsumption.getId());
 			ps.executeUpdate();
 			updatedConsumption = getById(investorConsumption.getId());
@@ -166,11 +166,11 @@ public class InvestorConsumptionDAO {
 				investorConsumtion.setId(rs.getInt(1));
 				investorConsumtion.setConsumptionId(rs.getInt(3));
 				investorConsumtion.setInvestorId(rs.getInt(2));
-				investorConsumtion.setActiveConsumption(rs.getFloat(4));
-				investorConsumtion.setReactiveConsumption(rs.getFloat(5));
+				investorConsumtion.setActiveConsumption(rs.getBigDecimal(4));
+				investorConsumtion.setReactiveConsumption(rs.getBigDecimal(5));
 				investorConsumtion.setCircleValidation(rs.getInt(6));
 				investorConsumtion.setBillGenerated(rs.getInt(7));
-				investorConsumtion.setAdjustment(rs.getFloat(8));
+				investorConsumtion.setAdjustment(rs.getBigDecimal(8));
 				investorConsumtionsList.add(investorConsumtion);
 			}
 		} catch (SQLException e) {

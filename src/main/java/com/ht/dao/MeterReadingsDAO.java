@@ -1,5 +1,6 @@
 package com.ht.dao;
 
+import java.math.BigDecimal;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -69,16 +70,16 @@ public class MeterReadingsDAO {
 							Statement.RETURN_GENERATED_KEYS);
 					) {
 				ps.setString(1, reading.getMeterno());
-				ps.setFloat(2, reading.getMf());
+				ps.setBigDecimal(2, reading.getMf());
 				ps.setString(3, reading.getReadingDate());
-				ps.setFloat(4, reading.getActiveEnergy());
-				ps.setFloat(5, reading.getActiveTodOne());
-				ps.setFloat(6, reading.getActiveTodTwo());
-				ps.setFloat(7, reading.getActiveTodThree());
-				ps.setFloat(8, reading.getReactiveQuadrantOne());
-				ps.setFloat(9, reading.getReactiveQuadrantTwo());
-				ps.setFloat(10, reading.getReactiveQuadrantThree());
-				ps.setFloat(11, reading.getReactiveQuadrantFour());
+				ps.setBigDecimal(4, reading.getActiveEnergy());
+				ps.setBigDecimal(5, reading.getActiveTodOne());
+				ps.setBigDecimal(6, reading.getActiveTodTwo());
+				ps.setBigDecimal(7, reading.getActiveTodThree());
+				ps.setBigDecimal(8, reading.getReactiveQuadrantOne());
+				ps.setBigDecimal(9, reading.getReactiveQuadrantTwo());
+				ps.setBigDecimal(10, reading.getReactiveQuadrantThree());
+				ps.setBigDecimal(11, reading.getReactiveQuadrantFour());
 				ps.setInt(12, 0);
 				ps.setInt(13, 0);
 				ps.setInt(14, 0);
@@ -86,7 +87,7 @@ public class MeterReadingsDAO {
 				ps.setString(16, null);
 				ps.setString(17, null);
 				ps.setInt(18, reading.getSrfrFlag());
-				ps.setFloat(19, reading.getAdjustment());
+				ps.setBigDecimal(19, reading.getAdjustment());
 				ps.executeUpdate();
 				ResultSet keys = ps.getGeneratedKeys();
 				keys.next();
@@ -111,16 +112,16 @@ public class MeterReadingsDAO {
 							"update meter_readings set meter_no=?, mf=?, reading_date=?, active_reading=?, active_tod1=?, active_tod2=?, active_tod3=?, reactive_q1=?, reactive_q2=?, reactive_q3=?, reactive_q4=?, ht_cell_validation=?, circle_cell_validation=?, developer_validation=?, discarded_flag=?, discarded_by=?, discarded_on=?, sr_fr_flag=?, adjustment=? where id=?");
 					) {
 				ps.setString(1, reading.getMeterno());
-				ps.setFloat(2, reading.getMf());
+				ps.setBigDecimal(2, reading.getMf());
 				ps.setString(3, reading.getReadingDate());
-				ps.setFloat(4, reading.getActiveEnergy());
-				ps.setFloat(5, reading.getActiveTodOne());
-				ps.setFloat(6, reading.getActiveTodTwo());
-				ps.setFloat(7, reading.getActiveTodThree());
-				ps.setFloat(8, reading.getReactiveQuadrantOne());
-				ps.setFloat(9, reading.getReactiveQuadrantTwo());
-				ps.setFloat(10, reading.getReactiveQuadrantThree());
-				ps.setFloat(11, reading.getReactiveQuadrantFour());
+				ps.setBigDecimal(4, reading.getActiveEnergy());
+				ps.setBigDecimal(5, reading.getActiveTodOne());
+				ps.setBigDecimal(6, reading.getActiveTodTwo());
+				ps.setBigDecimal(7, reading.getActiveTodThree());
+				ps.setBigDecimal(8, reading.getReactiveQuadrantOne());
+				ps.setBigDecimal(9, reading.getReactiveQuadrantTwo());
+				ps.setBigDecimal(10, reading.getReactiveQuadrantThree());
+				ps.setBigDecimal(11, reading.getReactiveQuadrantFour());
 				ps.setInt(12, reading.getHtCellValidation());
 				ps.setInt(13, reading.getCircleCellValidation());
 				ps.setInt(14, reading.getDeveloperValidation());
@@ -128,7 +129,7 @@ public class MeterReadingsDAO {
 				ps.setString(16, reading.getDiscardedBy());
 				ps.setString(17, reading.getDiscardedOn());
 				ps.setInt(18, reading.getSrfrFlag());
-				ps.setFloat(19, reading.getAdjustment());
+				ps.setBigDecimal(19, reading.getAdjustment());
 				ps.setInt(20, reading.getId());
 				ps.executeUpdate();
 			} catch (SQLException e) {
@@ -360,14 +361,14 @@ public class MeterReadingsDAO {
 				meterReadings.setMeterno(meterNo);
 				meterReadings.setMf(meterDetails.getMf());
 				meterReadings.setReadingDate(date);
-				meterReadings.setActiveEnergy(0);
-				meterReadings.setActiveTodOne(0);
-				meterReadings.setActiveTodTwo(0);
-				meterReadings.setActiveTodThree(0);
-				meterReadings.setReactiveQuadrantOne(0);
-				meterReadings.setReactiveQuadrantTwo(0);
-				meterReadings.setReactiveQuadrantThree(0);
-				meterReadings.setReactiveQuadrantFour(0);
+				meterReadings.setActiveEnergy(new BigDecimal(0));
+				meterReadings.setActiveTodOne(new BigDecimal(0));
+				meterReadings.setActiveTodTwo(new BigDecimal(0));
+				meterReadings.setActiveTodThree(new BigDecimal(0));
+				meterReadings.setReactiveQuadrantOne(new BigDecimal(0));
+				meterReadings.setReactiveQuadrantTwo(new BigDecimal(0));
+				meterReadings.setReactiveQuadrantThree(new BigDecimal(0));
+				meterReadings.setReactiveQuadrantFour(new BigDecimal(0));
 				meterReadings.setHtCellValidation(0);
 				meterReadings.setCircleCellValidation(0);
 				meterReadings.setDeveloperValidation(0);
@@ -375,7 +376,7 @@ public class MeterReadingsDAO {
 				meterReadings.setDiscardedBy("");
 				meterReadings.setDiscardedOn("");
 				meterReadings.setSrfrFlag(0);
-				meterReadings.setAdjustment(0);
+				meterReadings.setAdjustment(new BigDecimal(0));
 			} else {
 				meterReadings = readings.get(0);
 			}
@@ -414,20 +415,20 @@ public class MeterReadingsDAO {
 				meterReading.setId(-1);
 				meterReading.setMeterno(meterNo);
 				meterReading.setMf(meterDetails.getMf());
-				meterReading.setActiveEnergy(0);
-				meterReading.setActiveTodOne(0);
-				meterReading.setActiveTodTwo(0);
-				meterReading.setActiveTodThree(0);
-				meterReading.setReactiveQuadrantOne(0);
-				meterReading.setReactiveQuadrantTwo(0);
-				meterReading.setReactiveQuadrantThree(0);
-				meterReading.setReactiveQuadrantFour(0);
+				meterReading.setActiveEnergy(new BigDecimal(0));
+				meterReading.setActiveTodOne(new BigDecimal(0));
+				meterReading.setActiveTodTwo(new BigDecimal(0));
+				meterReading.setActiveTodThree(new BigDecimal(0));
+				meterReading.setReactiveQuadrantOne(new BigDecimal(0));
+				meterReading.setReactiveQuadrantTwo(new BigDecimal(0));
+				meterReading.setReactiveQuadrantThree(new BigDecimal(0));
+				meterReading.setReactiveQuadrantFour(new BigDecimal(0));
 				meterReading.setHtCellValidation(0);
 				meterReading.setCircleCellValidation(0);
 				meterReading.setDeveloperValidation(0);
 				meterReading.setDiscardedFlag(0);
 				meterReading.setSrfrFlag(0);
-				meterReading.setAdjustment(0);
+				meterReading.setAdjustment(new BigDecimal(0));
 			}
 		} catch (SQLException e) {
 			System.out.println(
@@ -473,14 +474,14 @@ public class MeterReadingsDAO {
 				meterReadings.setMeterno(meterNo);
 				meterReadings.setMf(meterDetails.getMf());
 				meterReadings.setReadingDate(readingDay + "-" + dateTrim);
-				meterReadings.setActiveEnergy(0);
-				meterReadings.setActiveTodOne(0);
-				meterReadings.setActiveTodTwo(0);
-				meterReadings.setActiveTodThree(0);
-				meterReadings.setReactiveQuadrantOne(0);
-				meterReadings.setReactiveQuadrantTwo(0);
-				meterReadings.setReactiveQuadrantThree(0);
-				meterReadings.setReactiveQuadrantFour(0);
+				meterReadings.setActiveEnergy(new BigDecimal(0));
+				meterReadings.setActiveTodOne(new BigDecimal(0));
+				meterReadings.setActiveTodTwo(new BigDecimal(0));
+				meterReadings.setActiveTodThree(new BigDecimal(0));
+				meterReadings.setReactiveQuadrantOne(new BigDecimal(0));
+				meterReadings.setReactiveQuadrantTwo(new BigDecimal(0));
+				meterReadings.setReactiveQuadrantThree(new BigDecimal(0));
+				meterReadings.setReactiveQuadrantFour(new BigDecimal(0));
 				meterReadings.setHtCellValidation(0);
 				meterReadings.setCircleCellValidation(0);
 				meterReadings.setDeveloperValidation(0);
@@ -488,7 +489,7 @@ public class MeterReadingsDAO {
 				meterReadings.setDiscardedBy("");
 				meterReadings.setDiscardedOn("");
 				meterReadings.setSrfrFlag(0);
-				meterReadings.setAdjustment(0);
+				meterReadings.setAdjustment(new BigDecimal(0));
 			} else {
 				meterReadings = readings.get(0);
 			}
@@ -529,20 +530,20 @@ public class MeterReadingsDAO {
 				meterReading.setId(-1);
 				meterReading.setMeterno(meterNo);
 				meterReading.setMf(meterDetails.getMf());
-				meterReading.setActiveEnergy(0);
-				meterReading.setActiveTodOne(0);
-				meterReading.setActiveTodTwo(0);
-				meterReading.setActiveTodThree(0);
-				meterReading.setReactiveQuadrantOne(0);
-				meterReading.setReactiveQuadrantTwo(0);
-				meterReading.setReactiveQuadrantThree(0);
-				meterReading.setReactiveQuadrantFour(0);
+				meterReading.setActiveEnergy(new BigDecimal(0));
+				meterReading.setActiveTodOne(new BigDecimal(0));
+				meterReading.setActiveTodTwo(new BigDecimal(0));
+				meterReading.setActiveTodThree(new BigDecimal(0));
+				meterReading.setReactiveQuadrantOne(new BigDecimal(0));
+				meterReading.setReactiveQuadrantTwo(new BigDecimal(0));
+				meterReading.setReactiveQuadrantThree(new BigDecimal(0));
+				meterReading.setReactiveQuadrantFour(new BigDecimal(0));
 				meterReading.setHtCellValidation(0);
 				meterReading.setCircleCellValidation(0);
 				meterReading.setDeveloperValidation(0);
 				meterReading.setDiscardedFlag(0);
 				meterReading.setSrfrFlag(0);
-				meterReading.setAdjustment(0);
+				meterReading.setAdjustment(new BigDecimal(0));
 			}
 		} catch (SQLException e) {
 			System.out
@@ -558,16 +559,16 @@ public class MeterReadingsDAO {
 				MeterReading meterReading = new MeterReading();
 				meterReading.setId(resultSet.getInt(1));
 				meterReading.setMeterno(resultSet.getString(2));
-				meterReading.setMf(resultSet.getFloat(3));
+				meterReading.setMf(resultSet.getBigDecimal(3));
 				meterReading.setReadingDate(resultSet.getString(4));
-				meterReading.setActiveEnergy(resultSet.getFloat(5));
-				meterReading.setActiveTodOne(resultSet.getFloat(6));
-				meterReading.setActiveTodTwo(resultSet.getFloat(7));
-				meterReading.setActiveTodThree(resultSet.getFloat(8));
-				meterReading.setReactiveQuadrantOne(resultSet.getFloat(9));
-				meterReading.setReactiveQuadrantTwo(resultSet.getFloat(10));
-				meterReading.setReactiveQuadrantThree(resultSet.getFloat(11));
-				meterReading.setReactiveQuadrantFour(resultSet.getFloat(12));
+				meterReading.setActiveEnergy(resultSet.getBigDecimal(5));
+				meterReading.setActiveTodOne(resultSet.getBigDecimal(6));
+				meterReading.setActiveTodTwo(resultSet.getBigDecimal(7));
+				meterReading.setActiveTodThree(resultSet.getBigDecimal(8));
+				meterReading.setReactiveQuadrantOne(resultSet.getBigDecimal(9));
+				meterReading.setReactiveQuadrantTwo(resultSet.getBigDecimal(10));
+				meterReading.setReactiveQuadrantThree(resultSet.getBigDecimal(11));
+				meterReading.setReactiveQuadrantFour(resultSet.getBigDecimal(12));
 				meterReading.setHtCellValidation(resultSet.getInt(13));
 				meterReading.setCircleCellValidation(resultSet.getInt(14));
 				meterReading.setDeveloperValidation(resultSet.getInt(15));
@@ -575,7 +576,7 @@ public class MeterReadingsDAO {
 				meterReading.setDiscardedBy(resultSet.getString(17));
 				meterReading.setDiscardedOn(resultSet.getString(18));
 				meterReading.setSrfrFlag(resultSet.getInt(19));
-				meterReading.setAdjustment(resultSet.getFloat(20));
+				meterReading.setAdjustment(resultSet.getBigDecimal(20));
 				readings.add(meterReading);
 			}
 		} catch (Exception e) {

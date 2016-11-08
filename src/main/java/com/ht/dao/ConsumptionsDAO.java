@@ -24,13 +24,13 @@ public class ConsumptionsDAO {
 				) {
 			ps.setString(1,consumption.getMeterNo());
 			ps.setString(2, consumption.getDate());
-			ps.setFloat(3, consumption.getActiveConsumption());
-			ps.setFloat(4, consumption.getReactiveConsumption());
+			ps.setBigDecimal(3, consumption.getActiveConsumption());
+			ps.setBigDecimal(4, consumption.getReactiveConsumption());
 			ps.setInt(5, consumption.getPlantId());
 			ps.setString(6, consumption.getPlantCode());
 			ps.setInt(7, consumption.getMeterReadingId());
 			ps.setInt(8, consumption.getConsumptionBifurcated());
-			ps.setFloat(9, consumption.getAdjustment());
+			ps.setBigDecimal(9, consumption.getAdjustment());
 			ps.executeUpdate();
 			ResultSet keys = ps.getGeneratedKeys();    
 			keys.next();  
@@ -51,13 +51,13 @@ public class ConsumptionsDAO {
 				) {
 			ps.setString(1,consumption.getMeterNo());
 			ps.setString(2, consumption.getDate());
-			ps.setFloat(3, consumption.getActiveConsumption());
-			ps.setFloat(4, consumption.getReactiveConsumption());
+			ps.setBigDecimal(3, consumption.getActiveConsumption());
+			ps.setBigDecimal(4, consumption.getReactiveConsumption());
 			ps.setInt(5, consumption.getPlantId());
 			ps.setString(6, consumption.getPlantCode());
 			ps.setInt(7, consumption.getMeterReadingId());
 			ps.setInt(8, consumption.getConsumptionBifurcated());
-			ps.setFloat(9, consumption.getAdjustment());
+			ps.setBigDecimal(9, consumption.getAdjustment());
 			ps.setInt(10, consumption.getId());
 			ps.executeUpdate();
 			updatedConsumption = getById(consumption.getId()); 
@@ -323,13 +323,13 @@ public class ConsumptionsDAO {
 				consumption.setId(rs.getInt(1));
 				consumption.setMeterNo(rs.getString(2));
 				consumption.setDate(rs.getString(3));
-				consumption.setActiveConsumption(rs.getFloat(4));
-				consumption.setReactiveConsumption(rs.getFloat(5));
+				consumption.setActiveConsumption(rs.getBigDecimal(4));
+				consumption.setReactiveConsumption(rs.getBigDecimal(5));
 				consumption.setPlantId(rs.getInt(6));
 				consumption.setPlantCode(rs.getString(7));
 				consumption.setMeterReadingId(rs.getInt(8));
 				consumption.setConsumptionBifurcated(rs.getInt(9));
-				consumption.setAdjustment(rs.getFloat(10));
+				consumption.setAdjustment(rs.getBigDecimal(10));
 				consumptionsList.add(consumption);
 			}
 		} catch (SQLException e) {

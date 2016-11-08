@@ -100,13 +100,15 @@ angular.module("htBillingApp").controller('ViewMeterReadingsController', ['$http
 	 * this function runs when user clicks validate reading button on page.
 	 */
 	this.validateReading = function (reading,index) {
+		console.log(reading.currentMeterReading.id);
 		$http(
 				{
 					method: 'PUT',
 					url: 'backend/readings/validate',
 					params: {
 						role: $scope.userRole.role,
-						readingId: reading.currentMeterReading.id
+						currentReadingId: reading.currentMeterReading.id,
+						previousReadingId: reading.previousMeterReading.id
 					}
 				}
 		).then(

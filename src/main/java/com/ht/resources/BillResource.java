@@ -3,6 +3,9 @@
  */
 package com.ht.resources;
 
+import java.math.BigDecimal;
+import java.math.MathContext;
+import java.math.RoundingMode;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -153,30 +156,30 @@ public class BillResource {
 				
 				billDetails.setPlantId(plant.getId());
 				
-				float activeConsumption = investorConsumption.getActiveConsumption();
+				BigDecimal activeConsumption = investorConsumption.getActiveConsumption();
 				//System.out.println("activeConsumption "+activeConsumption);
 				
-				float reactiveConsumption = investorConsumption.getReactiveConsumption();
+				BigDecimal reactiveConsumption = investorConsumption.getReactiveConsumption();
 				//System.out.println("reactiveConsumption "+reactiveConsumption);
 				
-				float adjustment = investorConsumption.getAdjustment();
+				BigDecimal adjustment = investorConsumption.getAdjustment();
 				
-				float activeRate = machine.getActiveRate();
+				BigDecimal activeRate = machine.getActiveRate();
 				//System.out.println("activeRate "+activeRate);
 				
-				float reactiveRate = machine.getReactiveRate();
+				BigDecimal reactiveRate = machine.getReactiveRate();
 				//System.out.println("reactiveRate "+reactiveRate);
 				
-				float activeAmount = activeConsumption * activeRate;
+				BigDecimal activeAmount = activeConsumption.multiply(activeRate);
 				//System.out.println("activeAmount "+activeAmount);
 				
-				float reactiveAmount = reactiveConsumption * reactiveRate;
+				BigDecimal reactiveAmount = reactiveConsumption.multiply(reactiveRate);
 				//System.out.println("reactiveAmount "+reactiveAmount);
 				
-				float totalAmount = (float)activeAmount - (reactiveAmount + adjustment);
+				BigDecimal totalAmount = activeAmount.subtract((reactiveAmount.add(adjustment)));
 				//System.out.println("total amount "+totalAmount);
 				
-				float totalAmountRoundOff = Math.round(totalAmount);
+				BigDecimal totalAmountRoundOff = totalAmount;
 				//System.out.println("rounded total amount : "+ totalAmountRoundOff);
 				
 				billDetails.setTotalKWH(activeConsumption);

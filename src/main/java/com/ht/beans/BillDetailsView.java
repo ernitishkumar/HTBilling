@@ -1,5 +1,6 @@
 package com.ht.beans;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 
 public class BillDetailsView {
@@ -24,21 +25,21 @@ public class BillDetailsView {
 	
 	private String billGenerationDate;
 	
-	private float totalKWH;
+	private BigDecimal totalKWH;
 	
-	private float totalRKVH;
+	private BigDecimal totalRKVH;
 	
-	private float kwhRate;
+	private BigDecimal kwhRate;
 	
-	private float rkvhRate;
+	private BigDecimal rkvhRate;
 	
-	private float activeAmount;
+	private BigDecimal activeAmount;
 	
-	private float reactiveAmount;
+	private BigDecimal reactiveAmount;
 	
-	private float totalAmount;
+	private BigDecimal totalAmount;
 	
-	private float totalAmountRoundoff;
+	private BigDecimal totalAmountRoundoff;
 	
 	private String totalAmountInWords;
 
@@ -47,7 +48,6 @@ public class BillDetailsView {
 	private Plant plant;
 	
 	private ArrayList<Machine> machines;
-	
 
 	/**
 	 * @return the id
@@ -143,7 +143,8 @@ public class BillDetailsView {
 	/**
 	 * @param investorConsumptionView the investorConsumptionView to set
 	 */
-	public void setInvestorConsumptionView(InvestorConsumptionView investorConsumptionView) {
+	public void setInvestorConsumptionView(
+			InvestorConsumptionView investorConsumptionView) {
 		this.investorConsumptionView = investorConsumptionView;
 	}
 
@@ -192,130 +193,129 @@ public class BillDetailsView {
 	/**
 	 * @return the totalKWH
 	 */
-	public float getTotalKWH() {
+	public BigDecimal getTotalKWH() {
 		return totalKWH;
 	}
 
 	/**
 	 * @param totalKWH the totalKWH to set
 	 */
-	public void setTotalKWH(float totalKWH) {
+	public void setTotalKWH(BigDecimal totalKWH) {
 		this.totalKWH = totalKWH;
 	}
 
 	/**
 	 * @return the totalRKVH
 	 */
-	public float getTotalRKVH() {
+	public BigDecimal getTotalRKVH() {
 		return totalRKVH;
 	}
 
 	/**
 	 * @param totalRKVH the totalRKVH to set
 	 */
-	public void setTotalRKVH(float totalRKVH) {
+	public void setTotalRKVH(BigDecimal totalRKVH) {
 		this.totalRKVH = totalRKVH;
 	}
 
 	/**
 	 * @return the kwhRate
 	 */
-	public float getKwhRate() {
+	public BigDecimal getKwhRate() {
 		return kwhRate;
 	}
 
 	/**
 	 * @param kwhRate the kwhRate to set
 	 */
-	public void setKwhRate(float kwhRate) {
+	public void setKwhRate(BigDecimal kwhRate) {
 		this.kwhRate = kwhRate;
 	}
 
 	/**
 	 * @return the rkvhRate
 	 */
-	public float getRkvhRate() {
+	public BigDecimal getRkvhRate() {
 		return rkvhRate;
 	}
 
 	/**
 	 * @param rkvhRate the rkvhRate to set
 	 */
-	public void setRkvhRate(float rkvhRate) {
+	public void setRkvhRate(BigDecimal rkvhRate) {
 		this.rkvhRate = rkvhRate;
 	}
 
 	/**
 	 * @return the activeAmount
 	 */
-	public float getActiveAmount() {
+	public BigDecimal getActiveAmount() {
 		return activeAmount;
 	}
 
 	/**
 	 * @param activeAmount the activeAmount to set
 	 */
-	public void setActiveAmount(float activeAmount) {
+	public void setActiveAmount(BigDecimal activeAmount) {
 		this.activeAmount = activeAmount;
 	}
 
 	/**
 	 * @return the reactiveAmount
 	 */
-	public float getReactiveAmount() {
+	public BigDecimal getReactiveAmount() {
 		return reactiveAmount;
 	}
 
 	/**
 	 * @param reactiveAmount the reactiveAmount to set
 	 */
-	public void setReactiveAmount(float reactiveAmount) {
+	public void setReactiveAmount(BigDecimal reactiveAmount) {
 		this.reactiveAmount = reactiveAmount;
 	}
 
 	/**
 	 * @return the totalAmount
 	 */
-	public float getTotalAmount() {
+	public BigDecimal getTotalAmount() {
 		return totalAmount;
 	}
 
 	/**
 	 * @param totalAmount the totalAmount to set
 	 */
-	public void setTotalAmount(float totalAmount) {
+	public void setTotalAmount(BigDecimal totalAmount) {
 		this.totalAmount = totalAmount;
 	}
 
 	/**
 	 * @return the totalAmountRoundoff
 	 */
-	public float getTotalAmountRoundoff() {
+	public BigDecimal getTotalAmountRoundoff() {
 		return totalAmountRoundoff;
 	}
 
 	/**
 	 * @param totalAmountRoundoff the totalAmountRoundoff to set
 	 */
-	public void setTotalAmountRoundoff(float totalAmountRoundoff) {
+	public void setTotalAmountRoundoff(BigDecimal totalAmountRoundoff) {
 		this.totalAmountRoundoff = totalAmountRoundoff;
 	}
 
 	/**
-	 * @return the amountInWords
+	 * @return the totalAmountInWords
 	 */
 	public String getTotalAmountInWords() {
 		return totalAmountInWords;
 	}
 
 	/**
-	 * @param amountInWords the amountInWords to set
+	 * @param totalAmountInWords the totalAmountInWords to set
 	 */
-	public void setTotalAmountInWords(String amountInWords) {
-		this.totalAmountInWords = amountInWords;
+	public void setTotalAmountInWords(String totalAmountInWords) {
+		this.totalAmountInWords = totalAmountInWords;
 	}
 
-	
 	/**
 	 * @return the particulars
 	 */
@@ -357,19 +357,146 @@ public class BillDetailsView {
 	public void setMachines(ArrayList<Machine> machines) {
 		this.machines = machines;
 	}
-	
+
+	/**
+	 * @param id
+	 * @param billNo
+	 * @param invoiceNo
+	 * @param meterReadings
+	 * @param investor
+	 * @param consumption
+	 * @param investorConsumptionView
+	 * @param meterNo
+	 * @param readingDate
+	 * @param billGenerationDate
+	 * @param totalKWH
+	 * @param totalRKVH
+	 * @param kwhRate
+	 * @param rkvhRate
+	 * @param activeAmount
+	 * @param reactiveAmount
+	 * @param totalAmount
+	 * @param totalAmountRoundoff
+	 * @param totalAmountInWords
+	 * @param particulars
+	 * @param plant
+	 * @param machines
+	 */
+	public BillDetailsView(int id, String billNo, String invoiceNo,
+			MeterReading meterReadings, Investor investor,
+			Consumption consumption,
+			InvestorConsumptionView investorConsumptionView, String meterNo,
+			String readingDate, String billGenerationDate, BigDecimal totalKWH,
+			BigDecimal totalRKVH, BigDecimal kwhRate, BigDecimal rkvhRate,
+			BigDecimal activeAmount, BigDecimal reactiveAmount,
+			BigDecimal totalAmount, BigDecimal totalAmountRoundoff,
+			String totalAmountInWords, String particulars, Plant plant,
+			ArrayList<Machine> machines) {
+		this.id = id;
+		this.billNo = billNo;
+		this.invoiceNo = invoiceNo;
+		this.meterReadings = meterReadings;
+		this.investor = investor;
+		this.consumption = consumption;
+		this.investorConsumptionView = investorConsumptionView;
+		this.meterNo = meterNo;
+		this.readingDate = readingDate;
+		this.billGenerationDate = billGenerationDate;
+		this.totalKWH = totalKWH;
+		this.totalRKVH = totalRKVH;
+		this.kwhRate = kwhRate;
+		this.rkvhRate = rkvhRate;
+		this.activeAmount = activeAmount;
+		this.reactiveAmount = reactiveAmount;
+		this.totalAmount = totalAmount;
+		this.totalAmountRoundoff = totalAmountRoundoff;
+		this.totalAmountInWords = totalAmountInWords;
+		this.particulars = particulars;
+		this.plant = plant;
+		this.machines = machines;
+	}
+
+	/**
+	 * @param billNo
+	 * @param invoiceNo
+	 * @param meterReadings
+	 * @param investor
+	 * @param consumption
+	 * @param investorConsumptionView
+	 * @param meterNo
+	 * @param readingDate
+	 * @param billGenerationDate
+	 * @param totalKWH
+	 * @param totalRKVH
+	 * @param kwhRate
+	 * @param rkvhRate
+	 * @param activeAmount
+	 * @param reactiveAmount
+	 * @param totalAmount
+	 * @param totalAmountRoundoff
+	 * @param totalAmountInWords
+	 * @param particulars
+	 * @param plant
+	 * @param machines
+	 */
+	public BillDetailsView(String billNo, String invoiceNo,
+			MeterReading meterReadings, Investor investor,
+			Consumption consumption,
+			InvestorConsumptionView investorConsumptionView, String meterNo,
+			String readingDate, String billGenerationDate, BigDecimal totalKWH,
+			BigDecimal totalRKVH, BigDecimal kwhRate, BigDecimal rkvhRate,
+			BigDecimal activeAmount, BigDecimal reactiveAmount,
+			BigDecimal totalAmount, BigDecimal totalAmountRoundoff,
+			String totalAmountInWords, String particulars, Plant plant,
+			ArrayList<Machine> machines) {
+		this.billNo = billNo;
+		this.invoiceNo = invoiceNo;
+		this.meterReadings = meterReadings;
+		this.investor = investor;
+		this.consumption = consumption;
+		this.investorConsumptionView = investorConsumptionView;
+		this.meterNo = meterNo;
+		this.readingDate = readingDate;
+		this.billGenerationDate = billGenerationDate;
+		this.totalKWH = totalKWH;
+		this.totalRKVH = totalRKVH;
+		this.kwhRate = kwhRate;
+		this.rkvhRate = rkvhRate;
+		this.activeAmount = activeAmount;
+		this.reactiveAmount = reactiveAmount;
+		this.totalAmount = totalAmount;
+		this.totalAmountRoundoff = totalAmountRoundoff;
+		this.totalAmountInWords = totalAmountInWords;
+		this.particulars = particulars;
+		this.plant = plant;
+		this.machines = machines;
+	}
+
+	/**
+	 * Default Constructor
+	 */
+	public BillDetailsView() {
+	}
+
 	/* (non-Javadoc)
 	 * @see java.lang.Object#toString()
 	 */
 	@Override
 	public String toString() {
-		return "BillDetailsView [id=" + id + ", billNo=" + billNo + ", invoiceNo=" + invoiceNo + ", meterReadings="
-				+ meterReadings + ", investor=" + investor + ", consumption=" + consumption
-				+ ", investorConsumptionView=" + investorConsumptionView + ", meterNo=" + meterNo + ", readingDate="
-				+ readingDate + ", billGenerationDate=" + billGenerationDate + ", totalKWH=" + totalKWH + ", totalRKVH="
-				+ totalRKVH + ", kwhRate=" + kwhRate + ", rkvhRate=" + rkvhRate + ", activeAmount=" + activeAmount
-				+ ", reactiveAmount=" + reactiveAmount + ", totalAmount=" + totalAmount + ", totalAmountRoundoff="
-				+ totalAmountRoundoff + ", amountInWords=" + totalAmountInWords + "]";
+		return "BillDetailsView [id=" + id + ", billNo=" + billNo
+				+ ", invoiceNo=" + invoiceNo + ", meterReadings="
+				+ meterReadings + ", investor=" + investor + ", consumption="
+				+ consumption + ", investorConsumptionView="
+				+ investorConsumptionView + ", meterNo=" + meterNo
+				+ ", readingDate=" + readingDate + ", billGenerationDate="
+				+ billGenerationDate + ", totalKWH=" + totalKWH
+				+ ", totalRKVH=" + totalRKVH + ", kwhRate=" + kwhRate
+				+ ", rkvhRate=" + rkvhRate + ", activeAmount=" + activeAmount
+				+ ", reactiveAmount=" + reactiveAmount + ", totalAmount="
+				+ totalAmount + ", totalAmountRoundoff=" + totalAmountRoundoff
+				+ ", totalAmountInWords=" + totalAmountInWords
+				+ ", particulars=" + particulars + ", plant=" + plant
+				+ ", machines=" + machines + "]";
 	}
 	
 }

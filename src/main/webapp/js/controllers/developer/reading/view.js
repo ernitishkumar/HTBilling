@@ -93,7 +93,8 @@ angular.module("htBillingApp").controller('DeveloperViewMeterReadingsController'
 					url: 'backend/readings/validate',
 					params: {
 						role: $scope.userRole.role,
-						readingId: reading.currentMeterReading.id
+						currentReadingId: reading.currentMeterReading.id,
+						previousReadingId: reading.previousMeterReading.id
 					}
 				}
 		).then(
@@ -125,13 +126,14 @@ angular.module("htBillingApp").controller('DeveloperViewMeterReadingsController'
 						//Implementing the above logic with index passed from the page, No need to loop over complete collection for
 						//every validation.
 						var item = $scope.readingData[index];
+						console.log("reading data.....  "+item);
 						if(item.meterNo === reading.meterNo){
 							console.log(item);
 							if ($scope.userRole.role === 'developer') {
 								item.currentMeterReading.developerValidation = 1;
 								//creating consumption data to be inserted into backend
 								consumptionData.meterNo = item.meterNo;
-								consumptionData.activeConsumption = parseFloat(item.activeEnergyConsumption);
+								consumptionData.activeConsumption = item.activeEnergyConsumption;
 								consumptionData.meterReadingId = item.currentMeterReading.id;
 								consumptionData.plantId = item.plant.id;
 								consumptionData.plantCode = item.plant.code;
@@ -140,7 +142,7 @@ angular.module("htBillingApp").controller('DeveloperViewMeterReadingsController'
 								
 								//As per new guidelines adding only Q2 and Q4 for bill generation. Will change after new orders
 								consumptionData.reactiveConsumption = parseFloat(item.quadrantTwoConsumption) + parseFloat(item.quadrantFourConsumption);
-								consumptionData.adjustment = parseFloat(item.currentMeterReading.adjustment);
+								consumptionData.adjustment = item.currentMeterReading.adjustment;
 
 								//making http request to save the consumption data at the backend
 								$http(

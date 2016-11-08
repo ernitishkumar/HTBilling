@@ -155,6 +155,7 @@ angular.module("htBillingApp").controller('MeterReadingController', ['$http', '$
 
 		if(ae && td1 && td2 && td3 && q1 && q2 && q3 && q4){
 			var res = this.formData.activeTodOne + this.formData.activeTodTwo + this.formData.activeTodThree;
+			console.log(res);
 			if(this.formData.activeEnergy.toFixed(2) !== res.toFixed(2)){
 				$scope.error = "Active Energy should be equal to sum of Tod 1, Tod 2, Tod 3";
 				return;
@@ -173,6 +174,7 @@ angular.module("htBillingApp").controller('MeterReadingController', ['$http', '$
 			var readingDate = day + "-" + month + "-" + year;
 			this.formData.readingDate = readingDate;
 			this.formData.mf = $scope.formData.mf;
+			console.log("inserting readings as "+$scope.formData);
 			$http(
 					{
 						method: 'POST',

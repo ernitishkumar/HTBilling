@@ -1,6 +1,8 @@
 package com.ht.utility;
 
+import java.math.BigDecimal;
 import java.text.DecimalFormat;
+
 import com.google.gson.Gson;
 
 import org.apache.tomcat.jdbc.pool.DataSource;
@@ -79,8 +81,8 @@ public class GlobalResources {
 	}
 
 
-	public static String convert(float number) {
-		long l = (long)number;
+	public static String convert(BigDecimal number) {
+		long l = (long)number.longValue();
 		if (l == 0) { return "Zero"; }
 		String snumber = Long.toString(l);
 

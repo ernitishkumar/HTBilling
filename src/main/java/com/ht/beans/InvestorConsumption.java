@@ -1,5 +1,7 @@
 package com.ht.beans;
 
+import java.math.BigDecimal;
+
 import javax.xml.bind.annotation.XmlRootElement;
 
 @XmlRootElement
@@ -8,49 +10,70 @@ public class InvestorConsumption {
 	private int id;
 	private int consumptionId;
 	private int investorId;
-	private float activeConsumption;
-	private float reactiveConsumption;
+	private BigDecimal activeConsumption;
+	private BigDecimal reactiveConsumption;
     private int circleValidation;
     private int billGenerated;
-    private float adjustment;
-    
+    private BigDecimal adjustment;
+	/**
+	 * @return the id
+	 */
 	public int getId() {
 		return id;
 	}
+	/**
+	 * @param id the id to set
+	 */
 	public void setId(int id) {
 		this.id = id;
 	}
+	/**
+	 * @return the consumptionId
+	 */
 	public int getConsumptionId() {
 		return consumptionId;
 	}
+	/**
+	 * @param consumptionId the consumptionId to set
+	 */
 	public void setConsumptionId(int consumptionId) {
 		this.consumptionId = consumptionId;
-    }
-    
+	}
+	/**
+	 * @return the investorId
+	 */
 	public int getInvestorId() {
 		return investorId;
 	}
+	/**
+	 * @param investorId the investorId to set
+	 */
 	public void setInvestorId(int investorId) {
 		this.investorId = investorId;
 	}
-	public float getActiveConsumption() {
+	/**
+	 * @return the activeConsumption
+	 */
+	public BigDecimal getActiveConsumption() {
 		return activeConsumption;
 	}
-	public void setActiveConsumption(float activeConsumption) {
+	/**
+	 * @param activeConsumption the activeConsumption to set
+	 */
+	public void setActiveConsumption(BigDecimal activeConsumption) {
 		this.activeConsumption = activeConsumption;
 	}
-	public float getReactiveConsumption() {
+	/**
+	 * @return the reactiveConsumption
+	 */
+	public BigDecimal getReactiveConsumption() {
 		return reactiveConsumption;
 	}
-	public void setReactiveConsumption(float reactiveConsumption) {
+	/**
+	 * @param reactiveConsumption the reactiveConsumption to set
+	 */
+	public void setReactiveConsumption(BigDecimal reactiveConsumption) {
 		this.reactiveConsumption = reactiveConsumption;
-	}
-	
-	public float getAdjustment() {
-		return adjustment;
-	}
-	public void setAdjustment(float adjustment) {
-		this.adjustment = adjustment;
 	}
 	/**
 	 * @return the circleValidation
@@ -76,15 +99,64 @@ public class InvestorConsumption {
 	public void setBillGenerated(int billGenerated) {
 		this.billGenerated = billGenerated;
 	}
-	@Override
-	public String toString() {
-		return "InvestorConsumption [id=" + id + ", consumptionId=" + consumptionId + ", investorId=" + investorId
-				+ ", activeConsumption=" + activeConsumption + ", reactiveConsumption=" + reactiveConsumption
-				+ ", circleValidation=" + circleValidation + ", billGenerated=" + billGenerated + ", adjustment="
-				+ adjustment + "]";
+	/**
+	 * @return the adjustment
+	 */
+	public BigDecimal getAdjustment() {
+		return adjustment;
 	}
-	
-	
-	
+	/**
+	 * @param adjustment the adjustment to set
+	 */
+	public void setAdjustment(BigDecimal adjustment) {
+		this.adjustment = adjustment;
+	}
+	/**
+	 * @param id
+	 * @param consumptionId
+	 * @param investorId
+	 * @param activeConsumption
+	 * @param reactiveConsumption
+	 * @param circleValidation
+	 * @param billGenerated
+	 * @param adjustment
+	 */
+	public InvestorConsumption(int id, int consumptionId, int investorId,
+			BigDecimal activeConsumption, BigDecimal reactiveConsumption,
+			int circleValidation, int billGenerated, BigDecimal adjustment) {
+		this.id = id;
+		this.consumptionId = consumptionId;
+		this.investorId = investorId;
+		this.activeConsumption = activeConsumption;
+		this.reactiveConsumption = reactiveConsumption;
+		this.circleValidation = circleValidation;
+		this.billGenerated = billGenerated;
+		this.adjustment = adjustment;
+	}
+	/**
+	 * @param consumptionId
+	 * @param investorId
+	 * @param activeConsumption
+	 * @param reactiveConsumption
+	 * @param circleValidation
+	 * @param billGenerated
+	 * @param adjustment
+	 */
+	public InvestorConsumption(int consumptionId, int investorId,
+			BigDecimal activeConsumption, BigDecimal reactiveConsumption,
+			int circleValidation, int billGenerated, BigDecimal adjustment) {
+		this.consumptionId = consumptionId;
+		this.investorId = investorId;
+		this.activeConsumption = activeConsumption;
+		this.reactiveConsumption = reactiveConsumption;
+		this.circleValidation = circleValidation;
+		this.billGenerated = billGenerated;
+		this.adjustment = adjustment;
+	}
+	/**
+	 * Default Constructor
+	 */
+	public InvestorConsumption() {
+	}
 	
 }

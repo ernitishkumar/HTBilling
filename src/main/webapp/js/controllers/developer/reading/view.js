@@ -99,50 +99,34 @@ angular.module("htBillingApp").controller('DeveloperViewMeterReadingsController'
 				}
 		).then(
 				function (response) {
+					console.log("inside response");
 					var status = response.status;
 					//checking status code for successful response from server
 					if (status === 200) {
 						var found = false;
+						//console.log("inside status"+$scope.readingData[index].meterNo);
 						var consumptionData = {};
-						/*$scope.readingData.forEach(
-								function (item) {
-									if (item.meterNo === reading.meterNo) {
-										if ($scope.userRole.role === 'developer') {
-
-											item.currentMeterReading.developerValidation = 1;
-											//creating consumption data to be inserted into backend
-											consumptionData.meterNo = item.meterNo;
-											consumptionData.activeConsumption = parseFloat(item.activeEnergyConsumption);
-											consumptionData.meterReadingId = item.currentMeterReading.id;
-											consumptionData.plantId = item.plant.id;
-											consumptionData.plantCode = item.plant.code;
-											consumptionData.reactiveConsumption = parseFloat(item.quadrantOneConsumption)+parseFloat(item.quadrantTwoConsumption)
-											                                      + parseFloat(item.quadrantThreeConsumption) + parseFloat(item.quadrantFourConsumption)
-											found = true;
-										}
-									}
-								}
-						);*/
+						
 						//Implementing the above logic with index passed from the page, No need to loop over complete collection for
 						//every validation.
-						var item = $scope.readingData[index];
-						console.log("reading data.....  "+item);
-						if(item.meterNo === reading.meterNo){
-							console.log(item);
+						//var item = $scope.readingData[index];
+						//console.log("reading data.....  "+item);
+						//if(item.meterNo === reading.meterNo){
+							console.log(reading);
 							if ($scope.userRole.role === 'developer') {
-								item.currentMeterReading.developerValidation = 1;
+								reading.currentMeterReading.developerValidation = 1;
 								//creating consumption data to be inserted into backend
-								consumptionData.meterNo = item.meterNo;
-								consumptionData.activeConsumption = item.activeEnergyConsumption;
-								consumptionData.meterReadingId = item.currentMeterReading.id;
-								consumptionData.plantId = item.plant.id;
-								consumptionData.plantCode = item.plant.code;
-								/*consumptionData.reactiveConsumption = parseFloat(item.quadrantOneConsumption)+parseFloat(item.quadrantTwoConsumption)
-								+ parseFloat(item.quadrantThreeConsumption) + parseFloat(item.quadrantFourConsumption);*/
+								consumptionData.meterNo = reading.meterNo;
+								consumptionData.activeConsumption = reading.activeEnergyConsumption;
+								consumptionData.meterReadingId = reading.currentMeterReading.id;
+								consumptionData.plantId = reading.plant.id;
+								consumptionData.plantCode = reading.plant.code;
+								/*consumptionData.reactiveConsumption = parseFloat(reading.quadrantOneConsumption)+parseFloat(reading.quadrantTwoConsumption)
+								+ parseFloat(reading.quadrantThreeConsumption) + parseFloat(reading.quadrantFourConsumption);*/
 								
 								//As per new guidelines adding only Q2 and Q4 for bill generation. Will change after new orders
-								consumptionData.reactiveConsumption = parseFloat(item.quadrantTwoConsumption) + parseFloat(item.quadrantFourConsumption);
-								consumptionData.adjustment = item.currentMeterReading.adjustment;
+								consumptionData.reactiveConsumption = parseFloat(reading.quadrantTwoConsumption) + parseFloat(reading.quadrantFourConsumption);
+								consumptionData.adjustment = reading.currentMeterReading.adjustment;
 
 								//making http request to save the consumption data at the backend
 								$http(
@@ -165,7 +149,7 @@ angular.module("htBillingApp").controller('DeveloperViewMeterReadingsController'
 										}
 								);
 							}
-						}
+						//}
 					}
 				},
 				function(error){
@@ -179,7 +163,7 @@ angular.module("htBillingApp").controller('DeveloperViewMeterReadingsController'
 	 * function discardReading to implement discard action event
 	 * this function runs when user clicks Discard reading button on page.
 	 */
-	this.discardReading = function (index) {
+	this.discardReading = function (reading) {
 		bootbox.confirm("Are you sure to Discard reading ?",function(answer){
 			if(answer === true){
 				$http(
@@ -187,7 +171,7 @@ angular.module("htBillingApp").controller('DeveloperViewMeterReadingsController'
 							method: 'PUT',
 							url: 'backend/readings/discard',
 							params: {
-								readingId: $scope.readingData[index].currentMeterReading.id
+								readingId: reading.currentMeterReading.id
 							},
 							data: $scope.userRole
 						}
@@ -197,7 +181,7 @@ angular.module("htBillingApp").controller('DeveloperViewMeterReadingsController'
 							//checking status code for successful response from server
 							if (status === 200) {
 								if ($scope.userRole.role === 'developer') {
-									$scope.readingData.splice(index,1);
+									$scope.readingData.splice($scope.readingData.indexOf(reading),1);
 								}
 							}
 						},

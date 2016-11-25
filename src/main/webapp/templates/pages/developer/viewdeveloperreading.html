@@ -61,10 +61,10 @@
             <div class="panel-body">
              <p class="text-center">
                 Developer Name: {{reading.developer.name|uppercase}} &nbsp;&nbsp;&nbsp; <br><br>Mf of Meter: {{reading.currentMeterReading.mf}} &nbsp;&nbsp;&nbsp; Location: {{reading.plant.circle|uppercase}} &nbsp;&nbsp;&nbsp; Total Adjustment: {{reading.currentMeterReading.adjustment}} &nbsp;&nbsp;&nbsp;
-                <button type="button" class="btn btn-success" name="validateButton" ng-click="viewMeterReadingsCtrl.validateReading(reading,((currentPage - 1)*pageSize + $index))" ng-hide="reading.currentMeterReading.developerValidation || reading.currentMeterReading.discardedFlag">Validate Readings</button>
+                <button type="button" class="btn btn-success" name="validateButton" ng-click="viewMeterReadingsCtrl.validateReading(reading,((currentPage - 1)*pageSize + $index))" ng-hide="reading.currentMeterReading.developerValidation || reading.currentMeterReading.discardedFlag || !reading.currentMeterReading.htCellValidation">Validate Readings</button>
                 &nbsp;&nbsp;&nbsp;
                 <button type="button" class="btn btn-danger" name="discardButton" 
-                ng-click="viewMeterReadingsCtrl.discardReading((currentPage - 1)*pageSize + $index)" 
+                ng-click="viewMeterReadingsCtrl.discardReading(reading)" 
                 ng-hide="reading.currentMeterReading.discardedFlag || reading.currentMeterReading.developerValidation">Discard Readings</button>
                 &nbsp;&nbsp;&nbsp;
                 <button type="button" class="btn btn-primary" data-toggle="modal" ng-show="reading.currentMeterReading.htCellValidation && reading.currentMeterReading.developerValidation && !reading.consumption.consumptionBifurcated && !reading.currentMeterReading.discardedFlag" ng-click="viewMeterReadingsCtrl.getInvestorsData(reading)">Bifurcate Readings</button>

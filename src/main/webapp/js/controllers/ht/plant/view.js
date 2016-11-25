@@ -85,13 +85,13 @@ angular.module("htBillingApp").controller('ViewPlantDetailsController', ['$http'
 	/*
 	 * function to delete selected meter
 	 */
-	this.remove = function(index){
+	this.remove = function(plant){
 		bootbox.confirm("Are you sure to delete plant?",function(answer){
 			if(answer === true){
 				$http(
 						{
 							method: 'DELETE',
-							url: 'backend/plants/'+$scope.plants[index].id
+							url: 'backend/plants/'+plant.id
 						}
 				).then(
 						function (response) {
@@ -99,7 +99,7 @@ angular.module("htBillingApp").controller('ViewPlantDetailsController', ['$http'
 							if(status === 200){
 								var deletedPlant = response.data;
 								if(deletedPlant !== null){
-									$scope.plants.splice(index,1);
+									$scope.plants.splice($scope.plants.indexOf(plant),1);
 								}
 							}
 						},

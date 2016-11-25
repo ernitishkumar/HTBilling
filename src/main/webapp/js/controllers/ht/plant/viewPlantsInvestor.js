@@ -82,13 +82,13 @@ angular.module("htBillingApp").controller('ViewInvestorMappingController', ['$ht
 		);
 	}
 
-	this.remove = function(index){
+	this.remove = function(mapping){
 		bootbox.confirm("Are you sure to delete Mapping?",function(answer){
 			if(answer === true){
 				$http(
 						{
 							method: 'DELETE',
-							url: 'backend/investor-plant-mapping/'+$scope.mappings[index].id
+							url: 'backend/investor-plant-mapping/'+mapping.id
 						}
 				).then(
 						function (response) {
@@ -96,7 +96,7 @@ angular.module("htBillingApp").controller('ViewInvestorMappingController', ['$ht
 							if(status === 200){
 								var deletedMapping = response.data;
 								if(deletedMapping !== null){
-									$scope.mappings.splice(index,1);
+									$scope.mappings.splice($scope.mappings.indexOf(mapping),1);
 								}
 							}
 						},

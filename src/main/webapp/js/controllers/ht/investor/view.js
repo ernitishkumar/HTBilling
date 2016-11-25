@@ -85,13 +85,13 @@ angular.module("htBillingApp").controller('ViewInvestorDetailsController', ['$ht
 	/*
 	 * function to delete selected meter
 	 */
-	this.remove = function(index){
+	this.remove = function(investor){
 		bootbox.confirm("Are you sure to delete this Investor?",function(answer){
 			if(answer === true){
 				$http(
 						{
 							method: 'DELETE',
-							url: 'backend/investors/'+$scope.investors[index].id
+							url: 'backend/investors/'+investor.id
 						}
 				).then(
 						function (response) {
@@ -99,7 +99,7 @@ angular.module("htBillingApp").controller('ViewInvestorDetailsController', ['$ht
 							if(status === 200){
 								var deletedInvestor = response.data;
 								if(deletedInvestor !== null){
-									$scope.investors.splice(index,1);
+									$scope.investors.splice($scope.investors.indexOf(investor),1);
 								}
 							}
 						},

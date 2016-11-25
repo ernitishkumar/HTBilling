@@ -79,13 +79,13 @@ angular.module("htBillingApp").controller('ViewMeterDetailsController', ['$http'
 	/*
 	 * function to delete selected meter
 	 */
-	this.remove = function(index){
+	this.remove = function(meter){
 		bootbox.confirm("Are you sure to delete this meter?",function(answer){
 			if(answer === true){
 				$http(
 						{
 							method: 'DELETE',
-							url: 'backend/meter/'+$scope.meters[index].meterNo
+							url: 'backend/meter/'+meter.meterNo
 						}
 				).then(
 						function (response) {
@@ -93,7 +93,7 @@ angular.module("htBillingApp").controller('ViewMeterDetailsController', ['$http'
 							if(status === 200){
 								var deletedMeter = response.data;
 								if(deletedMeter !== null){
-									$scope.meters.splice(index,1);
+									$scope.meters.splice($scope.meters.indexOf(meter),1);
 								}
 							}
 						},

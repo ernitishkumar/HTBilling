@@ -78,7 +78,7 @@
 						Readings</button>
 					&nbsp;&nbsp;&nbsp;
 					<button type="button" class="btn btn-danger" name="discardButton"
-						ng-click="viewMeterReadingsCtrl.discardReading((currentPage - 1)*pageSize + $index)"
+						ng-click="viewMeterReadingsCtrl.discardReading(reading)"
 						ng-hide="reading.currentMeterReading.discardedFlag || reading.currentMeterReading.htCellValidation">Discard
 						Readings</button>
 					<button type="button" class="btn btn-success" name="editButton"

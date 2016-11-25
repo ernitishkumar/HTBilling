@@ -87,13 +87,13 @@ angular.module("htBillingApp").controller('ViewDeveloperDetailsController', ['$h
 	/*
 	 * function to delete selected meter
 	 */
-	this.remove = function(index){
+	this.remove = function(developer){
 		bootbox.confirm("Are you sure to delete this developer?",function(answer){
 			if(answer === true){
 				$http(
 						{
 							method: 'DELETE',
-							url: 'backend/developers/'+$scope.developers[index].id
+							url: 'backend/developers/'+developer.id
 						}
 				).then(
 						function (response) {
@@ -101,7 +101,7 @@ angular.module("htBillingApp").controller('ViewDeveloperDetailsController', ['$h
 							if(status === 200){
 								var deletedDeveloper = response.data;
 								if(deletedDeveloper !== null){
-									$scope.developers.splice(index,1);
+									$scope.developers.splice($scope.developers.indexOf(developer),1);
 								}
 							}
 						},

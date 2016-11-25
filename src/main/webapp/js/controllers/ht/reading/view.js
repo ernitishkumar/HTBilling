@@ -116,23 +116,14 @@ angular.module("htBillingApp").controller('ViewMeterReadingsController', ['$http
 					var status = response.status;
 					//checking status code for successful response from server
 					if (status === 200) {
-						/*$scope.readingData.forEach(
-								function (item) {
-									if (item.meterNo === reading.meterNo) {
-										if ($scope.userRole.role === 'admin' || $scope.userRole.role === 'htcell') {
-											item.currentMeterReading.htCellValidation = 1;
-										}
-									}
-								}
-						);*/
 						//Implementing the above logic with index passed from the page, No need to loop over complete collection for
 						//every validation.
-						var item = $scope.readingData[index];
-						if(item.meterNo === reading.meterNo){
+						//var item = $scope.readingData[index];
+						//if(item.meterNo === reading.meterNo){
 							if ($scope.userRole.role === 'admin' || $scope.userRole.role === 'htcell') {
-								item.currentMeterReading.htCellValidation = 1;
+								$scope.readingData[$scope.readingData.indexOf(reading)].currentMeterReading.htCellValidation = 1;
 							}
-						}
+						//}
 					}
 				},
 				function(error){
@@ -147,7 +138,7 @@ angular.module("htBillingApp").controller('ViewMeterReadingsController', ['$http
 	 * function discardReading to implement discard action event
 	 * this function runs when user clicks Discard reading button on page.
 	 */
-	this.discardReading = function (index) {
+	this.discardReading = function (reading) {
 		bootbox.confirm("Are you sure to Discard reading ?",function(answer){
 			if(answer === true){
 				$http(
@@ -155,7 +146,7 @@ angular.module("htBillingApp").controller('ViewMeterReadingsController', ['$http
 							method: 'PUT',
 							url: 'backend/readings/discard',
 							params: {
-								readingId: $scope.readingData[index].currentMeterReading.id
+								readingId: reading.currentMeterReading.id
 							},
 							data: $scope.userRole
 						}
@@ -165,7 +156,7 @@ angular.module("htBillingApp").controller('ViewMeterReadingsController', ['$http
 							//checking status code for successful response from server
 							if (status === 200) {
 								if ($scope.userRole.role === 'admin' || $scope.userRole.role === 'htcell') {
-									$scope.readingData.splice(index,1);
+									$scope.readingData.splice($scope.readingData.indexOf(reading),1);
 								}
 							}
 						},

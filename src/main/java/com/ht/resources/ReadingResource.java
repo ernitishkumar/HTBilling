@@ -229,10 +229,12 @@ public class ReadingResource {
 			 * Date date = new Date(); //String currentDate =
 			 * formater.format(date);
 			 */for (Plant p : plants) {
+				 System.out.println(p.getName());
 				ViewMeterReadings viewMeterReadings = new ViewMeterReadings();
 				String meterNo = p.getMainMeterNo();
 				MeterDetails meter = meterDetailsDAO.getByMeterNo(meterNo);
 				viewMeterReadings.setMeterNo(meterNo);
+				//System.out.println(meter.getMeterNo());
 				if (meter != null) {
 					viewMeterReadings.setMeterMake(meter.getMake()
 							.toUpperCase());

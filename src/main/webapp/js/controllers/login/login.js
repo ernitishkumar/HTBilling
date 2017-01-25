@@ -23,6 +23,8 @@ angular.module("htBillingApp").controller('FormController', ['$http', '$scope', 
 						$location.path("/circle/home");
 					} else if (userRoles.role === "developer") {
 						$location.path("/developer/home");
+					}else if (userRoles.role === "amr") {
+						$location.path("/amr/home");
 					}
 				},
 				function(error){

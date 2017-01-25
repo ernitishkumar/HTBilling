@@ -34,8 +34,11 @@
 			templateUrl: 'templates/pages/developer/developerhome.html',
 			controller: 'DeveloperController',
 			controllerAs: 'developerCtrl'
-		})
-		.when('/enterreading', {
+		}).when('/amr/home', {
+			templateUrl: 'templates/pages/amr/amrhome.html',
+			controller: 'AMRHomeController',
+			controllerAs: 'homeCtrl'
+		}).when('/enterreading', {
 			templateUrl: 'templates/pages/ht/reading/meterreading.html',
 			controller: 'MeterReadingController',
 			controllerAs: 'readingCtrl'

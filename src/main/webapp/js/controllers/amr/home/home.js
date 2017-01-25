@@ -42,8 +42,8 @@ angular.module('htBillingApp').controller('AMRHomeController', ['$http', '$scope
     	authService.logout();
     };
     
-    this.loadReadingForm = function () {
-        $location.path("/enterreading");
+    this.loadFileUploadForm = function () {
+        $location.path("/amr/file/upload");
     };
     
     this.loadAMRHome = function () {

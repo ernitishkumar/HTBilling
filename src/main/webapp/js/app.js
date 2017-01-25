@@ -38,6 +38,10 @@
 			templateUrl: 'templates/pages/amr/amrhome.html',
 			controller: 'AMRHomeController',
 			controllerAs: 'homeCtrl'
+		}).when('/amr/file/upload', {
+			templateUrl: 'templates/pages/amr/uploadfile.html',
+			controller: 'UploadAMRFileController',
+			controllerAs: 'uploadAMRFileCtrl'
 		}).when('/enterreading', {
 			templateUrl: 'templates/pages/ht/reading/meterreading.html',
 			controller: 'MeterReadingController',

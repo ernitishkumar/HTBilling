@@ -1,0 +1,83 @@
+<div class="navbar navbar-fixed-top">
+    <div>
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="javascript:void(0);">HTBilling</a>
+        </div>
+        <div class="collapse navbar-collapse" id="myNavbar">
+            <ul class="nav navbar-nav">
+                <li class="active"><a href="javascript:void(0);" ng-click="uploadAMRFileCtrl.loadHome()">Home</a></li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+                <li class="dropdown">
+                    <a class="dropdown-toggle" data-toggle="dropdown" href="javascript:void(0);"><span class="glyphicon glyphicon-user"></span>  {{user.name}}<strong class="caret"></strong></a>
+                    <ul class="dropdown-menu">
+                        <li>
+                            <a href="javascript:void(0);"><span class="glyphicon glyphicon-wrench"></span> Settings</a>
+                        </li>
+                        <li>
+                            <a href="javascript:void(0);" ng-click="uploadAMRFileCtrl.logout()"><span class="glyphicon glyphicon-off"></span> Logout</a>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+<br>
+<br>
+<div class="container">
+    <div class="col-md-6 col-md-offset-3">
+        <div class="page-header text-center">
+            <h1><span class="glyphicon glyphicon-certificate"></span> AMR File Upload.</h1>
+        </div>
+
+        <!--Show error messages -->
+        <div align='center'>
+            <h3><span class="label label-danger" ng-show="error">{{error}}</span>
+        </h3>
+            <br>
+        </div>
+
+        <!--Form-->
+        <form ng-submit="processUpload()" name="uploadForm">
+				<div class="form-group row">
+					<label for="amrFileInput" class="col-xs-3 col-form-label">AMR
+						File</label>
+					<div class="col-xs-9">
+						<input type="file" class="form-control-file" id="amrFileInput"
+							aria-describedby="fileHelp" ngf-select ng-model="fileToUpload"
+							name="uploadFile" ngf-model-invalid="error" required> <small
+							id="fileHelp" class="form-text text-muted">Select the
+							AMR file to be uploaded from your computer & click upload.</small>
+						<!-- <span class="progress" ng-show="fileToUpload.progress >= 0">
+							<div style="width: {{fileToUpload.progress" ng-bind="fileToUpload.progress + '%'">
+								</div>
+						</span> -->
+						<div id="progressBarModule" ng-show="fileToUpload.progress >= 0">
+							<div class="text-xs-center" id="example-caption-1">Uploading
+								AMR File&hellip; {{fileToUpload.progress}}%</div>
+							<progress class="progress" value="{{fileToUpload.progress}}"
+								max="100" aria-describedby="example-caption-1"></progress>
+						</div>
+					</div>
+				</div>
+				<div class="form-group row">
+					<div class="col-xs-4 col-xs-offset-3">
+						<button type="submit" class="btn btn-primary form-control"
+							ng-disabled="!uploadForm.$valid || (fileToUpload.progress >= 1)">Upload</button>
+					</div>
+					<div class="col-xs-4">
+						<button class="btn btn-danger form-control"
+							ng-show="fileToUpload.progress >= 1" ng-click="cancelUpload()">Cancel
+							Upload</button>
+					</div>
+				</div>
+			</form>
+        </div>
+</div><br>
+<br>

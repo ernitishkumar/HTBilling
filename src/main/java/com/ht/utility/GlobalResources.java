@@ -30,8 +30,8 @@ public class GlobalResources {
 			poolProperties.setPassword("htbilling@452015");*/
 			
 			//Testing environment database connection details
-			poolProperties.setUrl("jdbc:mysql://localhost:3306/ht");
-			poolProperties.setUsername("ht");
+			poolProperties.setUrl("jdbc:mysql://localhost:3306/ht_test");
+			poolProperties.setUsername("ht_test");
 		    poolProperties.setPassword("ht");
 			
 		    poolProperties.setJmxEnabled(true);
@@ -145,4 +145,14 @@ public class GlobalResources {
 		// remove extra spaces!
 		return result.replaceAll("^\\s+", "").replaceAll("\\b\\s{2,}\\b", " ");
 	}
+	
+	/*
+	 * RELATIVE DTR PMR FILE LOCATION FOR STORAGE OF IMAGES
+	 */
+	public final static String RELATIVE_AMR_FILE_LOCATION = "ht//amr//";
+	
+	/*
+	 * DRIVE LOCATION FOR DTR PMR IMAGES
+	 */
+	public final static String AMR_DRIVE_LOCATION = "D://";
 }

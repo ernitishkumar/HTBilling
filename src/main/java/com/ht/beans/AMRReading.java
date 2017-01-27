@@ -14,7 +14,7 @@ public class AMRReading {
 
 	private int id;
 
-	private String meterno;
+	private String meterNo;
 	
 	private String readingDate;
 	
@@ -61,15 +61,15 @@ public class AMRReading {
 	/**
 	 * @return the meterno
 	 */
-	public String getMeterno() {
-		return meterno;
+	public String getMeterNo() {
+		return meterNo;
 	}
 
 	/**
-	 * @param meterno the meterno to set
+	 * @param meterNo the meterno to set
 	 */
-	public void setMeterno(String meterno) {
-		this.meterno = meterno;
+	public void setMeterNo(String meterNo) {
+		this.meterNo = meterNo;
 	}
 
 	/**
@@ -294,7 +294,7 @@ public class AMRReading {
 			Date uploadedOn, int status, String misc1, String misc2,
 			String misc3) {
 		this.id = id;
-		this.meterno = meterno;
+		this.meterNo = meterno;
 		this.readingDate = readingDate;
 		this.activeEnergy = activeEnergy;
 		this.activeTodOne = activeTodOne;
@@ -335,7 +335,7 @@ public class AMRReading {
 			BigDecimal reactiveQuadrantThree, BigDecimal reactiveQuadrantFour,
 			Date uploadedOn, int status, String misc1, String misc2,
 			String misc3) {
-		this.meterno = meterno;
+		this.meterNo = meterno;
 		this.readingDate = readingDate;
 		this.activeEnergy = activeEnergy;
 		this.activeTodOne = activeTodOne;
@@ -363,7 +363,7 @@ public class AMRReading {
 	 */
 	@Override
 	public String toString() {
-		return "AMRReading [id=" + id + ", meterno=" + meterno
+		return "AMRReading [id=" + id + ", meterno=" + meterNo
 				+ ", readingDate=" + readingDate + ", activeEnergy="
 				+ activeEnergy + ", activeTodOne=" + activeTodOne
 				+ ", activeTodTwo=" + activeTodTwo + ", activeTodThree="

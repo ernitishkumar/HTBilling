@@ -18,9 +18,9 @@ import com.ht.utility.GlobalResources;
  * @author lenovo
  *
  */
-public class AMRReadingDAO {
+public abstract class AMRReadingDAO {
 
-	public AMRReading insert(AMRReading reading) {
+	public static AMRReading insert(AMRReading reading) {
 		int lastInsertedId = -1;
 		AMRReading insertedReading = null;
 		if (reading != null) {
@@ -30,7 +30,7 @@ public class AMRReadingDAO {
 							"insert into amr_readings(meter_no, reading_date, active_reading, active_tod1, active_tod2, active_tod3, reactive_q1, reactive_q2, reactive_q3, reactive_q4, uploaded_on, status, misc1, misc2, misc3) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)",
 							Statement.RETURN_GENERATED_KEYS);
 					) {
-				ps.setString(1, reading.getMeterno());
+				ps.setString(1, reading.getMeterNo());
 				ps.setString(2, reading.getReadingDate());
 				ps.setBigDecimal(3, reading.getActiveEnergy());
 				ps.setBigDecimal(4, reading.getActiveTodOne());
@@ -61,14 +61,14 @@ public class AMRReadingDAO {
 		return insertedReading;
 	}
 	
-	public AMRReading update(AMRReading reading) {
+	public static AMRReading update(AMRReading reading) {
 		if (reading != null) {
 			try(
 					Connection connection = GlobalResources.getDatasource().getConnection();
 					PreparedStatement ps = connection.prepareStatement(
 							"update amr_readings set meter_no=?, reading_date=?, active_reading=?, active_tod1=?, active_tod2=?, active_tod3=?, reactive_q1=?, reactive_q2=?, reactive_q3=?, reactive_q4=?, uploaded_on=?, status =?, misc1=?, misc2=?, misc3=? where id=?");
 					) {
-				ps.setString(1, reading.getMeterno());
+				ps.setString(1, reading.getMeterNo());
 				ps.setString(2, reading.getReadingDate());
 				ps.setBigDecimal(3, reading.getActiveEnergy());
 				ps.setBigDecimal(4, reading.getActiveTodOne());
@@ -94,7 +94,7 @@ public class AMRReadingDAO {
 		return reading;
 	}
 	
-	public ArrayList<AMRReading> getAll() {
+	public static ArrayList<AMRReading> getAll() {
 		ArrayList<AMRReading> readings = null;
 		try(
 				Connection connection = GlobalResources.getDatasource().getConnection();
@@ -108,7 +108,7 @@ public class AMRReadingDAO {
 		return readings;
 	}
 	
-	public ArrayList<AMRReading> getAll(int status) {
+	public static ArrayList<AMRReading> getAll(int status) {
 		ArrayList<AMRReading> readings = null;
 		try(
 				Connection connection = GlobalResources.getDatasource().getConnection();
@@ -123,7 +123,7 @@ public class AMRReadingDAO {
 		return readings;
 	}
 	
-	public AMRReading getById(int id) {
+	public static AMRReading getById(int id) {
 		ArrayList<AMRReading> readings = null;
 		try(
 				Connection connection = GlobalResources.getDatasource().getConnection();
@@ -138,7 +138,7 @@ public class AMRReadingDAO {
 		return readings.size() > 0 ? readings.get(0) : null;
 	}
 	
-	public ArrayList<AMRReading> getByMeterNo(String meterNo) {
+	public static ArrayList<AMRReading> getByMeterNo(String meterNo) {
 		ArrayList<AMRReading> readings = null;
 		try(
 				Connection connection = GlobalResources.getDatasource().getConnection();
@@ -153,30 +153,30 @@ public class AMRReadingDAO {
 		return readings;
 	}
 	
-	public ArrayList<AMRReading> getByMeterNoAndReadingDate(String meterNo, Timestamp readingDate) {
+	public static AMRReading getByMeterNoAndReadingDate(String meterNo, String readingDate) {
 		ArrayList<AMRReading> readings = null;
 		try(
 				Connection connection = GlobalResources.getDatasource().getConnection();
 				PreparedStatement ps = connection.prepareStatement("select * from amr_readings where meter_no=? and reading_date = ?");
 				) {
 			ps.setString(1, meterNo);
-			ps.setTimestamp(2, readingDate);
+			ps.setString(2, readingDate);
 			ResultSet resultSet = ps.executeQuery();
 			readings = resultSetParser(resultSet);
 		} catch (SQLException e) {
-			System.out.println("Exception in class : AMRReadingDAO : method : [getByMeterNoAndReadingDate(String,Timestamp)] " + e.getMessage());
+			System.out.println("Exception in class : AMRReadingDAO : method : [getByMeterNoAndReadingDate(String,String)] " + e.getMessage());
 		}
-		return readings;
+		return readings.size() > 0 ? readings.get(0) : null;
 	}
 	
-	private ArrayList<AMRReading> resultSetParser(ResultSet resultSet) {
+	private static ArrayList<AMRReading> resultSetParser(ResultSet resultSet) {
 		ArrayList<AMRReading> readings = new ArrayList<AMRReading>();
 		try {
 			
 			while (resultSet.next()) {
 				AMRReading amrReading = new AMRReading();
 				amrReading.setId(resultSet.getInt(1));
-				amrReading.setMeterno(resultSet.getString(2));
+				amrReading.setMeterNo(resultSet.getString(2));
 				amrReading.setReadingDate(resultSet.getString(3));
 				amrReading.setActiveEnergy(resultSet.getBigDecimal(4));
 				amrReading.setActiveTodOne(resultSet.getBigDecimal(5));

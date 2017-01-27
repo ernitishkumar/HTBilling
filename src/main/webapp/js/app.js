@@ -42,6 +42,10 @@
 			templateUrl: 'templates/pages/amr/uploadfile.html',
 			controller: 'UploadAMRFileController',
 			controllerAs: 'uploadAMRFileCtrl'
+		}).when('/amr/file/view', {
+			templateUrl: 'templates/pages/amr/viewreading.html',
+			controller: 'ViewAMRReadingsController',
+			controllerAs: 'viewAMRReadingsCtrl'
 		}).when('/enterreading', {
 			templateUrl: 'templates/pages/ht/reading/meterreading.html',
 			controller: 'MeterReadingController',

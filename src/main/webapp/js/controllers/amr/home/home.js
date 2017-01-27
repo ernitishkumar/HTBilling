@@ -46,6 +46,10 @@ angular.module('htBillingApp').controller('AMRHomeController', ['$http', '$scope
         $location.path("/amr/file/upload");
     };
     
+    this.loadViewReadingPage = function () {
+        $location.path("/amr/file/view");
+    };
+    
     this.loadAMRHome = function () {
         $location.path("/amr/home");
     };

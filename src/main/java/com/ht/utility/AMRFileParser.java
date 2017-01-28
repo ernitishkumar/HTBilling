@@ -10,6 +10,7 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.Date;
 import java.util.List;
 
 import com.ht.beans.AMRReading;
@@ -44,8 +45,9 @@ public abstract class AMRFileParser {
 						amrReading.setMeterNo(meterData[0]);
 						readingDateAndTime = meterData[1];
 						String[] date = readingDateAndTime.trim().split("\\s+");
-						System.out.println(date[0]);
-						amrReading.setReadingDate(date[0]);
+						String [] currentDateArray = date[0].split("-");
+						String formatedDate = currentDateArray[2]+"-"+currentDateArray[1]+"-"+currentDateArray[0];  
+						amrReading.setReadingDate(formatedDate);
 						amrReading.setActiveEnergy(new BigDecimal(meterData[3]));
 						amrReading.setActiveTodOne(new BigDecimal(meterData[13]));
 						amrReading.setActiveTodTwo(new BigDecimal(meterData[14]));
@@ -69,5 +71,24 @@ public abstract class AMRFileParser {
 			System.out.println("FilePath is null in parseAMRFile");
 		}
 		return amrReading;
+	}
+	
+	private static String dateFormater(String currentDate){
+		String formattedDate = "";
+		System.out.println(currentDate);
+		Date date = new Date(currentDate);
+		int d = date.getDate();
+		int m = date.getMonth();
+		int y = date.getYear();
+		String month = "";
+		if (m < 10) {
+			month = "0" + m;
+		}
+		String day = "";
+		if (d < 10) {
+			day = "0" + d;
+		}
+		System.out.println("formatted date = "+day+"-"+month+"="+y);
+		return formattedDate;
 	}
 }

@@ -30,8 +30,9 @@ public class MeterReadingsDAO {
 	 * @return boolean
 	 */
 	public boolean isReadingAlreadyAdded(MeterReading reading) {
-		System.out.println("inside isReadingAlreadyAdded");
 		MeterReading latestInsertedReading = getLatestInsertedByMeterNo(reading.getMeterno());
+		System.out.println("previous reading id "+latestInsertedReading.getId());
+		System.out.println("current meter no "+ reading.getMeterno());
 		boolean isAlreadyAdded = true;
 		if (latestInsertedReading != null) {
 			SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
@@ -40,13 +41,16 @@ public class MeterReadingsDAO {
 				c.setTime(formatter.parse(latestInsertedReading.getReadingDate()));
 			
 				int lastReadingMonth = c.get(Calendar.MONTH) + 1;
+				System.out.println("last reading image "+lastReadingMonth);
 				c.setTime(formatter.parse(reading.getReadingDate()));
 				int currentReadingMonth = c.get(Calendar.MONTH) + 1;
+				System.out.println("current reading month "+currentReadingMonth);
 				int result = currentReadingMonth - lastReadingMonth;
 				/*
 				 * if(result == 1 || result == -11){ isAlreadyAdded = false; }
 				 */
-				if (result != 0 || latestInsertedReading.getDiscardedFlag() == 1) {
+				System.out.println("result "+result);
+				if (result == 1 || result == -11 || latestInsertedReading.getDiscardedFlag() == 1) {
 					isAlreadyAdded = false;
 				}
 			} catch (ParseException parseException) {

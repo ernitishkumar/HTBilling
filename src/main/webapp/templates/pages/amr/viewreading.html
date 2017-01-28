@@ -80,16 +80,16 @@
 				<td>{{reading.uploadedOn}}</td>
 				<td>{{reading.status}}</td>
 				<td ng-if="userRole.role==='admin'">
-					<!-- <a href="javascript:void(0);" 
+					<a href="javascript:void(0);" 
 					ng-click="viewAMRReadingsCtrl.approve(reading)">
-					<span>Approve</span></a> -->
-					<a href="javascript:void(0);"><span>Approve</span></a>
+					<span>Approve</span></a>
+					<!-- <a href="javascript:void(0);"><span>Approve</span></a> -->
 				</td>
 				<td ng-if="userRole.role==='admin'">
-					<!-- <a href="javascript:void(0);"
+					<a href="javascript:void(0);"
 					ng-click="viewAMRReadingsCtrl.remove(reading)"><span
-						class="glyphicon glyphicon-trash"></span></a> -->
-					<a href="javascript:void(0);"><span class="glyphicon glyphicon-trash"></span></a>
+						class="glyphicon glyphicon-trash"></span></a>
+					<!-- <a href="javascript:void(0);"><span class="glyphicon glyphicon-trash"></span></a> -->
 				</td>
 			</tr>
 		</tbody>

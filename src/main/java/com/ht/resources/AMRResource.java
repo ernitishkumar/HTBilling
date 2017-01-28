@@ -122,23 +122,47 @@ public class AMRResource {
 	@Path("/reading")
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
-	public MeterReading approve(AMRReading amrReading){
-		MeterDetails meterDetails = meterDetailsDAO.getByMeterNo(amrReading.getMeterNo());
-		System.out.println(meterDetails.getMf());
+	public Response approve(AMRReading amrReading){
+		MeterDetails meterDetails = null;
 		MeterReading meterReading = null;
+		MeterReading insertedMeterReading = null;
+		AMRReading updatedAMRReading = null;
+		boolean isReadingAlreadyAdded = true;
+		meterDetails = meterDetailsDAO.getByMeterNo(amrReading.getMeterNo());
 		if(meterDetails != null){
+			System.out.println("meter details not null.");
 			MeterReading previousReading = meterReadingsDAO.getCurrentMonthMeterReadings(amrReading.getMeterNo());
-			System.out.println("meter present in DB "+meterDetails.getMf());
 			meterReading = new MeterReading(amrReading,meterDetails);
-			boolean isReadingAlreadyAdded = meterReadingsDAO.isReadingAlreadyAdded(meterReading);  
-			if(meterReading.getActiveEnergy().compareTo(previousReading.getActiveEnergy()) == 1 &&
-					meterReading.getActiveTodOne().compareTo(previousReading.getActiveTodOne()) ==1 &&
-					meterReading.getActiveTodTwo().compareTo(previousReading.getActiveTodTwo())==1 &&
-					meterReading.getActiveTodThree().compareTo(previousReading.getActiveTodThree())==1 && isReadingAlreadyAdded){
-				meterReadingsDAO.insert(meterReading);
+			isReadingAlreadyAdded = meterReadingsDAO.isReadingAlreadyAdded(meterReading);
+			System.out.println("is reading already added "+isReadingAlreadyAdded);
+			if(meterReading.getActiveEnergy().compareTo(previousReading.getActiveEnergy()) != -1 &&
+					meterReading.getActiveTodOne().compareTo(previousReading.getActiveTodOne()) != -1 &&
+					meterReading.getActiveTodTwo().compareTo(previousReading.getActiveTodTwo())!= -1 &&
+					meterReading.getActiveTodThree().compareTo(previousReading.getActiveTodThree())!= -1 && !isReadingAlreadyAdded){
+				insertedMeterReading = meterReadingsDAO.insert(meterReading);
+				if(insertedMeterReading != null){
+					System.out.println("reading is OK"); 
+					updatedAMRReading = AMRReadingDAO.update(amrReading);
+				}
 			}
 		}
-		return meterReading;
+		if(updatedAMRReading != null){
+			return Response.status(Status.OK)
+					.entity(updatedAMRReading)
+					.build();
+		}else{
+			ErrorBean error = new ErrorBean();
+			if(meterDetails == null){
+				error.setErrorMessage("Meter not Present. Please Add the Meter Frist.");
+			}else if(isReadingAlreadyAdded){
+				error.setErrorMessage("Reading is already present. Unable to insert meter Reading.");
+			}else if(insertedMeterReading == null){
+				error.setErrorMessage("Unable to insert meter Reading.");
+			}else{
+				error.setErrorMessage("Unable to Approve the Reading.");
+			}
+			return Response.status(Status.EXPECTATION_FAILED).entity(error).build();
+		}
 		
 	}
 	

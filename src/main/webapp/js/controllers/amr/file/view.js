@@ -122,12 +122,51 @@ angular.module("htBillingApp").controller('ViewAMRReadingsController', ['$http',
 						function (response) {
 							var status = response.status;
 							if(status === 200){
+								bootbox.dialog({
+									  title: "Approve Status",
+									  message: "Reading Approved Successfully !",
+									  buttons: {
+										    danger: {
+										      label: "Close",
+										      className: "btn-default",
+										      callback: function() {
+										        
+										      }
+										    },
+										    main: {
+										      label: "Ok",
+										      className: "btn-primary",
+										      callback: function() {
+										        
+										      }
+										    }
+									  }
+									});
 								$location.path("/amr/file/view");
 							}
 						},
 						function(error){
-							console.log("Error while deleting Reading");
 							console.log(error);
+							bootbox.dialog({
+								  title: "Approval Failed !!!",
+								  message: error.data.errorMessage,
+								  buttons: {
+									    danger: {
+									      label: "Close",
+									      className: "btn-default",
+									      callback: function() {
+									        
+									      }
+									    },
+									    main: {
+									      label: "Ok",
+									      className: "btn-primary",
+									      callback: function() {
+									        
+									      }
+									    }
+								  }
+								});
 						}
 				);
 			}

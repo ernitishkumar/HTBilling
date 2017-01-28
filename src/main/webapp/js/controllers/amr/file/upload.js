@@ -103,8 +103,9 @@ angular.module("htBillingApp").controller('UploadAMRFileController', ['$http', '
 			}
 			
 		}, function (error) {
-			console.log("Error While Uploading AMR File");
+			//console.log("Error While Uploading AMR File");
 			console.log(error);
+			console.log(error.data.errorMessage);
 			bootbox.hideAll();
 			var data = error.data;
 			var status = error.status;
@@ -112,7 +113,7 @@ angular.module("htBillingApp").controller('UploadAMRFileController', ['$http', '
 				var errorMessageToDisplay = "Some error occured while uploading AMR file.Try Again !";
 				bootbox.dialog({
 					  title: "Upload Failed !!!",
-					  message: errorMessageToDisplay,
+					  message: error.data.errorMessage,
 					  buttons: {
 						    danger: {
 						      label: "Close",

@@ -50,6 +50,10 @@ angular.module("htBillingApp").controller('HomeController', ['$http', '$scope', 
         $location.path("/enterreading");
     };
     
+    this.loadAMRReadingViewPage = function () {
+        $location.path("/amr/file/view");
+    };
+    
     /*
      * loadMeterReadingViewPage() function to route to view meter readings page
      */

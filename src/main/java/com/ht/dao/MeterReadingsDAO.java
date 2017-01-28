@@ -30,6 +30,7 @@ public class MeterReadingsDAO {
 	 * @return boolean
 	 */
 	public boolean isReadingAlreadyAdded(MeterReading reading) {
+		System.out.println("inside isReadingAlreadyAdded");
 		MeterReading latestInsertedReading = getLatestInsertedByMeterNo(reading.getMeterno());
 		boolean isAlreadyAdded = true;
 		if (latestInsertedReading != null) {
@@ -54,6 +55,7 @@ public class MeterReadingsDAO {
 								+ parseException.getMessage());
 			}
 		} else {
+			System.out.println("returning false");
 			isAlreadyAdded = false;
 		}
 		return isAlreadyAdded;
@@ -80,7 +82,7 @@ public class MeterReadingsDAO {
 				ps.setBigDecimal(9, reading.getReactiveQuadrantTwo());
 				ps.setBigDecimal(10, reading.getReactiveQuadrantThree());
 				ps.setBigDecimal(11, reading.getReactiveQuadrantFour());
-				ps.setInt(12, 0);
+				ps.setInt(12, reading.getHtCellValidation());
 				ps.setInt(13, 0);
 				ps.setInt(14, 0);
 				ps.setInt(15, 0);

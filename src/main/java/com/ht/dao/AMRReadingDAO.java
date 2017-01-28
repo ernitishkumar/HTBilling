@@ -200,4 +200,19 @@ public abstract class AMRReadingDAO {
 		}
 		return readings;
 	}
+
+	public static AMRReading delete(int id) {
+		AMRReading readingToDelete = getById(id);
+		try(
+				Connection connection = GlobalResources.getDatasource().getConnection();
+				PreparedStatement ps = connection.prepareStatement("delete from amr_readings where id=?");
+				) {
+			ps.setInt(1, id);
+			ps.executeUpdate();
+		} catch (SQLException e) {
+			readingToDelete = null;
+			System.out.println("Exception in class : AMRReadingDAO : method : [delete(meterNo)] " + e.getMessage());
+		}
+		return readingToDelete;
+	}
 }

@@ -20,7 +20,7 @@ angular.module("htBillingApp").controller('ViewAMRReadingsController', ['$http',
 		var userRole = authService.fetchData(authService.USER_ROLE_KEY);
 		if(user === null || user === undefined || user.username === null || user.username == undefined || userRole === null || userRole === undefined){
 			$location.path("/");
-		}else if(userRole.role === "amr"){
+		}else if(userRole.role === "amr" || userRole.role === 'admin'){
 			$scope.user = user;
 			$scope.userRole = userRole;
 			loadAMRReadings();
@@ -47,8 +47,12 @@ angular.module("htBillingApp").controller('ViewAMRReadingsController', ['$http',
 	/*
 	 * function to navigate to the home page
 	 */
-	this.loadHome = function () {
+	this.loadAMRHome = function () {
 		$location.path("/amr/home");
+	};
+	
+	this.loadHTHome = function () {
+		$location.path("/ht/home");
 	};
 
 	/*
@@ -76,6 +80,60 @@ angular.module("htBillingApp").controller('ViewAMRReadingsController', ['$http',
 				}
 		);
 	}
+	
+	this.remove = function(reading){
+		bootbox.confirm("Are you sure to delete this Reading ?",function(answer){
+			if(answer === true){
+				$http(
+						{
+							method: 'DELETE',
+							url: 'backend/amr/reading/'+reading.id
+						}
+				).then(
+						function (response) {
+							var status = response.status;
+							if(status === 200){
+								var deletedReading = response.data;
+								if(deletedReading !== null){
+									$scope.readings.splice($scope.readings.indexOf(reading),1);
+								}
+							}
+						},
+						function(error){
+							console.log("Error while deleting Reading");
+							console.log(error);
+						}
+				);
+			}
+		});
+	};
+	
+	this.approve = function(reading){
+		bootbox.confirm("Are you sure want to Approve this Reading ?",function(answer){
+			reading.status=1;
+			if(answer === true){
+				$http(
+						{
+							method: 'PUT',
+							url: 'backend/amr/reading',
+							data: reading
+						}
+				).then(
+						function (response) {
+							var status = response.status;
+							if(status === 200){
+								$location.path("/amr/file/view");
+							}
+						},
+						function(error){
+							console.log("Error while deleting Reading");
+							console.log(error);
+						}
+				);
+			}
+		});
+	};
+	
 	
 	/*
 	 * variable currentPage to hold value for currentpage

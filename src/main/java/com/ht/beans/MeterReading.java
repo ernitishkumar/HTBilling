@@ -426,7 +426,29 @@ public class MeterReading {
 		this.srfrFlag = srfrFlag;
 		this.adjustment = adjustment;
 	}
-
+	
+	public MeterReading(AMRReading amrReading,MeterDetails meterDetails) {
+		this.meterno = amrReading.getMeterNo();
+		this.mf = meterDetails.getMf();
+		this.readingDate = amrReading.getReadingDate();
+		this.activeEnergy = amrReading.getActiveEnergy();
+		this.activeTodOne = amrReading.getActiveTodOne();
+		this.activeTodTwo = amrReading.getActiveTodTwo();
+		this.activeTodThree = amrReading.getActiveTodThree();
+		this.reactiveQuadrantOne = new BigDecimal(0);
+		this.reactiveQuadrantTwo = new BigDecimal(0);
+		this.reactiveQuadrantThree = new BigDecimal(0);
+		this.reactiveQuadrantFour = new BigDecimal(0);
+		this.htCellValidation = 1;
+		this.circleCellValidation = 0;
+		this.developerValidation = 0;
+		this.discardedFlag = 0;
+		this.discardedBy = null;
+		this.discardedOn = null;
+		this.srfrFlag = 0;
+		this.adjustment = new BigDecimal(0);
+	}
+	
 	/**
 	 * Default Constructor
 	 */

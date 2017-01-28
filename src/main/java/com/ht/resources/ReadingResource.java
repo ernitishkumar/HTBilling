@@ -3,7 +3,6 @@
  */
 package com.ht.resources;
 
-import java.math.BigDecimal;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -22,7 +21,6 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
 
-import com.ht.beans.Consumption;
 import com.ht.beans.Developer;
 import com.ht.beans.ErrorBean;
 import com.ht.beans.MessageBean;
@@ -64,6 +62,7 @@ public class ReadingResource {
 			isReadingAlreadyAdded = meterReadingsDAO
 					.isReadingAlreadyAdded(meterReading);
 			if (!isReadingAlreadyAdded) {
+				meterReading.setHtCellValidation(1);
 				insertedReading = meterReadingsDAO.insert(meterReading);
 			}
 		}
@@ -472,6 +471,7 @@ public class ReadingResource {
 		meterReading.setReactiveQuadrantFour(srfrReading
 				.getReactiveQuadrantFour());
 		meterReading.setSrfrFlag(1);
+		meterReading.setHtCellValidation(0);
 		SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
 		Calendar c = Calendar.getInstance();
 		try {
@@ -511,7 +511,7 @@ public class ReadingResource {
 		preCheckReading.setReactiveQuadrantFour(srfrReading
 				.getPreCheckReactiveQuadrantFour());
 		preCheckReading.setSrfrFlag(1);
-
+		preCheckReading.setHtCellValidation(0);
 		currCheckReading.setMeterno(srfrReading.getCheckMeterNo());
 		currCheckReading.setMf(srfrReading.getMf());
 		currCheckReading.setReadingDate(srfrReading.getReadingDate());
@@ -529,6 +529,7 @@ public class ReadingResource {
 		currCheckReading.setReactiveQuadrantFour(srfrReading
 				.getCurCheckReactiveQuadrantFour());
 		currCheckReading.setSrfrFlag(1);
+		currCheckReading.setHtCellValidation(0);
 		boolean isReadingAlreadyAdded = false;
 		isReadingAlreadyAdded = meterReadingsDAO
 				.isReadingAlreadyAdded(meterReading);

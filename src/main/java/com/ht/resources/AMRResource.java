@@ -157,7 +157,7 @@ public class AMRResource {
 			}else if(isReadingAlreadyAdded){
 				error.setErrorMessage("Reading is already present. Unable to insert meter Reading.");
 			}else if(insertedMeterReading == null){
-				error.setErrorMessage("Unable to insert meter Reading.");
+				error.setErrorMessage("Current Month Readings can not be less than last month Reading Please Check.");
 			}else{
 				error.setErrorMessage("Unable to Approve the Reading.");
 			}

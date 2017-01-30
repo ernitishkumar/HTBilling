@@ -146,6 +146,7 @@ angular.module("htBillingApp").controller('ViewAMRReadingsController', ['$http',
 							}
 						},
 						function(error){
+							reading.status=0;
 							console.log(error);
 							bootbox.dialog({
 								  title: "Approval Failed !!!",

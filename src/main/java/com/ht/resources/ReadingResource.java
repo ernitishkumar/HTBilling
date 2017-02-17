@@ -35,6 +35,7 @@ import com.ht.dao.DevelopersDAO;
 import com.ht.dao.MeterDetailsDAO;
 import com.ht.dao.MeterReadingsDAO;
 import com.ht.dao.PlantsDAO;
+import com.ht.utility.GlobalResources;
 
 /**
  * @author NITISH
@@ -137,6 +138,70 @@ public class ReadingResource {
 				}
 			}
 		}
+		return viewReadings;
+	}
+	
+	@GET
+	@Path("/month/{readingMonth}")
+	@Produces(MediaType.APPLICATION_JSON)
+	public ArrayList<ViewMeterReadings> getByReadingMonth(@PathParam("readingMonth") String readingMonth) {
+		String currentReadingMonth = GlobalResources.generateBillMonth(readingMonth);
+		String previousBillMonth = GlobalResources.generatePreviousBillMonth(readingMonth);
+		ArrayList<ViewMeterReadings> viewReadings = new ArrayList<ViewMeterReadings>();
+		ArrayList<Plant> plants = plantsDAO.getAll();
+		/*
+		 * SimpleDateFormat formater = new SimpleDateFormat("dd-MM-YYYY"); Date
+		 * date = new Date(); String currentDate = formater.format(date);
+		 */
+		for (Plant p : plants) {
+			ViewMeterReadings viewMeterReadings = new ViewMeterReadings();
+			String meterNo = p.getMainMeterNo();
+			MeterDetails meter = meterDetailsDAO.getByMeterNo(meterNo);
+			viewMeterReadings.setMeterNo(meterNo);
+			if (meter != null) {
+				viewMeterReadings.setMeterMake(meter.getMake().toUpperCase());
+			}
+			viewMeterReadings.setPlant(p);
+			viewMeterReadings.setDeveloper(developersDAO.getById(p
+					.getDeveloperId()));
+			MeterReading currentMonthReading = meterReadingsDAO
+					.getReadingsByReadingMonth(meterNo, currentReadingMonth);
+			if (currentMonthReading != null
+					&& (currentMonthReading.getDiscardedFlag() == 0 || currentMonthReading
+							.getHtCellValidation() == 1)) {
+				if (currentMonthReading.getSrfrFlag() == 1) {
+					// System.out.println("inside if of SR FR" );
+					String checkMeterNo = p.getCheckMeterNo();
+					viewMeterReadings.setMeterNo(checkMeterNo);
+					MeterDetails checkMeter = meterDetailsDAO
+							.getByMeterNo(checkMeterNo);
+					if (checkMeter != null) {
+						viewMeterReadings.setMeterMake(checkMeter.getMake()
+								.toUpperCase());
+					}
+					currentMonthReading = meterReadingsDAO
+							.getReadingsByReadingMonth(checkMeterNo, currentReadingMonth);
+					viewMeterReadings.setPreviousMeterReading(meterReadingsDAO
+							.getReadingsByReadingMonth(checkMeterNo, previousBillMonth));
+					viewMeterReadings
+							.setCurrentMeterReading(currentMonthReading);
+				} else {
+					viewMeterReadings.setPreviousMeterReading(meterReadingsDAO
+							.getReadingsByReadingMonth(meterNo, previousBillMonth));
+					viewMeterReadings
+							.setCurrentMeterReading(currentMonthReading);
+				}
+				if (currentMonthReading != null
+						&& currentMonthReading.getDeveloperValidation() == 1) {
+					viewMeterReadings.setConsumption(consumptionDAO
+							.getByMeterReadingId(currentMonthReading.getId()));
+				}
+				if (viewMeterReadings.getCurrentMeterReading().getId() != -1) {
+					viewReadings.add(viewMeterReadings);
+				}
+			}
+		}
+		
 		return viewReadings;
 	}
 

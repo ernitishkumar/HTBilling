@@ -60,6 +60,10 @@ angular.module("htBillingApp").controller('HomeController', ['$http', '$scope', 
     this.loadMeterReadingViewPage = function () {
         $location.path("/ht/readings");
     };
+    
+    this.loadMeterReadingTableView= function () {
+        $location.path("/ht/readings/table");
+    };
 
     /*
      * function to route to add meter page

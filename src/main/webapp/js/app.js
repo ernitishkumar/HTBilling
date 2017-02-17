@@ -67,6 +67,10 @@
 			templateUrl: 'templates/pages/ht/reading/viewmeterreading2.html',
 			controller: 'ViewMeterReadingsController',
 			controllerAs: 'viewMeterReadingsCtrl'
+		}).when('/ht/readings/table', {
+			templateUrl: 'templates/pages/ht/reading/viewmeterreading3.html',
+			controller: 'ViewReadingsController',
+			controllerAs: 'viewReadingsCtrl'
 		}).when('/meter/add', {
 			templateUrl: 'templates/pages/ht/meter/addmeter.html',
 			controller: 'AddMeterController',

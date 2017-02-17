@@ -66,8 +66,8 @@
 				<td><strong>Tod-3</strong></td>
 				<td><strong>Uploaded On</strong></td>
 				<td><strong>Status</strong></td>
-				<td ng-if="userRole.role==='admin'"><strong>Approve</strong></td>
-				<td ng-if="userRole.role==='admin'"><strong>Delete</strong></td>
+				<td ><strong>Approve</strong></td>
+				<td ><strong>Delete</strong></td>
 		    </tr>
 			<tr dir-paginate="reading in readings| filter:readingsSearchText | itemsPerPage: pageSize" current-page="currentPage">
 				<td>{{(currentPage-1)*pageSize + $index+1}}</td>
@@ -79,13 +79,13 @@
 				<td>{{reading.activeTodThree}}</td>
 				<td>{{reading.uploadedOn}}</td>
 				<td>{{reading.status}}</td>
-				<td ng-if="userRole.role==='admin'">
+				<td>
 					<a href="javascript:void(0);" 
 					ng-click="viewAMRReadingsCtrl.approve(reading)">
 					<span>Approve</span></a>
 					<!-- <a href="javascript:void(0);"><span>Approve</span></a> -->
 				</td>
-				<td ng-if="userRole.role==='admin'">
+				<td>
 					<a href="javascript:void(0);"
 					ng-click="viewAMRReadingsCtrl.remove(reading)"><span
 						class="glyphicon glyphicon-trash"></span></a>

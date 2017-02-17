@@ -51,7 +51,7 @@ angular.module("htBillingApp").controller('SRFRMeterReadingController', ['$http'
 		var userRole = authService.fetchData(authService.USER_ROLE_KEY);
 		if(user === null || user === undefined || user.username === null || user.username == undefined || userRole === null || userRole === undefined){
 			$location.path("/");
-		}else if(userRole.role === "admin" || userRole.role === "operator"){
+		}else if(userRole.role === "admin" || userRole.role === "operator" || userRole.role === "amr"){
 			$scope.user = user;
 			$scope.userRole = userRole;
 		}else{
@@ -83,6 +83,8 @@ angular.module("htBillingApp").controller('SRFRMeterReadingController', ['$http'
 			$location.path("/ht/home");
 		} else if (userRole.role === 'operator') {
 			$location.path("/operator/home");
+		} else if (userRole.role === 'amr') {
+			$location.path("/amr/home");
 		} else {
 			$location.path("/");
 		}

@@ -53,4 +53,8 @@ angular.module('htBillingApp').controller('AMRHomeController', ['$http', '$scope
     this.loadAMRHome = function () {
         $location.path("/amr/home");
     };
+    
+    this.loadAddMeterReadingPage = function() {
+        $location.path("/enterreading");
+    };
 }]);

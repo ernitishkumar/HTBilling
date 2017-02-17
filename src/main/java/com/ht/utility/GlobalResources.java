@@ -146,6 +146,100 @@ public class GlobalResources {
 		return result.replaceAll("^\\s+", "").replaceAll("\\b\\s{2,}\\b", " ");
 	}
 	
+	public final static String generateBillMonth(String date){
+		String billMonth = "";
+		String [] monthAndYear = date.split("-");
+		String month = monthAndYear[0];
+		switch(month){
+		case "JAN":
+			billMonth = "01";
+			break;
+		case "FEB":
+			billMonth = "02";
+			break;
+		case "MAR":
+			billMonth = "03";
+			break;
+		case "APR":
+			billMonth = "04";
+			break;
+		case "MAY":
+			billMonth = "05";
+			break;
+		case "JUN":
+			billMonth = "06";
+			break;
+		case "JUL":
+			billMonth = "07";
+			break;
+		case "AUG":
+			billMonth = "08";
+			break;
+		case "SEP":
+			billMonth = "09";
+			break;
+		case "OCT":
+			billMonth = "10";
+			break;
+		case "NOV":
+			billMonth = "11";
+			break;
+		case "DEC":
+			billMonth = "12";
+			break;
+		default:
+			break;
+		}
+		return billMonth+"-"+monthAndYear[1];
+	}
+	public final static String generatePreviousBillMonth(String date){
+		String billMonth = "";
+		String [] monthAndYear = date.split("-");
+		String month = monthAndYear[0];
+		switch(month){
+		case "JAN":
+			billMonth = "12";
+			break;
+		case "FEB":
+			billMonth = "01";
+			break;
+		case "MAR":
+			billMonth = "02";
+			break;
+		case "APR":
+			billMonth = "03";
+			break;
+		case "MAY":
+			billMonth = "04";
+			break;
+		case "JUN":
+			billMonth = "05";
+			break;
+		case "JUL":
+			billMonth = "06";
+			break;
+		case "AUG":
+			billMonth = "07";
+			break;
+		case "SEP":
+			billMonth = "08";
+			break;
+		case "OCT":
+			billMonth = "09";
+			break;
+		case "NOV":
+			billMonth = "10";
+			break;
+		case "DEC":
+			billMonth = "11";
+			break;
+		default:
+			break;
+		}
+		return billMonth+"-"+monthAndYear[1];
+	}
+	
+	
 	/*
 	 * RELATIVE DTR PMR FILE LOCATION FOR STORAGE OF IMAGES
 	 */
@@ -154,5 +248,5 @@ public class GlobalResources {
 	/*
 	 * DRIVE LOCATION FOR DTR PMR IMAGES
 	 */
-	public final static String AMR_DRIVE_LOCATION = "E://";
+	public final static String AMR_DRIVE_LOCATION = "G://";
 }

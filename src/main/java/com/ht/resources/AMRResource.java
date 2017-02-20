@@ -47,7 +47,8 @@ public class AMRResource {
 	@Consumes(MediaType.MULTIPART_FORM_DATA)
 	public Response uploadAMRFile(@FormDataParam("file")InputStream uploadedInputStream,
 			@FormDataParam("file") FormDataContentDisposition fileDetail){
-		System.out.println("AMR File upload started with file name as: "+fileDetail.getFileName());
+		//System.out.println("AMR File upload started with file name as: "+fileDetail.getFileName());
+		System.out.println(uploadedInputStream);
 		AMRReading amrReadingToInsert = null;
 		AMRReading readingAlreadyInserted = null;
 		AMRReading insertedReadning = null;
@@ -69,7 +70,7 @@ public class AMRResource {
 					}
 				}
 			}else{
-				System.out.println("Unable to save dtr pmr file in folder.Please check");
+				System.out.println("Unable to save AMR file in folder.Please check");
 			}
 		}else{
 			System.out.println("InputStream or FileDetail is null for AMR File Upload");

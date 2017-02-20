@@ -20,6 +20,8 @@ angular.module("htBillingApp").controller('UploadAMRFileController', ['$http', '
 	 */
 	$scope.uploadStarted = false;
 	
+	$scope.failedFiles = "Files not Able to Upload: ";
+	
 	/* 
 	 * checkUser function. checks whether any user is logged into the system
 	 * and if he is authorized to view this page according to his role
@@ -60,9 +62,113 @@ angular.module("htBillingApp").controller('UploadAMRFileController', ['$http', '
 		$location.path("/amr/home");
 	};
 
+	$scope.uploadFiles = function (){
+		console.log($scope.fileToUpload);
+		$scope.fileToUpload.forEach(function(file){
+			console.log(file.name);
+			$scope.processUpload(file);
+		});
+		if($scope.error === ''){
+			bootbox.hideAll();
+			bootbox.dialog({
+				  title: "Upload Result",
+				  message: "All AMR Files Uploaded Successfully !",
+				  buttons: {
+					    danger: {
+					      label: "Close",
+					      className: "btn-default",
+					      callback: function() {
+					        
+					      }
+					    },
+					    main: {
+					      label: "Ok",
+					      className: "btn-primary",
+					      callback: function() {
+					        
+					      }
+					    }
+				  }
+				});
+			$scope.clearForm();
+		}else{
+			bootbox.hideAll();
+			bootbox.dialog({
+				  title: "Upload Result",
+				  message: "File uploading Done, Unable to Upload some files, Please see the list below for File name.",
+				  buttons: {
+					    danger: {
+					      label: "Close",
+					      className: "btn-default",
+					      callback: function() {
+					        
+					      }
+					    },
+					    main: {
+					      label: "Ok",
+					      className: "btn-primary",
+					      callback: function() {
+					        
+					      }
+					    }
+				  }
+				});
+			$scope.clearForm();
+		}
+	}
+	
+	
+	$scope.processUpload = function (file) {
+		$scope.uploadStarted = true;
+		$scope.fileToUpload.upload = Upload.upload({
+			url: 'backend/amr/upload',
+			data: { file: file}
+		});
+
+		var processesingModal;
+		
+		$scope.fileToUpload.upload.then(function (response) {
+			$timeout(function () {
+				$scope.fileToUpload.result = response.data;
+			});
+			var status = response.status;
+			if(status === 201){
+				bootbox.hideAll();
+				var uploadResponse = response.data;
+				bootbox.dialog({
+					  title: "Upload Result",
+					  message: "AMR File Uploaded Successfully !",
+					  buttons: {
+						    danger: {
+						      label: "Close",
+						      className: "btn-default",
+						      callback: function() {
+						        
+						      }
+						    },
+						    main: {
+						      label: "Ok",
+						      className: "btn-primary",
+						      callback: function() {
+						        
+						      }
+						    }
+					  }
+					});
+				$scope.clearForm();
+			}
+			
+		},function (error) {
+			$scope.failedFiles = $scope.failedFiles + " "+file.name+" ,"; 
+		});
+
+	};
+	
+	
+	
 	
 
-	$scope.processUpload = function () {
+	/*$scope.processUpload = function () {
 		$scope.uploadStarted = true;
 		$scope.fileToUpload.upload = Upload.upload({
 			url: 'backend/amr/upload',
@@ -150,7 +256,7 @@ angular.module("htBillingApp").controller('UploadAMRFileController', ['$http', '
 			}
 		});
 
-	};
+	};*/
 	
 	$scope.clearForm = function () {
 		$scope.formData = null;

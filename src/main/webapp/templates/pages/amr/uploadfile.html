@@ -44,14 +44,14 @@
         </div>
 
         <!--Form-->
-        <form ng-submit="processUpload()" name="uploadForm">
+        <form ng-submit="uploadFiles()" name="uploadForm">
 				<div class="form-group row">
 					<label for="amrFileInput" class="col-xs-3 col-form-label">RMR
 						File</label>
 					<div class="col-xs-9">
 						<input type="file" class="form-control-file" id="amrFileInput"
-							aria-describedby="fileHelp" ngf-select ng-model="fileToUpload"
-							name="uploadFile" ngf-model-invalid="error" required> <small
+							aria-describedby="fileHelp" ngf-select multiple ng-model="fileToUpload"
+							name="uploadFile" ngf-model-invalid="error" required><small
 							id="fileHelp" class="form-text text-muted">Select the
 							RMR file to be uploaded from your computer & click upload.</small>
 						<div id="progressBarModule" ng-show="fileToUpload.progress >= 0">
@@ -74,6 +74,7 @@
 					</div>
 				</div>
 			</form>
+			{{failedFiles}}
         </div>
 </div><br>
 <br>

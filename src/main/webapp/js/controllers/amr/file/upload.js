@@ -123,6 +123,7 @@ angular.module("htBillingApp").controller('UploadAMRFileController', ['$http', '
 		$scope.fileToUpload.upload = Upload.upload({
 			url: 'backend/amr/upload',
 			data: { file: file}
+		
 		});
 
 		var processesingModal;
@@ -160,6 +161,7 @@ angular.module("htBillingApp").controller('UploadAMRFileController', ['$http', '
 			
 		},function (error) {
 			$scope.failedFiles = $scope.failedFiles + " "+file.name+" ,"; 
+			
 		});
 
 	};

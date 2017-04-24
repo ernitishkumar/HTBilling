@@ -6,6 +6,7 @@ import java.util.StringTokenizer;
 
 import javax.ws.rs.container.ContainerRequestContext;
 import javax.ws.rs.container.ContainerRequestFilter;
+import javax.ws.rs.core.MultivaluedMap;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.ext.Provider;
 
@@ -41,6 +42,27 @@ public class SecurityFilter implements ContainerRequestFilter{
 						return;
 					}
 				}
+			}else{
+				MultivaluedMap<String, String> queryParameters = requestContext.getUriInfo().getQueryParameters();
+				String param = queryParameters.get("Authorization").get(0);
+				//System.out.println("Auth param : "+param);
+				if(param != null)
+				{
+					param = param.replaceFirst(AUTHORIZATION_HEADER_PREFIX, "");
+					param = Base64.decodeAsString(param);
+					StringTokenizer tokenizer = new StringTokenizer(param, ":");
+					String username = tokenizer.nextToken();
+					String password = tokenizer.nextToken();
+					if(username != null && password !=null){
+						User user=userDAO.getByUsername(username);
+						if(user!=null && user.getPassword().equals(password)){
+							//System.out.println("REST Request Authenticated for : "+user.getName());
+							return;
+						}
+					}
+				}
+				System.out.println("Authorization Headers are null. Unauthorized Access !"+param);
+	
 			}
 			Response unauthorizedStatus = Response.status(Response.Status.UNAUTHORIZED)
 					.entity("Not a registered user. Unauthorized access!").build();

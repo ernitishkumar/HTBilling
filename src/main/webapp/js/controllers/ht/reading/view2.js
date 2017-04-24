@@ -1,4 +1,4 @@
-angular.module("htBillingApp").controller('ViewReadingsController', ['$http', '$scope', '$location', '$routeParams','authService','utilService', function ($http, $scope, $location, $routeParams, authService,utilService) {
+angular.module("htBillingApp").controller('ViewReadingsController', ['$http', '$scope', '$location', '$routeParams','authService','utilService','localStorageService', function ($http, $scope, $location, $routeParams, authService,utilService,localStorageService) {
 
 	/*
 	 * var user a controller level variable to store user object.
@@ -6,11 +6,14 @@ angular.module("htBillingApp").controller('ViewReadingsController', ['$http', '$
 	$scope.user = {};
 	
 	$scope.formData = {};
+	
+	$scope.encodedCredentials;
 
 	/*
 	 * var userRole a controller level variable to store userRole object.
 	 */
 	$scope.userRole = {};
+	
 
 	/* 
 	 * checkUser function. checks whether any user is logged into the system
@@ -25,8 +28,10 @@ angular.module("htBillingApp").controller('ViewReadingsController', ['$http', '$
 		}else if(userRole.role === "admin" || userRole.role === "operator"){
 			$scope.user = user;
 			$scope.userRole = userRole;
+			$scope.encodedCredentials = localStorageService.get('credentials');
 			fetchCurrentYear();
 			makeCurrentBillMonth();
+			getAllCircles();
 			loadReadings();
 		}else{
 			$location.path("/");
@@ -74,10 +79,14 @@ angular.module("htBillingApp").controller('ViewReadingsController', ['$http', '$
 	 */
 	function loadReadings() {
 		$scope.loading = true;
+		console.log("getting data for Circle "+$scope.formData.circle);
 		$http(
 				{
 					method: 'GET',
-					url: 'backend/readings/month/'+$scope.formData.billMonth
+					url: 'backend/readings/month/'+$scope.formData.billMonth,
+					params: {
+						circle: $scope.formData.circle
+						}
 				}
 		).then(
 				function (response) {
@@ -132,6 +141,28 @@ angular.module("htBillingApp").controller('ViewReadingsController', ['$http', '$
 				},
 				function(error){
 					console.log("error in validating readings. response is below");
+					console.log(error);
+				}
+		);
+	};
+	
+	
+	function getAllCircles(){
+		$http(
+				{
+					method: 'GET',
+					url: 'backend/plants/circle',
+				}
+		).then(
+				function (response) {
+					var status = response.status;
+					if (status === 200) {
+							console.log(response.data);
+							$scope.circles = response.data;
+					}
+				},
+				function(error){
+					console.log("error getting Circles. response is below");
 					console.log(error);
 				}
 		);
@@ -276,4 +307,16 @@ angular.module("htBillingApp").controller('ViewReadingsController', ['$http', '$
 			}
 			console.log("Current Bill Month is:"+$scope.formData.month+"-"+$scope.formData.year);
 		};
+		
+		$scope.exportReadings = function () {
+	        var params = {
+	        		Authorization: 'Basic '+$scope.encodedCredentials,
+	        		circle: $scope.formData.circle
+	        	};
+	        var fileUrl;
+			fileUrl = window.location.origin+"/htbilling/backend/export/month/circle/"+$scope.formData.billMonth;
+			
+	    	var url = [fileUrl, $.param(params)].join('?');
+	    	window.open(url);
+	    };
 }]);

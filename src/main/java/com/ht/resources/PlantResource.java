@@ -117,6 +117,13 @@ public class PlantResource {
 		return plantsDAO.getAll();
 	}
 	
+	@GET
+	@Path("/circle")
+	@Produces(MediaType.APPLICATION_JSON)
+	public ArrayList<Plant> getCircle(){
+		return plantsDAO.getUniqueCircle();
+	}
+	
 	@GET()
 	@Path("/plantId/{plantId}")
 	@Produces(MediaType.APPLICATION_JSON)

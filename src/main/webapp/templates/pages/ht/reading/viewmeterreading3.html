@@ -49,22 +49,35 @@
 	<div class="container">
 		<div class="row">
 			<div class="col-xs-2 col-xs-offset-1">
-			<!-- <div class="form-group"> -->
 				<label>Select Bill Month</label>
 			</div>
-			<div class="col-xs-3">
+			<div class="col-xs-2">
 				<select class="form-control" required ng-model="formData.month"
 					ng-change="billMonthYearChanged()">
 					<option value="" disabled selected hidden>Select Month</option>
 					<option ng-repeat="month in months" value="{{month}}">{{month}}</option>
 				</select>
 			</div>
-			<div class="col-xs-3">
+			<div class="col-xs-2">
 				<select class="form-control" required ng-model="formData.year"
 					ng-change="billMonthYearChanged()">
 					<option value="" disabled selected hidden>Select Year</option>
 					<option ng-repeat="year in years" value="{{year}}">{{year}}</option>
 				</select>
+			</div>
+			<div class="col-xs-1 col-xs-offset-1">
+				<label>Circle</label>
+			</div>
+			<div class="col-xs-2">
+				<select class="form-control" required ng-model="formData.circle"
+					ng-change="billMonthYearChanged()">
+					<option value="" disabled selected hidden>Select Circle</option>
+					<option ng-repeat="circle in circles" value="{{circle.circle}}">{{circle.circle}}</option>
+				</select>
+			</div>
+			<div class="col-xs-1">
+				<a href="javascript:void(0);" class="form-control btn btn-primary"
+					ng-click="exportReadings()">Export</a>
 			</div>
 		</div>
 	</div>

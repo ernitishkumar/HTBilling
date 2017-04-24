@@ -144,11 +144,18 @@ public class ReadingResource {
 	@GET
 	@Path("/month/{readingMonth}")
 	@Produces(MediaType.APPLICATION_JSON)
-	public ArrayList<ViewMeterReadings> getByReadingMonth(@PathParam("readingMonth") String readingMonth) {
+	public ArrayList<ViewMeterReadings> getByReadingMonth(@PathParam("readingMonth") String readingMonth, @QueryParam("circle") String circle) {
 		String currentReadingMonth = GlobalResources.generateBillMonth(readingMonth);
 		String previousBillMonth = GlobalResources.generatePreviousBillMonth(readingMonth);
 		ArrayList<ViewMeterReadings> viewReadings = new ArrayList<ViewMeterReadings>();
-		ArrayList<Plant> plants = plantsDAO.getAll();
+		System.out.println("getting Data for Circle "+circle);
+		ArrayList<Plant> plants = null;
+		if(circle==null || circle.equals("")){
+			plants = plantsDAO.getAll();
+		}else{
+			plants = plantsDAO.getByCircle(circle);
+		}
+		//ArrayList<Plant> plants = plantsDAO.getAll();
 		/*
 		 * SimpleDateFormat formater = new SimpleDateFormat("dd-MM-YYYY"); Date
 		 * date = new Date(); String currentDate = formater.format(date);
@@ -616,4 +623,6 @@ public class ReadingResource {
 		}
 
 	}
+	
+	
 }

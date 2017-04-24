@@ -199,6 +199,7 @@ public class GlobalResources {
 		switch(month){
 		case "JAN":
 			billMonth = "12";
+			monthAndYear[1]=String.valueOf(Integer.parseInt(monthAndYear[1])-1);
 			break;
 		case "FEB":
 			billMonth = "01";

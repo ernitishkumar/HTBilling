@@ -324,4 +324,22 @@ public class PlantsDAO {
 		}
 		return plantList;
 	}
+
+	public ArrayList<Plant> getUniqueCircle() {
+		ArrayList<Plant> plantList = new ArrayList<Plant>();
+		try(
+				Connection connection = GlobalResources.getDatasource().getConnection();
+				PreparedStatement ps = connection.prepareStatement("select distinct(circle) from plants");
+	    	) {
+			ResultSet rs = ps .executeQuery();
+			while(rs.next()){
+				Plant plant = new Plant();
+				plant.setCircle(rs.getString(1));
+				plantList.add(plant);
+			}
+		} catch (SQLException e) {
+			System.out.println("Exception in class : PlantsDAO : method : [getUniqueCircle()] "+e);
+		}
+		return plantList;
+	}
 }

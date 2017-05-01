@@ -357,6 +357,83 @@ public class ReadingResource {
 		return viewReadings;
 	}
 
+	
+	@GET
+	@Path("/developer/month/{billMonth}")
+	@Produces(MediaType.APPLICATION_JSON)
+	public ArrayList<ViewMeterReadings> getByDeveloperUsernameAndMonth(
+			@QueryParam("username") String username,@PathParam("billMonth") String billMonth) {
+		System.out
+				.println("GetReadings by Developer username started for username : "
+						+ username);
+		String currentReadingMonth = GlobalResources.generateBillMonth(billMonth);
+		String previousBillMonth = GlobalResources.generatePreviousBillMonth(billMonth);
+		ArrayList<ViewMeterReadings> viewReadings = new ArrayList<ViewMeterReadings>();
+		if (username != null) {
+			Developer developer = developersDAO.getByUsername(username);
+			ArrayList<Plant> plants = plantsDAO.getByDeveloperId(developer
+					.getId());
+			/*
+			 * SimpleDateFormat formater = new SimpleDateFormat("dd-MM-YYYY");
+			 * Date date = new Date(); //String currentDate =
+			 * formater.format(date);
+			 */for (Plant p : plants) {
+				ViewMeterReadings viewMeterReadings = new ViewMeterReadings();
+				String meterNo = p.getMainMeterNo();
+				MeterDetails meter = meterDetailsDAO.getByMeterNo(meterNo);
+				viewMeterReadings.setMeterNo(meterNo);
+				//System.out.println(meter.getMeterNo());
+				if (meter != null) {
+					viewMeterReadings.setMeterMake(meter.getMake()
+							.toUpperCase());
+				}
+				viewMeterReadings.setPlant(p);
+				viewMeterReadings.setDeveloper(developersDAO.getById(p
+						.getDeveloperId()));
+				MeterReading currentMonthReading = meterReadingsDAO
+						.getReadingsByReadingMonth(meterNo, currentReadingMonth);
+				if (currentMonthReading.getDiscardedFlag() == 0
+						|| currentMonthReading.getHtCellValidation() == 1) {
+					if (currentMonthReading.getSrfrFlag() == 1) {
+						// System.out.println("inside if of SR FR" );
+						String checkMeterNo = p.getCheckMeterNo();
+						viewMeterReadings.setMeterNo(checkMeterNo);
+						MeterDetails checkMeter = meterDetailsDAO
+								.getByMeterNo(checkMeterNo);
+						if (checkMeter != null) {
+							viewMeterReadings.setMeterMake(checkMeter.getMake()
+									.toUpperCase());
+						}
+						currentMonthReading = meterReadingsDAO
+								.getReadingsByReadingMonth(meterNo, currentReadingMonth);
+						viewMeterReadings
+								.setPreviousMeterReading(meterReadingsDAO
+										.getReadingsByReadingMonth(meterNo, previousBillMonth));
+						viewMeterReadings
+								.setCurrentMeterReading(currentMonthReading);
+					} else {
+						viewMeterReadings
+								.setPreviousMeterReading(meterReadingsDAO
+										.getReadingsByReadingMonth(meterNo, previousBillMonth));
+						viewMeterReadings
+								.setCurrentMeterReading(currentMonthReading);
+					}
+					if (currentMonthReading != null
+							&& currentMonthReading.getDeveloperValidation() == 1) {
+						viewMeterReadings.setConsumption(consumptionDAO
+								.getByMeterReadingId(currentMonthReading
+										.getId()));
+					}
+					// viewReadings.add(viewMeterReadings);
+					if (viewMeterReadings.getCurrentMeterReading().getId() != -1) {
+						viewReadings.add(viewMeterReadings);
+					}
+				}
+			}
+		}
+		return viewReadings;
+	}
+	
 	@GET
 	@Path("/meterno/{meterno}")
 	@Produces(MediaType.APPLICATION_JSON)

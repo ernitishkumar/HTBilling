@@ -1,0 +1,227 @@
+<div class="navbar navbar-fixed-top">
+	<div>
+		<div class="navbar-header">
+			<button type="button" class="navbar-toggle" data-toggle="collapse"
+				data-target="#myNavbar">
+				<span class="icon-bar"></span> <span class="icon-bar"></span> <span
+					class="icon-bar"></span>
+			</button>
+			<a class="navbar-brand" href="javascript:void(0);">HTBilling</a>
+		</div>
+		<div class="collapse navbar-collapse" id="myNavbar">
+			<ul class="nav navbar-nav">
+				<li class="active"><a href="javascript:void(0);"
+					ng-click="listCircleReadingsCtrl.loadHome()">Home</a></li>
+			</ul>
+			<ul class="nav navbar-nav pull-right">
+				<li class="dropdown"><a class="dropdown-toggle"
+					data-toggle="dropdown" href="javascript:void(0);"><span
+						class="glyphicon glyphicon-user"></span> {{user.name}}<strong
+						class="caret"></strong></a>
+					<ul class="dropdown-menu">
+						<li><a href="javascript:void(0);"><span
+								class="glyphicon glyphicon-wrench"></span> Settings</a></li>
+						<li><a href="javascript:void(0);"
+							ng-click="listCircleReadingsCtrl.logout()"><span
+								class="glyphicon glyphicon-off"></span> Logout</a></li>
+					</ul></li>
+			</ul>
+		</div>
+	</div>
+</div>
+<div class="row loading" ng-if="loading">
+	<div
+		class='form-group col-xs-12 col-md-4 col-md-offset-5 col-lg-4 col-lg-offset-5'>
+		<label for='example-text-input' class="font-weight-bold">Loading
+			Readings...</label>
+		<div>
+			<span class='fa fa-cog fa-spin' style='font-size: 100px'></span>
+		</div>
+	</div>
+</div>
+<div class="row" ng-if="!loading">
+	<div class="page-header text-center container">
+		<h2>
+			<span class="glyphicon glyphicon-certificate"></span>View Meter
+			Readings
+		</h2>
+	</div>
+	<div class="container">
+		<div class="row">
+			<div class="col-xs-2 col-xs-offset-1">
+				<label>Select Bill Month</label>
+			</div>
+			<div class="col-xs-2">
+				<select class="form-control" required ng-model="formData.month"
+					ng-change="billMonthYearChanged()">
+					<option value="" disabled selected hidden>Select Month</option>
+					<option ng-repeat="month in months" value="{{month}}">{{month}}</option>
+				</select>
+			</div>
+			<div class="col-xs-2">
+				<select class="form-control" required ng-model="formData.year"
+					ng-change="billMonthYearChanged()">
+					<option value="" disabled selected hidden>Select Year</option>
+					<option ng-repeat="year in years" value="{{year}}">{{year}}</option>
+				</select>
+			</div>
+			<!-- <div class="col-xs-1 col-xs-offset-1">
+				<label>Circle</label>
+			</div>
+			<div class="col-xs-2">
+				<select class="form-control" required ng-model="formData.circle"
+					ng-change="billMonthYearChanged()">
+					<option value="" disabled selected hidden>Select Circle</option>
+					<option ng-repeat="circle in circles" value="{{circle.circle}}">{{circle.circle}}</option>
+				</select>
+			</div> -->
+			<div class="col-xs-1">
+				<a href="javascript:void(0);" class="form-control btn btn-primary"
+					ng-click="exportReadings()">Export</a>
+			</div>
+		</div>
+	</div>
+	<div class="row">
+			<hr>
+		</div>
+	<div class="container">
+		<div class="row">
+			<div class="col-xs-8 col-xs-offset-1">
+				<input type="text" class="form-control" id="readingSearchBox"
+					placeholder="Enter Anything to Search" ng-model="readingSearchText">
+			</div>
+			<div class="col-xs-2">
+				<a href="javascript:void(0);" class="form-control btn btn-primary"
+					ng-click="readingSearchText=''">Clear</a>
+			</div>
+		</div>
+		<div class="row">
+			<hr>
+		</div>
+	</div>
+
+	<div class="row">
+		<div class="container">
+			<div class="row">
+				<table class="table table-sm table-responsive" id="viewMeterReading">
+					<tbody class="text-xs-center">
+						<tr class="success">
+							<td><strong>S.No</strong></td>
+							<td>Meter NO
+								<hr style="border-top: 1px solid #000000; margin: 0;">MF
+							</td>
+							<td>Developer Name</td>
+							<td>Site Location</td>
+							<td>Adjustment</td>
+							<td>Previous Reading Date
+								<hr style="border-top: 1px solid #000000; margin: 0;">Current
+								Reading Date
+							</td>
+							<td>Previous Active Energy
+								<hr style="border-top: 1px solid #000000; margin: 0;">Current
+								Active Energy
+							</td>
+							<td>Active Difference
+								<hr style="border-top: 1px solid #000000; margin: 0;">Active
+								Consumption
+							</td>
+							<td>Previous TOD1
+								<hr style="border-top: 1px solid #000000; margin: 0;">Current
+								TOD1
+							</td>
+							<td>TOD1 Difference
+								<hr style="border-top: 1px solid #000000; margin: 0;">TOD1
+								Consumption
+							</td>
+							<td>Previous TOD2
+								<hr style="border-top: 1px solid #000000; margin: 0;">Current
+								TOD2
+							</td>
+							<td>TOD2 Difference
+								<hr style="border-top: 1px solid #000000; margin: 0;">TOD2
+								Consumption
+							</td>
+							<td>Previous TOD3
+								<hr style="border-top: 1px solid #000000; margin: 0;">Current
+								TOD3
+							</td>
+							<td>TOD3 Difference
+								<hr style="border-top: 1px solid #000000; margin: 0;">TOD3
+								Consumption
+							</td>
+							<td>HT Validation</td>
+						</tr>
+						<tr
+							dir-paginate="reading in readingData | filter:readingSearchText | itemsPerPage: pageSize2"
+							current-page="currentPage">
+							<td>{{(currentPage-1)*pageSize2 + $index+1}}</td>
+							<td>{{reading.meterNo}}
+								<hr style="border-top: 1px solid #000000; margin: 0;">{{reading.currentMeterReading.mf}}
+							</td>
+							<td>{{reading.developer.name}}</td>
+							<td>{{reading.plant.address|uppercase}}</td>
+							<td>{{reading.currentMeterReading.adjustment}}</td>
+							<td>{{reading.previousMeterReading.readingDate}}
+								<hr style="border-top: 1px solid #000000; margin: 0;">{{reading.currentMeterReading.readingDate}}
+							</td>
+							<td>{{reading.previousMeterReading.activeEnergy}}
+								<hr style="border-top: 1px solid #000000; margin: 0;">{{reading.currentMeterReading.activeEnergy}}
+							</td>
+							<td>{{ reading.activeEnergyDifference}}
+								<hr style="border-top: 1px solid #000000; margin: 0;">{{reading.activeEnergyConsumption}}
+							</td>
+							<td>{{reading.previousMeterReading.activeTodOne}}
+								<hr style="border-top: 1px solid #000000; margin: 0;">{{reading.currentMeterReading.activeTodOne}}
+							</td>
+							<td>{{reading.todOneDifference}}
+								<hr style="border-top: 1px solid #000000; margin: 0;">{{reading.todOneConsumption}}
+							</td>
+							<td>{{reading.previousMeterReading.activeTodTwo}}
+								<hr style="border-top: 1px solid #000000; margin: 0;">{{reading.currentMeterReading.activeTodTwo}}
+							</td>
+							<td>{{reading.todTwoDifference}}
+								<hr style="border-top: 1px solid #000000; margin: 0;">{{reading.todTwoConsumption}}
+							</td>
+							<td>{{reading.previousMeterReading.activeTodThree}}
+								<hr style="border-top: 1px solid #000000; margin: 0;">{{reading.currentMeterReading.activeTodThree}}
+							</td>
+							<td>{{reading.todThreeDifference}}
+								<hr style="border-top: 1px solid #000000; margin: 0;">{{reading.todThreeConsumption}}
+							</td>
+							<td><!-- <button type="button" class="btn btn-success"
+									name="validateButton"
+									ng-click="viewReadingsCtrl.validateReading(reading,((currentPage- 1)*pageSize2 + $index))"
+									ng-hide="reading.currentMeterReading.discardedFlag || reading.currentMeterReading.htCellValidation">Validate
+									Readings</button>  --><span
+								ng-show="reading.currentMeterReading.htCellValidation"
+								class="label label-primary">Validated by HTCell</span> <span
+								ng-hide="reading.currentMeterReading.htCellValidation"
+								class="label label-danger">Not Validated by HTCell</span> <span
+								ng-show="reading.currentMeterReading.developerValidation"
+								class="label label-primary">Validated by Developer</span> <span
+								ng-hide="reading.currentMeterReading.developerValidation || reading.currentMeterReading.discardedFlag"
+								class="label label-danger">Not Validated by Developer</span> <span
+								ng-show="reading.currentMeterReading.htCellValidation && reading.currentMeterReading.discardedFlag && !reading.currentMeterReading.developerValidation"
+								class="label label-danger">Discarded by Developer</span> <span
+								ng-show="reading.currentMeterReading.circleCellValidation"
+								class="label label-primary">Validated by Circle</span> <span
+								ng-hide="reading.currentMeterReading.circleCellValidation"
+								class="label label-danger">Not Validated by Circle</span></td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+			<div class="row text-center">
+				<dir-pagination-controls boundary-links="true"
+					on-page-change="pageChangeHandler(newPageNumber)"
+					template-url="js/angular/dirPagination.tpl.html"></dir-pagination-controls>
+			</div>
+		</div>
+	</div>
+</div>
+<br>
+<br>
+<div class="row">
+	<br>
+	<hr>
+</div>

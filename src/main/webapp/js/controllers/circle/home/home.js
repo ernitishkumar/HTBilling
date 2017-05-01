@@ -47,6 +47,11 @@ angular.module("htBillingApp").controller('CircleHomeController', ['$http', '$sc
         $location.path("/circle/readings");
     	//$location.path("/circle/readings/consumptions");
     };
+    
+    this.loadCircleReadingListPage = function () {
+        $location.path("/circle/readings/list");
+    	//$location.path("/circle/readings/consumptions");
+    };
 
     /*
      * loadCircleHome function to route to homepage

@@ -55,5 +55,9 @@ angular.module('htBillingApp').controller('DeveloperController', ['$http', '$sco
     this.loadViewReadingForm = function () {
         $location.path("/developer/readings/view");
     }
+    
+    this.loadListReading = function () {
+        $location.path("/developer/readings/list");
+    }
 
 }]);

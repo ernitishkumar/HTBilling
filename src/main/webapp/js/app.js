@@ -159,6 +159,10 @@
 			templateUrl: 'templates/pages/developer/viewdeveloperreading.html',
 			controller: 'DeveloperViewMeterReadingsController',
 			controllerAs: 'viewMeterReadingsCtrl'
+		}).when('/developer/readings/list', {
+			templateUrl: 'templates/pages/developer/listdeveloperreading.html',
+			controller: 'ListDeveloperReadingsController',
+			controllerAs: 'listDeveloperReadingsCtrl'
 		})
 		.when('/developer/readings/split/:plantId/:consumptionId', {
 			templateUrl: 'templates/pages/developer/readingsbifircationpage.html',
@@ -189,6 +193,10 @@
 			templateUrl: 'templates/pages/circle/viewcirclereading.html',
 			controller: 'CircleViewMeterReadingsController',
 			controllerAs: 'viewMeterReadingsCtrl'
+		}).when('/circle/readings/list', {
+			templateUrl: 'templates/pages/circle/listcirclereading.html',
+			controller: 'ListCircleReadingsController',
+			controllerAs: 'listCircleReadingsCtrl'
 		})
 		.when('/circle/readings/viewsplited/:consumptionId', {
 			templateUrl: 'templates/pages/circle/viewbifircationpage.html',

@@ -316,7 +316,7 @@ public class ConsumptionsDAO {
 
 	private ArrayList<Consumption> ConsumptionsMapper(ResultSet rs){
 		ArrayList<Consumption> consumptionsList = new ArrayList<Consumption>();
-
+		MeterDetailsDAO meterDetailsDAO = new MeterDetailsDAO();
 		try {
 			while(rs.next()){
 				Consumption consumption =new Consumption();
@@ -330,6 +330,7 @@ public class ConsumptionsDAO {
 				consumption.setMeterReadingId(rs.getInt(8));
 				consumption.setConsumptionBifurcated(rs.getInt(9));
 				consumption.setAdjustment(rs.getBigDecimal(10));
+				consumption.setMeterDetails(meterDetailsDAO.getByMeterNo(consumption.getMeterNo()));
 				consumptionsList.add(consumption);
 			}
 		} catch (SQLException e) {

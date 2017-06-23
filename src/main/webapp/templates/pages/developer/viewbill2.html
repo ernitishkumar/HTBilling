@@ -58,12 +58,14 @@
 								{{billDetails.plant.circle}} (M.P)
 						</b> <br> <br></td>
 						<td colspan="3">Invoice No.: <b>{{billDetails.investor.invoiceNo}}</b><br>
-							BILL NO: <b>{{billDetails.billNo}}</b> &nbsp;&nbsp; Bill Month: <b>{{billDetails.readingDate}}</b><br>
+							BILL NO: <b>{{billDetails.billNo}}</b> &nbsp;&nbsp; Bill Month: <b>{{billDetails.billMonth}}</b><br>
 							Ref.: <b>PPA Dated
 								{{billDetails.investorConsumptionView.machines[0].ppaDate}}
 								issued vide</b><br> Letter No.: <b>{{billDetails.investorConsumptionView.machines[0].ppaLetterNo}}
 								from the O/o CGM(Comml.) M.P. Tradeco. Jabalpur)</b><br>
+							Meter No: <b>{{billDetails.meterNo}}</b>
 							TIN/VAT No.: <b>{{billDetails.investor.tin}}</b>
+							PAN No.: <b>{{billDetails.investor.vat}}</b>
 						</td>
 					</tr>
 					<tr>

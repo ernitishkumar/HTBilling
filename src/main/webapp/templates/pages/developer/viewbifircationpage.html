@@ -78,6 +78,7 @@
 						<td><strong>Investor Name</strong></td>
 						<td class="text-right"><strong>KWH Export</strong></td>
 						<td class="text-right"><strong>RKVAH Consumed</strong></td>
+						<td class="text-right"><strong>Adjustment Units</strong></td>
 						<td class="text-right"><strong>Adjustment</strong></td>
 						<td ng-show="investorConsumptions[0].circleValidation"><strong>Bill</strong></td>
 					</tr>
@@ -89,6 +90,7 @@
 						<td>{{investorData.investor.name}}</td>
 						<td class="text-right">{{investorData.activeConsumption}}</td>
 						<td class="text-right">{{investorData.reactiveConsumption}}</td>
+						<td class="text-right">{{investorData.adjustmentUnit}}</td>
 						<td class="text-right">{{investorData.adjustment}}</td>
 						<td ng-show="investorData.circleValidation">
 							<button type="button" class="btn btn-warning"
@@ -107,10 +109,10 @@
 						</td>
 					</tr>
 					<tr>
-						<td colspan="4"><strong>Grand Total</strong></td>
-						<td class="text-right"><b>{{investorConsumptions[0].consumption.activeConsumption}}</b></td>
-						<td class="text-right"><b>{{investorConsumptions[0].consumption.reactiveConsumption}}</b></td>
-						<td class="text-right"><b>{{investorConsumptions[0].consumption.adjustment}}</b></td>
+						<td colspan="4"><strong>Grand Total(KWH Export + Adjustment)</strong></td>
+						<td class="text-right" colspan="4"><b>{{investorConsumptions[0].consumption.activeConsumption}}</b></td>
+						<!-- <td class="text-right"><b>{{investorConsumptions[0].consumption.reactiveConsumption}}</b></td>
+						<td class="text-right"><b>{{investorConsumptions[0].consumption.adjustment}}</b></td> -->
 						<td ng-show="investorConsumptions[0].circleValidation"></td>
 					</tr>
 				</tbody>

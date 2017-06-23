@@ -18,6 +18,7 @@ public class InvestorConsumptionView {
 	private List<Machine> machines;
 	private int billDetailsId;
 	private BigDecimal adjustment;
+	private BigDecimal adjustmentUnit;
 	/**
 	 * @return the id
 	 */
@@ -138,6 +139,47 @@ public class InvestorConsumptionView {
 	public void setAdjustment(BigDecimal adjustment) {
 		this.adjustment = adjustment;
 	}
+	
+	/**
+	 * @return the adjustmentUnit
+	 */
+	public BigDecimal getAdjustmentUnit() {
+		return adjustmentUnit;
+	}
+	/**
+	 * @param adjustmentUnit the adjustmentUnit to set
+	 */
+	public void setAdjustmentUnit(BigDecimal adjustmentUnit) {
+		this.adjustmentUnit = adjustmentUnit;
+	}
+	
+	/**
+	 * @param consumption
+	 * @param investor
+	 * @param activeConsumption
+	 * @param reactiveConsumption
+	 * @param circleValidation
+	 * @param billGenerated
+	 * @param machines
+	 * @param billDetailsId
+	 * @param adjustment
+	 * @param adjustmentUnit
+	 */
+	public InvestorConsumptionView(Consumption consumption, Investor investor,
+			BigDecimal activeConsumption, BigDecimal reactiveConsumption,
+			int circleValidation, int billGenerated, List<Machine> machines,
+			int billDetailsId, BigDecimal adjustment, BigDecimal adjustmentUnit) {
+		this.consumption = consumption;
+		this.investor = investor;
+		this.activeConsumption = activeConsumption;
+		this.reactiveConsumption = reactiveConsumption;
+		this.circleValidation = circleValidation;
+		this.billGenerated = billGenerated;
+		this.machines = machines;
+		this.billDetailsId = billDetailsId;
+		this.adjustment = adjustment;
+		this.adjustmentUnit = adjustmentUnit;
+	}
 	/**
 	 * @param id
 	 * @param consumption
@@ -149,12 +191,13 @@ public class InvestorConsumptionView {
 	 * @param machines
 	 * @param billDetailsId
 	 * @param adjustment
+	 * @param adjustmentUnit
 	 */
 	public InvestorConsumptionView(int id, Consumption consumption,
 			Investor investor, BigDecimal activeConsumption,
 			BigDecimal reactiveConsumption, int circleValidation,
 			int billGenerated, List<Machine> machines, int billDetailsId,
-			BigDecimal adjustment) {
+			BigDecimal adjustment, BigDecimal adjustmentUnit) {
 		this.id = id;
 		this.consumption = consumption;
 		this.investor = investor;
@@ -165,31 +208,7 @@ public class InvestorConsumptionView {
 		this.machines = machines;
 		this.billDetailsId = billDetailsId;
 		this.adjustment = adjustment;
-	}
-	/**
-	 * @param consumption
-	 * @param investor
-	 * @param activeConsumption
-	 * @param reactiveConsumption
-	 * @param circleValidation
-	 * @param billGenerated
-	 * @param machines
-	 * @param billDetailsId
-	 * @param adjustment
-	 */
-	public InvestorConsumptionView(Consumption consumption, Investor investor,
-			BigDecimal activeConsumption, BigDecimal reactiveConsumption,
-			int circleValidation, int billGenerated, List<Machine> machines,
-			int billDetailsId, BigDecimal adjustment) {
-		this.consumption = consumption;
-		this.investor = investor;
-		this.activeConsumption = activeConsumption;
-		this.reactiveConsumption = reactiveConsumption;
-		this.circleValidation = circleValidation;
-		this.billGenerated = billGenerated;
-		this.machines = machines;
-		this.billDetailsId = billDetailsId;
-		this.adjustment = adjustment;
+		this.adjustmentUnit = adjustmentUnit;
 	}
 	/**
 	 * Default Constructor
@@ -207,7 +226,8 @@ public class InvestorConsumptionView {
 				+ ", reactiveConsumption=" + reactiveConsumption
 				+ ", circleValidation=" + circleValidation + ", billGenerated="
 				+ billGenerated + ", machines=" + machines + ", billDetailsId="
-				+ billDetailsId + ", adjustment=" + adjustment + "]";
+				+ billDetailsId + ", adjustment=" + adjustment
+				+ ", adjustmentUnit=" + adjustmentUnit + "]";
 	}
 	
 }

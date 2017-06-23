@@ -112,6 +112,7 @@ angular.module("htBillingApp").controller('ViewBillController', ['$http', '$scop
 						var billDetails = response.data;
 						if(billDetails.id == billId){
 							$scope.billDetails = billDetails;
+							makeBillMonth();
 							/*console.log("printing bill details");
 							console.log($scope.billDetails);*/
 						}else{
@@ -126,6 +127,59 @@ angular.module("htBillingApp").controller('ViewBillController', ['$http', '$scop
 					window.history.back();
 				}
 		);
+	}
+	
+	function makeBillMonth(){
+		console.log("inside make bill Month");
+		var date = $scope.billDetails.readingDate;
+		var dateArray = date.split("-");
+		var month;
+		var year = dateArray[2];
+		switch(dateArray[1]) {
+		    case "01":
+		        month = "JAN";
+		        break;
+		    case "02":
+		        month = "FEB";
+		        break;
+		    case "03":
+		        month = "MAR";
+		        break;
+		    case "04":
+		        month = "APR";
+		        break;
+		    case "05":
+		        month = "MAY";
+		        break;
+		    case "06":
+		        month = "JUN";
+		        break;
+		    case "07":
+		        month = "JUL";
+		        break;
+		    case "08":
+		        month = "AUG";
+		        break;
+		    case "09":
+		        month = "SEP";
+		        break;
+		    case "10":
+		        month = "OCT";
+		        break;
+		    case "11":
+		        month = "NOV";
+		        break;
+		    case "12":
+		        month = "DEC";
+		        break;
+		    default:
+		    	month = null;
+		    
+		}
+		if(month != null && year != null){
+	    	console.log("inside if of bill Month");
+	    	$scope.billDetails.billMonth = month+"-"+year;
+	    }
 	}
 
 }]);

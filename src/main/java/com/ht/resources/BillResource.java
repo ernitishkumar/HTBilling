@@ -126,6 +126,19 @@ public class BillResource {
 		return billDetailsDAO.getAll();
 	}
 	
+	@GET
+	@Path("/view")
+	@Produces(MediaType.APPLICATION_JSON)
+	public ArrayList<BillDetailsView> getAllBillDetailsView(){
+		System.out.println("getting all bills");
+		ArrayList<BillDetails> billDetails = billDetailsDAO.getAll();
+		ArrayList<BillDetailsView> billDetailsView = new ArrayList<BillDetailsView>();
+		for(BillDetails billDetail : billDetails){
+			billDetailsView.add(billDetailsDAO.getViewFromBean(billDetail));
+		}
+		return billDetailsView;
+	}
+	
 	/**
 	 * function to Generated Bill and add it to the database.
 	 * @param bifurcationId

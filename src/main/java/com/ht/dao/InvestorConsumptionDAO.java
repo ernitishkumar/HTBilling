@@ -21,7 +21,7 @@ public class InvestorConsumptionDAO {
 		int lastInsertedId;
 		try(
 				Connection connection = GlobalResources.getDatasource().getConnection();
-				PreparedStatement ps = connection.prepareStatement("insert into investor_consumption (consumption_id, investor_id, active_consumption, reactive_consumption,circle_validation,bill_generated, adjustment) values(?,?,?,?,?,?,?)",Statement.RETURN_GENERATED_KEYS);
+				PreparedStatement ps = connection.prepareStatement("insert into investor_consumption (consumption_id, investor_id, active_consumption, reactive_consumption,circle_validation,bill_generated, adjustment, adjustment_units) values(?,?,?,?,?,?,?,?)",Statement.RETURN_GENERATED_KEYS);
 				) {
 			ps.setInt(1,investorConsumption.getConsumptionId());
 			ps.setInt(2, investorConsumption.getInvestorId());
@@ -30,6 +30,7 @@ public class InvestorConsumptionDAO {
 			ps.setInt(5,0);
 			ps.setInt(6,0);
 			ps.setBigDecimal(7, investorConsumption.getAdjustment());
+			ps.setBigDecimal(8, investorConsumption.getAdjustmentUnit());
 			ps.executeUpdate();
 			ResultSet keys = ps.getGeneratedKeys();    
 			keys.next();  
@@ -58,14 +59,15 @@ public class InvestorConsumptionDAO {
 		InvestorConsumption updatedConsumption = null;
 		try(
 				Connection connection = GlobalResources.getDatasource().getConnection();
-				PreparedStatement ps = connection.prepareStatement("update investor_consumption set active_consumption = ?, reactive_consumption=?,bill_generated=?,circle_validation=?, adjustment=? where id = ?");
+				PreparedStatement ps = connection.prepareStatement("update investor_consumption set active_consumption = ?, reactive_consumption=?,bill_generated=?,circle_validation=?, adjustment=?,adjustment_units=? where id = ?");
 				) {
 			ps.setBigDecimal(1, investorConsumption.getActiveConsumption());
 			ps.setBigDecimal(2, investorConsumption.getReactiveConsumption());
 			ps.setInt(3, investorConsumption.getBillGenerated());
 			ps.setInt(4, investorConsumption.getCircleValidation());
 			ps.setBigDecimal(5, investorConsumption.getAdjustment());
-			ps.setInt(6, investorConsumption.getId());
+			ps.setBigDecimal(6, investorConsumption.getAdjustmentUnit());
+			ps.setInt(7, investorConsumption.getId());
 			ps.executeUpdate();
 			updatedConsumption = getById(investorConsumption.getId());
 		} catch (SQLException e) {
@@ -171,6 +173,7 @@ public class InvestorConsumptionDAO {
 				investorConsumtion.setCircleValidation(rs.getInt(6));
 				investorConsumtion.setBillGenerated(rs.getInt(7));
 				investorConsumtion.setAdjustment(rs.getBigDecimal(8));
+				investorConsumtion.setAdjustmentUnit(rs.getBigDecimal(9));
 				investorConsumtionsList.add(investorConsumtion);
 			}
 		} catch (SQLException e) {
@@ -192,6 +195,7 @@ public class InvestorConsumptionDAO {
 			investorConsumptionView.setActiveConsumption(investorConsumption.getActiveConsumption());
 			investorConsumptionView.setReactiveConsumption(investorConsumption.getReactiveConsumption());
 			investorConsumptionView.setAdjustment(investorConsumption.getAdjustment());
+			investorConsumptionView.setAdjustmentUnit(investorConsumption.getAdjustmentUnit());
 			Investor investor = investorsDAO.getById(investorConsumption.getInvestorId());
 			investorConsumptionView.setInvestor(investor);
 			investorConsumptionView.setMachines(machinesDAO.getByInvestorId(investor.getId()));

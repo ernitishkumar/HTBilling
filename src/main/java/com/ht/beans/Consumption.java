@@ -17,6 +17,7 @@ public class Consumption {
 	private int meterReadingId;
 	private int consumptionBifurcated;
 	private BigDecimal adjustment;
+	private MeterDetails meterDetails;
 	/**
 	 * @return the id
 	 */
@@ -138,31 +139,16 @@ public class Consumption {
 		this.adjustment = adjustment;
 	}
 	/**
-	 * @param id
-	 * @param meterNo
-	 * @param date
-	 * @param activeConsumption
-	 * @param reactiveConsumption
-	 * @param plantId
-	 * @param plantCode
-	 * @param meterReadingId
-	 * @param consumptionBifurcated
-	 * @param adjustment
+	 * @return the meterDetails
 	 */
-	public Consumption(int id, String meterNo, String date,
-			BigDecimal activeConsumption, BigDecimal reactiveConsumption,
-			int plantId, String plantCode, int meterReadingId,
-			int consumptionBifurcated, BigDecimal adjustment) {
-		this.id = id;
-		this.meterNo = meterNo;
-		this.date = date;
-		this.activeConsumption = activeConsumption;
-		this.reactiveConsumption = reactiveConsumption;
-		this.plantId = plantId;
-		this.plantCode = plantCode;
-		this.meterReadingId = meterReadingId;
-		this.consumptionBifurcated = consumptionBifurcated;
-		this.adjustment = adjustment;
+	public MeterDetails getMeterDetails() {
+		return meterDetails;
+	}
+	/**
+	 * @param meterDetails the meterDetails to set
+	 */
+	public void setMeterDetails(MeterDetails meterDetails) {
+		this.meterDetails = meterDetails;
 	}
 	/**
 	 * @param meterNo
@@ -174,11 +160,13 @@ public class Consumption {
 	 * @param meterReadingId
 	 * @param consumptionBifurcated
 	 * @param adjustment
+	 * @param meterDetails
 	 */
 	public Consumption(String meterNo, String date,
 			BigDecimal activeConsumption, BigDecimal reactiveConsumption,
 			int plantId, String plantCode, int meterReadingId,
-			int consumptionBifurcated, BigDecimal adjustment) {
+			int consumptionBifurcated, BigDecimal adjustment,
+			MeterDetails meterDetails) {
 		this.meterNo = meterNo;
 		this.date = date;
 		this.activeConsumption = activeConsumption;
@@ -188,6 +176,37 @@ public class Consumption {
 		this.meterReadingId = meterReadingId;
 		this.consumptionBifurcated = consumptionBifurcated;
 		this.adjustment = adjustment;
+		this.meterDetails = meterDetails;
+	}
+	/**
+	 * @param id
+	 * @param meterNo
+	 * @param date
+	 * @param activeConsumption
+	 * @param reactiveConsumption
+	 * @param plantId
+	 * @param plantCode
+	 * @param meterReadingId
+	 * @param consumptionBifurcated
+	 * @param adjustment
+	 * @param meterDetails
+	 */
+	public Consumption(int id, String meterNo, String date,
+			BigDecimal activeConsumption, BigDecimal reactiveConsumption,
+			int plantId, String plantCode, int meterReadingId,
+			int consumptionBifurcated, BigDecimal adjustment,
+			MeterDetails meterDetails) {
+		this.id = id;
+		this.meterNo = meterNo;
+		this.date = date;
+		this.activeConsumption = activeConsumption;
+		this.reactiveConsumption = reactiveConsumption;
+		this.plantId = plantId;
+		this.plantCode = plantCode;
+		this.meterReadingId = meterReadingId;
+		this.consumptionBifurcated = consumptionBifurcated;
+		this.adjustment = adjustment;
+		this.meterDetails = meterDetails;
 	}
 	/**
 	 * Default Constructor
@@ -204,9 +223,8 @@ public class Consumption {
 				+ ", reactiveConsumption=" + reactiveConsumption + ", plantId="
 				+ plantId + ", plantCode=" + plantCode + ", meterReadingId="
 				+ meterReadingId + ", consumptionBifurcated="
-				+ consumptionBifurcated + ", adjustment=" + adjustment + "]";
+				+ consumptionBifurcated + ", adjustment=" + adjustment
+				+ ", meterDetails=" + meterDetails + "]";
 	}
-    
-	
 	
 }

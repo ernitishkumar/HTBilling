@@ -54,8 +54,7 @@
 			templateUrl: 'templates/pages/ht/reading/updatereading.html',
 			controller: 'UpdateMeterReadingController',
 			controllerAs: 'updateReadingCtrl'
-		})
-		.when('/srfrenterreading', {
+		}).when('/srfrenterreading', {
 			templateUrl: 'templates/pages/ht/reading/srfrmeterreading.html',
 			controller: 'SRFRMeterReadingController',
 			controllerAs: 'srfrreadingCtrl'
@@ -71,6 +70,10 @@
 			templateUrl: 'templates/pages/ht/reading/viewmeterreading3.html',
 			controller: 'ViewReadingsController',
 			controllerAs: 'viewReadingsCtrl'
+		}).when('/ht/mis/consumptionreport', {
+			templateUrl: 'templates/pages/ht/mis/consumptionreport.html',
+			controller: 'ConsumptionReportCtrl',
+			controllerAs: 'consumptionReportCtrl'
 		}).when('/meter/add', {
 			templateUrl: 'templates/pages/ht/meter/addmeter.html',
 			controller: 'AddMeterController',

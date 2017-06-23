@@ -15,6 +15,7 @@ public class InvestorConsumption {
     private int circleValidation;
     private int billGenerated;
     private BigDecimal adjustment;
+    private BigDecimal adjustmentUnit;
 	/**
 	 * @return the id
 	 */
@@ -111,6 +112,24 @@ public class InvestorConsumption {
 	public void setAdjustment(BigDecimal adjustment) {
 		this.adjustment = adjustment;
 	}
+	
+	/**
+	 * @return the adjustmentUnit
+	 */
+	public BigDecimal getAdjustmentUnit() {
+		return adjustmentUnit;
+	}
+	/**
+	 * @param adjustmentUnit the adjustmentUnit to set
+	 */
+	public void setAdjustmentUnit(BigDecimal adjustmentUnit) {
+		this.adjustmentUnit = adjustmentUnit;
+	}
+	/**
+	 * Default Constructor
+	 */
+	public InvestorConsumption() {
+	}
 	/**
 	 * @param id
 	 * @param consumptionId
@@ -120,10 +139,12 @@ public class InvestorConsumption {
 	 * @param circleValidation
 	 * @param billGenerated
 	 * @param adjustment
+	 * @param adjustmentUnit
 	 */
 	public InvestorConsumption(int id, int consumptionId, int investorId,
 			BigDecimal activeConsumption, BigDecimal reactiveConsumption,
-			int circleValidation, int billGenerated, BigDecimal adjustment) {
+			int circleValidation, int billGenerated, BigDecimal adjustment,
+			BigDecimal adjustmentUnit) {
 		this.id = id;
 		this.consumptionId = consumptionId;
 		this.investorId = investorId;
@@ -132,6 +153,7 @@ public class InvestorConsumption {
 		this.circleValidation = circleValidation;
 		this.billGenerated = billGenerated;
 		this.adjustment = adjustment;
+		this.adjustmentUnit = adjustmentUnit;
 	}
 	/**
 	 * @param consumptionId
@@ -141,10 +163,12 @@ public class InvestorConsumption {
 	 * @param circleValidation
 	 * @param billGenerated
 	 * @param adjustment
+	 * @param adjustmentUnit
 	 */
 	public InvestorConsumption(int consumptionId, int investorId,
 			BigDecimal activeConsumption, BigDecimal reactiveConsumption,
-			int circleValidation, int billGenerated, BigDecimal adjustment) {
+			int circleValidation, int billGenerated, BigDecimal adjustment,
+			BigDecimal adjustmentUnit) {
 		this.consumptionId = consumptionId;
 		this.investorId = investorId;
 		this.activeConsumption = activeConsumption;
@@ -152,11 +176,20 @@ public class InvestorConsumption {
 		this.circleValidation = circleValidation;
 		this.billGenerated = billGenerated;
 		this.adjustment = adjustment;
+		this.adjustmentUnit = adjustmentUnit;
 	}
-	/**
-	 * Default Constructor
+	/* (non-Javadoc)
+	 * @see java.lang.Object#toString()
 	 */
-	public InvestorConsumption() {
+	@Override
+	public String toString() {
+		return "InvestorConsumption [id=" + id + ", consumptionId="
+				+ consumptionId + ", investorId=" + investorId
+				+ ", activeConsumption=" + activeConsumption
+				+ ", reactiveConsumption=" + reactiveConsumption
+				+ ", circleValidation=" + circleValidation + ", billGenerated="
+				+ billGenerated + ", adjustment=" + adjustment
+				+ ", adjustmentUnit=" + adjustmentUnit + "]";
 	}
 	
 }

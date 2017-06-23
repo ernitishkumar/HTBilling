@@ -105,6 +105,12 @@ angular.module("htBillingApp").controller('BifircateReadingsController', ['$http
 	this.back = function () {
 		window.history.back();
 	};
+	
+	this.calculateAdjustment = function (investorConsumption) {
+		console.log("inside adjustment");
+		investorConsumption.adjustment = investorConsumption.adjustmentUnit * $scope.consumption.meterDetails.mf;
+		console.log("below adjustment");
+	};
 
 	/*
 	 * function to save bifurcated investors wise readings
@@ -123,7 +129,7 @@ angular.module("htBillingApp").controller('BifircateReadingsController', ['$http
 			item.consumptionId = consumption.id;
 			item.investorId = item.investor.id;
 		});
-		if (totalActive === consumption.activeConsumption && totalReactive === consumption.reactiveConsumption && totalAdjustment === consumption.adjustment) {
+		if (totalActive + totalAdjustment === consumption.activeConsumption && totalReactive === consumption.reactiveConsumption) {
 			$http(
 					{
 						method: 'POST',

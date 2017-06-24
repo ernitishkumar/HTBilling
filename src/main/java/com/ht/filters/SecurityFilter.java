@@ -45,7 +45,7 @@ public class SecurityFilter implements ContainerRequestFilter{
 			}else{
 				MultivaluedMap<String, String> queryParameters = requestContext.getUriInfo().getQueryParameters();
 				String param = queryParameters.get("Authorization").get(0);
-				//System.out.println("Auth param : "+param);
+				System.out.println("Auth param : "+param);
 				if(param != null)
 				{
 					param = param.replaceFirst(AUTHORIZATION_HEADER_PREFIX, "");

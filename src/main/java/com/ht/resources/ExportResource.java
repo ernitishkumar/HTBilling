@@ -14,11 +14,14 @@ import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.ResponseBuilder;
 
+import com.ht.beans.BillDetails;
+import com.ht.beans.BillDetailsView;
 import com.ht.beans.Developer;
 import com.ht.beans.MeterDetails;
 import com.ht.beans.MeterReading;
 import com.ht.beans.Plant;
 import com.ht.beans.ViewMeterReadings;
+import com.ht.dao.BillDetailsDAO;
 import com.ht.dao.ConsumptionsDAO;
 import com.ht.dao.DevelopersDAO;
 import com.ht.dao.MeterDetailsDAO;
@@ -39,6 +42,7 @@ public class ExportResource {
 	private DevelopersDAO developersDAO = new DevelopersDAO();
 	private ConsumptionsDAO consumptionDAO = new ConsumptionsDAO();
 	private MeterDetailsDAO meterDetailsDAO = new MeterDetailsDAO();
+	private BillDetailsDAO billDetailsDAO = new BillDetailsDAO();
 	ExportUtility export = new ExportUtility();
 	
 	@GET
@@ -193,6 +197,27 @@ public class ExportResource {
 		ResponseBuilder response = Response.ok((Object) file);
 		response.header("Content-Disposition",
 				"attachment; filename=List_of_Readings.xls");
+		return response.build();
+	}
+	
+	@GET
+	@Path("/bill/month/{billMonth}")
+	@Produces("application/vnd.ms-excel")
+	public Response getAllBillDetailsView(@PathParam("billMonth") String billMonth){
+		System.out.println("getting all bills for export");
+		String date = GlobalResources.generateBillMonth(billMonth);
+		ArrayList<BillDetails> billDetails = billDetailsDAO.getByDate(date);
+		ArrayList<BillDetailsView> billDetailsView = new ArrayList<BillDetailsView>();
+		for(BillDetails billDetail : billDetails){
+			billDetailsView.add(billDetailsDAO.getViewFromBean(billDetail));
+		}
+		System.out.println("going to form excel");
+		String fileName  = export.exportConsumptionReport(billDetailsView);
+		File file = new File(fileName);
+
+		ResponseBuilder response = Response.ok((Object) file);
+		response.header("Content-Disposition",
+				"attachment; filename=Consumption_Report.xls");
 		return response.build();
 	}
 }

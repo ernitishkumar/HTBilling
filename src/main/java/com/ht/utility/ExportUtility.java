@@ -15,6 +15,8 @@ import org.apache.poi.hssf.usermodel.HSSFRow;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 
+import com.ht.beans.BillDetailsView;
+import com.ht.beans.Machine;
 import com.ht.beans.ViewMeterReadings;
 
 
@@ -113,6 +115,81 @@ public class ExportUtility {
 			
 		}
 	    return "C:\\Users\\Public\\Readings.xls";
+	}
+	
+	public String exportConsumptionReport(ArrayList<BillDetailsView> billDetailsView) {
+		HSSFWorkbook workbook = new HSSFWorkbook();
+		HSSFCellStyle style = getHeaderCellStyle(workbook);
+		
+	    HSSFSheet sheet = workbook.createSheet("ConsumptionReport");
+	    HSSFRow rowhead = sheet.createRow(0);
+	    
+	    try {
+	    rowhead.createCell(0).setCellValue("FEEDER NAME");
+	    rowhead.createCell(1).setCellValue("SUBSTATION NAME");
+	    rowhead.createCell(2).setCellValue("LOCATION");
+	    rowhead.createCell(3).setCellValue("DEVELOPER NAME");
+	    rowhead.createCell(4).setCellValue("INVESTOR NAME");
+	    rowhead.createCell(5).setCellValue("PPA LETTER NO");
+	    rowhead.createCell(6).setCellValue("PPA DATE");
+	    rowhead.createCell(7).setCellValue("MACHINES");
+	    rowhead.createCell(8).setCellValue("NO OF MACHINES");
+	    rowhead.createCell(9).setCellValue("CAPACITY");
+	    rowhead.createCell(10).setCellValue("BILL gENERATION DATE");
+	    rowhead.createCell(11).setCellValue("MONTH WISE ENERGY");
+	    rowhead.createCell(12).setCellValue("ADJUSTMENT");
+	    rowhead.createCell(13).setCellValue("REMARK");
+	    //Setting HEADER Row Styles
+	    for(int c=0;c<14;c++){
+	    	rowhead.getCell(c).setCellStyle(style);
+	    }
+	    int i=1;
+	    for(BillDetailsView billDetail : billDetailsView){
+	    	String machines = "";
+	    	for(Machine machine : billDetail.getMachines()){
+	    		machines = machines+machine.getCode()+", ";
+	    	}
+	        HSSFRow row = sheet.createRow(i);
+	        row.createCell(0).setCellValue(billDetail.getPlant().getFeederName());
+		    row.createCell(1).setCellValue(billDetail.getPlant().getInjectingSubstation());
+		    row.createCell(2).setCellValue(billDetail.getPlant().getAddress());
+		    row.createCell(3).setCellValue(billDetail.getPlant().getDeveloper().getName());
+		    row.createCell(4).setCellValue(billDetail.getInvestor().getName());
+		    if(billDetail.getMachines().size() > 0){
+		    	row.createCell(5).setCellValue(billDetail.getMachines().get(0).getPpaLetterNo());
+		    	row.createCell(6).setCellValue(billDetail.getMachines().get(0).getPpaDate());
+		    }
+		    row.createCell(7).setCellValue(machines);
+		    row.createCell(8).setCellValue(billDetail.getMachines().size());
+		    if(billDetail.getMachines().size() > 0){
+		    	row.createCell(9).setCellValue(billDetail.getMachines().get(0).getCapacity());
+		    }
+		    row.createCell(10).setCellValue(billDetail.getBillGenerationDate());
+		    row.createCell(11).setCellValue(billDetail.getInvestorConsumptionView().getActiveConsumption().doubleValue());
+		    row.createCell(12).setCellValue(billDetail.getInvestorConsumptionView().getAdjustment().doubleValue());
+		    i++;
+	    }
+	   
+			FileOutputStream fileOut = new FileOutputStream("C:\\Users\\Public\\ConsumptionReport.xls");
+			workbook.write(fileOut);
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		} catch(Exception e){
+			System.out.println("Exception aaya " + e.getMessage());
+			e.printStackTrace();
+		}
+	    finally{
+			try{
+				workbook.close();
+			}catch(Exception e){
+				System.out.println("Exception while closing working "+e.getMessage());
+				e.printStackTrace();
+			}
+			
+		}
+	    return "C:\\Users\\Public\\ConsumptionReport.xls";
 	}
 	
 	public HSSFCellStyle getHeaderCellStyle(HSSFWorkbook workbook){

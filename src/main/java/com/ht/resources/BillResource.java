@@ -4,8 +4,6 @@
 package com.ht.resources;
 
 import java.math.BigDecimal;
-import java.math.MathContext;
-import java.math.RoundingMode;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -127,11 +125,12 @@ public class BillResource {
 	}
 	
 	@GET
-	@Path("/view")
+	@Path("/view/{billMonth}")
 	@Produces(MediaType.APPLICATION_JSON)
-	public ArrayList<BillDetailsView> getAllBillDetailsView(){
+	public ArrayList<BillDetailsView> getAllBillDetailsView(@PathParam("billMonth") String billMonth){
 		System.out.println("getting all bills");
-		ArrayList<BillDetails> billDetails = billDetailsDAO.getAll();
+		String date = GlobalResources.generateBillMonth(billMonth);
+		ArrayList<BillDetails> billDetails = billDetailsDAO.getByDate(date);
 		ArrayList<BillDetailsView> billDetailsView = new ArrayList<BillDetailsView>();
 		for(BillDetails billDetail : billDetails){
 			billDetailsView.add(billDetailsDAO.getViewFromBean(billDetail));

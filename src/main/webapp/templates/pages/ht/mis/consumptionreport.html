@@ -31,53 +31,97 @@
 		</div>
 	</div>
 </div>
-<div class="container">
-	<br>
-	<h3>PPA Wise Consumption Report</h3>
-	<div class="row">
-		<div class="col-md-12">
-			<table class="table table-sm table-bordered" id="consumptionReport">
-				<tr>
-					<th>S.N.</th>
-					<th>Feeder</th>
-					<th>Substation</th>
-					<th>Location</th>
-					<th>Developer</th>
-					<th>Investor</th>
-					<th>PPA Letter No</th>
-					<th>PPA Date</th>
-					<th>Machines</th>
-					<th>No of Machines</th>
-					<th>Capacity</th>
-					<!-- <th>Total Capacity</th> -->
-					<th>Month wise Energy Injected</th>
-					<th>Adjustment</th>
-					<th>Remark</th>
-				</tr>
-				<tr dir-paginate="bill in billDetails | filter:searchText | itemsPerPage: pageSize"
-							current-page="currentPage">
-					<td>{{(currentPage-1)*pageSize + $index+1}}</td>
-					<td>{{bill.plant.feederName}}</td>
-					<td>{{bill.plant.injectingSubstation}}</td>
-					<td>{{bill.plant.address}}</td>
-					<td>{{bill.plant.developer.name}}</td>
-					<td>{{bill.investor.name}}</td>
-					<td>{{bill.machines[0].ppaLetterNo}}</td>
-					<td>{{bill.machines[0].ppaDate}}</td>
-					<td><p ng-repeat="machine in bill.machines">{{machine.code}},</p></td>
-					<td>{{bill.machines.length}}</td>
-					<td>{{bill.machines[0].capacity}}</td>
-					<!-- <td>{{bill.machines[0].capacity}}*{{bill.machines.length}}</td> -->
-					<td>{{bill.investorConsumptionView.activeConsumption}}</td>
-					<td>{{bill.investorConsumption.adjustment}}</td>
-					<td>Remark</td>
-				</tr>
-			</table>
+<div class="row loading" ng-if="loading">
+	<div
+		class='form-group col-xs-12 col-md-4 col-md-offset-5 col-lg-4 col-lg-offset-5'>
+		<label for='example-text-input' class="font-weight-bold">Loading...</label>
+		<div>
+			<span class='fa fa-cog fa-spin' style='font-size: 100px'></span>
 		</div>
-		<div class="row text-center">
+	</div>
+</div>
+<div class="row" ng-if="!loading">
+	<div class="page-header text-center container">
+		<h2>
+			<span class="glyphicon glyphicon-certificate"></span>PPA Wise Consumption Report
+		</h2>
+	</div>
+	<div class="container">
+		<br>
+		<div class="container">
+			<div class="row">
+				<div class="col-xs-2 col-xs-offset-1">
+					<label>Select Bill Month</label>
+				</div>
+				<div class="col-xs-2">
+					<select class="form-control" required ng-model="formData.month"
+						ng-change="billMonthYearChanged()">
+						<option value="" disabled selected hidden>Select Month</option>
+						<option ng-repeat="month in months" value="{{month}}">{{month}}</option>
+					</select>
+				</div>
+				<div class="col-xs-2">
+					<select class="form-control" required ng-model="formData.year"
+						ng-change="billMonthYearChanged()">
+						<option value="" disabled selected hidden>Select Year</option>
+						<option ng-repeat="year in years" value="{{year}}">{{year}}</option>
+					</select>
+				</div>
+				<div class="col-xs-1">
+					<a href="javascript:void(0);" class="form-control btn btn-primary"
+						ng-click="exportConsumptionReport()">Export</a>
+				</div>
+			</div>
+		</div>
+		<div class="row">
+			<hr>
+		</div>
+		<div class="row">
+			<div class="col-md-12">
+				<table class="table table-sm table-bordered" id="consumptionReport">
+					<tr>
+						<th>S.N.</th>
+						<th>Feeder</th>
+						<th>Substation</th>
+						<th>Location</th>
+						<th>Developer</th>
+						<th>Investor</th>
+						<th>PPA Letter No</th>
+						<th>PPA Date</th>
+						<th>Machines</th>
+						<th>No of Machines</th>
+						<th>Capacity</th>
+						<th>Bill Generation Date</th>
+						<th>Month wise Energy Injected</th>
+						<th>Adjustment</th>
+						<th>Remark</th>
+					</tr>
+					<tr
+						dir-paginate="bill in billDetails | filter:searchText | itemsPerPage: pageSize"
+						current-page="currentPage">
+						<td>{{(currentPage-1)*pageSize + $index+1}}</td>
+						<td>{{bill.plant.feederName}}</td>
+						<td>{{bill.plant.injectingSubstation}}</td>
+						<td>{{bill.plant.address}}</td>
+						<td>{{bill.plant.developer.name}}</td>
+						<td>{{bill.investor.name}}</td>
+						<td>{{bill.machines[0].ppaLetterNo}}</td>
+						<td>{{bill.machines[0].ppaDate}}</td>
+						<td><p ng-repeat="machine in bill.machines">{{machine.code}},</p></td>
+						<td>{{bill.machines.length}}</td>
+						<td>{{bill.machines[0].capacity}}</td>
+						<td>{{bill.billGenerationDate}}</td>
+						<td>{{bill.investorConsumptionView.activeConsumption}}</td>
+						<td>{{bill.investorConsumption.adjustment}}</td>
+						<td>Remark</td>
+					</tr>
+				</table>
+			</div>
+			<div class="row text-center">
 				<dir-pagination-controls boundary-links="true"
 					on-page-change="pageChangeHandler(newPageNumber)"
 					template-url="js/angular/dirPagination.tpl.html"></dir-pagination-controls>
+			</div>
 		</div>
 	</div>
 </div>

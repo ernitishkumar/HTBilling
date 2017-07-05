@@ -48,6 +48,8 @@ public class BillDetailsView {
 	private Plant plant;
 	
 	private ArrayList<Machine> machines;
+	
+	private BillDetails billDetails;
 
 	/**
 	 * @return the id
@@ -357,7 +359,24 @@ public class BillDetailsView {
 	public void setMachines(ArrayList<Machine> machines) {
 		this.machines = machines;
 	}
+	
+	
 
+	/**
+	 * @return the billDetails
+	 */
+	public BillDetails getBillDetails() {
+		return billDetails;
+	}
+
+	/**
+	 * @param billDetails the billDetails to set
+	 */
+	public void setBillDetails(BillDetails billDetails) {
+		this.billDetails = billDetails;
+	}
+
+	
 	/**
 	 * @param id
 	 * @param billNo
@@ -381,6 +400,7 @@ public class BillDetailsView {
 	 * @param particulars
 	 * @param plant
 	 * @param machines
+	 * @param billDetails
 	 */
 	public BillDetailsView(int id, String billNo, String invoiceNo,
 			MeterReading meterReadings, Investor investor,
@@ -391,7 +411,7 @@ public class BillDetailsView {
 			BigDecimal activeAmount, BigDecimal reactiveAmount,
 			BigDecimal totalAmount, BigDecimal totalAmountRoundoff,
 			String totalAmountInWords, String particulars, Plant plant,
-			ArrayList<Machine> machines) {
+			ArrayList<Machine> machines, BillDetails billDetails) {
 		this.id = id;
 		this.billNo = billNo;
 		this.invoiceNo = invoiceNo;
@@ -414,8 +434,9 @@ public class BillDetailsView {
 		this.particulars = particulars;
 		this.plant = plant;
 		this.machines = machines;
+		this.billDetails = billDetails;
 	}
-
+	
 	/**
 	 * @param billNo
 	 * @param invoiceNo
@@ -438,6 +459,7 @@ public class BillDetailsView {
 	 * @param particulars
 	 * @param plant
 	 * @param machines
+	 * @param billDetails
 	 */
 	public BillDetailsView(String billNo, String invoiceNo,
 			MeterReading meterReadings, Investor investor,
@@ -448,7 +470,7 @@ public class BillDetailsView {
 			BigDecimal activeAmount, BigDecimal reactiveAmount,
 			BigDecimal totalAmount, BigDecimal totalAmountRoundoff,
 			String totalAmountInWords, String particulars, Plant plant,
-			ArrayList<Machine> machines) {
+			ArrayList<Machine> machines, BillDetails billDetails) {
 		this.billNo = billNo;
 		this.invoiceNo = invoiceNo;
 		this.meterReadings = meterReadings;
@@ -470,6 +492,7 @@ public class BillDetailsView {
 		this.particulars = particulars;
 		this.plant = plant;
 		this.machines = machines;
+		this.billDetails = billDetails;
 	}
 
 	/**
@@ -496,7 +519,8 @@ public class BillDetailsView {
 				+ totalAmount + ", totalAmountRoundoff=" + totalAmountRoundoff
 				+ ", totalAmountInWords=" + totalAmountInWords
 				+ ", particulars=" + particulars + ", plant=" + plant
-				+ ", machines=" + machines + "]";
+				+ ", machines=" + machines + ", billDetails=" + billDetails
+				+ "]";
 	}
 	
 }

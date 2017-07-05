@@ -25,6 +25,7 @@ public class BillDetails {
 	private String totalAmountInWords;
 	private int plantId;
 	private BigDecimal adjustment;
+	private BigDecimal adjustmentUnit;
 	/**
 	 * @return the id
 	 */
@@ -277,6 +278,78 @@ public class BillDetails {
 	public void setAdjustment(BigDecimal adjustment) {
 		this.adjustment = adjustment;
 	}
+	
+	/**
+	 * @return the adjustmentUnit
+	 */
+	public BigDecimal getAdjustmentUnit() {
+		return adjustmentUnit;
+	}
+	/**
+	 * @param adjustmentUnit the adjustmentUnit to set
+	 */
+	public void setAdjustmentUnit(BigDecimal adjustmentUnit) {
+		this.adjustmentUnit = adjustmentUnit;
+	}
+	/**
+	 * Default Constructor
+	 */
+	public BillDetails() {
+	}
+	
+	/**
+	 * @param billNo
+	 * @param invoiceNo
+	 * @param meterReadingId
+	 * @param investorId
+	 * @param consumptionId
+	 * @param consumptionBifurcationId
+	 * @param meterNo
+	 * @param readingDate
+	 * @param billGenerationDate
+	 * @param totalKWH
+	 * @param totalRKVH
+	 * @param kwhRate
+	 * @param rkvhRate
+	 * @param activeAmount
+	 * @param reactiveAmount
+	 * @param totalAmount
+	 * @param totalAmountRoundOff
+	 * @param totalAmountInWords
+	 * @param plantId
+	 * @param adjustment
+	 * @param adjustmentUnit
+	 */
+	public BillDetails(String billNo, String invoiceNo, int meterReadingId,
+			int investorId, int consumptionId, int consumptionBifurcationId,
+			String meterNo, String readingDate, String billGenerationDate,
+			BigDecimal totalKWH, BigDecimal totalRKVH, BigDecimal kwhRate,
+			BigDecimal rkvhRate, BigDecimal activeAmount,
+			BigDecimal reactiveAmount, BigDecimal totalAmount,
+			BigDecimal totalAmountRoundOff, String totalAmountInWords,
+			int plantId, BigDecimal adjustment, BigDecimal adjustmentUnit) {
+		this.billNo = billNo;
+		this.invoiceNo = invoiceNo;
+		this.meterReadingId = meterReadingId;
+		this.investorId = investorId;
+		this.consumptionId = consumptionId;
+		this.consumptionBifurcationId = consumptionBifurcationId;
+		this.meterNo = meterNo;
+		this.readingDate = readingDate;
+		this.billGenerationDate = billGenerationDate;
+		this.totalKWH = totalKWH;
+		this.totalRKVH = totalRKVH;
+		this.kwhRate = kwhRate;
+		this.rkvhRate = rkvhRate;
+		this.activeAmount = activeAmount;
+		this.reactiveAmount = reactiveAmount;
+		this.totalAmount = totalAmount;
+		this.totalAmountRoundOff = totalAmountRoundOff;
+		this.totalAmountInWords = totalAmountInWords;
+		this.plantId = plantId;
+		this.adjustment = adjustment;
+		this.adjustmentUnit = adjustmentUnit;
+	}
 	/**
 	 * @param id
 	 * @param billNo
@@ -299,6 +372,7 @@ public class BillDetails {
 	 * @param totalAmountInWords
 	 * @param plantId
 	 * @param adjustment
+	 * @param adjustmentUnit
 	 */
 	public BillDetails(int id, String billNo, String invoiceNo,
 			int meterReadingId, int investorId, int consumptionId,
@@ -307,7 +381,8 @@ public class BillDetails {
 			BigDecimal totalRKVH, BigDecimal kwhRate, BigDecimal rkvhRate,
 			BigDecimal activeAmount, BigDecimal reactiveAmount,
 			BigDecimal totalAmount, BigDecimal totalAmountRoundOff,
-			String totalAmountInWords, int plantId, BigDecimal adjustment) {
+			String totalAmountInWords, int plantId, BigDecimal adjustment,
+			BigDecimal adjustmentUnit) {
 		this.id = id;
 		this.billNo = billNo;
 		this.invoiceNo = invoiceNo;
@@ -329,62 +404,7 @@ public class BillDetails {
 		this.totalAmountInWords = totalAmountInWords;
 		this.plantId = plantId;
 		this.adjustment = adjustment;
-	}
-	/**
-	 * @param billNo
-	 * @param invoiceNo
-	 * @param meterReadingId
-	 * @param investorId
-	 * @param consumptionId
-	 * @param consumptionBifurcationId
-	 * @param meterNo
-	 * @param readingDate
-	 * @param billGenerationDate
-	 * @param totalKWH
-	 * @param totalRKVH
-	 * @param kwhRate
-	 * @param rkvhRate
-	 * @param activeAmount
-	 * @param reactiveAmount
-	 * @param totalAmount
-	 * @param totalAmountRoundOff
-	 * @param totalAmountInWords
-	 * @param plantId
-	 * @param adjustment
-	 */
-	public BillDetails(String billNo, String invoiceNo, int meterReadingId,
-			int investorId, int consumptionId, int consumptionBifurcationId,
-			String meterNo, String readingDate, String billGenerationDate,
-			BigDecimal totalKWH, BigDecimal totalRKVH, BigDecimal kwhRate,
-			BigDecimal rkvhRate, BigDecimal activeAmount,
-			BigDecimal reactiveAmount, BigDecimal totalAmount,
-			BigDecimal totalAmountRoundOff, String totalAmountInWords,
-			int plantId, BigDecimal adjustment) {
-		this.billNo = billNo;
-		this.invoiceNo = invoiceNo;
-		this.meterReadingId = meterReadingId;
-		this.investorId = investorId;
-		this.consumptionId = consumptionId;
-		this.consumptionBifurcationId = consumptionBifurcationId;
-		this.meterNo = meterNo;
-		this.readingDate = readingDate;
-		this.billGenerationDate = billGenerationDate;
-		this.totalKWH = totalKWH;
-		this.totalRKVH = totalRKVH;
-		this.kwhRate = kwhRate;
-		this.rkvhRate = rkvhRate;
-		this.activeAmount = activeAmount;
-		this.reactiveAmount = reactiveAmount;
-		this.totalAmount = totalAmount;
-		this.totalAmountRoundOff = totalAmountRoundOff;
-		this.totalAmountInWords = totalAmountInWords;
-		this.plantId = plantId;
-		this.adjustment = adjustment;
-	}
-	/**
-	 * Default Constructor
-	 */
-	public BillDetails() {
+		this.adjustmentUnit = adjustmentUnit;
 	}
 	/* (non-Javadoc)
 	 * @see java.lang.Object#toString()
@@ -403,7 +423,8 @@ public class BillDetails {
 				+ ", reactiveAmount=" + reactiveAmount + ", totalAmount="
 				+ totalAmount + ", totalAmountRoundOff=" + totalAmountRoundOff
 				+ ", totalAmountInWords=" + totalAmountInWords + ", plantId="
-				+ plantId + ", adjustment=" + adjustment + "]";
+				+ plantId + ", adjustment=" + adjustment + ", adjustmentUnit="
+				+ adjustmentUnit + "]";
 	}
 	
 	

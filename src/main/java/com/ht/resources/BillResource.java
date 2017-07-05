@@ -174,7 +174,7 @@ public class BillResource {
 				BigDecimal reactiveConsumption = investorConsumption.getReactiveConsumption();
 				//System.out.println("reactiveConsumption "+reactiveConsumption);
 				
-				BigDecimal adjustment = investorConsumption.getAdjustment();
+				BigDecimal adjustmentUnit = investorConsumption.getAdjustment();
 				
 				BigDecimal activeRate = machine.getActiveRate();
 				//System.out.println("activeRate "+activeRate);
@@ -188,7 +188,9 @@ public class BillResource {
 				BigDecimal reactiveAmount = reactiveConsumption.multiply(reactiveRate);
 				//System.out.println("reactiveAmount "+reactiveAmount);
 				
-				BigDecimal totalAmount = activeAmount.subtract((reactiveAmount.add(adjustment)));
+				BigDecimal adjustment = investorConsumption.getAdjustment().multiply(activeRate);
+				
+				BigDecimal totalAmount = (activeAmount.subtract(reactiveAmount)).add(adjustment);
 				//System.out.println("total amount "+totalAmount);
 				
 				BigDecimal totalAmountRoundOff = totalAmount;
@@ -204,7 +206,7 @@ public class BillResource {
 				billDetails.setAdjustment(adjustment);
 				billDetails.setTotalAmount(totalAmount);
 				billDetails.setTotalAmountRoundOff(totalAmountRoundOff);
-				
+				billDetails.setAdjustmentUnit(adjustmentUnit);
 				//getting amounts in words.
 				String amountInWords = GlobalResources.convert(totalAmountRoundOff);
 				System.out.println("Total Amounts in words is : "+amountInWords);

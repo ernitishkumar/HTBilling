@@ -98,14 +98,14 @@
 						<td colspan="3">Less RKVH Charges</td>
 						<td>{{billDetails.totalRKVH}}</td>
 						<td>{{billDetails.rkvhRate}}</td>
-						<td>-{{billDetails.reactiveAmount}}</td>
+						<td>{{billDetails.reactiveAmount}}</td>
 					</tr>
 					<tr class="text-center">
 						<td>3</td>
 						<td colspan="3">Less Adjustment</td>
-						<td></td>
-						<td></td>
-						<td>-{{billDetails.investorConsumptionView.adjustment}}</td>
+						<td>{{billDetails.billDetails.adjustmentUnit}}</td>
+						<td>{{billDetails.kwhRate}}</td>
+						<td>{{billDetails.billDetails.adjustment}}</td>
 					</tr>
 					<tr class="text-center">
 						<td></td>

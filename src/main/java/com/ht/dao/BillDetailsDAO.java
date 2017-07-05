@@ -24,7 +24,7 @@ public class BillDetailsDAO {
 		try {
 			//obtaining connection from connection pool
 			connection = GlobalResources.getDatasource().getConnection();
-			PreparedStatement ps = connection.prepareStatement("insert into bill_details (bill_no, invoice_no, meter_readings_id, investor_id, consumption_id, consumption_bifurcation_id,meter_no, reading_date, bill_generation_date, total_kwh, total_rkvh, kwh_rate, rkvh_rate, active_amount, reactive_amount, total_amount, total_amount_roundoff,total_amount_in_words,plant_id,adjustment) values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)",Statement.RETURN_GENERATED_KEYS);
+			PreparedStatement ps = connection.prepareStatement("insert into bill_details (bill_no, invoice_no, meter_readings_id, investor_id, consumption_id, consumption_bifurcation_id,meter_no, reading_date, bill_generation_date, total_kwh, total_rkvh, kwh_rate, rkvh_rate, active_amount, reactive_amount, total_amount, total_amount_roundoff,total_amount_in_words,plant_id,adjustment,adjustment_unit) values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)",Statement.RETURN_GENERATED_KEYS);
 			ps.setString(1,"");
 			ps.setString(2, billDetails.getInvoiceNo());
 			ps.setInt(3, billDetails.getMeterReadingId());
@@ -45,6 +45,7 @@ public class BillDetailsDAO {
 			ps.setString(18,billDetails.getTotalAmountInWords());
 			ps.setInt(19,billDetails.getPlantId());
 			ps.setBigDecimal(20, billDetails.getAdjustment());
+			ps.setBigDecimal(21, billDetails.getAdjustmentUnit());
 			ps.executeUpdate();
 			ResultSet keys = ps.getGeneratedKeys();    
 			keys.next();  
@@ -68,11 +69,12 @@ public class BillDetailsDAO {
 	}
 	
 	public BillDetails update(BillDetails billDetails){
+		System.out.println(billDetails);
 		BillDetails updatedBillDetails = null;
 		Connection connection = null;
 		try {
 			connection = GlobalResources.getDatasource().getConnection();
-			PreparedStatement ps = connection.prepareStatement("update bill_details set bill_no=?, invoice_no=?, meter_readings_id=?, investor_id=?, consumption_id=?, consumption_bifurcation_id=?,meter_no=?, reading_date=?, bill_generation_date=?, total_kwh=?, total_rkvh=?, kwh_rate=?, rkvh_rate=?, active_amount=?, reactive_amount=?, total_amount=?, total_amount_roundoff=?,total_amount_in_words=?,plant_id=?,adjustment=? where id = ?");
+			PreparedStatement ps = connection.prepareStatement("update bill_details set bill_no=?, invoice_no=?, meter_readings_id=?, investor_id=?, consumption_id=?, consumption_bifurcation_id=?,meter_no=?, reading_date=?, bill_generation_date=?, total_kwh=?, total_rkvh=?, kwh_rate=?, rkvh_rate=?, active_amount=?, reactive_amount=?, total_amount=?, total_amount_roundoff=?,total_amount_in_words=?,plant_id=?,adjustment=?,adjustment_unit=? where id = ?");
 			ps.setString(1,billDetails.getBillNo());
 			ps.setString(2, billDetails.getInvoiceNo());
 			ps.setInt(3, billDetails.getMeterReadingId());
@@ -93,11 +95,13 @@ public class BillDetailsDAO {
 			ps.setString(18,billDetails.getTotalAmountInWords());
 			ps.setInt(19,billDetails.getPlantId());
 			ps.setBigDecimal(20, billDetails.getAdjustment());
-			ps.setInt(21, billDetails.getId());
+			ps.setBigDecimal(21, billDetails.getAdjustmentUnit());
+			ps.setInt(22, billDetails.getId());
 			ps.executeUpdate();
 			ps.close();
 			updatedBillDetails = getById(billDetails.getId());
 		} catch (SQLException e) {
+			e.printStackTrace();
 			System.out.println("Exception in class : BillDetailsDAO : method : [update(BillDetails)] "+e.getMessage());
 		}finally {
 			if(connection != null){
@@ -352,6 +356,7 @@ public class BillDetailsDAO {
 				billDetails.setTotalAmountInWords(rs.getString(19));
 				billDetails.setPlantId(rs.getInt(20));
 				billDetails.setAdjustment(rs.getBigDecimal(21));
+				billDetails.setAdjustmentUnit(rs.getBigDecimal(22));
 				billDetailsList.add(billDetails);
 			}
 		} catch (SQLException e) {
@@ -365,7 +370,7 @@ public class BillDetailsDAO {
 		billDetailsView.setId(billDetails.getId());
 		billDetailsView.setBillNo(billDetails.getBillNo());
 		billDetailsView.setTotalAmountInWords(billDetails.getTotalAmountInWords());
-		
+		billDetailsView.setBillDetails(billDetails);
 		PlantsDAO plantsDAO = new PlantsDAO();
 		billDetailsView.setPlant(plantsDAO.getById(billDetails.getPlantId()));
 		//uncomment below code once invoice is being set

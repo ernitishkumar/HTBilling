@@ -129,7 +129,7 @@ angular.module("htBillingApp").controller('BifircateReadingsController', ['$http
 			item.consumptionId = consumption.id;
 			item.investorId = item.investor.id;
 		});
-		if (totalActive + totalAdjustment === consumption.activeConsumption && totalReactive === consumption.reactiveConsumption) {
+		if (totalActive === consumption.activeConsumption && totalReactive === consumption.reactiveConsumption) {
 			$http(
 					{
 						method: 'POST',

@@ -136,41 +136,42 @@ angular.module("htBillingApp").controller('ViewBillController', ['$http', '$scop
 		var month;
 		var year = dateArray[2];
 		switch(dateArray[1]) {
-		    case "01":
+		    case "02":
 		        month = "JAN";
 		        break;
-		    case "02":
+		    case "03":
 		        month = "FEB";
 		        break;
-		    case "03":
+		    case "04":
 		        month = "MAR";
 		        break;
-		    case "04":
+		    case "05":
 		        month = "APR";
 		        break;
-		    case "05":
+		    case "06":
 		        month = "MAY";
 		        break;
-		    case "06":
+		    case "07":
 		        month = "JUN";
 		        break;
-		    case "07":
+		    case "08":
 		        month = "JUL";
 		        break;
-		    case "08":
+		    case "09":
 		        month = "AUG";
 		        break;
-		    case "09":
+		    case "10":
 		        month = "SEP";
 		        break;
-		    case "10":
+		    case "11":
 		        month = "OCT";
 		        break;
-		    case "11":
+		    case "12":
 		        month = "NOV";
 		        break;
-		    case "12":
+		    case "01":
 		        month = "DEC";
+		        year = year-1;
 		        break;
 		    default:
 		    	month = null;

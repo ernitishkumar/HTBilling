@@ -96,18 +96,19 @@
 			templateUrl: 'templates/pages/ht/plant/updateplant.html',
 			controller: 'UpdatePlantController',
 			controllerAs: 'updatePlantCtrl'
-		})
-		.when('/plant/view', {
+		}).when('/plant/view', {
 			templateUrl: 'templates/pages/ht/plant/viewplantdetails.html',
 			controller: 'ViewPlantDetailsController',
 			controllerAs: 'viewPlantDetailsCtrl'
-		})
-		.when('/plant/investor/add', {
+		}).when('/plant/investor/add', {
 			templateUrl: 'templates/pages/ht/plant/mapinvestor.html',
 			controller: 'AddInvestorMappingController',
 			controllerAs: 'addInvestorMappingCtrl'
-		})
-		.when('/plant/investor/view', {
+		}).when('/plant/meter/map', {
+			templateUrl: 'templates/pages/ht/plant/plantmetermapping.html',
+			controller: 'PlantInvestorMappingController',
+			controllerAs: 'plantInvestorMappingCtrl'
+		}).when('/plant/investor/view', {
 			templateUrl: 'templates/pages/ht/plant/viewinvestormapping.html',
 			controller: 'ViewInvestorMappingController',
 			controllerAs: 'viewInvestorMappingCtrl'

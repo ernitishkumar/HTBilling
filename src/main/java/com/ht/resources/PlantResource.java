@@ -109,7 +109,6 @@ public class PlantResource {
 		}
 	}
 	
-	
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
 	public ArrayList<Plant> getAllPlants(){

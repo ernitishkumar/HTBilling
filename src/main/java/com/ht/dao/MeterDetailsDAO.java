@@ -114,6 +114,20 @@ public class MeterDetailsDAO {
 		return meterDetails;
 	}
 	
+	public ArrayList<MeterDetails> getMetersNotMappedToPlant(){
+		ArrayList<MeterDetails> meterDetails = new ArrayList<MeterDetails>();
+		try(
+				Connection connection = GlobalResources.getDatasource().getConnection();
+				PreparedStatement ps = connection.prepareStatement("select * from meter_details where meter_no not in (select meter_no from plant_meter_mapping)");
+				) {
+			ResultSet resultSet = ps.executeQuery();
+			meterDetails = resultSetMapper(resultSet);
+		} catch (SQLException e) {
+			System.out.println("Exception in class : MeterDetailsDAO : method : [getMetersNotMappedToPlant] "+ e);
+		}
+		return meterDetails;
+	}
+	
 	public MeterDetails getByMeterNo(String meterNo){
 		MeterDetails meterDetails = null;
 		try (

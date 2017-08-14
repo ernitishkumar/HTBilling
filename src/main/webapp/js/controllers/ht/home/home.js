@@ -57,6 +57,9 @@ angular.module("htBillingApp").controller('HomeController', ['$http', '$scope', 
     this.loadConsumptionReportPage = function(){
     	$location.path("/ht/mis/consumptionreport");
     }
+    this.loadPlantMeterMappingPage = function(){
+    	$location.path("/plant/meter/map");
+    }
     /*
      * loadMeterReadingViewPage() function to route to view meter readings page
      */

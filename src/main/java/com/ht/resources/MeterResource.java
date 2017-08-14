@@ -62,6 +62,14 @@ public class MeterResource {
 		return meterDetailsDAO.getMetersNotInUse();
 	}
 	
+	@GET
+	@Path("/unmapped")
+	@Produces(MediaType.APPLICATION_JSON)
+	public ArrayList<MeterDetails> getAllUnmappedMeters(){
+		System.out.println("Getting all unused meters");
+		return meterDetailsDAO.getMetersNotMappedToPlant();
+	}
+	
 	@DELETE
 	@Path("/{meterno}")
 	@Produces(MediaType.APPLICATION_JSON)

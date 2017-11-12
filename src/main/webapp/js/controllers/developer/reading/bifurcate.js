@@ -9,6 +9,8 @@ angular.module("htBillingApp").controller('BifircateReadingsController', ['$http
 	 * var userRole a controller level variable to store userRole object.
 	 */
 	$scope.userRole = {};
+	
+	$scope.consumption = {};
 
 	/* 
 	 * checkUser function. checks whether any user is logged into the system
@@ -55,8 +57,8 @@ angular.module("htBillingApp").controller('BifircateReadingsController', ['$http
 	 * function loadConsumptionData to load the consumption data for 
 	 * provided plant and meter
 	 */
-	function loadConsumptionData() {
-
+	/*function loadConsumptionData() {
+		
 		var plantId = $routeParams.plantId;
 
 		var consumptionId = $routeParams.consumptionId;
@@ -97,7 +99,56 @@ angular.module("htBillingApp").controller('BifircateReadingsController', ['$http
 					console.log(error);
 				}
 		);
-	};
+	};*/
+	
+	/*
+	 * function fetches consumptions of meters mapped to particular plant 
+	 * provided plant id
+	 */
+	function loadConsumptionData() {
+		
+		var plantId = $routeParams.plantId;
+		var consumptionId = $routeParams.consumptionId;
+		//Getting Investors for bifurcation of readings
+		$http(
+				{
+					method: 'GET',
+					url: 'backend/investors/bifurcation/'+plantId
+				}
+		).then(
+				function (response) {
+					var status = response.status;
+					if (status === 200) {
+						console.log(response.data);
+						$scope.investorsData = response.data;
+					}
+				},
+				function(error){
+					console.log("error while fetching investors for bifurcation.below is error");
+					console.log(error);
+				}
+		);
+		
+		$http(
+				{
+					method: 'GET',
+					url: 'backend/consumptions/metermapping/'+plantId+'/consumption/'+consumptionId
+				}
+		).then(
+				function (response) {
+					var status = response.status;
+					if (status === 200) {
+						console.log(response.data);
+						$scope.consumptions = response.data;
+						createConsumption();
+					}
+				},
+				function(error){
+					console.log("error while fetching investors for bifurcation.below is error");
+					console.log(error);
+				}
+		);
+		};
 	
 	/*
 	 * back function to go back to the last page.
@@ -106,12 +157,37 @@ angular.module("htBillingApp").controller('BifircateReadingsController', ['$http
 		window.history.back();
 	};
 	
-	this.calculateAdjustment = function (investorConsumption) {
+	/*this.calculateAdjustment = function (investorConsumption) {
 		console.log("inside adjustment");
-		investorConsumption.adjustment = investorConsumption.adjustmentUnit * $scope.consumption.meterDetails.mf;
+		investorConsumption.adjustment = investorConsumption.adjustmentUnit * $scope.consumption.mf;
+		//investorConsumption.adjustment = investorConsumption.adjustmentUnit * $scope.consumption.meterDetails.mf;
 		console.log("below adjustment");
-	};
+	};*/
 
+	function createConsumption(){
+		var consumptionList = $scope.consumptions;
+		$scope.consumption.activeConsumption = 0;
+		$scope.consumption.reactiveConsumption = 0;
+		$scope.consumption.adjustment = 0;
+		$scope.consumption.adjustmentUnit = 0;
+		$scope.consumption.mf = consumptionList[0].meterDetails.mf;
+		$scope.consumption.id = consumptionList[0].id;
+		for(var i=0; i < consumptionList.length ; i++){
+			console.log(consumptionList[i]);
+			$scope.consumption.plantCode = consumptionList[i].plantCode;
+			if($scope.consumption.meterNo == undefined){
+				$scope.consumption.meterNo = consumptionList[i].meterNo;
+			}else{
+				$scope.consumption.meterNo = $scope.consumption.meterNo +', '+ consumptionList[i].meterNo;
+			}
+			
+			$scope.consumption.date = consumptionList[i].date;
+			$scope.consumption.activeConsumption = $scope.consumption.activeConsumption + consumptionList[i].activeConsumption;
+			$scope.consumption.reactiveConsumption = $scope.consumption.reactiveConsumption + consumptionList[i].reactiveConsumption;
+			$scope.consumption.adjustment = $scope.consumption.adjustment + consumptionList[i].adjustment;
+			//$scope.consumption.adjustmentUnit = $scope.consumption.adjustmentUnit + consumptionList[i].adjustmentUnit;
+		}
+	}
 	/*
 	 * function to save bifurcated investors wise readings
 	 * to the backend server.
@@ -141,7 +217,7 @@ angular.module("htBillingApp").controller('BifircateReadingsController', ['$http
 						var status = response.status;
 						if(status === 201){
 							var insertedInvestorsConsumption = response.data;
-							updateBifurcationFlag(consumption);
+							updateBifurcationFlag();
 						}
 					},
 					function(error){
@@ -158,29 +234,42 @@ angular.module("htBillingApp").controller('BifircateReadingsController', ['$http
 	 * updateBifercationFlag(id) function to update the bifurcation flag of consumption data
 	 * in the backend when developer successfully bifurcates the consumption data
 	 */
-	function updateBifurcationFlag(consumption) {
+	function updateBifurcationFlag() {
 		//Updating the consumptionBifurcated property of the controller's local variable and passing
 		//it to the backend to update in database.
-		consumption.consumptionBifurcated = 1;
-		
-		$http(
-				{
-					method: 'PUT',
-					url: 'backend/consumptions/'+consumption.id,
-					data: consumption
-				}
-		).then(
-				function (response) {
-					var status = response.status;
-					if (status === 200) {
-						bootbox.alert("Bifurcated Successfully.");
-						window.history.back();
+		var errorOccurred = false;
+		var consumptionList = $scope.consumptions;
+		for(var i=0; i < consumptionList.length ; i++){
+			consumptionList[i].consumptionBifurcated = 1;
+			
+			$http(
+					{
+						method: 'PUT',
+						url: 'backend/consumptions/bifurcate',
+						data: consumptionList[i]
 					}
-				},
-				function(error){
-					console.log("error while updating flag.error below : ");
-					console.log(error);
-				}
-		);
+			).then(
+					function (response) {
+						var status = response.status;
+						if (status === 200) {
+							window.history.back();
+						}
+					},
+					function(error){
+						errorOccurred = true;
+						console.log("error while updating flag.error below : ");
+						console.log(error);
+					}
+			);
+			if(!errorOccurred){
+				bootbox.alert("Bifurcated Successfully.");
+			}else{
+				bootbox.alert("Some Error Occurred bifercating the readings.");
+			}
+			
+		}
+		
+		
+		
 	}
 }]);

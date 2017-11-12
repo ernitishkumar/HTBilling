@@ -69,5 +69,20 @@ public class PlantMeterMappingDAO {
 		}
 		return mappingList;
 	}
+	
+	public ArrayList<PlantMeterMapping> getByPlantId(int plantId) {
+		ArrayList<PlantMeterMapping> mappingList = new ArrayList<PlantMeterMapping>();
+		try(
+				Connection connection = GlobalResources.getDatasource().getConnection();
+				PreparedStatement ps = connection.prepareStatement("select * from plant_meter_mapping where plant_id=?");
+				) {
+			ps.setInt(1,plantId);
+			ResultSet rs = ps.executeQuery();
+			mappingList = plantMeterMappingParser(rs);
+		} catch (SQLException e) {
+			System.out.println("Exception in class : PlantMeterMappingDAO : method : [getById(int)] "+e.getMessage());
+		}
+		return mappingList;
+	}
 
 }

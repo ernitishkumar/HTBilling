@@ -445,12 +445,29 @@ public class MeterReadingsDAO {
 
 	public MeterReading getReadingsByMeterAndReadingMonth(String meterNo, String readingMonth) {
 		MeterReading meterReading = new MeterReading();
+		SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
 		MeterDetailsDAO meterDetailsDAO = new MeterDetailsDAO();
 		int id = -1;
+		Calendar c = Calendar.getInstance();
+		try {
+			c.setTime(formatter.parse(readingMonth));
+		} catch (ParseException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		int year = c.get(Calendar.YEAR);
+		// System.out.println("Year is :"+year);
+		int month = c.get(Calendar.MONTH) + 1;
+		// System.out.println("Month is :"+month );
+		String mon = null;
+		if (month < 10) {
+			mon = "0" + month;
+		}
+		String dateTrim = mon + "-" + year;
 		try(
 				//Added discarded flag check to prevent discarded reading to be used
 				Connection connection = GlobalResources.getDatasource().getConnection();
-				PreparedStatement ps = connection.prepareStatement("select * from meter_readings where meter_no=? and reading_date like '%"+readingMonth+"%' and discarded_flag=0");
+				PreparedStatement ps = connection.prepareStatement("select * from meter_readings where meter_no=? and reading_date like '%"+dateTrim+"%' and discarded_flag=0");
 				) {
 			ps.setString(1, meterNo);
 			ResultSet rs = ps.executeQuery();

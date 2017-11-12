@@ -82,18 +82,21 @@ public class ConsumptionsDAO {
 	}
 
 	public Consumption getByMeterNo(String meterNo){
-		ArrayList<Consumption> consumptionsList = new ArrayList<Consumption>();
+		Consumption consumption = new Consumption();
 		try(
 				Connection connection = GlobalResources.getDatasource().getConnection();
-				PreparedStatement ps = connection.prepareStatement("select * from consumptions where meter_no=?");
+				PreparedStatement ps = connection.prepareStatement("select max(id) from consumptions where meter_no=?");
 				) {
 			ps.setString(1, meterNo);
 			ResultSet rs = ps.executeQuery();
-			consumptionsList = ConsumptionsMapper(rs);
+			rs.next();
+			int id = rs.getInt(1);
+			consumption = getById(id);
+			
 		} catch (SQLException e) {
 			System.out.println("Exception in class : ConsumptionsDAO : method : [getByMeterNo(String)] "+e.getMessage());
 		}
-		return consumptionsList.get(0);
+		return consumption;
 	}
 
 	public Consumption getByMeterReadingId(int id){

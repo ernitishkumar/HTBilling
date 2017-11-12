@@ -4,7 +4,9 @@
 package com.ht.resources;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
@@ -21,7 +23,11 @@ import javax.ws.rs.core.Response.Status;
 import com.ht.beans.Consumption;
 import com.ht.beans.ErrorBean;
 import com.ht.beans.MessageBean;
+import com.ht.beans.MeterReading;
+import com.ht.beans.PlantMeterMapping;
 import com.ht.dao.ConsumptionsDAO;
+import com.ht.dao.MeterReadingsDAO;
+import com.ht.dao.PlantMeterMappingDAO;
 
 /**
  * @author NITISH
@@ -31,6 +37,8 @@ import com.ht.dao.ConsumptionsDAO;
 public class ConsumptionResource {
 
 	private ConsumptionsDAO consumptionsDAO=new ConsumptionsDAO();
+	private PlantMeterMappingDAO plantMeterMappingDAO = new PlantMeterMappingDAO();
+	private MeterReadingsDAO MeterReadingsDAO = new MeterReadingsDAO();
 
 	/**
 	 * method to add consumption
@@ -119,6 +127,41 @@ public class ConsumptionResource {
 		return consumption;
 	}
 	
+	/**
+	 * method to get the consumptions for a given plantId
+	 * @param plantId
+	 * @return
+	 */
+	@GET
+	@Path("/metermapping/{plantId}/consumption/{consumptionId}")
+	@Produces(MediaType.APPLICATION_JSON)
+	public ArrayList<Consumption> getByPlantMeterMapping(@PathParam("plantId")int plantId, @PathParam("consumptionId")int consumptionId){
+		System.out.println("getByPlantMeterMapping by plantId called");
+		ArrayList<Consumption> consumptions = null;
+		ArrayList<PlantMeterMapping> plantMeterMappings = plantMeterMappingDAO.getByPlantId(plantId);
+		Consumption consumption = consumptionsDAO.getById(consumptionId);
+		MeterReading meterReading = MeterReadingsDAO.getById(consumption.getMeterReadingId());
+		System.out.println(meterReading);
+		if(plantMeterMappings != null){
+			System.out.println("size of mapping array is: "+plantMeterMappings.size());
+			consumptions = new ArrayList<Consumption>();
+			for(PlantMeterMapping mapping : plantMeterMappings){
+				MeterReading reading = MeterReadingsDAO.getReadingsByMeterAndReadingMonth(mapping.getMeterNo(), meterReading.getReadingDate());
+				System.out.println(reading);
+				if(reading != null){
+					consumptions.add(consumptionsDAO.getByMeterReadingId(reading.getId()));
+				}else{
+					System.out.println("Reading not found for another meter mapped with this plant for Month.");
+					consumptions = null;
+					break;
+				}
+			}
+		}else{
+			System.out.println("Unable to get the Plant Meter Mapping");
+		}
+		return consumptions;
+	}
+	
 	@PUT
 	@Path("/bifurcation")
 	@Produces(MediaType.APPLICATION_JSON)
@@ -141,6 +184,25 @@ public class ConsumptionResource {
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response updateBifurcationFlag(Consumption consumption){
 		Consumption updatedConsumption = consumptionsDAO.update(consumption);
+		if(updatedConsumption != null){
+			return Response.status(Status.OK)
+					.entity(updatedConsumption)
+					.build();
+		}else{
+			return Response.status(Status.EXPECTATION_FAILED)
+					.entity(new ErrorBean("Unable to update bifurcation flag"))
+					.build();
+		}
+	}
+	
+	@PUT
+	@Path("/bifercate")
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response updateBifurcationFlagForMultipleConsumptions(Consumption consumption){
+		Consumption updatedConsumption = consumptionsDAO.update(consumption);
+		
+		
 		if(updatedConsumption != null){
 			return Response.status(Status.OK)
 					.entity(updatedConsumption)

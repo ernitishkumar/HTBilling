@@ -83,7 +83,6 @@
 											<td><strong>Investor Name</strong></td>
 											<td><strong>KWH Export</strong></td>
 											<td><strong>RKVAH Consumed</strong></td>
-											<td><strong>Adjustment Units</strong></td>
 											<td><strong>Adjustment</strong></td>
 										</tr>
 										<tr ng-repeat="investorData in investorsData"
@@ -105,17 +104,13 @@
 												ng-model="investorData.reactiveConsumption">
 											</td>
 											<td>
-												<input type="number" ng-model="investorData.adjustmentUnit" ng-blur="viewMeterReadingsCtrl.calculateAdjustment(investorData)">
-											</td>
-											<td>
-												<input type="number" ng-model="investorData.adjustment" disabled>
+												<input type="number" ng-model="investorData.adjustment">
 											</td>
 										</tr>
 										<tr>
 											<td colspan="4"><strong>Grand Total</strong></td>
 											<td><b>{{consumption.activeConsumption}}</b></td>
 											<td><b>{{consumption.reactiveConsumption}}</b></td>
-											<td><b>{{consumption.adjustmentUnit}}</b></td>
 											<td><b>{{consumption.adjustment}}</b></td>
 										</tr>
 									</tbody>
